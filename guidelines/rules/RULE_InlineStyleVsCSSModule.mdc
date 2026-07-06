@@ -1,0 +1,158 @@
+---
+description: Inline Style vs CSS Module
+globs:
+alwaysApply: true
+---
+
+## Purpose
+
+The project uses CSS Modules as the primary styling system. Inline styles (`style={{}}`) are allowed only for a narrow set of cases involving truly dynamic, per-instance values. This rule prevents two common mistakes:
+
+1. Putting dynamic values in CSS modules (causes them to not work at runtime)
+2. Putting static values inline (bypasses token enforcement and theme switching)
+
+---
+
+## The Rule in One Line
+
+> **CSS modules for everything static. Inline styles only for values that change per render.**
+
+---
+
+## CSS Modules — Use for All of These
+
+| Category | Examples |
+|---|---|
+| Variant-based colors | `.brand { background: var(--ld-semantic-color-action-fill-primary); }` |
+| State-based styles | `.tile:hover { background: var(--ld-semantic-color-surface-hovered); }` |
+| Layout and spacing | `padding`, `gap`, `margin`, `display`, `flex-direction` |
+| Typography | `font-family`, `font-size`, `font-weight`, `line-height` |
+| Border radius | `border-radius: var(--ld-primitive-scale-borderradius-100, 8px)` |
+| Responsive breakpoints | All `@media` queries |
+| Animations and transitions | `@keyframes`, `transition`, `animation` |
+| Token references | All `var(--ld-semantic-*)` and `var(--ld-primitive-*)` references |
+
+---
+
+## Inline Styles — Allowed Only for These
+
+Inline styles are permitted **only** when the value is computed at runtime from data or user interaction and cannot be expressed as a CSS class:
+
+| Approved use | Example |
+|---|---|
+| Image focal point per slide | `style={{ objectPosition: slide.objectPosition }}` |
+| Panel width from user drag | `style={{ width: panelWidth + 'px' }}` |
+| Tooltip/popover position | `style={{ top: tooltipY + 'px', left: tooltipX + 'px' }}` |
+| Progress bar fill percentage | `style={{ width: progress + '%' }}` |
+| Inline color from API data | `style={{ color: 'var(--ld-semantic-color-' + sentimentToken + ')' }}` |
+
+When using tokens in inline styles, always include a fallback value:
+
+```tsx
+// ✅ CORRECT — token with fallback
+style={{ color: 'var(--ld-semantic-color-text-positive, #1A7A34)' }}
+
+// ❌ WRONG — hardcoded hex inline
+style={{ color: '#1A7A34' }}
+```
+
+---
+
+## Forbidden Inline Styles
+
+Never use inline styles for these — they belong in CSS modules:
+
+```tsx
+// ❌ WRONG — variant color inline
+<div style={{ backgroundColor: '#0071DC', color: '#FFFFFF' }}>
+
+// ❌ WRONG — spacing inline
+<div style={{ padding: '16px', gap: '12px' }}>
+
+// ❌ WRONG — font inline
+<div style={{ fontFamily: 'Everyday Sans UI', fontSize: '14px' }}>
+
+// ❌ WRONG — border radius inline (unless computed)
+<div style={{ borderRadius: '8px' }}>
+
+// ❌ WRONG — hardcoded hex anywhere
+<div style={{ color: '#2E2F32' }}>
+```
+
+The correct versions belong in a `.module.css` file:
+
+```css
+/* ✅ CORRECT — in CSS module */
+.card {
+  background: var(--ld-semantic-color-action-fill-primary);
+  color: var(--ld-semantic-color-action-text-on-fill-primary);
+  padding: var(--ld-primitive-scale-space-400, 16px);
+  gap: var(--ld-primitive-scale-space-300, 12px);
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: var(--ld-semantic-font-body-small-size);
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  color: var(--ld-semantic-color-text);
+}
+```
+
+---
+
+## Common Judgment Calls
+
+### "The value comes from props — does it go inline?"
+
+Only if the prop is a raw computed value (a number, pixel string, or percentage). If the prop selects between known variants, use CSS module classes:
+
+```tsx
+// Variant from prop → CSS module class (not inline)
+// ✅ CORRECT
+className={[styles.banner, styles[variant]].filter(Boolean).join(' ')}
+
+// ❌ WRONG — selecting variant via inline style
+style={{ backgroundColor: variant === 'brand' ? '#0071DC' : '#FFF' }}
+```
+
+```tsx
+// Numeric value from prop → inline style is acceptable
+// ✅ CORRECT
+style={{ width: panelWidth + 'px' }}
+```
+
+### "objectPosition comes from data — inline or CSS?"
+
+Inline. The value is unique per slide item and cannot be expressed as a predefined class:
+
+```tsx
+// ✅ CORRECT
+<img style={{ objectPosition: slide.objectPosition ?? 'center' }} />
+```
+
+### "I need to override a Builder.io editor injection"
+
+Use `!important` in the CSS module — not inline styles:
+
+```css
+/* ✅ CORRECT — counters Builder editor inline style injections */
+.content {
+  width: 100% !important;
+  max-width: none !important;
+}
+```
+
+---
+
+## Quick Decision Checklist
+
+Before writing `style={{}}`:
+
+- [ ] Is this value the same every time the component renders? → **CSS module**
+- [ ] Is this value one of a known set of variants? → **CSS module class**
+- [ ] Does this value reference a design token? → **CSS module**
+- [ ] Is this value computed from a number at runtime (drag, scroll, progress)? → **Inline OK**
+- [ ] Is this value unique per data item (objectPosition, image URL as background)? → **Inline OK, with token fallback**
+
+---
+
+## Enforcement Level
+
+**HIGH** — Inline styles that hardcode hex values or duplicate token values are a token compliance violation. CSS modules with dynamic runtime values will silently fail. Both mistakes must be caught in code review.

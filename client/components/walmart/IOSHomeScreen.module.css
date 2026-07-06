@@ -1,0 +1,376 @@
+/* ============================================================
+   iOS Home/Lock Screen Simulation
+   ============================================================ */
+
+.screen {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(
+    160deg,
+    #1a6bb5 0%,
+    #2a8fd4 20%,
+    #4da8e0 35%,
+    #6bc0ea 50%,
+    #3a7fc8 70%,
+    #2563a8 85%,
+    #1a4d8f 100%
+  );
+  overflow: hidden;
+  animation: screenFadeIn 400ms ease-out forwards;
+}
+
+@keyframes screenFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.screen.exiting {
+  animation: screenFadeOut 300ms ease-in forwards;
+}
+
+@keyframes screenFadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* ---- Dynamic Island ---- */
+.dynamicIsland {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 126px;
+  height: 32px;
+  border-radius: 60px;
+  background: #000;
+  z-index: 2;
+}
+
+/* ---- Status Bar ---- */
+.statusBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 14px 18px 0;
+  height: 47px;
+  flex-shrink: 0;
+  color: #fff;
+  font-family: 'SF Pro Text', -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: -0.408px;
+  z-index: 3;
+}
+
+.statusBarLeft {
+  flex: 1;
+}
+
+.statusBarCenter {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.statusBarRight {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+/* ---- Date & Time ---- */
+.dateTimeArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 80px;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.date {
+  font-family: 'SF Pro Display', -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0.38px;
+  color: #fff;
+  mix-blend-mode: overlay;
+  text-align: center;
+}
+
+.time {
+  font-family: 'SF Pro Rounded', 'SF Pro Display', -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 96px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -2.12px;
+  color: #fff;
+  text-align: center;
+  margin-top: 4px;
+}
+
+/* ---- Widgets ---- */
+.widgets {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  margin-top: 16px;
+  z-index: 1;
+}
+
+.widgetImg {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+}
+
+/* ---- Spacer ---- */
+.spacer {
+  flex: 1;
+}
+
+/* ---- Notification Card ---- */
+.notification {
+  width: calc(100% - 20px);
+  max-width: 375px;
+  border-radius: 16px;
+  border: 0.5px solid rgba(255, 255, 255, 0.70);
+  background: rgba(255, 255, 255, 0.10);
+  box-shadow:
+    2px 2px 0.5px -2px rgba(255, 255, 255, 0.50) inset,
+    -2px -2px 10px -2px rgba(255, 255, 255, 0.50) inset,
+    0 0 8px 0 rgba(160, 160, 160, 0.50) inset,
+    0 4px 24px -4px rgba(0, 0, 0, 0.16);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  overflow: visible;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 1;
+  animation: notifSlideUp 500ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transition: transform 0.15s ease;
+}
+
+.notification:active {
+  transform: scale(0.97);
+}
+
+@keyframes notifSlideUp {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.notifContent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.notifIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.notifBody {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  gap: 8px;
+}
+
+.notifTitleRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.notifLogo {
+  height: 15px;
+  width: auto;
+  flex: 1;
+}
+
+.notifLogoImg {
+  height: 15px;
+  width: auto;
+  display: block;
+}
+
+.notifTime {
+  font-family: 'SF Pro Text', -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: -0.078px;
+  color: rgba(255, 255, 255, 0.7);
+  flex-shrink: 0;
+}
+
+.notifTextBlock {
+  display: flex;
+  flex-direction: column;
+}
+
+.notifHeadline {
+  font-family: 'SF Pro Text', -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 18px;
+  letter-spacing: -0.078px;
+  color: #fff;
+}
+
+.notifSubtitle {
+  font-family: 'SF Pro Text', -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: -0.078px;
+  color: #fff;
+}
+
+/* ---- Progress Tracker ---- */
+.progressTracker {
+  position: relative;
+  height: 16px;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.progressTrackBg {
+  position: absolute;
+  top: 50%;
+  left: 8px;
+  right: 8px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-50%);
+}
+
+.progressTrackFill {
+  position: absolute;
+  top: 50%;
+  left: 8px;
+  height: 2px;
+  width: 0%;
+  background: #0053E2;
+  transform: translateY(-50%);
+}
+
+.trackFillAnimating {
+  animation: trackFillGrow 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes trackFillGrow {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 50%;
+  }
+}
+
+.progressStops {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0;
+}
+
+.progressStop {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progressStopDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.progressStopDotActive {
+  background: #0053E2;
+}
+
+.progressStopDotInactive {
+  background: #E3E4E5;
+}
+
+/* ---- Truck Animation ---- */
+.truckWrap {
+  position: absolute;
+  top: -8px;
+  left: 0%;
+}
+
+.truckAnimating {
+  animation: truckSlide 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes truckSlide {
+  0% {
+    left: 0%;
+  }
+  100% {
+    left: 45%;
+  }
+}
+
+.truckImg {
+  width: 54px;
+  height: 23px;
+}
+
+/* ---- Bottom Actions ---- */
+.bottomActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: calc(100% - 92px);
+  max-width: 283px;
+  padding: 12px 0;
+  z-index: 1;
+}
+
+/* ---- Home Indicator ---- */
+.homeIndicator {
+  width: 134px;
+  height: 5px;
+  border-radius: 100px;
+  background: #fff;
+  margin-bottom: 8px;
+  z-index: 1;
+}
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  .screen,
+  .screen.exiting,
+  .notification,
+  .truckWrap {
+    animation-duration: 0ms;
+    transition-duration: 0ms;
+  }
+}

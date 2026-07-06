@@ -1,0 +1,201 @@
+/**
+ * Customer token overrides
+ * Maps Tailwind / developer CSS variables to Living Design 3.5 semantic tokens.
+ * Values change automatically when the LD theme switches (e.g. Walmart → Bodega).
+ *
+ * Load order (see index.css):
+ *   1. primitive.css  — raw scale values (--ld-primitive-*)
+ *   2. semantic.css   — semantic meanings (--ld-semantic-*)
+ *   3. theme.css      — THIS FILE: Tailwind vars → LD semantic tokens
+ */
+
+:root {
+  /* ── Typography ─────────────────────────────────────────────── */
+  --font-size: 16px;
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-lg: 18px;
+  --text-xl: 24px;
+  --text-2xl: 28px;
+  --text-3xl: 32px;
+  --font-family-sans: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  --font-family-mono: var(--ld-semantic-font-family-mono, 'Everyday Sans Mono', monospace);
+  --font-weight-bold: 700;
+  --font-weight-normal: 400;
+
+  /* ── Surfaces ───────────────────────────────────────────────── */
+  /* Page background */
+  --background: var(--ld-semantic-color-background, #ffffff);
+  /* Primary text */
+  --foreground: var(--ld-semantic-color-text, #2e2f32);
+
+  /* Cards */
+  --card: var(--ld-semantic-color-surface, #ffffff);
+  --card-foreground: var(--ld-semantic-color-text, #2e2f32);
+
+  /* Popovers / overlays */
+  --popover: var(--ld-semantic-color-surface-overlay, #ffffff);
+  --popover-foreground: var(--ld-semantic-color-text, #2e2f32);
+
+  /* ── Actions ────────────────────────────────────────────────── */
+  /* Primary button / brand fill */
+  --primary: var(--ld-semantic-color-action-fill-primary, #0053e2);
+  --primary-foreground: var(--ld-semantic-color-action-text-on-fill-primary, #ffffff);
+
+  /* Secondary button */
+  --secondary: var(--ld-semantic-color-action-fill-secondary, #ffffff);
+  --secondary-foreground: var(--ld-semantic-color-action-text-on-fill-secondary, #2e2f32);
+
+  /* Muted / subdued elements (tab bars, code blocks, subtle surfaces) */
+  --muted: var(--ld-semantic-color-fill-subtle, #f8f8f8);
+  --muted-foreground: var(--ld-semantic-color-text-subtlest, #74767c);
+
+  /* Accent / brand hover highlight */
+  --accent: var(--ld-semantic-color-fill-brand, #0053e2);
+  --accent-foreground: var(--ld-semantic-color-text-on-fill-brand, #ffffff);
+
+  /* Destructive actions */
+  --destructive: var(--ld-semantic-color-action-fill-negative, #ea1100);
+  --destructive-foreground: var(--ld-semantic-color-action-text-on-fill-negative, #ffffff);
+
+  /* ── Borders / Inputs ───────────────────────────────────────── */
+  --border: var(--ld-semantic-color-field-border, #909196);
+  --input: var(--ld-semantic-color-field-fill, #ffffff);
+  --input-background: var(--ld-semantic-color-field-fill, #ffffff);
+  --ring: var(--ld-semantic-color-action-focus-outline, #0053e2);
+
+  /* ── Elevation ──────────────────────────────────────────────── */
+  --elevation-sm: var(--ld-semantic-elevation-100);
+
+  /* ── Charts ─────────────────────────────────────────────────── */
+  --chart-1: var(--ld-semantic-color-chart-categorical-1, #002e99);
+  --chart-2: var(--ld-semantic-color-chart-categorical-2, #df74b1);
+  --chart-3: var(--ld-semantic-color-chart-categorical-3, #cc851a);
+  --chart-4: var(--ld-semantic-color-chart-categorical-4, #0092db);
+  --chart-5: var(--ld-semantic-color-chart-categorical-5, #af2f00);
+
+  /* ── Border Radius ──────────────────────────────────────────── */
+  --radius: var(--ld-primitive-scale-border-radius-50, 0.25rem);          /* 4px  */
+  --radius-button: var(--ld-primitive-scale-border-radius-round, 62.5rem); /* pill */
+  --radius-card: var(--ld-primitive-scale-border-radius-50, 0.25rem);      /* 4px  */
+  --radius-tag: var(--ld-primitive-scale-border-radius-25, 0.125rem);      /* 2px  */
+
+  /* ── Sidebar ────────────────────────────────────────────────── */
+  --sidebar: var(--ld-semantic-color-surface, #ffffff);
+  --sidebar-foreground: var(--ld-semantic-color-text, #2e2f32);
+  --sidebar-primary: var(--ld-semantic-color-action-fill-primary, #0053e2);
+  --sidebar-primary-foreground: var(--ld-semantic-color-action-text-on-fill-primary, #ffffff);
+  --sidebar-accent: var(--ld-semantic-color-fill-brand, #0053e2);
+  --sidebar-accent-foreground: var(--ld-semantic-color-text-on-fill-brand, #ffffff);
+  --sidebar-border: var(--ld-semantic-color-separator, #e3e4e5);
+  --sidebar-ring: var(--ld-semantic-color-action-focus-outline, #0053e2);
+
+  /* ── Status colors ──────────────────────────────────────────── */
+  --warning: var(--ld-semantic-color-fill-warning, #ffc220);
+  --warning-foreground: var(--ld-semantic-color-text-warning-bold, #662b0d);
+  --success: var(--ld-semantic-color-fill-positive, #2a8703);
+  --success-foreground: var(--ld-semantic-color-text-positive-bold, #1d5f02);
+  --info: var(--ld-semantic-color-fill-info, #0053e2);
+  --info-foreground: var(--ld-semantic-color-text-on-fill-info, #ffffff);
+  --overlay: var(--ld-semantic-color-scrim, rgba(0, 0, 0, 0.4));
+}
+
+/* ── Dark mode — LD does not ship dark tokens so we preserve the
+      existing overrides rather than pointing at undefined vars ── */
+.dark {
+  --background: rgba(23, 25, 29, 1);
+  --foreground: rgba(235, 235, 235, 1);
+  --card: rgba(32, 34, 38, 1);
+  --card-foreground: rgba(235, 235, 235, 1);
+  --popover: rgba(32, 34, 38, 1);
+  --popover-foreground: rgba(235, 235, 235, 1);
+  --primary: rgba(0, 83, 226, 1);
+  --primary-foreground: rgba(255, 255, 255, 1);
+  --secondary: rgba(45, 47, 51, 1);
+  --secondary-foreground: rgba(235, 235, 235, 1);
+  --muted: rgba(70, 72, 76, 1);
+  --muted-foreground: rgba(160, 162, 166, 1);
+  --accent: rgba(0, 83, 226, 1);
+  --accent-foreground: rgba(255, 255, 255, 1);
+  --destructive: rgba(234, 17, 0, 1);
+  --destructive-foreground: rgba(255, 255, 255, 1);
+  --border: rgba(70, 72, 76, 1);
+  --input: rgba(32, 34, 38, 1);
+  --input-background: rgba(32, 34, 38, 1);
+  --ring: rgba(0, 83, 226, 1);
+  --chart-1: rgba(102, 153, 255, 1);
+  --chart-2: rgba(255, 179, 221, 1);
+  --chart-3: rgba(255, 204, 102, 1);
+  --chart-4: rgba(102, 204, 255, 1);
+  --chart-5: rgba(255, 128, 102, 1);
+  --sidebar: rgba(32, 34, 38, 1);
+  --sidebar-foreground: rgba(235, 235, 235, 1);
+  --sidebar-primary: rgba(0, 83, 226, 1);
+  --sidebar-primary-foreground: rgba(255, 255, 255, 1);
+  --sidebar-accent: rgba(0, 83, 226, 1);
+  --sidebar-accent-foreground: rgba(255, 255, 255, 1);
+  --sidebar-border: rgba(70, 72, 76, 1);
+  --sidebar-ring: rgba(0, 83, 226, 1);
+  --warning: rgba(255, 194, 32, 1);
+  --warning-foreground: rgba(102, 43, 13, 1);
+  --success: rgba(42, 135, 3, 1);
+  --success-foreground: rgba(29, 95, 2, 1);
+  --info: rgba(0, 83, 226, 1);
+  --info-foreground: rgba(255, 255, 255, 1);
+  --overlay: rgba(0, 0, 0, 0.8);
+}
+
+/* ── Tailwind v4 @theme mapping ─────────────────────────────────
+   Registers CSS vars as Tailwind color utilities so classes like
+   bg-primary, text-muted-foreground, border-border, etc. work.  */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 8px);
+  --radius-button: var(--radius-button);
+  --radius-card: var(--radius-card);
+  --radius-tag: var(--radius-tag);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-overlay: var(--overlay);
+  --shadow-elevation-sm: var(--elevation-sm);
+}

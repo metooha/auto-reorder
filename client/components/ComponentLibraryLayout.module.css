@@ -1,0 +1,246 @@
+/* Root layout shell */
+.shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ─── Sidebar ─── */
+.sidebar {
+  width: 280px;
+  border-right: 1px solid var(--ld-semantic-color-border-moderate, #E6E6E8);
+  background-color: var(--ld-semantic-color-surface, #ffffff);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  z-index: 200;
+  transition: transform 0.25s ease;
+}
+
+.sidebarInner {
+  padding: 24px 16px;
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebarTitle {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--ld-semantic-color-text-primary, #2E2F32);
+}
+
+.sidebarSubtitle {
+  font-size: 14px;
+  color: var(--ld-semantic-color-text-secondary, #74767C);
+  margin-bottom: 24px;
+}
+
+/* ─── Collapsible nav sections ─── */
+.navSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.sectionToggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 6px 8px 6px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  gap: 4px;
+}
+
+.sectionToggle:hover {
+  background: var(--ld-semantic-color-fill-surface-secondary, #f5f5f6);
+}
+
+.sectionLabelText {
+  font-size: var(--ld-semantic-font-body-large-size, 1.125rem);
+  font-weight: var(--ld-semantic-font-body-large-weight-alt, 700);
+  line-height: var(--ld-semantic-font-body-large-line-height, 1.5rem);
+  color: var(--ld-semantic-color-text-primary, #2E2F32);
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+.sectionChevron {
+  color: var(--ld-semantic-color-text-subtle, #74767C);
+  flex-shrink: 0;
+  transition: transform 200ms ease;
+  transform: rotate(-90deg);
+}
+
+.sectionChevronOpen {
+  transform: rotate(0deg);
+}
+
+/* Grid-row collapse — no JS height calc needed */
+.sectionContent {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 220ms ease;
+  overflow: hidden;
+}
+
+.sectionContentOpen {
+  grid-template-rows: 1fr;
+}
+
+.sectionContentInner {
+  min-height: 0;
+  padding-bottom: 4px;
+}
+
+/* Keep the old static label class for anything still using it */
+.sectionLabel {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--ld-semantic-color-text-secondary, #74767C);
+  margin-bottom: 8px;
+  padding-left: 16px;
+}
+
+.backToHome {
+  margin-top: auto;
+  padding-top: 24px;
+  border-top: 2px solid var(--ld-semantic-color-separator, #e3e4e5);
+}
+
+/* ─── Mobile top bar ─── */
+.mobileTopBar {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background-color: var(--ld-semantic-color-surface, #ffffff);
+  border-bottom: 1px solid var(--ld-semantic-color-border-moderate, #E6E6E8);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  flex-shrink: 0;
+}
+
+.mobileTopBarTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text-primary, #2E2F32);
+  flex: 1;
+}
+
+.hamburgerBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--ld-semantic-color-text-primary, #2E2F32);
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.hamburgerBtn:hover {
+  background-color: var(--ld-semantic-color-fill-surface-hover, #f2f2f2);
+}
+
+/* Close button inside drawer */
+.drawerCloseRow {
+  display: none;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+}
+
+.drawerCloseBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--ld-semantic-color-text-primary, #2E2F32);
+  border-radius: 8px;
+}
+
+.drawerCloseBtn:hover {
+  background-color: var(--ld-semantic-color-fill-surface-hover, #f2f2f2);
+}
+
+/* ─── Backdrop overlay ─── */
+.backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 190;
+}
+
+.backdropVisible {
+  display: block;
+}
+
+/* ─── Main content ─── */
+.main {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: #ffffff;
+}
+
+/* ─── Mobile breakpoint ─── */
+@media (max-width: 768px) {
+  .mobileTopBar {
+    display: flex;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    transform: translateX(-100%);
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .sidebarOpen {
+    transform: translateX(0);
+  }
+
+  .drawerCloseRow {
+    display: flex;
+  }
+
+  .backdrop {
+    display: none;
+  }
+
+  .backdropVisible {
+    display: block;
+  }
+
+  /* The body doesn't need overflow:hidden tricks — fixed sidebar handles it */
+  .body {
+    flex-direction: column;
+  }
+}

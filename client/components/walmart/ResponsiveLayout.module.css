@@ -1,0 +1,87 @@
+.root {
+  min-height: 100vh;
+  background-color: var(--ld-semantic-color-surface);
+}
+
+.main {
+  width: 100%;
+}
+
+.contentContainer {
+  width: 100%;
+  padding-left: 16px;
+  padding-right: 16px;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .contentContainer {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .contentContainer {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 64px;
+    padding-right: 64px;
+    padding-bottom: 0;
+  }
+
+  .contentContainer.maxWidthSm {
+    max-width: 640px;
+  }
+
+  .contentContainer.maxWidthMd {
+    max-width: 768px;
+  }
+
+  .contentContainer.maxWidthLg {
+    max-width: 1024px;
+  }
+
+  .contentContainer.maxWidthXl {
+    max-width: 1280px;
+  }
+
+  .contentContainer.maxWidth2xl {
+    max-width: 1660px;
+  }
+
+  .contentContainer.maxWidthFull {
+    max-width: 1660px;
+  }
+}
+
+.nativeNavWrapper {
+  background-color: var(--ld-semantic-color-top-nav-fill);
+  color: var(--ld-semantic-color-text-inverse, #fff);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nativeNavWrapperWhite {
+  background-color: var(--ld-semantic-color-surface, #fff);
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+@media (min-width: 1024px) {
+  .nativeNavWrapper {
+    display: none;
+  }
+}
+
+.mobileNavWrapper {
+  display: block;
+}
+
+@media (min-width: 1024px) {
+  .mobileNavWrapper {
+    display: none;
+  }
+}

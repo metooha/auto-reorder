@@ -1,0 +1,92 @@
+---
+description: TextArea component specification
+alwaysApply: false
+---
+## Purpose
+
+Text Areas collect free-form, multi-line input from the user. They are visually taller than other text inputs to indicate that longer entries are possible and encouraged.
+
+## Rules
+
+- **MUST** use the Living Design TextArea component (`import { TextArea } from '@/components/ui/TextArea'`).
+- **MUST** provide a visible label (or an accessible name when visually hidden).
+- **MUST** support error/validation, disabled, and read-only states using documented APIs.
+- **MUST NOT** use placeholder text as a replacement for labels.
+- **MUST NOT** use TextArea for single-line input (use TextField instead).
+- **SHOULD** use helper text to provide supplemental instruction/context.
+
+## Usage
+
+```tsx
+import { TextArea } from '@/components/ui/TextArea';
+
+// Basic
+<TextArea
+  label="Description"
+  value={value}
+  onChange={(e) => setValue(e.target.value)}
+  textAreaProps={{ placeholder: 'Enter description...' }}
+/>
+
+// With error
+<TextArea label="Input" value={value} onChange={onChange} error="This field is required" />
+
+// With character counter
+<TextArea label="Bio" value={value} onChange={onChange} maxLength={200} />
+
+// AI-generated content
+<TextArea label="AI Response" value={text} onChange={onChange} isMagic />
+```
+
+### States
+
+- **Default**, **Hover**, **Focus**, **Disabled**, **Read-only**, **Error**, **Magic** (AI-filled)
+
+### Sizes
+
+- **large** (default): 128px height, 16px padding
+- **small**: 100px height, condensed padding
+
+## Migration
+
+```tsx
+// Old (legacy)
+import { Textarea } from '@/components/ui/textarea';
+<Label htmlFor="msg">Message</Label>
+<Textarea id="msg" placeholder="Type here..." />
+
+// New (LD 3.5)
+import { TextArea } from '@/components/ui/TextArea';
+<TextArea label="Message" value={value} onChange={onChange} textAreaProps={{ placeholder: 'Type here...' }} />
+```
+
+Key changes: integrated label, controlled component, built-in error/helper/counter support, LD 3.5 tokens.
+
+## Do / Don't
+
+### Do
+
+- Always provide a descriptive label.
+- Use helper text for context or instructions.
+- Show character counter for fields with length limits.
+- Use `isMagic` for AI-generated content.
+
+### Don't
+
+- Use placeholder text as a replacement for labels.
+- Use TextArea for single-line input (use TextField).
+- Override LD semantic tokens with hard-coded values.
+- Use `disabled` when you mean read-only (copyable but not editable).
+
+## Accessibility
+
+- Label must be associated to the control (`label` + `id`).
+- Errors announced via `aria-invalid` and `aria-describedby`.
+- Character count uses live region with debounced announcements.
+- Read-only fields remain focusable/selectable.
+
+## Related
+
+- [TextArea API reference](../../design-system-docs/TextArea.mdx)
+- [TextField](./TextField.md) for single-line input
+- [Select](./Select.md) for dropdown selections

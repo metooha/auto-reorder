@@ -1,0 +1,105 @@
+---
+description: Proactive Purchase History Prompt Injector
+globs:
+alwaysApply: true
+---
+
+# RULE: Proactive Purchase History Prompt Injector
+
+**Scope:** `client/pages/walmart/PurchaseHistory.tsx`
+**Purpose:** Ensure agents can deterministically and instantly inject specific order card patterns into the Purchase History page during demos without reading the file structure every time.
+
+## Injection Protocol
+
+When a user prompts with a specific keyword matching a known Order Card pattern, the agent MUST immediately apply the following three edits to `PurchaseHistory.tsx`:
+
+1.  **Ensure Component Import:**
+    Verify or add the import statement for the necessary component at the top of the file.
+2.  **Ensure Data Constant:**
+    Verify or add the required data constant (e.g., `COMBINED_CARD_AUTO`, `DELAYED_CARD`) below the product image definitions.
+3.  **Inject JSX:**
+    Find the exact string `{/* ── Prompt-driven card patterns ──────────────────────────────` and replace the existing `<div className={styles.newCard}>...</div>` block underneath it with the new component.
+
+---
+
+## Pattern Map
+
+### 1. Active Curbside Upgrade
+**Trigger keywords:** `curbside order with a countdown`, `Get it now`
+**Component:** `CurbsideOrderCard`
+**Data Constant:** `COMBINED_CARD_DELIVERY`
+**JSX to Inject:**
+```tsx
+<div className={styles.newCard} style={{ marginBottom: 16 }}>
+  <CurbsideOrderCard {...COMBINED_CARD_DELIVERY} />
+</div>
+```
+
+### 2. Auto Care Appointment
+**Trigger keywords:** `scheduled oil change`, `Check in, Reschedule`
+**Component:** `AutoCareOrderCard`
+**Data Constant:** `COMBINED_CARD_AUTO`
+**JSX to Inject:**
+```tsx
+<div className={styles.newCard} style={{ marginBottom: 16 }}>
+  <AutoCareOrderCard {...COMBINED_CARD_AUTO} />
+</div>
+```
+
+### 3. The 'One Walmart' Bundle
+**Trigger keywords:** `combined card pairing`, `merged bundle total`
+**Component:** `CombinedOrderCard`
+**Data Constants:** `COMBINED_CARD_AUTO` & `COMBINED_CARD_DELIVERY`
+**JSX to Inject:**
+```tsx
+<div className={styles.newCard} style={{ marginBottom: 16 }}>
+  <CombinedOrderCard 
+    autoCare={COMBINED_CARD_AUTO}
+    delivery={COMBINED_CARD_DELIVERY}
+    autoCareAppointmentDate={new Date(2026, 2, 7, 10)} 
+  />
+</div>
+```
+
+### 4. Delayed Delivery Warning
+**Trigger keywords:** `delayed delivery warning`, `reschedule, switch to pickup, or cancel`
+**Component:** `DelayedDeliveryCard`
+**Data Constant:** `DELAYED_CARD`
+**JSX to Inject:**
+```tsx
+<div className={styles.newCard} style={{ marginBottom: 16 }}>
+  <DelayedDeliveryCard
+    statusHeading={DELAYED_CARD.statusHeading}
+    delayEstimate={DELAYED_CARD.delayEstimate}
+    products={DELAYED_CARD.products}
+    orderTotal={DELAYED_CARD.orderTotal}
+    onReschedule={() => console.log('Reschedule delivery clicked')}
+    onPickupInstead={() => console.log('Switch to pickup clicked')}
+    onCancelOrder={() => console.log('Cancel order clicked')}
+  />
+</div>
+```
+
+### 5. Auto Care Engagement
+**Trigger keywords:** `2 ways to improve Auto Care engagement`
+**Components:** `MaintenanceHealthCard`, `AutoCareUpsellOfferCard`
+**Data Constants:** `AUTO_CARE_MAINTENANCE_CARD`, `AUTO_CARE_UPSELL_OFFER`
+**JSX to Inject:**
+```tsx
+<div className={styles.newCard} style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 16 }}>
+  <MaintenanceHealthCard {...AUTO_CARE_MAINTENANCE_CARD} onViewReport={() => {}} />
+  <AutoCareUpsellOfferCard
+    {...AUTO_CARE_UPSELL_OFFER}
+    onBook={() => {}}
+    onDismiss={() => {}}
+  />
+</div>
+```
+
+---
+
+## Critical Rules for Agents
+*   **DO NOT** use the `Agent(explorer)` tool to find where to put the card. You already know it goes immediately after the `Prompt-driven card patterns` comment block.
+*   **DO NOT** attempt to recreate the data constants from scratch if they already exist in the file.
+*   **ALWAYS** wrap the injected component in `<div className={styles.newCard} style={{ marginBottom: 16 }}>` so it triggers the green insertion glow.
+*   **ALWAYS** use the `Edit` or `MultiEdit` tool with exact string matching to replace the existing `newCard` block with the new one.

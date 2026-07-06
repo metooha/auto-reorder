@@ -1,0 +1,171 @@
+/* Chip Base Styles - LD 3.5 */
+/* Uses filter-* tokens (matching FilterChip) */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: var(--ld-semantic-font-body-small-size, 0.875rem);
+  font-weight: var(--ld-semantic-font-body-small-weight-default, 400);
+  border-radius: var(--ld-primitive-scale-border-radius-50, 4px); /* Square with subtle rounding */
+  border: var(--ld-semantic-scale-border-width-interactive, 1px) solid var(--ld-semantic-color-filter-border);
+  background-color: var(--ld-semantic-color-filter-fill);
+  color: var(--ld-semantic-color-filter-text-on-fill);
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, border-width 0.15s ease;
+  white-space: nowrap;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+/* Focus visible */
+.chip:focus-visible {
+  border-width: 2px;
+  border-color: var(--ld-semantic-color-filter-border-focused);
+  background-color: var(--ld-semantic-color-filter-fill-focused);
+  color: var(--ld-semantic-color-filter-text-on-fill-focused);
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline);
+  outline-offset: var(--ld-primitive-scale-space-50, 2px);
+}
+
+/* Hover - Unselected */
+.chip:hover:not(:disabled):not(.chip--selected) {
+  border-width: 2px;
+  background-color: var(--ld-semantic-color-filter-fill-hovered);
+  border-color: var(--ld-semantic-color-filter-border-hovered);
+  color: var(--ld-semantic-color-filter-text-on-fill-hovered);
+}
+
+/* Pressed - Unselected */
+.chip:active:not(:disabled):not(.chip--selected) {
+  border-width: 2px;
+  background-color: var(--ld-semantic-color-filter-fill-pressed);
+  border-color: var(--ld-semantic-color-filter-border-pressed);
+  color: var(--ld-semantic-color-filter-text-on-fill-pressed);
+}
+
+/* Disabled */
+.chip:disabled {
+  cursor: not-allowed;
+  background-color: var(--ld-semantic-color-filter-fill-disabled);
+  border-color: var(--ld-semantic-color-filter-border-disabled);
+  color: var(--ld-semantic-color-filter-text-on-fill-disabled);
+  border-width: var(--ld-semantic-scale-border-width-interactive, 1px);
+}
+
+/* ==================== */
+/* Size Variants         */
+/* ==================== */
+
+.chip--size-small {
+  padding: 0 var(--ld-primitive-scale-space-200, 16px);
+  font-size: var(--ld-semantic-font-body-small-size, 0.875rem);
+  line-height: var(--ld-semantic-font-body-small-line-height, 1.25rem);
+  height: 32px;
+  min-height: 32px;
+}
+
+.chip--size-medium {
+  padding: 0 var(--ld-primitive-scale-space-200, 16px);
+  font-size: var(--ld-semantic-font-body-small-size, 0.875rem);
+  line-height: var(--ld-semantic-font-body-small-line-height, 1.25rem);
+  height: 40px;
+  min-height: 40px;
+}
+
+/* ==================== */
+/* Selected State        */
+/* ==================== */
+
+.chip--selected {
+  border-width: 2px;
+  background-color: var(--ld-semantic-color-filter-fill-activated);
+  border-color: var(--ld-semantic-color-filter-border-activated);
+  color: var(--ld-semantic-color-filter-text-on-fill-activated);
+  font-size: var(--ld-semantic-font-body-small-size, 0.875rem);
+  font-weight: var(--ld-semantic-font-body-small-weight-default, 400);
+}
+
+.chip--selected:hover:not(:disabled) {
+  border-width: 2px;
+  background-color: var(--ld-semantic-color-filter-fill-activated-hovered);
+  border-color: var(--ld-semantic-color-filter-border-activated-hovered);
+  color: var(--ld-semantic-color-filter-text-on-fill-activated-hovered);
+}
+
+.chip--selected:focus-visible {
+  border-width: 2px;
+  background-color: var(--ld-semantic-color-filter-fill-activated-focused);
+  border-color: var(--ld-semantic-color-filter-border-activated-focused);
+  color: var(--ld-semantic-color-filter-text-on-fill-activated-focused);
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline);
+  outline-offset: var(--ld-primitive-scale-space-50, 2px);
+}
+
+.chip--selected:active:not(:disabled) {
+  border-width: 2px;
+  background-color: var(--ld-semantic-color-filter-fill-activated-pressed);
+  border-color: var(--ld-semantic-color-filter-border-activated-pressed);
+  color: var(--ld-semantic-color-filter-text-on-fill-activated-pressed);
+}
+
+.chip--selected:disabled {
+  background-color: var(--ld-semantic-color-filter-fill-disabled);
+  border-color: var(--ld-semantic-color-filter-border-disabled);
+  border-width: 2px;
+  color: var(--ld-semantic-color-filter-text-on-fill-disabled);
+}
+
+/* ==================== */
+/* Variant: primary      */
+/* ==================== */
+
+.chip--variant-primary.chip--selected {
+  background-color: var(--ld-semantic-color-filter-fill-activated);
+  border-color: var(--ld-semantic-color-filter-border-activated);
+  border-width: 2px;
+  color: var(--ld-semantic-color-filter-text-on-fill-activated);
+  font-weight: var(--ld-semantic-font-body-small-weight-alt, 700);
+}
+
+.chip--variant-primary.chip--selected:hover:not(:disabled) {
+  background-color: var(--ld-semantic-color-filter-fill-activated-hovered);
+  border-color: var(--ld-semantic-color-filter-border-activated-hovered);
+  color: var(--ld-semantic-color-filter-text-on-fill-activated-hovered);
+}
+
+.chip--variant-primary.chip--selected:active:not(:disabled) {
+  background-color: var(--ld-semantic-color-filter-fill-activated-pressed);
+  border-color: var(--ld-semantic-color-filter-border-activated-pressed);
+  color: var(--ld-semantic-color-filter-text-on-fill-activated-pressed);
+}
+
+/* ==================== */
+/* Icon Containers       */
+/* ==================== */
+
+.chip__iconLeading,
+.chip__iconTrailing {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.chip__iconLeading svg,
+.chip__iconTrailing svg {
+  width: var(--ld-semantic-scale-icon-small, 1rem);
+  height: var(--ld-semantic-scale-icon-small, 1rem);
+}
+
+/* Label */
+.chip__label {
+  display: inline-flex;
+  align-items: center;
+}

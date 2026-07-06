@@ -1,0 +1,136 @@
+.content {
+  padding: 0 48px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+
+/* ─── Section ─── */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sectionTitle {
+  font-size: 22px;
+  font-weight: 700;
+  font-family: var(--ld-semantic-font-family-sans);
+  color: var(--ld-semantic-color-text-primary, #2e2f32);
+  margin: 0;
+}
+
+.sectionDesc {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ld-semantic-color-text-secondary, #74767c);
+  font-family: var(--ld-semantic-font-family-sans);
+  margin: 0;
+  max-width: 680px;
+}
+
+/* ─── Dropdown grid ─── */
+.dropdownGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.dropdownCard {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  background: var(--ld-semantic-color-surface, #ffffff);
+  border: 1px solid var(--ld-semantic-color-border-subtle, #e6e6e8);
+  border-radius: 12px;
+}
+
+.variantDesc {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ld-semantic-color-text-secondary, #74767c);
+  font-family: var(--ld-semantic-font-family-sans);
+  margin: 0;
+}
+
+/* ─── Bottom sheet variant grid ─── */
+.variantGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.variantCard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+  background: var(--ld-semantic-color-surface, #ffffff);
+  border: 1px solid var(--ld-semantic-color-border-subtle, #e6e6e8);
+  border-radius: 12px;
+}
+
+.variantTitle {
+  font-size: 14px;
+  font-weight: 700;
+  font-family: var(--ld-semantic-font-family-sans);
+  color: var(--ld-semantic-color-text-secondary, #74767c);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+/* ─── Phone input states grid ─── */
+.statesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+.stateItem {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stateLabel {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--ld-semantic-color-text-secondary, #74767c);
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+/* ─── Country select group grid ─── */
+.groupGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(300px, 480px));
+  gap: 32px;
+}
+
+.groupCard {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  background: var(--ld-semantic-color-surface, #ffffff);
+  border: 1px solid var(--ld-semantic-color-border-subtle, #e6e6e8);
+  border-radius: 12px;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .content {
+    padding: 0 16px 32px;
+  }
+
+  .dropdownGrid,
+  .variantGrid,
+  .statesGrid,
+  .groupGrid {
+    grid-template-columns: 1fr;
+  }
+}

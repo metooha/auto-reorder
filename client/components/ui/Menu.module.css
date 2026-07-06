@@ -1,0 +1,51 @@
+/* Menu Container - LD 3.5 compliant */
+.menu {
+  background-color: var(--ld-semantic-color-surface-overlay);
+  border-radius: var(--ld-semantic-border-radius-large);
+  box-shadow: var(--ld-semantic-elevation-200);
+  min-width: 200px;
+  max-height: 400px;
+  z-index: var(--ld-semantic-z-index-dropdown);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.menu:focus {
+  outline: none;
+}
+
+/* Menu Items Container */
+.menu__items {
+  padding: 0;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Menu Footer */
+.menu__footer {
+  padding: var(--ld-semantic-spacing-200);
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--ld-semantic-spacing-100);
+  flex-shrink: 0;
+}
+
+/* Positioning variants */
+.menu--position-bottomLeft {
+  /* Handled by positioning logic in parent */
+}
+
+.menu--position-bottomRight {
+  /* Handled by positioning logic in parent */
+}
+
+.menu--position-topLeft {
+  /* Handled by positioning logic in parent */
+}
+
+.menu--position-topRight {
+  /* Handled by positioning logic in parent */
+}

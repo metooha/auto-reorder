@@ -1,0 +1,170 @@
+---
+description: Component Library page creation rules
+alwaysApply: false
+---
+description: Component Library Page
+globs:
+alwaysApply: false
+---
+
+## Purpose
+
+Define the mandatory structure and registration process for component library documentation pages. Every component — LD primitive or WCP product-level — MUST have a page (or be added to an existing grouped page) in the Component Library.
+
+---
+
+## Page Structure Requirements
+
+Every component library page MUST include:
+
+### 1. ComponentPageLayout Wrapper
+
+```tsx
+import { ComponentPageLayout } from '@/components/ui/ComponentPageLayout';
+
+export default function MyComponentPage() {
+  return (
+    <ComponentPageLayout
+      section="WCP Components"  // or "LD Components", "Patterns"
+      title="My Component"
+      description="One-line description of the component and its use cases."
+    >
+      {/* page content */}
+    </ComponentPageLayout>
+  );
+}
+```
+
+Note: Pages use `export default` (unlike components which use named exports).
+
+### 2. Interactive Demo
+
+A live, stateful demo where users can interact with the component. Use `useState` to make props controllable.
+
+### 3. All Variants and States
+
+Show every variant, size, and state the component supports. Each should be in a labeled card with a brief note.
+
+### 4. Usage Notes
+
+A bullet list covering:
+- Available props and their values
+- Accepted content types or constraints
+- Responsive behavior
+- Accessibility considerations
+
+---
+
+## Grouping Policy — When to Share a Page
+
+Similar components MUST be grouped on a single page rather than getting separate pages:
+
+| Component type | Group on page |
+|---------------|---------------|
+| Item tile variants (WCPItemTile, FlashDealsItemTile, PromotionalItemTile) | **Item Tile** |
+| Carousel components (FlashDealsCarousel, NewArrivalsCarousel, JumpRightBackIn) | **Carousels & Product Grids** |
+| Order/status cards (ActiveCurbsideCard, OrderStatusCard, OrderStatusBanner) | **Order & Status Cards** |
+| Banner variants (BasicBanner, SkylineBanner, PromoBanner) | **Promo Banners** |
+| Dropdown components (AccountDropdown, ReorderDropdown, DepartmentsDropdown) | **Dropdowns** |
+
+Only create a new standalone page when the component represents a genuinely new pattern with no existing group.
+
+---
+
+## Registration Checklist (ALL Required)
+
+After creating the page file, you MUST complete all of these steps:
+
+### Step 1 — Lazy import in App.tsx
+
+```tsx
+const MyComponentPage = React.lazy(() => import('./pages/component-library/MyComponent'));
+```
+
+### Step 2 — Route in App.tsx
+
+```tsx
+<Route path="my-component" element={<MyComponentPage />} />
+```
+
+### Step 3 — Sidebar entry in ComponentLibraryLayout.tsx
+
+Add to the correct section in `navigationSections`:
+
+```ts
+{ id: 'my-component', nameKey: 'componentLibrary.navMyComponent', path: '/component-library/my-component' },
+```
+
+| Component type | Sidebar section |
+|---------------|----------------|
+| WCP product components | `componentLibrary.wcpComponents` |
+| WCP page/layout patterns | `componentLibrary.wcpPatterns` |
+| LD 3.5 primitives | `componentLibrary.components` |
+| Shared/Radix components | `componentLibrary.sharedSection` |
+
+**Without this step, the page is unreachable from the sidebar.**
+
+### Step 4 — Overview.tsx card entry
+
+```ts
+{
+  titleKey: 'componentLibrary.navMyComponent',
+  descKey: 'componentLibrary.descMyComponent',
+  path: '/component-library/my-component',
+  icon: 'Note',
+  section: 'wcp'  // or 'ld'
+},
+```
+
+### Step 5 — i18n keys in ALL THREE locale files
+
+Add to `client/locales/en/common.json`, `es/common.json`, and `fr/common.json`:
+
+```json
+"navMyComponent": "My Component",
+"descMyComponent": "Short description for the Overview card"
+```
+
+---
+
+## Page CSS Module Pattern
+
+Use a dedicated CSS module for the page. Common classes:
+
+```css
+.page { display: flex; flex-direction: column; gap: 32px; }
+.section { display: flex; flex-direction: column; gap: 16px; }
+.sectionTitle {
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  margin: 0;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+@media (max-width: 768px) {
+  .grid { grid-template-columns: 1fr; }
+}
+```
+
+---
+
+## Common Mistakes
+
+| Mistake | Fix |
+|---------|-----|
+| Missing sidebar entry | Page exists but unreachable — always add to `ComponentLibraryLayout.tsx` |
+| Missing i18n keys | Sidebar shows raw key string — add to all 3 locale files |
+| No interactive demo | Page is static documentation only — add `useState` controls |
+| Hardcoded styles in page | Use CSS modules with semantic tokens, same as components |
+| Duplicate page for variant | Add to existing grouped page instead |
+
+---
+
+## Enforcement Level
+
+**HIGH** — Every component must be documented. A component without a library page is considered incomplete.

@@ -1,0 +1,44 @@
+---
+title: "[Name]"
+scope: "component | rule | design-system | migration | implementation"
+status: "stable | draft | deprecated"
+owner: "design-system"
+last_updated: "YYYY-MM-DD"
+---
+
+## Purpose
+
+[1-2 sentences: what this document covers and why it exists.]
+
+## Rules
+
+- **MUST** ...
+- **MUST NOT** ...
+- **SHOULD** ...
+
+## Usage
+
+[When and how to use. Include a brief code example if helpful.]
+
+```tsx
+// Example usage
+```
+
+## Do / Don't
+
+### Do
+
+- ...
+
+### Don't
+
+- ...
+
+## Accessibility
+
+[Requirements and considerations, if applicable.]
+
+## Related
+
+- [Link to related design-system-docs/ file](../design-system-docs/ComponentName.mdx)
+- [Link to other relevant guidelines](./path/to/file.md)

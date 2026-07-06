@@ -1,0 +1,132 @@
+.carousel {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .carousel {
+    height: 260px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .carousel {
+    height: 300px;
+  }
+}
+
+/* Background image fills the entire banner */
+.bgImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* Text overlay — top-left */
+.textPanel {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 45%;
+}
+
+@media (min-width: 768px) {
+  .textPanel {
+    top: 20px;
+    left: 24px;
+    gap: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .textPanel {
+    top: 24px;
+    left: 24px;
+    gap: 24px;
+  }
+}
+
+.eyebrow {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 12px;
+  font-weight: 800;
+  color: #001E60;
+  line-height: 1.08;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .eyebrow {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .eyebrow {
+    font-size: 24px;
+  }
+}
+
+.headline {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 22px;
+  font-weight: 800;
+  color: #001E60;
+  line-height: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .headline {
+    font-size: 40px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .headline {
+    font-size: 64px;
+  }
+}
+
+/* Controls — top-right */
+.controls {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (min-width: 768px) {
+  .controls {
+    top: 24px;
+    right: 24px;
+  }
+}
+
+/* White pill background for each control button */
+.controlBtn {
+  background: #ffffff !important;
+  border-radius: 1000px !important;
+  width: 24px !important;
+  height: 24px !important;
+  flex-shrink: 0;
+}

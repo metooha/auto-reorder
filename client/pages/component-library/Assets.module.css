@@ -1,0 +1,155 @@
+/* Assets page — illustrations, product images, icons */
+
+.searchBar {
+  position: relative;
+  max-width: 480px;
+  margin-bottom: 24px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--ld-semantic-color-text-subtle, #74767c);
+}
+
+.searchInput {
+  width: 100%;
+  padding: 8px 12px 8px 40px;
+  font-size: 14px;
+  font-family: var(--ld-semantic-font-family-sans);
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  border-radius: 8px;
+  background: var(--ld-semantic-color-fill-surface-primary, #fff);
+  color: var(--ld-semantic-color-text, #2e2f32);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.searchInput:focus {
+  border-color: var(--ld-semantic-color-action-fill-primary, #0071dc);
+}
+
+.resultCount {
+  font-size: 13px;
+  color: var(--ld-semantic-color-text-subtle, #74767c);
+  margin-bottom: 16px;
+}
+
+/* Illustration / image grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.gridLarge {
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+}
+
+.assetCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 8px 8px;
+  border-radius: 8px;
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  background: var(--ld-semantic-color-fill-surface-primary, #fff);
+  cursor: pointer;
+  transition: box-shadow 0.15s, border-color 0.15s;
+  position: relative;
+}
+
+.assetCard:hover {
+  box-shadow: var(--ld-semantic-elevation-200);
+  border-color: var(--ld-semantic-color-action-fill-primary, #0071dc);
+}
+
+.assetImage {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  display: block;
+}
+
+.assetImageLarge {
+  width: 100%;
+  height: 100px;
+  object-fit: contain;
+  display: block;
+  border-radius: 4px;
+}
+
+.assetName {
+  font-size: 11px;
+  font-family: var(--ld-semantic-font-family-sans);
+  color: var(--ld-semantic-color-text-subtle, #74767c);
+  text-align: center;
+  word-break: break-all;
+  line-height: 1.3;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.copiedBadge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-action-fill-primary, #0071dc);
+  background: var(--ld-semantic-color-fill-surface-primary, #fff);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--ld-semantic-color-text-subtle, #74767c);
+  font-size: 14px;
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+.linkCard {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  border-radius: 8px;
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  background: var(--ld-semantic-color-fill-surface-primary, #fff);
+  text-decoration: none;
+  transition: box-shadow 0.15s;
+}
+
+.linkCard:hover {
+  box-shadow: var(--ld-semantic-elevation-200);
+}
+
+.linkCardText {
+  flex: 1;
+}
+
+.linkCardTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  font-family: var(--ld-semantic-font-family-sans);
+  margin-bottom: 4px;
+}
+
+.linkCardDesc {
+  font-size: 13px;
+  color: var(--ld-semantic-color-text-subtle, #74767c);
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+.tabContent {
+  padding-top: 24px;
+}

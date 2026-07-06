@@ -1,0 +1,163 @@
+# RULE: Always Use LD 3.5 LinkButton and Spot Icon
+
+## Overview
+This rule enforces the use of the Living Design 3.5 `LinkButton` component and the standardized Spot Icon pattern. Custom inline link-styled buttons and square icon placeholders are prohibited.
+
+---
+
+## Rule 1: Always Use LD 3.5 LinkButton
+
+**NEVER create custom link-styled buttons with inline styles. ALWAYS use the `LinkButton` component from `@/components/ui/LinkButton`.**
+
+The LD 3.5 LinkButton renders with **regular weight** and **black text** (not bold blue). Do not override its styles.
+
+### ❌ WRONG — Custom inline link button:
+```tsx
+// NEVER do this
+<button
+  style={{
+    background: "none",
+    border: "none",
+    color: "#0053E2",        // ❌ Hard-coded blue
+    fontSize: "14px",
+    fontWeight: 700,          // ❌ Bold weight
+    textDecoration: "underline",
+    cursor: "pointer",
+    padding: 0,
+  }}
+>
+  Button label
+</button>
+```
+
+### ❌ WRONG — Styled anchor pretending to be a button:
+```tsx
+// NEVER do this
+<a
+  href="#"
+  onClick={handleClick}
+  style={{ color: "blue", textDecoration: "underline", fontWeight: "bold" }}
+>
+  View details
+</a>
+```
+
+### ✅ CORRECT — LD 3.5 LinkButton:
+```tsx
+import { LinkButton } from '@/components/ui/LinkButton';
+
+// Default (black, regular weight, underlined)
+<LinkButton>Button label</LinkButton>
+
+// With size
+<LinkButton size="medium">View details</LinkButton>
+
+// White variant (for dark backgrounds)
+<LinkButton color="white">Button label</LinkButton>
+
+// With icons
+import { ChevronRight } from '@/components/icons';
+<LinkButton trailing={<ChevronRight />}>Next step</LinkButton>
+```
+
+### LinkButton API Quick Reference
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `ReactNode` | — | Button text content (required) |
+| `color` | `'default' \| 'subtle' \| 'white'` | `'default'` | Color variant |
+| `size` | `'small' \| 'medium' \| 'large'` | `'small'` | Text size |
+| `leading` | `ReactNode` | — | Icon before text |
+| `trailing` | `ReactNode` | — | Icon after text |
+| `isFullWidth` | `boolean` | `false` | Stretch to full width |
+| `disabled` | `boolean` | `false` | Disabled state (button mode) |
+| `href` | `string` | — | Renders as `<a>` when provided |
+
+### Key Rules
+- **MUST NOT** override the color of a LinkButton with custom CSS or inline styles.
+- **MUST NOT** change the font-weight of a LinkButton.
+- **MUST** use `color="white"` for LinkButtons on dark backgrounds (never inline `color: white`).
+- **MUST** use `children` prop (not a `label` prop) for the button text.
+
+---
+
+## Rule 2: Always Use Spot Icon Pattern
+
+**NEVER use square placeholder containers for action/todo item icons. ALWAYS use the round Spot Icon pattern with brand-subtle tokens.**
+
+### ❌ WRONG — Square placeholder icon:
+```tsx
+// NEVER do this
+<div
+  style={{
+    width: 48,
+    height: 48,
+    borderRadius: "4px",                    // ❌ Square
+    backgroundColor: "#F2F3F3",             // ❌ Neutral gray
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  }}
+>
+  <Placeholder style={{ color: "#74767C" }} />  {/* ❌ Gray icon */}
+</div>
+```
+
+### ✅ CORRECT — LD 3.5 Spot Icon:
+```tsx
+import { ListBox } from '@/components/icons';
+
+<div
+  style={{
+    display: 'flex',
+    width: 48,
+    height: 48,
+    padding: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: '50%',                                                    // ✅ Round
+    background: 'var(--ld-semantic-color-fill-brand-subtle, #E9F1FE)',      // ✅ Brand subtle
+    flexShrink: 0,
+  }}
+>
+  <ListBox
+    width={24}
+    height={24}
+    style={{ color: 'var(--ld-semantic-color-text-onfill-brand-subtle, #002E99)' }}  // ✅ Brand text
+  />
+</div>
+```
+
+### Spot Icon Spec
+
+| Property | Value | Token |
+|----------|-------|-------|
+| Shape | Circle | `borderRadius: '50%'` |
+| Size | 48×48px | `width: 48, height: 48` |
+| Padding | 12px | `padding: 12` |
+| Background | Brand subtle blue | `var(--ld-semantic-color-fill-brand-subtle, #E9F1FE)` |
+| Icon size | 24×24px | `width: 24, height: 24` |
+| Icon color | Brand text on subtle | `var(--ld-semantic-color-text-onfill-brand-subtle, #002E99)` |
+
+### Reference Implementation
+See `client/features/catalog/CatalogTodoList.tsx` — the `SpotIcon` component.
+
+---
+
+## Detection — Search for Violations
+
+```bash
+# Find custom link-styled buttons (blue color, underline, no border)
+grep -rn "textDecoration.*underline" client/pages/ client/features/
+grep -rn "color.*#0053E2\|color.*action-text-primary" client/pages/ client/features/
+
+# Find square icon placeholders
+grep -rn "borderRadius.*4px.*backgroundColor\|borderRadius.*small" client/pages/ client/features/
+
+# Verify correct LinkButton imports
+grep -rn "from.*LinkButton" client/pages/ client/features/
+```
+
+---
+
+## Enforcement Level: CRITICAL — NO EXCEPTIONS

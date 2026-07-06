@@ -1,0 +1,114 @@
+/* FlashDealsCarousel — horizontal scrolling Flash Deals section */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Header row: title + "View all" */
+.headerRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.heading {
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  margin: 0;
+  line-height: 1.2;
+}
+
+@media (min-width: 768px) {
+  .heading {
+    font-size: 24px;
+  }
+}
+
+.viewAll {
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ld-semantic-color-link-text);
+  text-decoration: underline;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Subtitle */
+.subtitle {
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ld-semantic-color-text-subtle, #515357);
+  margin: 0;
+  line-height: 20px;
+}
+
+/* Scroll row container */
+.scrollWrapper {
+  position: relative;
+}
+
+.scrollRow {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  overflow-y: visible;
+  scroll-snap-type: x proximity;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 40px 0;
+  margin: -40px 0;
+}
+
+.scrollRow::-webkit-scrollbar {
+  display: none;
+}
+
+/* Right chevron button */
+.chevronButton {
+  position: absolute;
+  top: 50%;
+  right: -4px;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--ld-semantic-color-surface, #fff);
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  box-shadow: var(--ld-semantic-elevation-100, 0 1px 4px rgba(0, 0, 0, 0.1));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 5;
+  transition: background 150ms ease;
+}
+
+.chevronButton:hover {
+  background: var(--ld-semantic-color-surface-hovered, #f0f0f0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chevronButton {
+    transition: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .chevronButton {
+    display: none;
+  }
+}
+
+.chevronIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--ld-semantic-color-text, #2e2f32);
+}

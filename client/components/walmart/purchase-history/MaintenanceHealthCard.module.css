@@ -1,0 +1,334 @@
+.card {
+  border-radius: var(--ld-primitive-scale-borderradius-150, 10px);
+  overflow: visible;
+  font-family: var(--ld-semantic-font-family-sans);
+  background: var(--ld-semantic-color-surface);
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+}
+
+/* ── Header strip ──────────────────────────────────────── */
+.header {
+  background: var(--ld-semantic-color-fill-brand-bold, #001E5A);
+  padding: var(--ld-primitive-scale-space-400, 16px) var(--ld-primitive-scale-space-500, 20px);
+  display: flex;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-350, 14px);
+  position: relative;
+  overflow: visible;
+  min-height: 100px;
+  border-radius: var(--ld-primitive-scale-borderradius-150, 10px) var(--ld-primitive-scale-borderradius-150, 10px) 0 0;
+}
+
+/* When an illustration is present the solid bg acts as a fallback */
+.headerWithIllustration {
+  padding: var(--ld-primitive-scale-space-500, 20px) var(--ld-primitive-scale-space-500, 20px);
+}
+
+/* Illustration image — fills right portion of header, clipped to header bounds */
+.headerIllustration {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 60%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 30%, rgba(0,0,0,1) 70%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 30%, rgba(0,0,0,1) 70%);
+  pointer-events: none;
+  border-radius: 0 var(--ld-primitive-scale-borderradius-150, 10px) 0 0;
+}
+
+/* Wraps text + score — sits above illustration */
+.headerContent {
+  display: flex;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-350, 14px);
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.headerText {
+  flex: 1;
+  min-width: 0;
+}
+
+.headerEyebrow {
+  font-family: var(--ld-semantic-font-caption-family);
+  font-size: var(--ld-semantic-font-caption-size, 0.75rem);
+  font-weight: var(--ld-semantic-font-caption-weight-alt, 700);
+  line-height: var(--ld-semantic-font-caption-line-height, 1rem);
+  color: var(--ld-semantic-color-action-text-on-fill-primary, #ffffff);
+  opacity: 0.7;
+  margin: 0 0 var(--ld-primitive-scale-space-050, 2px);
+}
+
+.headerVehicle {
+  font-family: var(--ld-semantic-font-heading-small-family);
+  font-size: var(--ld-semantic-font-heading-small-size-b-s, 1.125rem);
+  font-weight: var(--ld-semantic-font-heading-small-weight-default, 700);
+  line-height: var(--ld-semantic-font-heading-small-line-height-b-s, 1.5rem);
+  color: var(--ld-semantic-color-action-text-on-fill-primary, #ffffff);
+  margin: 0 0 var(--ld-primitive-scale-space-025, 1px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.headerMileage {
+  font-family: var(--ld-semantic-font-caption-family);
+  font-size: var(--ld-semantic-font-caption-size, 0.75rem);
+  font-weight: var(--ld-semantic-font-caption-weight-default, 400);
+  line-height: var(--ld-semantic-font-caption-line-height, 1rem);
+  color: var(--ld-semantic-color-action-text-on-fill-primary, #ffffff);
+  opacity: 0.7;
+  margin: 0;
+}
+
+.healthScoreWrapper {
+  position: relative;
+  flex-shrink: 0;
+  cursor: help;
+}
+
+.healthScoreWrapper:hover .scoreTooltip,
+.healthScoreWrapper:focus-within .scoreTooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scoreTooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  right: 0;
+  background: var(--ld-semantic-color-fill-overlay, rgba(0, 0, 0, 0.85));
+  color: #ffffff;
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: var(--ld-semantic-font-caption-size, 0.75rem);
+  line-height: var(--ld-semantic-font-caption-line-height, 1rem);
+  padding: var(--ld-primitive-scale-space-200, 8px) var(--ld-primitive-scale-space-300, 12px);
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-050, 2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scoreTooltip {
+    transition: opacity 0.15s ease;
+    transform: none;
+  }
+}
+
+.healthScore {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(0, 0, 20, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  padding: var(--ld-primitive-scale-space-150, 6px) var(--ld-primitive-scale-space-200, 8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.scoreRing {
+  width: 52px;
+  height: 52px;
+}
+
+.scoreLabel {
+  font-family: var(--ld-semantic-font-caption-family);
+  font-size: var(--ld-semantic-font-caption-size, 0.75rem);
+  font-weight: var(--ld-semantic-font-caption-weight-default, 400);
+  line-height: var(--ld-semantic-font-caption-line-height, 1rem);
+  color: var(--ld-semantic-color-action-text-on-fill-primary, #ffffff);
+  opacity: 0.65;
+  margin-top: var(--ld-primitive-scale-space-075, 3px);
+}
+
+/* ── Maintenance grid ──────────────────────────────────── */
+.section {
+  padding: 0 var(--ld-primitive-scale-space-500, 20px) 0;
+}
+
+.sectionTitle {
+  font-family: var(--ld-semantic-font-caption-family);
+  font-size: var(--ld-semantic-font-caption-size, 0.75rem);
+  font-weight: var(--ld-semantic-font-caption-weight-alt, 700);
+  line-height: var(--ld-semantic-font-caption-line-height, 1rem);
+  color: var(--ld-semantic-color-text-subtle);
+  margin: 0 0 var(--ld-primitive-scale-space-300, 12px);
+}
+
+.healthGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--ld-primitive-scale-space-250, 10px);
+  padding-bottom: var(--ld-primitive-scale-space-400, 16px);
+}
+
+.healthItem {
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  padding: var(--ld-primitive-scale-space-300, 12px) var(--ld-primitive-scale-space-250, 10px) var(--ld-primitive-scale-space-250, 10px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ld-primitive-scale-space-150, 6px);
+  position: relative;
+  overflow: hidden;
+}
+
+.healthItem--overdue {
+  background: var(--ld-semantic-color-fill-error-subtle, #FFEDEC);
+  border: 1px solid var(--ld-semantic-color-border-negative, #F7ADAB);
+}
+
+.healthItem--due {
+  background: var(--ld-semantic-color-fill-warning-subtle, #FFF5E0);
+  border: 1px solid var(--ld-semantic-color-border-warning, #F9C23C);
+}
+
+.healthItem--good {
+  background: var(--ld-semantic-color-fill-success-subtle, #EAF6ED);
+  border: 1px solid var(--ld-semantic-color-border-positive, #5CB85C);
+}
+
+
+.itemName {
+  font-family: var(--ld-semantic-font-body-small-family);
+  font-size: var(--ld-semantic-font-body-small-size, 0.875rem);
+  font-weight: var(--ld-semantic-font-body-small-weight-alt, 700);
+  line-height: var(--ld-semantic-font-body-small-line-height, 1.25rem);
+  color: var(--ld-semantic-color-text-primary);
+  margin: 0;
+}
+
+.itemDetail {
+  font-family: var(--ld-semantic-font-caption-family);
+  font-size: var(--ld-semantic-font-caption-size, 0.75rem);
+  font-weight: var(--ld-semantic-font-caption-weight-default, 400);
+  line-height: var(--ld-semantic-font-caption-line-height, 1rem);
+  color: var(--ld-semantic-color-text-subtle);
+  margin: 0;
+}
+
+.itemPrice {
+  font-family: var(--ld-semantic-font-body-small-family);
+  font-size: var(--ld-semantic-font-body-small-size, 0.875rem);
+  font-weight: var(--ld-semantic-font-body-small-weight-alt, 700);
+  line-height: var(--ld-semantic-font-body-small-line-height, 1.25rem);
+  color: var(--ld-semantic-color-text-primary);
+  margin: 0;
+}
+
+/* ── Alert wrapper (valueStatement + bundleSavings) ──────── */
+.alertWrapper {
+  margin: var(--ld-primitive-scale-space-400, 16px) var(--ld-primitive-scale-space-500, 20px) var(--ld-primitive-scale-space-300, 12px);
+}
+
+/* ── Footer ────────────────────────────────────────────── */
+.footer {
+  border-top: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  padding: var(--ld-primitive-scale-space-300, 12px) var(--ld-primitive-scale-space-500, 20px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--ld-semantic-color-background-subtle, #F6F6F7);
+  gap: var(--ld-primitive-scale-space-250, 10px);
+}
+
+.footerLeft {
+  font-family: var(--ld-semantic-font-caption-family);
+  font-size: var(--ld-semantic-font-caption-size, 0.75rem);
+  font-weight: var(--ld-semantic-font-caption-weight-default, 400);
+  line-height: var(--ld-semantic-font-caption-line-height, 1rem);
+  color: var(--ld-semantic-color-text-subtle);
+}
+
+@media (max-width: 600px) {
+  /* Compact list: one item per row, horizontal layout */
+  .healthGrid {
+    grid-template-columns: 1fr;
+    gap: var(--ld-primitive-scale-space-150, 6px);
+  }
+
+  .healthItem {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto auto;
+    align-items: center;
+    column-gap: var(--ld-primitive-scale-space-200, 8px);
+    row-gap: var(--ld-primitive-scale-space-050, 2px);
+    padding: var(--ld-primitive-scale-space-250, 10px) var(--ld-primitive-scale-space-300, 12px);
+    border-radius: var(--ld-primitive-scale-borderradius-075, 6px);
+  }
+
+  /* Tag: row 1 col 1 */
+  .healthItem > span:first-child {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: center;
+  }
+
+  /* Name: row 1 col 2 */
+  .itemName {
+    grid-column: 2;
+    grid-row: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Price: row 1 col 3 */
+  .itemPrice {
+    grid-column: 3;
+    grid-row: 1;
+    white-space: nowrap;
+    text-align: right;
+  }
+
+  /* Detail: row 2 col 2–3, indented under name */
+  .itemDetail {
+    grid-column: 2 / 4;
+    grid-row: 2;
+    white-space: nowrap;
+  }
+
+  .header {
+    min-height: 72px;
+    padding: var(--ld-primitive-scale-space-300, 12px) var(--ld-primitive-scale-space-400, 16px);
+  }
+
+  .scoreRing {
+    width: 40px;
+    height: 40px;
+  }
+
+  .section {
+    padding: var(--ld-primitive-scale-space-300, 12px) var(--ld-primitive-scale-space-400, 16px) 0;
+  }
+
+  .alertWrapper {
+    margin: 0 var(--ld-primitive-scale-space-400, 16px) var(--ld-primitive-scale-space-250, 10px);
+  }
+
+  .footer {
+    padding: var(--ld-primitive-scale-space-250, 10px) var(--ld-primitive-scale-space-400, 16px);
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scoreRing circle {
+    transition: none;
+  }
+}

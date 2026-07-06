@@ -1,0 +1,255 @@
+/* ============================================================
+   SmartDeliverySheet — gradient blue bottom sheet
+   ============================================================ */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 750;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  animation: fadeIn 200ms ease forwards;
+}
+
+.overlay.exiting {
+  animation: fadeOut 200ms ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+.sheet {
+  width: 100%;
+  max-width: 480px;
+  border-top-left-radius: var(--ld-primitive-scale-borderradius-xlarge, 24px);
+  border-top-right-radius: var(--ld-primitive-scale-borderradius-xlarge, 24px);
+  background:
+    linear-gradient(0deg, rgba(255, 255, 255, 0.00) 47.6%, rgba(255, 255, 255, 0.80) 97.95%),
+    linear-gradient(0deg, rgba(240, 245, 255, 0.80) -42.23%, rgba(226, 235, 252, 0.80) 100%),
+    linear-gradient(0deg, #C9DCFD 0%, #C9DCFD 100%);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--ld-primitive-scale-space-200, 16px);
+  animation: slideIn 280ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.exiting .sheet {
+  animation: slideOut 220ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+@keyframes slideIn {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+@keyframes slideOut {
+  from { transform: translateY(0); }
+  to   { transform: translateY(100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .overlay.exiting,
+  .sheet,
+  .exiting .sheet { animation: none; }
+}
+
+/* ── Dark arch SVG ── */
+.sunriseWrap {
+  position: relative;
+  width: 100%;
+  flex-shrink: 0;
+  margin-bottom: -1px; /* avoid hairline gap */
+}
+
+.sunriseWrap svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ── Close button row ── */
+.closeRow {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 var(--ld-primitive-scale-space-200, 16px);
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Scrollable content area ── */
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-200, 16px);
+  padding: var(--ld-primitive-scale-space-200, 16px) var(--ld-primitive-scale-space-200, 16px) var(--ld-primitive-scale-space-300, 24px);
+  overflow-y: auto;
+}
+
+/* ── Heading ── */
+.heading {
+  font-family: var(--ld-semantic-font-heading-medium-font-family, inherit);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--ld-semantic-color-text-default, #2e2f32);
+  text-align: center;
+  margin: 0;
+}
+
+/* ── Product images row ── */
+.imagesRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  height: 124px;
+  flex-shrink: 0;
+}
+
+.imgLeft {
+  width: 106px;
+  height: 106px;
+  object-fit: contain;
+  position: absolute;
+  left: 50%;
+  transform: translateX(calc(-50% - 82px));
+  z-index: 1;
+}
+
+.imgCenter {
+  width: 124px;
+  height: 124px;
+  object-fit: contain;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.imgInner {
+  width: 81px;
+  height: 81px;
+  object-fit: contain;
+  position: absolute;
+  left: 50%;
+  transform: translateX(calc(-50% + 10px));
+  z-index: 3;
+}
+
+.imgRight {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+  border-radius: var(--ld-primitive-scale-borderradius-medium, 15px);
+  position: absolute;
+  left: 50%;
+  transform: translateX(calc(-50% + 90px));
+  z-index: 1;
+}
+
+/* ── Feature card ── */
+.featureCard {
+  width: 100%;
+  border-radius: var(--ld-primitive-scale-borderradius-large, 16px);
+  overflow: hidden;
+}
+
+.featureTop {
+  background: rgba(255, 255, 255, 0.72);
+  padding: var(--ld-primitive-scale-space-150, 12px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-200, 16px);
+  border-radius: var(--ld-primitive-scale-borderradius-large, 16px) var(--ld-primitive-scale-borderradius-large, 16px) 0 0;
+}
+
+.featureRow {
+  display: flex;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-150, 12px);
+}
+
+.featureIcon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--ld-semantic-color-fill-activated, #0071dc1a);
+}
+
+.featureText {
+  font-size: var(--ld-semantic-font-body-small-font-size, 14px);
+  color: var(--ld-semantic-color-text-default, #2e2f32);
+  line-height: 1.43;
+}
+
+.featureBottom {
+  background: #C9DCFD;
+  padding: var(--ld-primitive-scale-space-150, 12px) var(--ld-primitive-scale-space-200, 16px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+}
+
+.featureBottomText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-50, 4px);
+}
+
+.featureBottomTitle {
+  font-size: var(--ld-semantic-font-body-small-font-size, 14px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text-default, #2e2f32);
+  line-height: 1.43;
+}
+
+.featureBottomSub {
+  font-size: var(--ld-semantic-font-caption-font-size, 12px);
+  color: var(--ld-semantic-color-text-default, #2e2f32);
+  line-height: 1.33;
+}
+
+.featureBottomChevron {
+  flex-shrink: 0;
+  color: var(--ld-semantic-color-text-default, #2e2f32);
+  margin-top: var(--ld-primitive-scale-space-50, 4px);
+}
+
+/* ── CTA button ── */
+.cta {
+  width: 100%;
+}
+
+/* ── iOS home indicator ── */
+.homeIndicator {
+  width: 100%;
+  height: 40px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.homeBar {
+  width: 135px;
+  height: 5px;
+  border-radius: 100px;
+  background: var(--ld-semantic-color-text-default, #2e2f32);
+  opacity: 0.2;
+}

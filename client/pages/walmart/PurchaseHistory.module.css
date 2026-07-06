@@ -1,0 +1,130 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  background: var(--ld-semantic-color-surface, #ffffff);
+  min-height: 100%;
+}
+
+.topSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.breadcrumbRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+}
+
+.breadcrumbActions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.bannerRow {
+  padding: 16px;
+}
+
+/* Body layout: side nav left, main content right */
+.body {
+  display: flex;
+  flex: 1;
+  align-items: stretch;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+}
+
+/* Main content */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px 24px 40px;
+  width: 100% !important;
+  max-width: none !important;
+  box-sizing: border-box;
+}
+
+.pageTitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  margin: 0;
+  line-height: 32px;
+}
+
+/* Order list */
+.orderList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+/* New card glow — plays once on mount when a demo card is unhidden */
+.newCard {
+  border-radius: 8px;
+  animation: cardGlow 3s ease-out forwards;
+}
+
+@keyframes cardGlow {
+  0% {
+    box-shadow: 0 0 0 2px #1A7A34, 0 0 24px 6px rgba(26, 122, 52, 0.30);
+  }
+  60% {
+    box-shadow: 0 0 0 2px #1A7A34, 0 0 24px 6px rgba(26, 122, 52, 0.30);
+  }
+  100% {
+    box-shadow: none;
+  }
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  padding: 8px 0;
+}
+
+.paginationBtn {
+  font-size: 24px;
+  color: var(--ld-semantic-color-text-subtle);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 50%;
+  line-height: 1;
+}
+
+.paginationBtn:hover {
+  background: var(--ld-semantic-color-fill-subtle);
+}
+
+/* Responsive */
+@media (max-width: 1023px) {
+  /* Hide the desktop-only ad banner section */
+  .topSection {
+    display: none;
+  }
+
+  .body {
+    flex-direction: column;
+  }
+
+  .content {
+    padding: 16px;
+  }
+
+  .pageTitle {
+    font-size: 28px;
+    line-height: 36px;
+  }
+}

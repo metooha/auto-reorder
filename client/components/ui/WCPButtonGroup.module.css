@@ -1,0 +1,57 @@
+/**
+ * WCPButtonGroup — WCP Button Group patterns
+ *
+ * All 8 WCP button group patterns derived from Figma:
+ * Inline: tertiary-tertiary, secondary-tertiary, primary-secondary, primary-tertiary
+ * Stacked: primary-secondary, secondary-tertiary, primary-tertiary, three-options
+ */
+
+/* ── Base group container ───────────────────────────────────────────────────── */
+
+.group {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ── Inline layout ──────────────────────────────────────────────────────────── */
+
+.group--inline {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-200, 16px); /* 16px gap between buttons */
+  justify-content: center;
+}
+
+/* Full-width inline: both sides expand equally */
+.group--inline-fullWidth > * {
+  flex: 1 0 0;
+}
+
+/* ── Stacked layout ─────────────────────────────────────────────────────────── */
+
+.group--stacked {
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-200, 16px); /* 16px vertical gap */
+}
+
+/* Stacked: all direct Button/LinkButton children fill full width */
+.group--stacked > * {
+  width: 100%;
+  align-self: stretch;
+}
+
+/* ── Three-options: inline top row ──────────────────────────────────────────── */
+
+.inlineRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-200, 16px);
+  width: 100%;
+}
+
+.inlineRow > * {
+  flex: 1 0 0;
+}

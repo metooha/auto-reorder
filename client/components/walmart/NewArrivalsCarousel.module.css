@@ -1,0 +1,96 @@
+.carousel {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .carousel { height: 260px; }
+}
+
+@media (min-width: 1024px) {
+  .carousel { height: 300px; }
+}
+
+@media (max-width: 480px) {
+  .carousel { height: 160px; }
+}
+
+.bgImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .bgImage { object-position: center; }
+}
+
+.textPanel {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 45%;
+}
+
+@media (min-width: 768px) {
+  .textPanel { top: 20px; left: 24px; gap: 16px; }
+}
+
+@media (min-width: 1024px) {
+  .textPanel { top: 24px; left: 24px; gap: 24px; }
+}
+
+.eyebrow {
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--ld-semantic-color-text-brand-bold);
+  line-height: 1.08;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) { .eyebrow { font-size: 16px; } }
+@media (min-width: 1024px) { .eyebrow { font-size: 24px; } }
+
+.headline {
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--ld-semantic-color-text-brand-bold);
+  line-height: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  margin: 0;
+}
+
+@media (min-width: 768px) { .headline { font-size: 40px; } }
+@media (min-width: 1024px) { .headline { font-size: 64px; } }
+
+.controls {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (min-width: 768px) { .controls { top: 24px; right: 24px; } }
+
+.controlBtn {
+  width: 28px !important;
+  height: 28px !important;
+}

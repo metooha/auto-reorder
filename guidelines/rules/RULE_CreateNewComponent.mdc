@@ -1,0 +1,664 @@
+---
+description: Create New Component Process
+globs:
+alwaysApply: true
+---
+
+## Purpose
+
+When the user says **"Create new component"** or requests a new LD 3.5/WCP component, you MUST follow this complete process to ensure nothing breaks and the component integrates properly.
+
+---
+
+## Complete Component Creation Process
+
+### Step 1: Check for Existing Component
+
+**FIRST, check if component already exists:**
+
+```bash
+# Check for existing component
+ls client/components/ui/ComponentName.tsx
+ls client/components/ui/ComponentName.module.css
+```
+
+**If exists:**
+- ✅ **REPLACE IT** instead of creating new
+- ✅ Create migration plan to update all usages
+- ✅ Ensure backward compatibility or update all references
+
+**If doesn't exist:**
+- ✅ Create new component from scratch
+
+---
+
+### Step 2: Reference Figma Design
+
+**MUST read Figma design files if provided:**
+
+```
+Read(file_path: figma-design.html)
+Read(file_path: figma-design-frame-1.html)
+Read(file_path: figma-design-frame-2.html)
+...
+```
+
+**Extract from Figma:**
+- ✅ All variants (primary, secondary, etc.)
+- ✅ All sizes (small, medium, large)
+- ✅ All states (hover, focus, pressed, disabled)
+- ✅ Exact spacing, typography, colors
+- ✅ Border radius, border width
+- ✅ Component props and behavior
+- ✅ Token usage (what tokens are used)
+
+**Document findings** before coding.
+
+---
+
+### Step 3: Create Component Files
+
+**Required files (minimum):**
+
+1. **Component TypeScript** - `client/components/ui/ComponentName.tsx`
+2. **Component Styles** - `client/components/ui/ComponentName.module.css`
+3. **Component Example** - `client/components/examples/ComponentNameExample.tsx`
+4. **Component Guideline** - `guidelines/components/ComponentName.md`
+
+### Step 4: Build Component Using Tokens
+
+**MANDATORY: Use tokens for ALL values**
+
+```tsx
+// ComponentName.tsx
+import * as React from 'react';
+import styles from './ComponentName.module.css';
+
+export interface ComponentNameProps {
+  variant?: 'primary' | 'secondary'; // From Figma
+  size?: 'small' | 'medium' | 'large'; // From Figma
+  disabled?: boolean;
+  // ... all props from Figma
+}
+
+export const ComponentName = React.forwardRef<HTMLElement, ComponentNameProps>(
+  ({ variant = 'primary', size = 'medium', ...props }, ref) => {
+    const className = [
+      styles.component,
+      styles[`component--variant-${variant}`],
+      styles[`component--size-${size}`],
+    ].filter(Boolean).join(' ');
+
+    return <div ref={ref} className={className} {...props} />;
+  }
+);
+```
+
+**Component CSS - USE TOKENS ONLY:**
+
+```css
+/* ComponentName.module.css */
+.component {
+  /* ✅ Spacing - use tokens */
+  padding: var(--ld-primitive-scale-space-200);
+  gap: var(--ld-primitive-scale-space-100);
+  
+  /* ✅ Typography - use tokens */
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: var(--ld-semantic-font-body-small-size);
+  line-height: var(--ld-semantic-font-body-small-line-height);
+  
+  /* ✅ Border - use tokens */
+  border-radius: var(--ld-primitive-scale-border-radius-50);
+  border-width: var(--ld-semantic-scale-border-width-interactive);
+  
+  /* ✅ Colors - use tokens */
+  background-color: var(--ld-semantic-color-surface);
+  color: var(--ld-semantic-color-text);
+  
+  /* ✅ Transitions - use tokens */
+  transition: all var(--ld-primitive-duration-200) ease;
+}
+
+/* ❌ NO HARDCODED VALUES ALLOWED */
+```
+
+---
+
+### Step 5: Integrate into Component Library (MANDATORY)
+
+**ALL new UI components MUST be accessible in the component library UI.**
+
+This step has FOUR mandatory sub-steps that make components discoverable, accessible, and documented:
+
+---
+
+#### 5a. Create Dedicated Library Page (REQUIRED)
+
+**File**: `client/pages/component-library/[ComponentName]s.tsx`
+
+**Purpose**: Provides dedicated space for component documentation and interactive demos
+
+**Template**:
+```tsx
+import React from 'react';
+import ComponentNameExample from '@/components/examples/ComponentNameExample';
+
+export default function ComponentNamesPage() {
+  return (
+    <div style={{
+      padding: '48px',
+      maxWidth: '1400px',
+      margin: '0 auto'
+    }}>
+      <div style={{ marginBottom: '32px' }}>
+        <h1 style={{
+          fontSize: '32px',
+          fontWeight: '700',
+          fontFamily: 'var(--ld-semantic-font-family-sans)',
+          color: 'var(--ld-semantic-color-text-primary, #2E2F32)',
+          marginBottom: '12px'
+        }}>
+          Component Names
+        </h1>
+        <p style={{
+          fontSize: '16px',
+          lineHeight: '1.6',
+          color: 'var(--ld-semantic-color-text-secondary, #74767C)',
+          maxWidth: '800px'
+        }}>
+          Brief description of the component, its purpose, and key features.
+        </p>
+      </div>
+
+      <div style={{
+        backgroundColor: 'var(--ld-semantic-color-fill-surface-primary, #ffffff)',
+        padding: '32px',
+        borderRadius: '8px',
+        border: '1px solid var(--ld-semantic-color-border-moderate, #E6E6E8)'
+      }}>
+        <React.Suspense fallback={<div>Loading...</div>}>
+          <ComponentNameExample />
+        </React.Suspense>
+      </div>
+    </div>
+  );
+}
+```
+
+**Reference Examples**: `client/pages/component-library/Buttons.tsx`, `client/pages/component-library/Panels.tsx`
+
+---
+
+#### 5b. Register Route (REQUIRED)
+
+**File**: `client/App.tsx`
+
+**Actions**:
+
+1. Add import at top of file:
+```tsx
+import ComponentNamesPage from "./pages/component-library/ComponentNames";
+```
+
+2. Add route inside ComponentLibraryLayout section:
+```tsx
+<Route path="/component-library" element={<ComponentLibraryLayout />}>
+  {/* ... existing routes ... */}
+  <Route path="component-names" element={<ComponentNamesPage />} />
+</Route>
+```
+
+**Naming Convention**:
+- URL path: kebab-case, plural (`component-names`)
+- Component import: PascalCase, plural (`ComponentNamesPage`)
+- File name: PascalCase, plural (`ComponentNames.tsx`)
+
+**Purpose**: Makes component accessible via direct URL navigation (e.g., `/component-library/panels`)
+
+---
+
+#### 5c. Add to Overview Page (REQUIRED)
+
+**File**: `client/pages/component-library/Overview.tsx`
+
+**Action**: Add entry to `componentSections` array (maintain alphabetical order):
+
+```typescript
+const componentSections = [
+  // ... other components ...
+  {
+    title: 'Component Names',
+    description: 'Brief description matching the library page description',
+    path: '/component-library/component-names',
+    icon: 'IconName' // Choose appropriate icon from @/components/icons
+  },
+  // ... more components ...
+];
+```
+
+**Icon Selection Guidelines**:
+- Choose from existing icon library (303+ icons available)
+- View icons at `/component-library/icons`
+- Select semantically appropriate icon for component type
+
+**Purpose**: Makes component discoverable from the component library overview/index page
+
+---
+
+#### 5d. Add to ComponentLibrary.tsx (REQUIRED - Interactive Testing)
+
+**File**: `client/pages/ComponentLibrary.tsx`
+
+This enables interactive property testing and code generation.
+
+**Import Component**:
+```tsx
+// At top of ComponentLibrary.tsx
+import { ComponentNameExample } from '@/components/examples/ComponentNameExample';
+import { ComponentName } from '@/components/ui/ComponentName';
+```
+
+**Add to Search Sections**:
+```tsx
+const allSections = [
+  // ... existing sections
+  { id: 'component-name', name: 'Component Name', keywords: ['keyword1', 'keyword2'] },
+];
+```
+
+**Add Component Section**:
+```tsx
+<Section
+  id="component-name"
+  title="Component Name"
+  description="Description from Figma/guidelines"
+>
+  <ComponentNameExample />
+</Section>
+```
+
+**Add to Property Tester**:
+```tsx
+// Add to ComponentType union
+type ComponentType =
+  | 'Button'
+  | 'Badge'
+  | 'ComponentName' // ← Add here
+  | ...;
+
+// Add configuration
+const componentConfigs: Record<ComponentType, ComponentConfig> = {
+  // ...
+  ComponentName: {
+    variants: ['primary', 'secondary'], // From Figma
+    sizes: ['small', 'medium', 'large'], // From Figma
+    supportsFullWidth: false,
+    supportsIcons: true,
+    supportsValue: false,
+    supportsShape: false,
+    // ... all support flags
+  },
+};
+
+// Add to generateCode()
+case 'ComponentName':
+  return `<ComponentName
+  variant="${variant}"
+  size="${size}"${disabled ? '\n  disabled' : ''}
+>
+  Content
+</ComponentName>`;
+
+// Add to renderPreview()
+case 'ComponentName':
+  return (
+    <ComponentName
+      variant={variant as any}
+      size={size as any}
+      disabled={disabled}
+    >
+      Preview
+    </ComponentName>
+  );
+```
+
+**Purpose**: Enables interactive testing and code generation in the property testing tool
+
+---
+
+#### Step 5 Summary Checklist
+
+Before proceeding to Step 6, verify ALL of these exist:
+
+- [ ] Dedicated library page created: `client/pages/component-library/ComponentNames.tsx`
+- [ ] Route registered in `client/App.tsx`
+- [ ] Entry added to Overview.tsx `componentSections` array
+- [ ] Component section added to ComponentLibrary.tsx
+- [ ] Property Tester integration complete
+- [ ] Component accessible at `/component-library/component-names`
+- [ ] Component appears in Overview page list
+
+**Result**: New component is now:
+- ✅ Discoverable (visible in overview list)
+- ✅ Accessible (direct URL navigation)
+- ✅ Documented (dedicated page with description)
+- ✅ Testable (Property Tester integration)
+
+---
+
+### Step 6: Create Migration Plan (If Replacing)
+
+**If replacing existing component:**
+
+Create migration plan in `guidelines/migrations/COMPONENTNAME-MIGRATION-PLAN.md`:
+
+```markdown
+# ComponentName Migration Plan
+
+## Overview
+Replacing old ComponentName with new LD 3.5 version
+
+## Files Using Old Component
+- client/pages/PageA.tsx (3 usages)
+- client/pages/PageB.tsx (1 usage)
+- client/components/FeatureX.tsx (2 usages)
+
+## Migration Steps
+1. Update imports
+2. Update prop names
+3. Update variant names
+4. Test each page
+
+## Backward Compatibility
+- Old prop `x` → New prop `y`
+- Old variant `old` → New variant `new`
+```
+
+---
+
+### Step 7: Update All Usages (If Replacing)
+
+**Find all usages:**
+
+```bash
+grep -r "import.*ComponentName" client/
+grep -r "<ComponentName" client/
+```
+
+**For each file:**
+1. Update import path if changed
+2. Update prop names to match new API
+3. Update variant/size names
+4. Test the page works
+
+**Create checklist:**
+- [ ] File 1: `client/pages/PageA.tsx` - 3 usages
+- [ ] File 2: `client/pages/PageB.tsx` - 1 usage
+- [ ] File 3: `client/components/FeatureX.tsx` - 2 usages
+
+**Update files incrementally, test after each.**
+
+---
+
+### Step 8: Create Component Example
+
+**File**: `client/components/examples/ComponentNameExample.tsx`
+
+**Must include:**
+- All variants demonstrated
+- All sizes demonstrated
+- All states shown (hover, disabled, etc.)
+- Multi-select pattern (if applicable)
+- Single-select pattern (if applicable)
+- Usage code examples
+- Clear section labels
+
+```tsx
+export function ComponentNameExample() {
+  return (
+    <div style={{ padding: '32px', display: 'flex', flexDirection: 'column', gap: '48px' }}>
+      <section>
+        <h3>Variants</h3>
+        <div style={{ display: 'flex', gap: '16px' }}>
+          <ComponentName variant="primary">Primary</ComponentName>
+          <ComponentName variant="secondary">Secondary</ComponentName>
+        </div>
+      </section>
+      
+      <section>
+        <h3>Sizes</h3>
+        {/* Show all sizes */}
+      </section>
+      
+      <section>
+        <h3>States</h3>
+        {/* Show all states */}
+      </section>
+    </div>
+  );
+}
+```
+
+---
+
+### Step 9: Create Component Guideline
+
+**File**: `guidelines/components/ComponentName.md`
+
+**Must include:**
+```markdown
+# ComponentName Component - LD 3.5
+
+## Overview
+[Description from Figma]
+
+## Component Location
+- Component: `client/components/ui/ComponentName.tsx`
+- Styles: `client/components/ui/ComponentName.module.css`
+- Examples: `client/components/examples/ComponentNameExample.tsx`
+
+## API
+
+### Props
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| variant | string | 'primary' | ... |
+| size | string | 'medium' | ... |
+
+### Variants
+[List all variants from Figma]
+
+### Sizes
+[List all sizes from Figma with exact heights]
+
+### States
+[Document all interactive states]
+
+## Design Tokens Used
+[List all tokens used]
+
+## Usage Examples
+[Code examples]
+
+## Accessibility
+[ARIA requirements]
+```
+
+---
+
+### Step 10: Test Everything
+
+**Before marking complete:**
+
+- [ ] Component renders in Component Library
+- [ ] All variants work
+- [ ] All sizes work
+- [ ] All states work (hover, focus, disabled)
+- [ ] Works in all themes (test Walmart, Sam's Club, Bodega)
+- [ ] Fonts change with themes (if applicable)
+- [ ] Colors change with themes
+- [ ] Property Tester works
+- [ ] Generated code is correct
+- [ ] Copy code button works
+- [ ] Example page renders
+- [ ] No TypeScript errors
+- [ ] No console errors
+- [ ] All usages updated (if replacing)
+- [ ] Migration plan complete (if replacing)
+
+---
+
+## Complete Checklist
+
+When user says **"Create new component"**, follow this checklist:
+
+### Pre-Creation
+- [ ] Read all Figma design files
+- [ ] Document variants, sizes, states, props
+- [ ] Check if component already exists
+- [ ] If exists, create migration plan
+
+### Creation
+- [ ] Create `ComponentName.tsx` using tokens ONLY
+- [ ] Create `ComponentName.module.css` using tokens ONLY
+- [ ] Create `ComponentNameExample.tsx`
+- [ ] Create `guidelines/components/ComponentName.md`
+
+### Integration
+- [ ] Add to ComponentLibrary.tsx imports
+- [ ] Add to search sections
+- [ ] Add component section with example
+- [ ] Add to Property Tester (ComponentType, config, generateCode, renderPreview)
+
+### Migration (if replacing)
+- [ ] Find all existing usages
+- [ ] Create migration plan document
+- [ ] Update all usages systematically
+- [ ] Test each updated file
+- [ ] Verify nothing breaks
+
+### Validation
+- [ ] Test all variants in Component Library
+- [ ] Test all sizes
+- [ ] Test in all themes (Walmart, Sam's Club, Bodega minimum)
+- [ ] Verify Property Tester works
+- [ ] Run TypeScript check
+- [ ] Check for console errors
+- [ ] Verify responsive behavior
+
+---
+
+## Token Usage Reminder
+
+**EVERY value MUST use tokens:**
+
+✅ Spacing → `var(--ld-primitive-scale-space-*)`  
+✅ Typography → `var(--ld-semantic-font-*)`  
+✅ Colors → `var(--ld-semantic-color-*)`  
+✅ Border radius → `var(--ld-primitive-scale-border-radius-*)`  
+✅ Border width → `var(--ld-semantic-scale-border-width-*)`  
+✅ Transitions → `var(--ld-primitive-duration-*)`  
+✅ Icons → `var(--ld-semantic-scale-icon-*)`  
+
+❌ NO hardcoded px, rem, hex, or duration values (except documented specs)
+
+---
+
+## Example: Full Component Creation
+
+### User Request
+> "Create new component Alert"
+
+### Your Process
+
+1. ✅ Read figma-design.html files
+2. ✅ Check: `ls client/components/ui/Alert.tsx` (already exists!)
+3. ✅ Create migration plan: `guidelines/migrations/ALERT-MIGRATION-PLAN.md`
+4. ✅ Find usages: `grep -r "<Alert" client/` → 5 files found
+5. ✅ Create new Alert.tsx using Figma specs + tokens only
+6. ✅ Create new Alert.module.css using tokens only
+7. ✅ Create AlertExample.tsx with all variants/sizes
+8. ✅ Create guidelines/components/Alert.md
+9. ✅ Add to ComponentLibrary.tsx (import, section, Property Tester)
+10. ✅ Update all 5 files using old Alert
+11. ✅ Test each updated file
+12. ✅ Test in all themes
+13. ✅ Verify Property Tester works
+14. ✅ Mark complete
+
+---
+
+## Enforcement
+
+**This process is MANDATORY for all component creation/updates.**
+
+**Do NOT skip steps.** Each step ensures:
+- Quality (tokens, Figma accuracy)
+- Integration (Component Library, Property Tester)
+- Documentation (guidelines, examples)
+- Safety (migration plan, testing)
+- Completeness (nothing breaks)
+
+---
+
+## Quick Start Command
+
+**When user says**: "Create new component [ComponentName]"
+
+**You respond**:
+
+"I'll create the new LD 3.5 [ComponentName] component. Let me:
+
+1. Read Figma designs for specifications
+2. Check if [ComponentName] already exists
+3. [If exists] Create migration plan for existing usages
+4. Create component with all variants, sizes, and states
+5. Use Living Design tokens exclusively
+6. Add to Component Library and Property Tester
+7. [If exists] Update all existing usages
+8. Test in all themes
+9. Verify nothing breaks
+
+Starting now..."
+
+**Then execute all 10 steps systematically.**
+
+---
+
+## Success Criteria
+
+Component creation is ONLY complete when:
+
+- [x] Component code created (using tokens only)
+- [x] Component styles created (using tokens only)
+- [x] Component example created
+- [x] Component guideline created
+- [x] Added to Component Library page
+- [x] Added to Property Tester
+- [x] Migration plan created (if replacing)
+- [x] All existing usages updated (if replacing)
+- [x] Tested in Component Library
+- [x] Tested in all themes
+- [x] Works in Property Tester
+- [x] No TypeScript errors
+- [x] No console errors
+- [x] No broken pages
+
+**If ANY checkbox is unchecked, component creation is INCOMPLETE.**
+
+---
+
+## Related Rules
+
+This process enforces:
+- `RULE_TokenUsageEnforcement.mdc` - All values must use tokens
+- `RULE_ComponentPropertyTester.mdc` - All components must be testable
+- `RULE_NoEmojisUseIcons.mdc` - Use icon library, not emojis
+
+---
+
+**IMPORTANT**: This is the ONLY approved process for component creation. No shortcuts.
+
+Last updated: 2025-02-14  
+See also: `component-token-audit.md`, `RULE_TokenUsageEnforcement.mdc`

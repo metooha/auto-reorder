@@ -1,0 +1,179 @@
+/* ============================================================
+   WCPIconSelector — toggleable icon button (WCP consumer)
+   Uses LD semantic tokens for full theme compatibility.
+   ============================================================ */
+
+/* ── Base ──────────────────────────────────────────────────── */
+.selector {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  transition:
+    background-color 120ms ease,
+    box-shadow 120ms ease,
+    color 120ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.selector:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline, #0053e2);
+  outline-offset: 2px;
+}
+
+.selector:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* ── Icon wrapper ──────────────────────────────────────────── */
+.iconWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* scale icons to fill the wrapper */
+.iconWrap svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ── Sizes (mobile-first) ─────────────────────────────────── */
+
+/* small: 24 × 24 → 32 × 32 on desktop */
+.selector--small {
+  width: 24px;
+  height: 24px;
+}
+
+.selector--small .iconWrap {
+  padding: 4px;
+}
+
+@media (min-width: 1024px) {
+  .selector--small {
+    width: 32px;
+    height: 32px;
+  }
+  .selector--small .iconWrap {
+    padding: 6px;
+  }
+}
+
+/* medium: 32 × 32 → 40 × 40 on desktop */
+.selector--medium {
+  width: 32px;
+  height: 32px;
+}
+
+.selector--medium .iconWrap {
+  padding: 6px;
+}
+
+@media (min-width: 1024px) {
+  .selector--medium {
+    width: 40px;
+    height: 40px;
+  }
+  .selector--medium .iconWrap {
+    padding: 8px;
+  }
+}
+
+/* large: 40 × 40 → 48 × 48 on desktop */
+.selector--large {
+  width: 40px;
+  height: 40px;
+}
+
+.selector--large .iconWrap {
+  padding: 8px;
+}
+
+@media (min-width: 1024px) {
+  .selector--large {
+    width: 48px;
+    height: 48px;
+  }
+  .selector--large .iconWrap {
+    padding: 10px;
+  }
+}
+
+/* ── Shapes ────────────────────────────────────────────────── */
+.selector--circle {
+  border-radius: 9999px;
+}
+
+.selector--rounded {
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+}
+
+/* ── Color: default (for light backgrounds) ─────────────────
+   OFF  → transparent bg, primary text color
+   ON   → no background change, filled icon in text color
+   ─────────────────────────────────────────────────────────── */
+.selector--default {
+  background-color: transparent;
+  color: var(--ld-semantic-color-text-primary, #2e2f32);
+}
+
+.selector--default:hover:not(:disabled) {
+  background-color: var(--ld-semantic-color-input-fill-hovered, rgba(0, 0, 0, 0.06));
+}
+
+.selector--default:active:not(:disabled) {
+  background-color: var(--ld-semantic-color-input-fill-pressed, rgba(0, 0, 0, 0.12));
+}
+
+.selector--default.selector--checked {
+  background-color: transparent;
+  color: var(--ld-semantic-color-text-primary, #2e2f32);
+}
+
+.selector--default.selector--checked:hover:not(:disabled) {
+  background-color: var(--ld-semantic-color-input-fill-hovered, rgba(0, 0, 0, 0.06));
+}
+
+.selector--default.selector--checked:active:not(:disabled) {
+  background-color: var(--ld-semantic-color-input-fill-pressed, rgba(0, 0, 0, 0.12));
+}
+
+/* ── Color: white (for dark/colored backgrounds) ─────────────
+   OFF  → no background, white icon
+   ON   → no background, white filled icon
+   ─────────────────────────────────────────────────────────── */
+.selector--white {
+  background-color: transparent;
+  color: rgba(255, 255, 255, 1);
+}
+
+.selector--white:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.selector--white:active:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.20);
+}
+
+.selector--white.selector--checked {
+  background-color: transparent;
+  color: rgba(255, 255, 255, 1);
+}
+
+.selector--white.selector--checked:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.selector--white.selector--checked:active:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.20);
+}

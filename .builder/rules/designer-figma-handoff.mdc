@@ -1,0 +1,65 @@
+---
+description: Designer Figma best practices — how to hand off designs for accurate AI implementation
+globs:
+alwaysApply: false
+---
+
+## Purpose
+
+Guidelines for designers handing off Figma files to be implemented by Fusion. Following these practices produces more accurate code on the first pass.
+
+## 6 Figma Best Practices
+
+### 1. Use Auto Layout (Not Absolute Positioning)
+
+Figma frames with auto layout translate cleanly to CSS flexbox/grid. Absolute-positioned layers require manual conversion and often produce incorrect layouts.
+
+### 2. Name Your Layers Meaningfully
+
+Layer names become component names and CSS class names. Use descriptive names like `OrderCard`, `PriceSection`, `DeliveryStatus` — not `Frame 47` or `Group 12`.
+
+### 3. Use Design System Components
+
+Always use LD 3.5 Figma components (buttons, tags, inputs, etc.) rather than creating custom shapes that look similar. This ensures the code uses the correct LD component.
+
+### 4. Annotate States and Interactions
+
+Include frames for all states: default, hover, active, disabled, loading, empty, error. If a component has multiple states, show them all in the Figma file.
+
+### 5. Specify Responsive Behavior
+
+Include frames at key breakpoints (1440px desktop, 1024px tablet, 768px small tablet, 480px phone). Note which elements stack, hide, or resize at each breakpoint.
+
+### 6. Export Images as Separate Assets
+
+Product images, illustrations, and icons should be clearly marked as exportable assets. Use descriptive export names. See `.builder/rules/figma-asset-extraction.mdc` for extraction rules.
+
+## Figma Component → Code Mapping
+
+| Figma Component | Code Component | Import Path |
+|---|---|---|
+| Button (any variant) | `Button` | `@/components/ui/Button` |
+| Input Field | `TextField` | `@/components/ui/TextField` |
+| Dropdown | `Select` | `@/components/ui/Select` |
+| Checkbox | `Checkbox` | `@/components/ui/Checkbox` |
+| Radio Button | `Radio` | `@/components/ui/Radio` |
+| Toggle | `Switch` | `@/components/ui/Switch` |
+| Tag / Badge | `Tag` | `@/components/ui/tag` |
+| Star Rating | `Rating` | `@/components/ui/Rating` |
+| Tab Bar | `Tabs` / `TabList` / `Tab` | `@/components/ui/Tab` |
+| Modal / Dialog | `Dialog` | `@/components/ui/Dialog` |
+| Tooltip | `Popover` | `@/components/ui/Popover` |
+| Table | `DataTable` | `@/components/ui/DataTable` |
+| Link Text | `Link` | `@/components/ui/Link` |
+| Spinner | `Spinner` | `@/components/ui/Spinner` |
+
+## Pre-Launch Designer Checklist
+
+- [ ] All frames use auto layout (no absolute positioning)
+- [ ] Layer names are descriptive and match intended component names
+- [ ] LD 3.5 Figma components used where available
+- [ ] All interactive states shown (hover, focus, active, disabled, empty, error)
+- [ ] Responsive frames provided for 1440px, 1024px, 768px, 480px
+- [ ] Images marked as exportable with descriptive names
+- [ ] Color values match LD semantic tokens (no custom hex values)
+- [ ] Spacing follows 8px grid (4, 8, 12, 16, 24, 32, 48px)

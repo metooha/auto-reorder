@@ -1,0 +1,88 @@
+.initialButton {
+  display: flex;
+  width: 32px;
+  height: 32px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 9999px;
+  border: 1px solid var(--ld-semantic-color-border-default);
+  background: var(--ld-semantic-color-surface);
+  cursor: pointer;
+  transition: transform 0.2s ease-out;
+}
+
+.initialButton:hover {
+  transform: scale(1.05);
+}
+
+.initialButton:active {
+  transform: scale(0.95);
+}
+
+.collapsedButton {
+  composes: initialButton;
+  padding: 0 8px;
+}
+
+.countText {
+  color: var(--ld-semantic-color-text);
+  text-align: center;
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: var(--ld-semantic-font-body-small-size);
+  font-weight: 700;
+  line-height: 20px;
+}
+
+.stepper {
+  display: flex;
+  min-width: 112px;
+  height: 32px;
+  padding: 0 4px;
+  align-items: center;
+  gap: 4px;
+  border-radius: 9999px;
+  border: 1px solid var(--ld-semantic-color-border-default);
+  background: var(--ld-semantic-color-surface);
+  transition: all 0.3s ease-out;
+}
+
+.stepperButton {
+  display: flex;
+  width: 24px;
+  height: 24px;
+  padding: 4px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 9999px;
+  background: var(--ld-semantic-color-surface);
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease-out;
+}
+
+.stepperButton:hover {
+  background: var(--ld-semantic-color-fill-subtle);
+}
+
+.stepperButton:active {
+  transform: scale(0.9);
+}
+
+.stepperCount {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 480px) {
+  .stepper {
+    min-width: 96px;
+    height: 28px;
+  }
+
+  .initialButton {
+    width: 28px;
+    height: 28px;
+  }
+}

@@ -1,0 +1,78 @@
+.header {
+  height: 54px;
+  border-bottom: 1px solid var(--ld-semantic-color-separator, #E3E4E5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--ld-semantic-spacing-6, 24px);
+  background-color: var(--ld-semantic-color-fill-surface-primary, #ffffff);
+  font-family: var(--ld-semantic-font-family-sans);
+  flex-shrink: 0;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: var(--ld-semantic-spacing-5, 20px);
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: var(--ld-semantic-spacing-2, 8px);
+}
+
+.appName {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text-brand, #001F64);
+  white-space: nowrap;
+}
+
+.iconButton {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--ld-semantic-border-radius-full, 9999px);
+  border: none;
+  background: transparent;
+  color: var(--ld-semantic-color-text-primary, #2E2F32);
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+
+.iconButton:hover {
+  background-color: var(--ld-semantic-color-fill-surface-secondary, #F2F3F3);
+}
+
+.notifDot {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 6px;
+  height: 6px;
+  background-color: var(--ld-semantic-color-sentiment-negative-fill, #e00);
+  border-radius: var(--ld-semantic-border-radius-full, 9999px);
+}
+
+.companyName {
+  display: flex;
+  align-items: center;
+  gap: var(--ld-semantic-spacing-1, 4px);
+  font-size: 12px;
+  color: var(--ld-semantic-color-text-primary, #2E2F32);
+}
+
+.divider {
+  height: 22px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--ld-semantic-spacing-1, 4px);
+}

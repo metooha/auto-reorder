@@ -1,0 +1,234 @@
+.fadeOverlay {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 320px;
+  pointer-events: none;
+  z-index: 40;
+  transition: transform 0.3s ease;
+  background: linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.95) 20%, rgba(255,255,255,0.7) 50%, transparent 100%);
+}
+
+.fadeOverlayHidden {
+  transform: translateY(180px);
+}
+
+.nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 92px;
+  backdrop-filter: blur(8px);
+  z-index: 50;
+  transition: transform 0.3s ease;
+}
+
+.navHidden {
+  transform: translateY(100%);
+}
+
+.navInner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 48px;
+  margin-top: 17px;
+  gap: 8px;
+  padding: 0 16px;
+}
+
+.tabBar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  border-radius: 9999px;
+  backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  border-left: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow:
+    -4.5px -4.5px 1.5px -5.25px rgba(255, 255, 255, 0.5) inset,
+    4.5px 4.5px 1.5px -5.25px rgba(255, 255, 255, 0.7) inset,
+    3px 4.5px 1.5px -3px rgba(179, 179, 179, 0.2) inset,
+    -3px -4.5px 1.5px -3px rgba(179, 179, 179, 1) inset,
+    0 0 33px 0 rgba(242, 242, 242, 0.5) inset,
+    0 0 14px 0 rgba(0, 0, 0, 0.11);
+}
+
+.indicator {
+  position: absolute;
+  width: 72px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  /* slide + spring settle */
+  transition:
+    transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
+    width 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow:
+    0 -0.91px 1.829px 0 rgba(0, 0, 0, 0.08),
+    2px 0.915px 8.83px 0.915px rgba(0, 0, 0, 0.08),
+    0 0 12px 0 rgba(255, 255, 255, 0.4) inset;
+  transform-origin: center center;
+}
+
+/* Pill stretches horizontally while in motion — liquid feel */
+.indicatorMoving {
+  width: 92px;
+  transition:
+    transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
+    width 0.18s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.tab {
+  position: relative;
+  width: 72px;
+  height: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 9999px;
+  z-index: 10;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.tabIcon {
+  width: 28px;
+  height: 28px;
+  transition:
+    transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
+    color 0.25s ease;
+  transform: scale(1);
+}
+
+/* Magnifying-glass effect: active icon pops up in size */
+.tabIconActive {
+  color: var(--ld-semantic-color-action-fill-primary);
+  transform: scale(1.22);
+}
+
+.tabIconInactive {
+  color: var(--ld-semantic-color-text-subtle);
+  transform: scale(1);
+}
+
+.sparkyButton {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 9999px;
+  backdrop-filter: blur(8px);
+  flex-shrink: 0;
+  border-top: 1px solid rgba(255, 255, 255, 1);
+  border-left: 1px solid rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 0.89);
+  border: none;
+  cursor: pointer;
+  box-shadow:
+    -4.5px -4.5px 1.5px -5.25px rgba(255, 255, 255, 0.5) inset,
+    4.5px 4.5px 1.5px -5.25px rgba(255, 255, 255, 0.7) inset,
+    3px 4.5px 1.5px -3px rgba(179, 179, 179, 0.2) inset,
+    -3px -4.5px 1.5px -3px rgba(179, 179, 179, 1) inset,
+    0 0 33px 0 rgba(242, 242, 242, 0.5) inset,
+    0 0 14px 0 rgba(0, 0, 0, 0.11);
+}
+
+.sparkyIcon {
+  width: 32px;
+  height: 32px;
+}
+
+.homeIndicator {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 123px;
+  height: 5px;
+  background: black;
+  border-radius: 9999px;
+  opacity: 0.3;
+}
+
+/* Android gesture bar */
+.androidNavBar {
+  position: absolute;
+  bottom: 4px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  padding: 8px 0;
+}
+
+.androidGestureBar {
+  width: 96px;
+  height: 4px;
+  background: black;
+  border-radius: 9999px;
+  opacity: 0.25;
+}
+
+@media (min-width: 1024px) {
+  .fadeOverlay,
+  .nav {
+    display: none;
+  }
+}
+
+/* Tablet: constrain nav to 60vw centered */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .nav {
+    left: 50%;
+    right: auto;
+    width: 60vw;
+    transform: translateX(-50%);
+  }
+}
+
+/* ── Hide when search modal is open ── */
+:global(body.search-modal-open) .nav,
+:global(body.search-modal-open) .fadeOverlay {
+  display: none;
+}
+
+/* ── Contained wrapper — lets the fade overlay be clipped by the parent ── */
+.containedWrapper {
+  position: relative;
+}
+
+/* Gradient fade rendered above the nav inside the phone preview frame */
+.fadeOverlayContained {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  height: 56px;
+  pointer-events: none;
+  z-index: 5;
+  background: linear-gradient(to top, rgba(242, 242, 247, 0.95), transparent);
+}
+
+/* ── Contained / in-flow mode (used in patterns page) ── */
+.navContained {
+  position: relative !important;
+  bottom: auto !important;
+  left: auto !important;
+  right: auto !important;
+  display: block !important;
+  height: auto;
+  padding-bottom: 27px;
+  background: rgba(255, 255, 255, 0.95);
+}

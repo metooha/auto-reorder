@@ -1,0 +1,408 @@
+.page {
+  padding: 48px;
+  max-width: 1200px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  margin-top: 32px;
+}
+
+/* ── Section ── */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sectionTitle {
+  font-size: 20px;
+  font-weight: 700;
+  font-family: var(--ld-semantic-font-family-sans);
+  color: var(--ld-semantic-color-text);
+  margin: 0;
+}
+
+.sectionDesc {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ld-semantic-color-text-subtle, #74767c);
+  font-family: var(--ld-semantic-font-family-sans);
+  margin: 0;
+  max-width: 680px;
+}
+
+.sectionDesc code {
+  font-family: monospace;
+  font-size: 13px;
+  background: var(--ld-semantic-color-fill-secondary, #f2f2f2);
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: var(--ld-semantic-color-text);
+}
+
+/* ── Demo card ── */
+.demoCard {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 28px;
+  background: var(--ld-semantic-color-surface, #fff);
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  border-radius: 12px;
+}
+
+.cardTitle {
+  font-size: 13px;
+  font-weight: 700;
+  font-family: var(--ld-semantic-font-family-sans);
+  color: var(--ld-semantic-color-text-subtle, #74767c);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0;
+}
+
+/* ── States grid ── */
+.statesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.stateRow {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 32px;
+}
+
+.stateItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.stateLabel {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ld-semantic-color-text-subtle, #74767c);
+  font-family: var(--ld-semantic-font-family-sans);
+  white-space: nowrap;
+}
+
+/* ── Responsive demo ── */
+.responsiveDemo {
+  display: flex;
+  align-items: flex-end;
+  gap: 40px;
+  padding: 28px;
+  background: var(--ld-semantic-color-surface, #fff);
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  border-radius: 12px;
+}
+
+.responsiveItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ── Controlled demo ── */
+.controlledDemo {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 28px;
+  background: var(--ld-semantic-color-surface, #fff);
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  border-radius: 12px;
+}
+
+.resetBtn {
+  height: 36px;
+  padding: 0 16px;
+  background: var(--ld-semantic-color-action-fill-secondary, #fff);
+  border: 1.5px solid var(--ld-semantic-color-border-interactive, #74767c);
+  border-radius: 9999px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--ld-semantic-font-family-sans);
+  color: var(--ld-semantic-color-text);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.resetBtn:hover {
+  background: var(--ld-semantic-color-action-fill-secondary-hovered, #f2f2f2);
+}
+
+/* ── Product tile demo ── */
+.tilesRow {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.tile {
+  position: relative;
+  width: 200px;
+  background: var(--ld-semantic-color-surface, #fff);
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  border-radius: 8px;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+}
+
+.tileImage {
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%;
+  background: var(--ld-semantic-color-fill-secondary, #f2f2f2);
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
+}
+
+.tilePlaceholder {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    var(--ld-semantic-color-fill-secondary, #f2f2f2) 0%,
+    var(--ld-semantic-color-fill-brand-subtle, #e9f1fe) 100%
+  );
+}
+
+.tileHeartWrap {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 1;
+}
+
+.tileMeta {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tilePrice {
+  font-size: 16px;
+  font-weight: 700;
+  font-family: var(--ld-semantic-font-family-sans);
+  color: var(--ld-semantic-color-text);
+}
+
+.tileName {
+  font-size: 13px;
+  font-family: var(--ld-semantic-font-family-sans);
+  color: var(--ld-semantic-color-text-subtle, #74767c);
+  line-height: 1.4;
+}
+
+/* ── Behavior grid ── */
+.behaviorGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.behaviorCard {
+  padding: 20px 24px;
+  background: var(--ld-semantic-color-surface, #fff);
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  border-radius: 10px;
+}
+
+.behaviorTitle {
+  font-size: 15px;
+  font-weight: 700;
+  font-family: var(--ld-semantic-font-family-sans);
+  color: var(--ld-semantic-color-text);
+  margin: 0 0 12px;
+}
+
+.behaviorList {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.behaviorList li {
+  font-size: 14px;
+  font-family: var(--ld-semantic-font-family-sans);
+  color: var(--ld-semantic-color-text-subtle, #74767c);
+  line-height: 1.5;
+}
+
+/* ── Code block ── */
+.codeBlock {
+  background: var(--ld-semantic-color-fill-inverse, #2e2f32);
+  color: #e8eaf0;
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  padding: 24px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 0;
+  white-space: pre;
+}
+
+/* ── Callout Positions ── */
+.positionsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.positionCard {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  background: var(--ld-semantic-color-surface, #fff);
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  border-radius: 12px;
+}
+
+.positionPreview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80px;
+  /* Extra horizontal room so the callout has space to appear */
+  padding: 0 56px;
+}
+
+.positionMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.positionCode {
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 12px;
+  background: var(--ld-semantic-color-fill-secondary, #f2f2f2);
+  padding: 3px 7px;
+  border-radius: 4px;
+  color: var(--ld-semantic-color-text);
+  align-self: flex-start;
+}
+
+.positionDesc {
+  font-size: 13px;
+  line-height: 1.5;
+  font-family: var(--ld-semantic-font-family-sans);
+  color: var(--ld-semantic-color-text-subtle, #74767c);
+  margin: 0;
+}
+
+/* ── Do's and Don'ts ── */
+.dosDonotsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.dosDontCard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--ld-semantic-color-surface, #fff);
+}
+
+.dosDontPreview {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--ld-semantic-color-fill-secondary, #f2f2f2);
+}
+
+.dosDontImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: left top;
+  display: block;
+}
+
+
+.doLabel,
+.dontLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 16px;
+}
+
+.doText {
+  font-size: 13px;
+  font-weight: 700;
+  font-family: var(--ld-semantic-font-family-sans);
+  color: #1A7A3F;
+  letter-spacing: 0.04em;
+}
+
+.dontText {
+  font-size: 13px;
+  font-weight: 700;
+  font-family: var(--ld-semantic-font-family-sans);
+  color: #C1002B;
+  letter-spacing: 0.04em;
+}
+
+.doIcon,
+.dontIcon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.dosDontCard:has(.doLabel) {
+  border-top: 3px solid #1A7A3F;
+}
+
+.dosDontCard:has(.dontLabel) {
+  border-top: 3px solid #C1002B;
+}
+
+.dosDontDesc {
+  font-size: 14px;
+  line-height: 1.55;
+  font-family: var(--ld-semantic-font-family-sans);
+  color: var(--ld-semantic-color-text-subtle, #74767c);
+  margin: 0;
+  padding: 0 16px 16px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .page {
+    padding: 16px;
+  }
+
+  .statesGrid,
+  .behaviorGrid,
+  .dosDonotsGrid,
+  .positionsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .stateRow {
+    gap: 20px;
+  }
+}

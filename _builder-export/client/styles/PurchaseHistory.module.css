@@ -1,0 +1,52 @@
+.page {
+  padding: 16px 0 48px;
+}
+
+/* ── Breadcrumb ── */
+.breadcrumbRow {
+  padding: 0 24px 16px;
+}
+
+/* ── Marketing Banner (TempoBanner) ── */
+.bannerRow {
+  margin: 0 24px 32px;
+}
+
+/* ── Placeholder content ── */
+.emptyState {
+  padding: 48px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.emptyStateTitle {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.emptyStateSubtext {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ld-semantic-color-text-subtle, #74767c);
+  max-width: 360px;
+  line-height: 1.6;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .bannerRow {
+    margin: 0 12px 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .breadcrumbRow {
+    padding: 0 12px 12px;
+  }
+}

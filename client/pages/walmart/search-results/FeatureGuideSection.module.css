@@ -1,0 +1,107 @@
+.section {
+  padding: 16px 12px;
+  border-top: 8px solid var(--ld-semantic-color-fill-subtle);
+  background: var(--ld-semantic-color-fill-accent-blue-subtle);
+}
+
+.headerRow {
+  margin-bottom: 12px;
+}
+
+.sectionTitle {
+  font-size: var(--ld-semantic-font-body-large-size);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  margin-bottom: 8px;
+}
+
+.chipRow {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+}
+
+.chipRow::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.featureCard {
+  background: var(--ld-semantic-color-surface);
+  border-radius: 16px;
+  overflow: hidden;
+  flex-shrink: 0;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px;
+}
+
+.featureCardTitle {
+  font-size: var(--ld-semantic-font-body-small-size);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  text-align: left;
+  margin-bottom: 8px;
+}
+
+.featureCardInner {
+  background: var(--ld-semantic-color-surface);
+  border-radius: 8px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.featureBodyText {
+  font-size: var(--ld-semantic-font-body-small-size);
+  color: var(--ld-semantic-color-text);
+}
+
+.featureBadgeLabel {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  line-height: 1.27;
+}
+
+.badgesRow {
+  position: absolute;
+  top: 6px;
+  left: 7px;
+  display: flex;
+  gap: 8px;
+}
+
+.badgePill {
+  display: inline-flex;
+  height: 20px;
+  padding: 0 8px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  background: var(--ld-semantic-color-surface);
+}
+
+.paragraphsArea {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

@@ -1,0 +1,252 @@
+/* ──────────────────────────────────────────────────────────────
+   WCP Rich Snackbar
+   Extends the LD Snackbar with a leading media slot and
+   4 color variants: primary · secondary · inverse · brand
+   ────────────────────────────────────────────────────────────── */
+
+/* Base container */
+.snackbar {
+  display: flex;
+  min-width: 311px;
+  width: 390px;
+  max-width: calc(100vw - 48px);
+  min-height: 52px;
+  align-items: stretch;
+  position: fixed;
+  z-index: var(--ld-semantic-z-index-notification, 1080);
+
+  border-radius: var(--ld-primitive-scale-borderradius-50, 4px);
+  box-shadow: 0 -1px 4px 0 rgba(0, 0, 0, 0.10), 0 5px 10px 3px rgba(0, 0, 0, 0.15);
+
+  /* animation initial state */
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19),
+              transform 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* Open (visible) state */
+.open {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Position variants ──────────────────────────────────────── */
+.bottomLeft {
+  bottom: 24px;
+  left: 24px;
+}
+
+.bottomCenter {
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100%);
+}
+
+.bottomCenter.open {
+  transform: translateX(-50%) translateY(0);
+}
+
+.bottomRight {
+  bottom: 24px;
+  right: 24px;
+}
+
+/* ── Color variants ─────────────────────────────────────────── */
+
+/* Primary – blue-subtle background */
+.primary {
+  background: var(--ld-semantic-color-fill-accent-blue-subtle, #EBF0FF);
+}
+
+/* Secondary – white surface */
+.secondary {
+  background: var(--ld-semantic-color-surface, #ffffff);
+}
+
+/* Inverse – dark background */
+.inverse {
+  background: var(--ld-semantic-color-text, #2e2f32);
+}
+
+/* Brand – brand blue fill */
+.brand {
+  background: var(--ld-semantic-color-fill-brand, #0071DC);
+}
+
+/* ── Content row: leading slot + text ──────────────────────── */
+.copy {
+  display: flex;
+  flex: 1 0 0;
+  min-height: 56px;
+  padding: var(--ld-primitive-scale-space-200, 16px)
+           var(--ld-primitive-scale-space-100, 8px)
+           var(--ld-primitive-scale-space-200, 16px)
+           var(--ld-primitive-scale-space-200, 16px);
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+}
+
+/* Center layout variant */
+.copyCenter {
+  justify-content: center;
+}
+
+/* Leading media slot */
+.leading {
+  display: flex;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+
+/* ── Message text ──────────────────────────────────────────── */
+.message {
+  font-family: var(--ld-semantic-font-body-small-family);
+  font-size: var(--ld-semantic-font-body-small-size);
+  font-weight: var(--ld-semantic-font-body-small-weight-default);
+  line-height: var(--ld-semantic-font-body-small-lineheight);
+  font-kerning: none;
+  font-feature-settings: 'liga' off;
+}
+
+.messageBold {
+  font-weight: var(--ld-semantic-font-body-small-weight-alt);
+}
+
+/* Per-color text tokens */
+.primary .message {
+  color: var(--ld-semantic-color-text-onfill-accent-blue-subtle, #002E99);
+}
+
+.secondary .message {
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.inverse .message {
+  color: var(--ld-semantic-color-text-inverse, #ffffff);
+}
+
+.brand .message {
+  color: var(--ld-semantic-color-text-inverse, #ffffff);
+}
+
+/* ── Trailing section ──────────────────────────────────────── */
+.trailing {
+  display: flex;
+  height: 56px;
+  justify-content: flex-end;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.trailingActions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Action link button wrapper */
+.actionWrapper {
+  display: flex;
+  padding: 0 var(--ld-primitive-scale-space-200, 16px) 0 var(--ld-primitive-scale-space-100, 8px);
+  align-items: center;
+}
+
+/* Action link button */
+.actionBtn {
+  display: flex;
+  height: var(--ld-primitive-scale-space-400, 32px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+
+  font-family: var(--ld-semantic-font-body-small-family);
+  font-size: var(--ld-semantic-font-body-small-size);
+  font-weight: var(--ld-semantic-font-body-small-weight-default);
+  line-height: var(--ld-semantic-font-body-small-lineheight);
+  font-kerning: none;
+  font-feature-settings: 'liga' off;
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  transition: opacity 0.15s ease;
+}
+
+.actionBtn:hover {
+  opacity: 0.8;
+}
+
+.actionBtn:focus {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Action link colors per variant */
+.primary .actionBtn {
+  color: var(--ld-semantic-color-link-text, #0071DC);
+}
+
+.secondary .actionBtn {
+  color: var(--ld-semantic-color-link-text, #0071DC);
+}
+
+.inverse .actionBtn {
+  color: var(--ld-semantic-color-link-text-accent-white, #ffffff);
+}
+
+.brand .actionBtn {
+  color: var(--ld-semantic-color-link-text-accent-white, #ffffff);
+}
+
+/* Close button icon wrapper */
+.closeWrapper {
+  display: flex;
+  padding: 0 var(--ld-primitive-scale-space-100, 8px);
+  align-items: center;
+}
+
+/* ── Static (inline / demo) mode ──────────────────────────── */
+.inlineMode {
+  position: relative;
+  bottom: auto;
+  left: auto;
+  right: auto;
+  z-index: auto;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+/* ── Responsive adjustments ────────────────────────────────── */
+@media (max-width: 480px) {
+  .snackbar {
+    width: calc(100vw - 48px);
+    min-width: 0;
+  }
+
+  .bottomLeft,
+  .bottomRight {
+    left: 24px;
+    right: auto;
+  }
+
+  .bottomCenter {
+    left: 50%;
+  }
+}
+
+/* ── Reduced motion ────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .snackbar {
+    transition: opacity 0.01ms;
+  }
+
+  .bottomCenter {
+    transition: opacity 0.01ms;
+  }
+}

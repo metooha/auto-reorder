@@ -1,0 +1,114 @@
+---
+description: Purchase History — Prompt-Driven Card Patterns
+globs:
+alwaysApply: true
+---
+
+## Purpose
+
+Special order card patterns on the Purchase History page are added and removed **directly in JSX** — there are no boolean flags. When a user prompts for a card pattern, add it to the page. When it should no longer be shown, remove it.
+
+---
+
+## Where Cards Go
+
+All prompt-driven cards live **immediately below `<ReviewPromptBanner>`** in `client/pages/walmart/PurchaseHistory.tsx`, inside the "Prompt-driven card patterns" comment block:
+
+```tsx
+{/* ── Prompt-driven card patterns ──────────────────────────────
+    Cards below are added/removed here in response to user prompts.
+    Each card is wrapped in styles.newCard to trigger the green glow
+    animation on insert. Remove the wrapper + component to hide.
+─────────────────────────────────────────────────────────────── */}
+
+{/* Combined card: same-day oil change + curbside pickup bundle */}
+<div className={styles.newCard}>
+  <CombinedOrderCard
+    autoCare={COMBINED_CARD_AUTO}
+    delivery={COMBINED_CARD_DELIVERY}
+    autoCareAppointmentDate={new Date(2026, 2, 7)}
+  />
+</div>
+```
+
+---
+
+## Green Glow on Insert
+
+Every inserted card **MUST** be wrapped in `<div className={styles.newCard}>`. This triggers the green glow animation defined in `PurchaseHistory.module.css` that plays once on mount, signaling the card was just added.
+
+```tsx
+// ✅ CORRECT — always wrap in newCard for green glow
+<div className={styles.newCard}>
+  <SomeOrderCard ... />
+</div>
+
+// ❌ WRONG — no glow, card appears without visual feedback
+<SomeOrderCard ... />
+```
+
+---
+
+## Prompt → Card Mapping
+
+Match on the **exact prompt** from `OrderCardPatterns.tsx` OR keyword aliases. Both trigger the same immediate JSX add/remove.
+
+| Exact prompt / keyword aliases | Component | Data constants |
+|---|---|---|
+| "Show a combined card pairing a same-day oil change with a curbside pickup, with a merged bundle total." / "combined card", "bundle total", "oil change + curbside" | `<CombinedOrderCard>` | `COMBINED_CARD_AUTO`, `COMBINED_CARD_DELIVERY` |
+| "Show a scheduled oil change appointment card with Check in, Reschedule, and View details actions." / "auto care order", "oil change card", "auto care appointment" | `<AutoCareOrderCard>` | Define inline or as `AUTO_CARE_CARD_DATA` |
+| "Show an active curbside order with a countdown to edit and a 'Get it now' button to upgrade to express delivery." / "get it now", "active curbside", "express upgrade" | `<CurbsideOrderCard>` | Define inline or as `CURBSIDE_GET_IT_NOW_DATA` |
+| "Show a delayed delivery warning card with options to reschedule, switch to pickup, or cancel." / "delayed delivery", "late delivery", "delay card" | `<DelayedDeliveryCard>` | Define inline or as `DELAYED_DELIVERY_DATA` |
+
+---
+
+## How to Add a Card
+
+1. **Define card data** as a named constant near the top of the file (see `COMBINED_CARD_AUTO` / `COMBINED_CARD_DELIVERY` pattern).
+2. **Add the JSX** inside the prompt-driven comment block, wrapped in `<div className={styles.newCard}>`.
+3. **Add the import** if the component isn't already imported.
+
+```tsx
+// Step 1 — data constant (near top of file)
+const AUTO_CARE_CARD_DATA = {
+  orderType: 'auto' as const,
+  // ...
+};
+
+// Step 2 — JSX (inside prompt-driven block, below ReviewPromptBanner)
+<div className={styles.newCard}>
+  <AutoCareOrderCard {...AUTO_CARE_CARD_DATA} />
+</div>
+```
+
+## How to Remove a Card
+
+Delete the `<div className={styles.newCard}>` wrapper and the component inside it. Also remove the data constant if it's no longer used.
+
+---
+
+## Standard Order List (ORDERS array)
+
+The `ORDERS` array contains only the **always-visible** filterable orders. Do not add prompt-driven card data to `ORDERS` — keep it in dedicated constants as shown above.
+
+---
+
+## Adding a New Card Pattern
+
+When a new pattern is added to `client/pages/component-library/OrderCardPatterns.tsx`:
+
+1. **Add a row** to the Prompt → Card Mapping table above.
+2. **Update `RULES_INDEX.mdc`** rule #14 table.
+3. **Define data constants** near the top of `PurchaseHistory.tsx` for the new card's props.
+
+---
+
+## Enforcement Rules
+
+- ✅ ALWAYS add prompt-driven cards immediately below `<ReviewPromptBanner>`
+- ✅ ALWAYS wrap inserted cards in `<div className={styles.newCard}>` for green glow
+- ✅ ONLY add/remove JSX — do not add boolean flags
+- ✅ ALWAYS add the import for any new card component
+- ❌ NEVER add boolean visibility flags
+- ❌ NEVER add prompt-driven card data to the `ORDERS` array
+- ❌ NEVER skip the `newCard` wrapper on insert

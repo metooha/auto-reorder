@@ -1,0 +1,83 @@
+---
+description: Card component specification
+alwaysApply: false
+---
+## Purpose
+
+Cards display content and actions for a single subject or concept. They help users quickly scan information, understand hierarchy, and take associated actions.
+
+## Rules
+
+- **MUST** use Living Design Card component when available.
+- **MUST** use elevation (box-shadow) for visual separation, not borders.
+- **MUST** use surface/border/elevation tokens; no raw values.
+- **SHOULD** keep each Card focused on a single subject/concept.
+- **MUST NOT** place Cards within Cards.
+- **MUST NOT** add borders unless explicitly shown in Figma or requested by user.
+
+## Usage
+
+```tsx
+import { Card, CardHeader, CardContent, CardActions } from '@/components/ui/Card';
+
+<Card size="small">
+  <CardHeader title="Card Title" />
+  <CardContent>Card content goes here</CardContent>
+  <CardActions>
+    <Button variant="secondary">Learn more</Button>
+    <Button>Continue</Button>
+  </CardActions>
+</Card>
+```
+
+### Elevation Rule
+
+Cards use elevation tokens for depth instead of borders:
+
+```css
+/* CORRECT */
+box-shadow: var(--ld-semantic-elevation-100);  /* Default */
+box-shadow: var(--ld-semantic-elevation-200);  /* Hover */
+box-shadow: var(--ld-semantic-elevation-300);  /* Modal/Overlay */
+
+/* WRONG - never use borders for card separation */
+border: 1px solid var(--ld-semantic-color-border-moderate);
+```
+
+**Exceptions**: Borders on cards are only allowed when explicitly shown in Figma, user explicitly requests it, or for interactive states (hover/focus/selected).
+
+### Anatomy
+
+1. Container
+2. CardMedia (optional)
+3. CardHeader (optional) - includes leading icon, title, trailing
+4. CardContent
+5. CardActions (optional)
+
+## Do / Don't
+
+### Do
+
+- Use Cards together, aligned horizontally, vertically, or both.
+- Keep each Card focused on a single subject.
+- Use elevation tokens for visual hierarchy.
+
+### Don't
+
+- Place Cards within Cards.
+- Place content over media without accessibility review.
+- Use borders instead of elevation for card separation.
+- Hard-code colors or shadow values.
+
+## Accessibility
+
+- Placing content over media can result in ADA violations.
+- Ensure sufficient contrast between card content and background.
+
+## Related
+
+- [Card API reference](../../design-system-docs/Card.mdx)
+- [CardActions](../../design-system-docs/CardActions.mdx)
+- [CardContent](../../design-system-docs/CardContent.mdx)
+- [CardHeader](../../design-system-docs/CardHeader.mdx)
+- [CardMedia](../../design-system-docs/CardMedia.mdx)

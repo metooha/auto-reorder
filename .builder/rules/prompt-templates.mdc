@@ -1,0 +1,59 @@
+---
+description: Prompt templates for common Fusion design tasks — visual changes, interactive components, data, navigation
+globs:
+alwaysApply: false
+---
+
+## Purpose
+
+Quick-reference prompt templates for getting consistent results from Fusion when building UI. Use these patterns as starting points.
+
+## Template 1: Visual Change
+
+
+Change [component/section] to use [specific token or style].
+- Current: [describe what it looks like now]
+- Desired: [describe the target appearance]
+- Tokens: [list specific LD tokens if known]
+- Breakpoints affected: [desktop/tablet/phone or all]
+```
+
+## Template 2: Interactive Component
+
+```
+Add [component type] to [page/section].
+- Trigger: [what initiates the interaction — click, hover, scroll]
+- Content: [what appears — modal, popover, tooltip, drawer]
+- States: [default, hover, active, disabled, loading]
+- Dismiss: [how it closes — click outside, X button, ESC key]
+- Animation: [fade, slide, none] with prefers-reduced-motion fallback
+```
+
+## Template 3: Data / Content Update
+
+```
+Update [component] with new data:
+- Data source: [static array in file / API endpoint / mock]
+- Shape: [describe fields — name, price, image, status]
+- Items: [number of items to display]
+- Empty state: [what to show when no data]
+- Dates: [relative to today or fixed dates]
+```
+
+## Template 4: Navigation / Routing
+
+```
+Add navigation from [source page/component] to [destination].
+- Trigger: [button click, link, card click, tab switch]
+- Route: [exact path, e.g., /purchase-history/order/:id]
+- Component: [use Link, Button with onClick, or Tab]
+- Active state: [how to indicate current page in nav]
+```
+
+## Tips for Better Prompts
+
+- Reference specific LD components by name (e.g., "use `Tag` with `success` variant")
+- Include breakpoint requirements upfront
+- Specify token names when you know them
+- Mention the page/file path if editing existing code
+- Say "just go ahead" only after reading the defaults in `prompt-driven-design.mdc`

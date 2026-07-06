@@ -1,0 +1,181 @@
+---
+description: ItemTile component specification
+alwaysApply: false
+---
+## Overview
+
+Compact product tile used in 2×2 category grids within horizontally scrollable carousels. Displays a product image, optional badge, heart/favorite toggle, price, and truncated product name.
+
+**Type**: WCP (Walmart product-level component)
+**Location**: `client/components/walmart/WCPItemTile.tsx`
+**Styles**: `client/components/walmart/WCPItemTile.module.css`
+**Component Library Page**: `/component-library/item-tile`
+
+---
+
+## Import
+
+```tsx
+import { WCPItemTile } from '@/components/walmart/WCPItemTile';
+import type { WCPItemTileProps, ItemTileBadgeType } from '@/components/walmart/WCPItemTile';
+```
+
+---
+
+## Props
+
+| Prop | Type | Required | Default | Description |
+|---|---|---|---|---|
+| `image` | `string` | Yes | — | Product image URL |
+| `name` | `string` | Yes | — | Product name (truncated to 1 line) |
+| `price` | `string` | Yes | — | Dollar portion, e.g. `"98"` |
+| `cents` | `string` | Yes | — | Cents portion, e.g. `"00"` |
+| `originalPrice` | `string` | No | — | Strikethrough price, e.g. `"$200.00"` |
+| `pricePrefix` | `string` | No | — | Prefix like `"Now"` — triggers green savings style |
+| `priceSuffix` | `string` | No | — | Suffix like `"/mo"` |
+| `badge` | `{ label: string; type: ItemTileBadgeType }` | No | — | Optional badge overlay |
+
+---
+
+## Badge Types
+
+```ts
+type ItemTileBadgeType = 'bestseller' | 'deal' | 'popular' | 'rollback';
+```
+
+| Type | Label example | Visual |
+|---|---|---|
+| `bestseller` | "Best seller" | Solid red flag |
+| `deal` | "Deal" | Light red tint flag |
+| `popular` | "Popular pick" | Light blue tint flag |
+| `rollback` | "Rollback" | Dark charcoal flag |
+
+---
+
+## Variants
+
+### Default Price
+
+Standard black price text. No prefix, no original price.
+
+```tsx
+<WCPItemTile
+  image={PRODUCT_IMAGES.airFryer}
+  name="Ninja 4 Qt Air Fryer"
+  price="98"
+  cents="00"
+  badge={{ label: 'Best seller', type: 'bestseller' }}
+/>
+```
+
+### Savings Price
+
+Green price text with "Now" prefix, optional strikethrough original price and suffix.
+
+```tsx
+<WCPItemTile
+  image={PRODUCT_IMAGES.countertopBlender}
+  name="VAVSEA 3-in-1 Blender System"
+  price="169"
+  cents="98"
+  pricePrefix="Now"
+  originalPrice="$200.00"
+  priceSuffix="/mo"
+  badge={{ label: 'Best seller', type: 'bestseller' }}
+/>
+```
+
+### Plain (No Badge)
+
+Tile without any badge overlay.
+
+```tsx
+<WCPItemTile
+  image={PRODUCT_IMAGES.mugSet}
+  name="Stoneware Mug Set of 4"
+  price="28"
+  cents="00"
+/>
+```
+
+---
+
+## Anatomy
+
+```
+┌─────────────────────────┐
+│ [Flag]          [Heart] │  ← absolute positioned overlays
+│                         │
+│       Product Image     │  ← 145px height, object-fit: contain
+│                         │
+├─────────────────────────┤
+│ Now $169⁹⁸/mo          │  ← price row (green if prefix present)
+│ $200.00                 │  ← original price (strikethrough)
+│ VAVSEA 3-in-1 Blende…  │  ← product name (1-line clamp)
+└─────────────────────────┘
+```
+
+### Price Row Typography
+
+| Element | Font size | Weight | Alignment |
+|---|---|---|---|
+| Prefix ("Now") | 20px | 700 | Baseline |
+| Dollar sign ("$") | 14px | 700 | Superscript (padding-bottom: 6px) |
+| Price ("169") | 24px | 700 | Baseline |
+| Cents ("98") | 14px | 700 | Superscript (padding-bottom: 8px) |
+| Suffix ("/mo") | 14px | 700 | Bottom-aligned |
+
+---
+
+## Composition Dependencies
+
+| Dependency | Role |
+|---|---|
+| `WCPFlag` | Badge overlay (top-left, scaled 0.75) |
+| `WCPHeartView` | Favorite toggle (top-right, `size="small"`, `calloutPosition="top"`) |
+| `PRODUCT_IMAGES` | Centralized product image URLs |
+
+---
+
+## Layout Specs
+
+| Property | Value |
+|---|---|
+| Tile background | `var(--ld-semantic-color-surface)` |
+| Border radius | `var(--ld-primitive-scale-borderradius-100, 8px)` |
+| Image height | `145px` |
+| Image padding | `24px 8px 8px` |
+| Body padding | `0 8px 8px` |
+| Body min-height | `72px` |
+| Name line clamp | `1` |
+
+---
+
+## Usage in Category Grids
+
+```tsx
+<div className={styles.productGrid}>
+  {products.map((product, i) => (
+    <WCPItemTile key={i} {...product} />
+  ))}
+</div>
+```
+
+```css
+.productGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 1fr;  /* ensures equal tile heights */
+  gap: 8px;
+}
+```
+
+---
+
+## Related
+
+- **Rule**: `guidelines/rules/RULE_ItemTile.mdc`
+- **Component Library**: `/component-library/item-tile`
+- **WCPFlag**: `guidelines/components/Flag.md` (if exists)
+- **WCPHeartView**: `client/components/walmart/WCPHeartView.tsx`
+- **Product Images**: `client/components/walmart/productImages.ts`

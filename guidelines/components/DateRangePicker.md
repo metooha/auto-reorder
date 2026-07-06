@@ -1,0 +1,74 @@
+---
+title: DateRangePicker
+scope: component
+status: stable
+owner: design-system
+last_updated: 2025-02-25
+---
+
+## Purpose
+
+The DateRangePicker provides a dual-calendar interface for selecting a start and end date, with Cancel and Apply action buttons.
+
+## Rules
+
+- **MUST** use the Living Design DateRangePicker component.
+- **MUST** implement both `onApply` and `onCancel` handlers.
+- **MUST NOT** override colors with hard-coded values.
+- **SHOULD** use `fromDate`/`toDate` to restrict selectable dates.
+- **SHOULD** use within a Popover or Dialog component.
+
+## Usage
+
+```tsx
+import { DateRangePicker, DateRange } from '@/components/ui/DateRangePicker';
+
+const [range, setRange] = useState<DateRange>();
+
+<DateRangePicker
+  value={range}
+  onApply={setRange}
+  onCancel={() => console.log('cancelled')}
+/>
+
+// With week numbers (Walmart weeks, Sat-Fri)
+<DateRangePicker
+  value={range}
+  onApply={setRange}
+  onCancel={handleCancel}
+  showWeekNumbers
+  weekStartsOn={6}
+/>
+
+// In a Popover
+<Popover open={isOpen} onOpenChange={setIsOpen}>
+  <PopoverTrigger><Button>Select Date Range</Button></PopoverTrigger>
+  <PopoverContent>
+    <DateRangePicker
+      value={range}
+      onApply={(r) => { setRange(r); setIsOpen(false); }}
+      onCancel={() => setIsOpen(false)}
+    />
+  </PopoverContent>
+</Popover>
+```
+
+### Selection Behavior
+
+1. First click sets start date (`from`).
+2. Second click sets end date (`to`). If before start, becomes new start.
+3. Third click starts a new range.
+4. Apply is disabled until both dates are selected.
+5. Cancel resets to original value.
+
+## Accessibility
+
+- Both calendars are fully keyboard navigable.
+- Apply button disabled when range is incomplete.
+- Date buttons have `aria-label` with full date and `aria-selected` when selected.
+
+## Related
+
+- [DatePicker API reference](../../design-system-docs/DatePicker.mdx)
+- [DatePickerCalendar](./DatePickerCalendar.md) for single calendar
+- [DateField](./DateField.md) for manual date entry

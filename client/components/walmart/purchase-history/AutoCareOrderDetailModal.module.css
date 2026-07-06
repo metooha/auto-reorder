@@ -1,0 +1,698 @@
+/* ── Full-screen overlay ───────────────────────────────────────────────────── */
+/* Sits above everything; the ResponsiveLayout inside renders the real chrome  */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--ld-semantic-z-index-modal, 1050);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--ld-semantic-color-surface, #ffffff);
+  animation: fadeIn 180ms ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   PAGE STRUCTURE — mirrors PurchaseHistory.module.css exactly
+   ════════════════════════════════════════════════════════════════════════════ */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  background: var(--ld-semantic-color-surface, #ffffff);
+  min-height: 100%;
+}
+
+/* Top section: breadcrumb + divider */
+.topSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.breadcrumbRow {
+  padding: 8px 16px;
+}
+
+/* Body layout: side nav left, main content right */
+.body {
+  display: flex;
+  flex: 1;
+  align-items: stretch;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+}
+
+/* Main content padding — same as PurchaseHistory .content */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 24px 40px;
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+  background: var(--ld-semantic-color-surface, #ffffff);
+  min-height: 100%;
+}
+
+/* Responsive — matches PurchaseHistory breakpoints */
+@media (max-width: 1023px) {
+  .body {
+    flex-direction: column;
+  }
+
+  .content {
+    padding: 16px;
+  }
+
+  /* Hide Print button on mobile */
+  .printBtn {
+    display: none;
+  }
+
+  /* Hide the | separator on mobile */
+  .orderNumPipe {
+    display: none;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   ORDER HEADER
+   ════════════════════════════════════════════════════════════════════════════ */
+
+.orderHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.orderHeaderLeft {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.orderDate {
+  font-family: var(--ld-semantic-font-display-large-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-display-large-size-b-s, 2rem);
+  font-weight: var(--ld-semantic-font-display-large-weight-alt, 700);
+  line-height: var(--ld-semantic-font-display-large-line-height-b-s, 2.5rem);
+  color: var(--ld-semantic-color-text);
+  margin: 0;
+}
+
+.orderNumHeader {
+  font-size: 14px;
+  color: var(--ld-semantic-color-text);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   TWO-COLUMN LAYOUT
+   ════════════════════════════════════════════════════════════════════════════ */
+
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  align-items: start;
+  gap: 20px;
+}
+
+@media (max-width: 1200px) {
+  .columns {
+    grid-template-columns: 1fr 300px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .columns {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    order: -1;
+  }
+}
+
+.mainCol {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   CONTENT CARDS
+   ════════════════════════════════════════════════════════════════════════════ */
+
+.card {
+  background: var(--ld-semantic-color-surface, #ffffff);
+  border: 1px solid var(--ld-semantic-color-separator);
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ── Appointment card ──────────────────────────────────────────────────────── */
+.fulfillmentRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.fulfillmentText {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.fulfillmentLabel {
+  font-size: 12px;
+  color: var(--ld-semantic-color-text-subtle);
+  line-height: 16px;
+}
+
+.fulfillmentSub {
+  font-size: 12px;
+  color: var(--ld-semantic-color-text-subtle);
+  line-height: 16px;
+}
+
+.apptHeading {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  margin: 0;
+  line-height: 1.25;
+}
+
+@media (max-width: 640px) {
+  .apptHeading {
+    font-size: 20px;
+  }
+}
+
+.apptProgress {
+  margin: 4px 0 8px;
+}
+
+.apptActions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* ── Section title ─────────────────────────────────────────────────────────── */
+.sectionTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  margin: 0;
+}
+
+/* ── Vehicle row ───────────────────────────────────────────────────────────── */
+.vehicleRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vehicleIcon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--ld-semantic-color-text-subtle);
+}
+
+.vehicleName {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  margin: 0;
+}
+
+/* ── Rich service item list ────────────────────────────────────────────────── */
+.serviceItemsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.serviceItemRow {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.serviceItemImage {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  border-radius: 6px;
+  border: 1px solid var(--ld-semantic-color-separator);
+  flex-shrink: 0;
+  background: var(--ld-semantic-color-fill-subtle);
+}
+
+.serviceItemImagePlaceholder {
+  width: 52px;
+  height: 52px;
+  border-radius: 6px;
+  border: 1px solid var(--ld-semantic-color-separator);
+  background: var(--ld-semantic-color-fill-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--ld-semantic-color-text-subtle);
+}
+
+.serviceItemBody {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+  min-width: 0;
+}
+
+.serviceItemName {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ld-semantic-color-text);
+  margin: 0;
+  line-height: 20px;
+}
+
+.serviceItemVariant {
+  font-size: 13px;
+  color: var(--ld-semantic-color-text-subtle);
+  margin: 0;
+  line-height: 18px;
+}
+
+.serviceItemMeta {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.serviceItemPrice {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+}
+
+.serviceItemCapacity {
+  font-size: 13px;
+  color: var(--ld-semantic-color-text-subtle);
+}
+
+.serviceItemNotes {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.serviceItemNote {
+  font-size: 12px;
+  color: var(--ld-semantic-color-text-subtle);
+  line-height: 18px;
+}
+
+/* ── Simple fallback service list ─────────────────────────────────────────── */
+.serviceList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.serviceItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--ld-semantic-color-text-subtle);
+  line-height: 20px;
+}
+
+.serviceItem::before {
+  content: '';
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--ld-semantic-color-text-subtle);
+  flex-shrink: 0;
+}
+
+/* ── Service instructions collapsible ──────────────────────────────────────── */
+.instructionsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.instructionsToggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--ld-semantic-color-text);
+}
+
+.instructionsLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ld-semantic-color-text);
+}
+
+.instructionsText {
+  font-size: 13px;
+  color: var(--ld-semantic-color-text-subtle);
+  margin: 0;
+  line-height: 1.6;
+  padding: 10px 12px;
+  background: var(--ld-semantic-color-fill-subtle);
+  border-radius: 6px;
+  border: 1px solid var(--ld-semantic-color-separator);
+}
+
+/* ── Appointment details card rows ─────────────────────────────────────────── */
+.apptDetailsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.apptDetailRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--ld-semantic-color-separator);
+}
+
+.apptDetailRow:first-child {
+  padding-top: 4px;
+}
+
+.apptDetailRow:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.apptDetailContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.apptDetailLabel {
+  font-size: 12px;
+  color: var(--ld-semantic-color-text-subtle);
+  line-height: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+
+.apptDetailValue {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ld-semantic-color-text);
+  line-height: 20px;
+}
+
+.apptDetailSub {
+  font-size: 13px;
+  color: var(--ld-semantic-color-text-subtle);
+  line-height: 18px;
+}
+
+/* ── Help rows ─────────────────────────────────────────────────────────────── */
+.helpList {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--ld-semantic-color-separator);
+  margin-top: 4px;
+}
+
+.helpRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 0;
+  border: none;
+  border-bottom: 1px solid var(--ld-semantic-color-separator);
+  background: none;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--ld-semantic-color-text);
+  cursor: pointer;
+  text-align: left;
+  transition: color 120ms;
+}
+
+.helpRow:last-child {
+  border-bottom: none;
+}
+
+.helpRow:hover {
+  color: var(--ld-semantic-color-action-fill-primary);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   SIDEBAR
+   ════════════════════════════════════════════════════════════════════════════ */
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: sticky;
+  top: 20px;
+}
+
+.sideCard {
+  background: var(--ld-semantic-color-surface, #ffffff);
+  border: 1px solid var(--ld-semantic-color-separator);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ── Sidebar sections ──────────────────────────────────────────────────────── */
+.sideSection {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 14px;
+  border-top: 1px solid var(--ld-semantic-color-separator);
+}
+
+.sideSectionTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  margin: 0;
+}
+
+.sideSectionContent {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.sideText {
+  font-size: 14px;
+  color: var(--ld-semantic-color-text);
+  margin: 0;
+}
+
+.sideTextSub {
+  font-size: 13px;
+  color: var(--ld-semantic-color-text-subtle);
+  margin: 2px 0 0;
+}
+
+/* ── Pricing lines ─────────────────────────────────────────────────────────── */
+.pricingLines {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.priceLine {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--ld-semantic-color-text);
+}
+
+.priceLineLabel { flex: 1; }
+.priceLineValue { flex-shrink: 0; }
+
+.priceTotal {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--ld-semantic-color-separator);
+}
+
+.priceTotalLabel,
+.priceTotalValue {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+}
+
+/* ── Temporary adjusted total ──────────────────────────────────────────────── */
+.priceAdjusted {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 10px;
+  border-top: 1px solid var(--ld-semantic-color-separator);
+}
+
+.priceAdjustedRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.priceAdjustedLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ld-semantic-color-text);
+  display: inline-flex;
+  align-items: center;
+}
+
+.priceAdjustedValue {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  flex-shrink: 0;
+}
+
+.priceAdjustedNote {
+  font-size: 12px;
+  color: var(--ld-semantic-color-text-subtle);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ── Charge history ────────────────────────────────────────────────────────── */
+.chargeHistoryRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 0 0;
+  border: none;
+  border-top: 1px solid var(--ld-semantic-color-separator);
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+}
+
+.chargeHistoryRow:hover { opacity: 0.8; }
+
+.chargeHistoryText {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.chargeHistoryTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ld-semantic-color-text);
+}
+
+.chargeHistorySub {
+  font-size: 12px;
+  color: var(--ld-semantic-color-text-subtle);
+}
+
+/* ── Order number + barcode ────────────────────────────────────────────────── */
+.orderNumSide {
+  font-size: 13px;
+  color: var(--ld-semantic-color-text);
+  margin: 0;
+  font-family: var(--ld-semantic-font-family-mono, 'Courier New', monospace);
+}
+
+.barcode {
+  height: 56px;
+  width: 100%;
+  border-radius: 2px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    #1a1a1a 0px,  #1a1a1a 2px,
+    transparent   2px,  transparent   5px,
+    #1a1a1a 5px,  #1a1a1a 6px,
+    transparent   6px,  transparent   8px,
+    #1a1a1a 8px,  #1a1a1a 11px,
+    transparent   11px, transparent   13px,
+    #1a1a1a 13px, #1a1a1a 14px,
+    transparent   14px, transparent   17px,
+    #1a1a1a 17px, #1a1a1a 20px,
+    transparent   20px, transparent   22px,
+    #1a1a1a 22px, #1a1a1a 23px,
+    transparent   23px, transparent   27px,
+    #1a1a1a 27px, #1a1a1a 29px,
+    transparent   29px, transparent   31px,
+    #1a1a1a 31px, #1a1a1a 33px,
+    transparent   33px, transparent   36px,
+    #1a1a1a 36px, #1a1a1a 37px,
+    transparent   37px, transparent   40px,
+    #1a1a1a 40px, #1a1a1a 42px,
+    transparent   42px, transparent   45px,
+    #1a1a1a 45px, #1a1a1a 47px,
+    transparent   47px, transparent   48px,
+    #1a1a1a 48px, #1a1a1a 51px,
+    transparent   51px, transparent   54px,
+    #1a1a1a 54px, #1a1a1a 55px,
+    transparent   55px, transparent   58px,
+    #1a1a1a 58px, #1a1a1a 60px,
+    transparent   60px, transparent   62px,
+    #1a1a1a 62px, #1a1a1a 64px,
+    transparent   64px, transparent   67px
+  );
+  background-size: 67px 100%;
+}

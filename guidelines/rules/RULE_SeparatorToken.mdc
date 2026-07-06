@@ -1,0 +1,110 @@
+---
+description: Separator Token Rule
+globs:
+alwaysApply: true
+---
+
+## Rule: Use `--ld-semantic-color-separator` for All Divider Lines
+
+**Enforcement level: CRITICAL — NO EXCEPTIONS**
+
+---
+
+### When This Rule Applies
+
+Use the separator token any time you need a:
+
+- Horizontal or vertical divider line between sections
+- Table row border (`border-bottom` on `<tr>` or `<td>`)
+- Card outline where the card acts as a container (not an interactive element)
+- Section separator inside a panel, drawer, or page
+- Subtle border on a preview frame or documentation card
+
+---
+
+### The Tokens
+
+| Use case | Token | Resolved value |
+|---|---|---|
+| **Dividers, separators, table rows** | `--ld-semantic-color-separator` | gray-20 `#e3e4e5` — light, true separator |
+| **Interactive component borders** (inputs, interactive cards) | `--ld-semantic-color-border-strong` | medium-contrast border |
+| **Field borders** | `--ld-semantic-color-field-border` | field-specific border |
+
+---
+
+### Quick Check
+
+```css
+/* ❌ WRONG — border-subtle resolves to gray-130 (#515357), near-black — too dark for dividers */
+border-bottom: 1px solid var(--ld-semantic-color-border-subtle, #515357);
+border-bottom: 1px solid var(--ld-semantic-color-border-subtle, #e6e6e8);
+border-bottom: 1px solid var(--ld-semantic-color-border-subtle, #F1F1F2);
+
+/* ✅ CORRECT — separator resolves to gray-20 (#e3e4e5) — correct light divider */
+border-bottom: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+```
+
+```tsx
+/* ❌ WRONG — hardcoded light gray that bypasses theming */
+<div style={{ borderBottom: '1px solid #e6e6e8' }} />
+
+/* ✅ CORRECT */
+<div style={{ borderBottom: '1px solid var(--ld-semantic-color-separator, #e3e4e5)' }} />
+```
+
+```css
+/* ❌ WRONG — for a section divider bar */
+.divider {
+  background: var(--ld-semantic-color-border-subtle, #e6e6e8);
+}
+
+/* ✅ CORRECT */
+.divider {
+  background: var(--ld-semantic-color-separator, #e3e4e5);
+}
+```
+
+---
+
+### When to Use `border-subtle` (it still has a purpose)
+
+`--ld-semantic-color-border-subtle` is reserved for **interactive component borders** where a clearly visible, medium-contrast border is appropriate — **not** for dividers:
+
+- Input/text field borders (prefer `--ld-semantic-color-field-border`)
+- Dropdown container outlines
+- A card that a user can click or hover (interactive card frame)
+- Dividers **inside** a component where the design spec explicitly calls for border-subtle
+
+---
+
+### Why This Matters
+
+`--ld-semantic-color-border-subtle` has inconsistent fallback values in the codebase (some use `#515357` which is near-black, others use `#e6e6e8` which is light gray). This inconsistency causes visual bugs — the divider may render too dark in some themes.
+
+`--ld-semantic-color-separator` always resolves to gray-20 (`#e3e4e5`) — a light, unambiguous separator color that works across all themes.
+
+---
+
+### Files Updated in Initial Sweep (2025-03-01)
+
+All `border-subtle` usages in divider/table-row contexts were migrated to `separator`:
+
+- `client/pages/component-library/OnboardingQuiz.module.css` — progress dot background
+- `client/pages/component-library/ProgressIndicator.tsx` — 6 table row borders
+- `client/pages/component-library/Icons.tsx` — icon card border + hover reset
+- `client/pages/component-library/WCPFlag.tsx` — 5 card/table borders
+- `client/pages/component-library/Overview.tsx` — theme card border
+- `client/components/ComponentLibraryLayout.module.css` — back-to-home divider
+
+---
+
+### Pre-Completion Grep Check
+
+Run this before marking any component or page task as done:
+
+```bash
+# Find any remaining border-subtle in divider/separator contexts
+grep -rn "border-subtle" client/pages/ client/components/ --include="*.css" --include="*.tsx"
+```
+
+Flag any result where the element is a **section divider, table row, or preview card border** — those must use `separator`.

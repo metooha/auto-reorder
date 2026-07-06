@@ -1,0 +1,1431 @@
+/* ============================================================
+   ReplenishFlow — Full-page overlay for basket editing
+   ============================================================ */
+
+/* Overlay backdrop */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: var(--ld-semantic-color-surface-brand, #D9E9FF);
+  display: flex;
+  flex-direction: column;
+  /* Do NOT use overflow:hidden — that clips card box-shadows.
+     Inner scroll containers (.cardScroll) handle their own overflow. */
+  overflow: clip;
+
+  /* Slide-up enter animation */
+  animation: overlayEnter 300ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.overlay.exiting {
+  animation: overlayExit 250ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+@keyframes overlayEnter {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+@keyframes overlayExit {
+  from { transform: translateY(0);    opacity: 1; }
+  to   { transform: translateY(100%); opacity: 0; }
+}
+
+/* ============================================================
+   Status bar wrapper — brand bg so icons stay on brand color
+   ============================================================ */
+.statusBarWrap {
+  flex-shrink: 0;
+  background: transparent;
+}
+
+/* ============================================================
+   Home indicator (iOS) / gesture bar (Android)
+   ============================================================ */
+.homeIndicator {
+  flex-shrink: 0;
+  height: 34px;
+  background: var(--ld-semantic-color-surface-brand, #D9E9FF);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.homeIndicator::after {
+  content: '';
+  width: 134px;
+  height: 5px;
+  background: var(--ld-semantic-color-text, #2E2F32);
+  border-radius: 9999px;
+  opacity: 0.2;
+}
+
+.androidNavBar {
+  flex-shrink: 0;
+  height: 24px;
+  background: var(--ld-semantic-color-surface-brand, #D9E9FF);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.androidGestureBar {
+  width: 134px;
+  height: 4px;
+  background: var(--ld-semantic-color-text, #2E2F32);
+  border-radius: 9999px;
+  opacity: 0.15;
+}
+
+/* ============================================================
+   Section wrapper (horizontal padding)
+   ============================================================ */
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--ld-primitive-scale-space-200, 16px);
+  padding: 16px var(--ld-primitive-scale-space-200, 16px) 0;
+  flex: 1 1 0;
+  /* overflow visible so card box-shadows are not clipped */
+  overflow: visible;
+  min-height: 0;
+  width: 100%;
+}
+
+/* ============================================================
+   Header row
+   ============================================================ */
+.headerWrap {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  flex-shrink: 0;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  align-self: stretch;
+  flex-shrink: 0;
+}
+
+.headerText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  flex: 1 0 0;
+}
+
+.headerMagicIcon {
+  color: var(--ld-semantic-color-fill-activated, #0071DC);
+  flex-shrink: 0;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+.headerTitle {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
+  font-family: var(--ld-semantic-font-heading-medium-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-heading-medium-size-b-s, 1.25rem);
+  font-weight: var(--ld-semantic-font-heading-medium-weight-default, 700);
+  line-height: var(--ld-semantic-font-heading-medium-line-height-b-s, 1.75rem);
+  color: var(--ld-semantic-color-text, #2E2F32);
+  align-self: stretch;
+}
+
+.headerSubtitle {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 400;
+  line-height: var(--ld-semantic-font-body-small-lineheight, 1.43);
+  color: var(--ld-semantic-color-text, #2E2F32);
+  padding-right: 16px;
+}
+
+.headerSubtitle span {
+  text-decoration: underline;
+}
+
+/* Close button (floating pill style from Figma) */
+.closeBtn {
+  display: flex;
+  width: 32px;
+  height: 32px;
+  padding: var(--ld-primitive-scale-space-100, 8px);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 9999px;
+  background: var(--ld-semantic-color-action-fill-secondary, #fff);
+  box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.10), 0 1px 2px 1px rgba(0, 0, 0, 0.15);
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.closeBtn:hover {
+  background: var(--ld-semantic-color-action-fill-secondary-hovered, #f5f5f5);
+}
+
+/* ============================================================
+   Product card (white rounded card)
+   ============================================================ */
+.productCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 4px 19.6px 0 rgba(204, 217, 247, 0.25);
+  overflow: hidden;
+  position: relative;
+  flex: 1 1 0;
+  min-height: 0;
+  opacity: 1;
+}
+
+/* Loading state: no flex-grow */
+.productCardLoading {
+  flex: 0 0 auto;
+  overflow: visible;
+}
+
+/* ============================================================
+   Delivery time banner (top of card scroll)
+   ============================================================ */
+.deliveryBanner {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px;
+  min-height: 44px;
+  background: var(--wcp-semantic-color-fill-status, #fff200);
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+.deliveryBannerIcon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+.deliveryBannerText {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 400;
+  line-height: var(--ld-semantic-font-body-small-lineheight, 1.43);
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+/* ============================================================
+   Scrollable content area inside the product card
+   ============================================================ */
+.cardScroll {
+  flex: 1 1 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.cardScroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Scroll fade-out at bottom */
+.cardScrollFade {
+  pointer-events: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.85) 100%
+  );
+  border-radius: 0 0 24px 24px;
+}
+
+/* ============================================================
+   2-column condensed grid
+   ============================================================ */
+.condensedGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-content: center;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+  padding: var(--ld-primitive-scale-space-200, 16px) var(--ld-primitive-scale-space-200, 16px);
+  width: 100%;
+  transition: gap 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* 2-column edit grid */
+.editGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--ld-primitive-scale-space-100, 8px);
+  padding: var(--ld-primitive-scale-space-200, 16px) var(--ld-primitive-scale-space-200, 16px) 48px;
+  width: 100%;
+  transition: gap 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* ============================================================
+   Est. total row (inside card, above footer overlay)
+   ============================================================ */
+.totalRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px 12px;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.totalLeft {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  flex: 1 0 0;
+}
+
+.totalLabel {
+  font-family: var(--ld-semantic-font-body-medium-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+.totalCount {
+  font-family: var(--ld-semantic-font-body-medium-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: 400;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+.totalColon {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 400;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+.totalAmount {
+  font-family: var(--ld-semantic-font-body-medium-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+/* ============================================================
+   "View other items you might need" separate sticky section
+   ============================================================ */
+.viewOtherItemsSection {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  /* footer sits above this at z-index 3 */
+  width: 100%;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.viewOtherItemsRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--ld-semantic-color-surface, #fff);
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  text-align: left;
+  min-height: 48px;
+}
+
+.viewOtherItemsRow:hover {
+  background: var(--ld-semantic-color-fill-subtle, #f8f8f8);
+}
+
+.viewOtherItemsLabel {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+/* ============================================================
+   Footer area — always reserves space so the card doesn't resize
+   ============================================================ */
+.footerArea {
+  position: relative;
+  flex-shrink: 0;
+  align-self: stretch;
+  z-index: 3;
+}
+
+/* ============================================================
+   Floating footer bar (glass pill with buttons)
+   ============================================================ */
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  align-self: stretch;
+  padding-bottom: var(--ld-primitive-scale-space-200, 16px);
+  flex-shrink: 0;
+  animation: footerSlideUp 350ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.footerHidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@keyframes footerSlideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.footerBar {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 12px;
+  gap: 8px;
+  border-radius: 24px;
+  background: var(--ld-semantic-color-surface-overlay, rgba(255, 255, 255, 0.92));
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  box-shadow:
+    0 2px 20px 2px rgba(53, 53, 53, 0.05) inset,
+    1px 0.5px 0 0 rgba(255, 255, 255, 0.60) inset,
+    -1px -1px 0 0 rgba(255, 255, 255, 0.40) inset,
+    0 0 5px 0 rgba(255, 255, 255, 0.15) inset,
+    0 2px 30px 0 rgba(0, 0, 0, 0.05),
+    0 8px 72px -5px rgba(0, 0, 0, 0.10);
+}
+
+.footerSummaryRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px;
+}
+
+.footerItemCount {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 400;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+.footerSubtotal {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+.footerActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+/* Primary button in footer fills available space */
+.footerBar > button:last-child {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ============================================================
+   Loading screen: skeleton pill button
+   ============================================================ */
+.skeletonPill {
+  display: flex;
+  width: 100%;
+  padding: var(--ld-primitive-scale-space-150, 12px);
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 60px;
+  background: var(--ld-semantic-color-surface, #fff);
+  box-shadow:
+    0 0 5px 0 rgba(255, 255, 255, 0.15) inset,
+    0 2px 20px 2px rgba(53, 53, 53, 0.05) inset,
+    0 2px 30px 0 rgba(0, 0, 0, 0.05),
+    0 8px 72px -5px rgba(0, 0, 0, 0.10);
+}
+
+.skeletonBar {
+  height: 32px;
+  flex: 1;
+  border-radius: 9999px;
+  background: var(--ld-semantic-color-loading-magic-subtle, #E9F1FE);
+  overflow: hidden;
+  position: relative;
+}
+
+.skeletonBar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    var(--ld-semantic-color-loading-magic-subtle, #E9F1FE) 14.62%,
+    var(--ld-semantic-color-loading-magic, #3D90EC) 49.95%,
+    var(--ld-semantic-color-loading-magic-subtle, #E9F1FE) 85.28%
+  );
+  animation: shimmer 1.8s linear infinite;
+  transform: translateX(-100%);
+}
+
+@keyframes shimmer {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(200%); }
+}
+
+/* ============================================================
+   Loading screen: StepAnimation positioning
+   ============================================================ */
+.stepAnimationWrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+/* ============================================================
+   Opt-in card (1.3) — slides up from bottom
+   ============================================================ */
+.optinCard {
+  margin: 0;
+  padding: var(--ld-primitive-scale-space-200, 16px);
+  border-radius: 24px;
+  background: var(--ld-semantic-color-surface, #fff);
+  box-shadow: 0 -4px 20px 0 rgba(0, 0, 0, 0.08), 0 4px 20px 0 rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-200, 16px);
+  flex-shrink: 0;
+  animation: cardSlideUp 300ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes cardSlideUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.optinHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-150, 12px);
+}
+
+.optinIconWrap {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--ld-semantic-color-surface-brand, #D9E9FF);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--ld-semantic-color-text-brand, #0071DC);
+  overflow: hidden;
+}
+
+.optinIconImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.optinTextBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.optinTitle {
+  font-family: var(--ld-semantic-font-body-medium-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+.optinSubtitle {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 400;
+  color: var(--ld-semantic-color-text-subtle, #51535A);
+}
+
+.optinCtas {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ============================================================
+   Terms card (1.4)
+   ============================================================ */
+.termsCard {
+  margin: 0;
+  padding: var(--ld-primitive-scale-space-200, 16px);
+  border-radius: 24px;
+  background: var(--ld-semantic-color-surface, #fff);
+  box-shadow: 0 -4px 20px 0 rgba(0, 0, 0, 0.08), 0 4px 20px 0 rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-200, 16px);
+  flex-shrink: 0;
+  animation: cardSlideUp 300ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.termsTitle {
+  font-family: var(--ld-semantic-font-body-medium-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+.termsBody {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--ld-semantic-color-text-subtle, #51535A);
+}
+
+.termsCtas {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ============================================================
+   Screen-level layout wrappers
+   ============================================================ */
+.screenContent {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-height: 0;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+  overflow: visible;
+  width: 100%;
+  position: relative;
+}
+
+/* Screens that have a bottom card (optin/terms): constrain the grid card */
+.screenWithCard {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-height: 0;
+  gap: 0;
+  overflow: visible;
+}
+
+.screenWithCardGrid {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.screenWithCardFooter {
+  flex-shrink: 0;
+  padding-bottom: var(--ld-primitive-scale-space-200, 16px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-200, 16px);
+}
+
+/* ============================================================
+   Inline footer card wrapper (overlays the product card from bottom)
+   ============================================================ */
+.inlineFooterCard {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-bottom: var(--ld-primitive-scale-space-200, 16px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-200, 16px);
+  animation: cardSlideUp 300ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  z-index: 1;
+}
+
+/* ============================================================
+   Need Anything Else Screen — Smart Recurring Deliveries Opt-in
+   Slides in from the right when opened
+   ============================================================ */
+
+@keyframes slideInFromRight {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+
+@keyframes slideOutToRight {
+  from { transform: translateX(0); }
+  to   { transform: translateX(100%); }
+}
+
+.naSection {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+  /* Blue gradient background — matches Figma */
+  background:
+    linear-gradient(0deg, rgba(255, 255, 255, 0) 47.6%, rgba(255, 255, 255, 0.80) 97.95%),
+    linear-gradient(0deg, rgba(240, 245, 255, 0.80) -42.23%, rgba(226, 235, 252, 0.80) 100%),
+    #C9DCFD;
+  animation: slideInFromRight 350ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.naSectionExiting {
+  animation: slideOutToRight 320ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+/* ── Page-style NA screen (matches "Want to get these this week?" design) ── */
+.naSectionPage {
+  /* Override blue gradient — use the standard brand background */
+  background: var(--ld-semantic-color-surface-brand, #D9E9FF);
+  padding: 0;
+}
+
+.naPageHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 16px 12px;
+  flex-shrink: 0;
+}
+
+/* Floating shadow pill — matches the main header close button style */
+.naBackBtn {
+  background: var(--ld-semantic-color-surface, #fff) !important;
+  box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.10), 0 1px 2px 1px rgba(0, 0, 0, 0.15) !important;
+  border: none !important;
+  flex-shrink: 0;
+}
+
+.naPageHeaderText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.naPageTitle {
+  font-family: var(--ld-semantic-font-heading-medium-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-heading-medium-size-b-s, 1.25rem);
+  font-weight: var(--ld-semantic-font-heading-medium-weight-default, 700);
+  line-height: var(--ld-semantic-font-heading-medium-line-height-b-s, 1.75rem);
+  color: var(--ld-semantic-color-text-brand-bold, #001E60);
+}
+
+.naPageSubtitle {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 400;
+  line-height: 1.43;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+.naPageContent {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 4px 16px 16px;
+}
+
+.naPageContent::-webkit-scrollbar { display: none; }
+
+/* Group card wrapping all category sections */
+.naGroupCard {
+  background: var(--ld-semantic-color-surface, #fff);
+  border-radius: 16px;
+  overflow: clip; /* clips visual overflow for rounded corners, but doesn't block child scroll events */
+  box-shadow: 0 4px 19.6px 0 rgba(204, 217, 247, 0.25);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Category section (inside the group card) */
+.naCategory {
+  padding: 16px 0 16px 16px;
+}
+
+/* Divider between category sections */
+.naCategory + .naCategory {
+  border-top: 1px solid var(--ld-semantic-color-separator, #EAEBEE);
+}
+
+.naCategoryTitle {
+  font-family: var(--ld-semantic-font-body-medium-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2E2F32);
+  margin: 0 0 12px;
+  padding-right: 16px;
+}
+
+/* Horizontal scroll row */
+.naCategoryScroll {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 0 16px 4px 0;
+}
+
+.naCategoryScroll::-webkit-scrollbar { display: none; }
+
+.naCategoryItem {
+  flex: 0 0 auto;
+  width: 140px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.naOriginalPrice {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 400;
+  color: var(--ld-semantic-color-text-subtle, #51535A);
+  text-decoration: line-through;
+}
+
+.naLastBought {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 400;
+  color: var(--ld-semantic-color-text-info-bold, #001E60);
+}
+
+.naLowStock {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 400;
+  color: var(--ld-semantic-color-text-warning, #8A6500);
+}
+
+/* Footer area for the NA page — sits below content, transparent */
+.naPageFooterArea {
+  flex-shrink: 0;
+  padding: 16px 16px 0;
+  background: transparent;
+}
+
+/* ============================================================
+   Delivery Details Screen
+   ============================================================ */
+
+.ddSection {
+  /* Inherits gradient from .naSection — no background override */
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Header */
+.ddHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 16px 16px 12px;
+  flex-shrink: 0;
+  background: transparent;
+  border-bottom: none;
+}
+
+.ddHeaderText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.ddHeaderTitle {
+  font-family: var(--ld-semantic-font-heading-medium-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-heading-medium-size-b-s, 1.25rem);
+  font-weight: var(--ld-semantic-font-heading-medium-weight-default, 700);
+  line-height: var(--ld-semantic-font-heading-medium-line-height-b-s, 1.75rem);
+  color: var(--ld-semantic-color-text-brand-bold, #001E60);
+}
+
+.ddHeaderSubtitle {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 400;
+  color: var(--ld-semantic-color-text-subtle, #51535A);
+}
+
+/* Scrollable body */
+.ddBody {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 8px 16px 180px; /* extra bottom padding so content clears the floating footer */
+  background: transparent;
+}
+
+.ddBody::-webkit-scrollbar { display: none; }
+
+/* Error alert wrapper */
+.ddErrorAlert {
+  display: block;
+}
+
+/* Inline links inside the error alert should match the alert's text color */
+.ddErrorAlert a,
+.ddErrorAlert a:hover,
+.ddErrorAlert a:active,
+.ddErrorAlert a:visited,
+.ddErrorAlert a:focus,
+.ddErrorAlert a:focus-visible {
+  color: inherit;
+}
+
+.ddPrefError {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ld-semantic-color-text-error, #B91C1C);
+}
+
+/* Delivery banner (yellow) */
+.ddBanner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--wcp-semantic-color-fill-status, #fff200);
+  border-radius: 12px;
+}
+
+.ddBannerIcon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+.ddBannerText {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 400;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+/* White cards */
+.ddCard {
+  background: var(--ld-semantic-color-surface, #fff);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.06);
+}
+
+.ddCardTitle {
+  font-family: var(--ld-semantic-font-body-medium-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+/* Title row that includes a trailing chevron and acts as the card's tap
+   target — used by the Delivery preferences card. */
+.ddCardTitleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  color: inherit;
+}
+
+.ddCardSubtitle {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 400;
+  color: var(--ld-semantic-color-text-subtle, #51535A);
+  margin-top: -4px;
+}
+
+/* Divider */
+.ddDivider {
+  height: 1px;
+  background: var(--ld-semantic-color-separator, #EAEBEE);
+  margin: 4px 0;
+}
+
+/* Delivery pref rows */
+.ddPrefRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+}
+
+.ddPrefRows {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.ddPrefItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.ddPrefIcon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--ld-semantic-color-icon-brand, #0053E2);
+  margin-top: 2px;
+}
+
+.ddInhomeIcon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: block;
+}
+
+.ddPrefText {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.ddPrefLabel {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+.ddPrefSub {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 400;
+  color: var(--ld-semantic-color-text-subtle, #51535A);
+}
+
+.ddChevron {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--ld-semantic-color-fg-primary, #1a1a1a);
+}
+
+/* Associate discount row (shown only in associate-discount variant) */
+.ddAssociateRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+}
+
+.ddAssociateBadge {
+  width: 32px;
+  height: 20px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ld-semantic-color-action-primary-default, #0071dc);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 4px;
+  letter-spacing: 0.02em;
+}
+
+/* Payment rows */
+.ddPayRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+}
+
+.ddPayLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.ddPayCard {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ddPayCardIcon {
+  width: 28px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+.ddVisaLogo {
+  width: 36px;
+  height: 24px;
+  flex-shrink: 0;
+  object-fit: contain;
+  display: block;
+}
+
+.ddTipEmoji {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.ddPayCardLabel {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+.ddPaySub {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 400;
+  color: var(--ld-semantic-color-text-subtle, #51535A);
+}
+
+/* Terms */
+.ddTermsBody {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--ld-semantic-color-text, #2E2F32);
+  margin: 0;
+}
+
+.ddTermsErrorBanner {
+  margin-bottom: 10px;
+  animation: cardSlideUp 200ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.ddTermsCheck {
+  margin-top: 4px;
+}
+
+/* Text updates */
+.ddTextRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ddLegal {
+  font-family: var(--ld-semantic-font-caption-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-caption-size, 12px);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--ld-semantic-color-text-subtle, #51535A);
+  margin: 0;
+}
+
+.ddLegal a {
+  color: var(--ld-semantic-color-text-subtle, #51535A);
+}
+
+/* Bold the phone-number label after the user changes it */
+.ddTextRowChanged label > span {
+  font-weight: 700;
+}
+
+/* Order summary card */
+.ddSummaryCard {
+  background: var(--ld-semantic-color-surface, #fff);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.06);
+}
+
+.ddSummaryRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ddSummaryLabel {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 400;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+.ddSummaryValue {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 400;
+  color: var(--ld-semantic-color-text, #2E2F32);
+  white-space: nowrap;
+}
+
+.ddSheetBody {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  color: var(--ld-semantic-color-text-subtle, #51535A);
+  margin: 0 0 16px;
+}
+
+.ddSummaryStrike {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 400;
+  color: var(--ld-semantic-color-text-subtle, #51535A);
+  white-space: nowrap;
+  text-decoration: line-through;
+}
+
+.ddSummarySavings {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 400;
+  color: var(--ld-semantic-color-text-success, #1A6E30);
+}
+
+.ddSummarySubtotalRow {
+  justify-content: flex-end;
+}
+
+.ddSummarySubtotal {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+.ddSummaryMeta {
+  font-family: var(--ld-semantic-font-caption-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-caption-size, 12px);
+  color: var(--ld-semantic-color-text-subtle, #51535A);
+}
+
+.ddSummaryTotalRow {
+  align-items: center;
+}
+
+.ddSummaryTotal {
+  font-family: var(--ld-semantic-font-body-large-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-large-size, 18px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+.ddInfoRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+.ddAdjustedNote {
+  font-family: var(--ld-semantic-font-caption-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-caption-size, 12px);
+  line-height: 1.5;
+  color: var(--ld-semantic-color-text-subtle, #51535A);
+  margin: 0;
+}
+
+/* Sticky footer — rendered as a sibling of .naSection so it doesn't
+   slide with the screen transition. Positioned absolute against the
+   overlay so the .ddFooterBar's translucent backdrop blur reveals
+   body content scrolling behind it. */
+:global(body:has([data-replenish-floating-footer]) [role="status"][aria-live="polite"]) {
+  bottom: calc(128px + var(--ld-primitive-scale-space-200, 16px) + var(--ld-primitive-scale-space-200, 16px));
+}
+
+.ddFooter {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 8px 16px 16px;
+  background: transparent;
+  border-top: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.ddFooter > * {
+  pointer-events: auto;
+}
+
+.ddFooterBar {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 12px;
+  gap: 10px;
+  border-radius: 24px;
+  background: var(--ld-semantic-color-surface-overlay, rgba(255, 255, 255, 0.92));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    0 2px 20px 2px rgba(53, 53, 53, 0.05) inset,
+    1px 0.5px 0 0 rgba(255, 255, 255, 0.60) inset,
+    -1px -1px 0 0 rgba(255, 255, 255, 0.40) inset,
+    0 0 5px 0 rgba(255, 255, 255, 0.15) inset,
+    0 4px 24px 0 rgba(0, 46, 153, 0.18),
+    0 8px 40px 0 rgba(0, 113, 220, 0.14),
+    0 16px 72px -5px rgba(0, 30, 96, 0.22);
+}
+
+.ddFooterLegal {
+  font-family: var(--ld-semantic-font-caption-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-caption-size, 12px);
+  line-height: 1.5;
+  color: var(--ld-semantic-color-text-subtle, #51535A);
+  text-align: center;
+  margin: 0;
+}
+
+/* ============================================================
+   Responsive: on wider screens, center the overlay like a modal
+   ============================================================ */
+/* Overlay is always full-bleed; tile sizing is handled by grid + tile max-width */
+
+/* ============================================================
+   Reduced motion overrides
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .naSection,
+  .naSectionExiting {
+    animation-duration: 0ms;
+  }
+}
+
+/* ============================================================
+   Tile animation classes (used by MainScreen state machine)
+   ============================================================ */
+
+.tileShrinkAnim {
+  transform: scale(0.88);
+  transition: transform 0.175s ease-out;
+}
+
+.tileBounceIn {
+  animation: tileBounce 480ms cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+  animation-delay: var(--item-delay, 0ms);
+}
+
+@keyframes tileBounce {
+  0%   { transform: scale(0.6); opacity: 0; }
+  50%  { transform: scale(1.08); opacity: 1; }
+  70%  { transform: scale(0.96); opacity: 1; }
+  85%  { transform: scale(1.03); opacity: 1; }
+  100% { transform: scale(1.0);  opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .overlay.exiting,
+  .optinCard,
+  .termsCard,
+  .footer,
+  .inlineFooterCard,
+  .naSection,
+  .naFooter,
+  .tileShrinkAnim,
+  .tileBounceIn {
+    animation-duration: 0ms;
+    transition-duration: 0ms;
+  }
+
+  .skeletonBar::after {
+    animation: none;
+  }
+}

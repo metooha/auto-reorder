@@ -1,0 +1,40 @@
+---
+description: [One-line summary of what this rule enforces]
+globs:
+alwaysApply: false
+---
+
+## Purpose
+
+[What problem does this rule solve and when does it apply?]
+
+---
+
+## The Rule
+
+[Core rule content here]
+
+---
+
+## Examples
+
+### Correct
+
+
+// ✅ CORRECT
+[Good example]
+```
+
+### Wrong
+
+```tsx
+// ❌ WRONG
+[Bad example]
+```
+
+---
+
+## Checklist
+
+- [ ] [Verification step 1]
+- [ ] [Verification step 2]

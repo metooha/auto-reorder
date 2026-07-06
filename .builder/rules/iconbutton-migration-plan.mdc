@@ -1,0 +1,105 @@
+---
+description: IconButton migration plan to replace custom icon buttons with LD IconButton
+alwaysApply: false
+---
+## Purpose
+
+Replace all custom icon button implementations with `IconButton` from `@/components/ui/IconButton`.
+
+## Rule
+
+NEVER use a raw `<button>` with a manual icon and `p-1 hover:bg-gray-100 rounded-full` pattern. ALWAYS use `IconButton`.
+
+## Usage
+
+```tsx
+import { IconButton } from '@/components/ui/IconButton';
+
+// ghost (default) — info tooltips, close buttons, menu toggles
+<IconButton aria-label="Close dialog" variant="ghost" size="medium">
+  <CloseIcon />
+</IconButton>
+
+// destructive — delete/remove actions
+<IconButton aria-label="Delete item" variant="destructive" size="small">
+  <TrashIcon />
+</IconButton>
+```
+
+**Variants**: `ghost` | `primary` | `secondary` | `tertiary` | `destructive`
+
+**Sizes**: `small` (24px) | `medium` (32px) | `large` (40px)
+
+**Required prop**: `aria-label` — always descriptive ("Close dialog", not "X")
+
+**Icon SVGs**: must use `fill="currentColor"` or `stroke="currentColor"`, not hard-coded colors.
+
+## Migration Pattern
+
+```tsx
+// WRONG
+<button className="p-1 hover:bg-gray-100 rounded-full transition-colors">
+  <svg width="16" height="16" viewBox="0 0 16 16">
+    <path d="..." fill="#515357"/>
+  </svg>
+</button>
+
+// CORRECT
+<IconButton aria-label="Descriptive action" variant="ghost" size="small">
+  <svg width="16" height="16" viewBox="0 0 16 16">
+    <path d="..." fill="currentColor"/>
+  </svg>
+</IconButton>
+```
+
+## Find Violations
+
+```bash
+grep -r "p-1.*hover:bg-gray-100.*rounded-full" client/components/
+grep -r "rounded-full.*transition.*<svg" client/components/
+```
+
+## Migration Status
+
+**Progress**: ~6% (3 of ~50 buttons migrated)
+
+### Completed
+
+- `DisplayDashboard.tsx` — 3 of 7 info buttons (Impressions, eCPM, Spend)
+
+### High Priority — Remaining
+
+| File | What to migrate |
+|------|----------------|
+| `DisplayDashboard.tsx` | 4 remaining info buttons (Total ROAS, attributed sales, transactions, units) |
+| `DesktopHeader.tsx` | Top navigation flyout triggers, account, delivery icons |
+| `SponsoredSearchSidebar.tsx` line 283 | Sidebar lock/unlock toggle |
+| `DisplayAdvertisingSidebar.tsx` line 256 | Sidebar collapse/expand |
+| `StoreAdsSidebar.tsx` line 165 | Sidebar toggle |
+
+### Medium Priority
+
+| File | What to migrate |
+|------|----------------|
+| `EditMetricsModal.tsx` | Close button, info tooltips |
+| `DateRangeFilterDropdown.tsx` | Calendar prev/next, clear button |
+| `BiddingStrategyModal.tsx` | Modal close, help icons |
+| `RecommendationsPanel.tsx` | Close, expand/collapse, filter/sort |
+| `MartyAssistant.tsx` line 134 | Chat expand/collapse, action buttons |
+
+### Low Priority
+
+| File | What to migrate |
+|------|----------------|
+| `carousel.tsx` | Prev/Next navigation arrows |
+| `pagination.tsx` | Page arrows, first/last buttons |
+
+## Per-File Checklist
+
+After migrating each file verify:
+
+- [ ] All icon buttons have a descriptive `aria-label`
+- [ ] Hover, focus, and disabled states render correctly
+- [ ] SVG icons use `currentColor`
+- [ ] No `className` or inline style overrides on `IconButton`
+- [ ] Dev server shows no errors

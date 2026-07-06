@@ -1,0 +1,188 @@
+---
+description: Animation and Motion
+globs:
+alwaysApply: false
+---
+
+## Purpose
+
+Unify how animations are implemented across the project. Several animation patterns exist (insertion glow, carousel transitions, button spinners) but were built independently. This rule standardizes when to animate, how to implement each type, and ensures `prefers-reduced-motion` is always respected.
+
+---
+
+## Core Rule
+
+> Every animation MUST have a `@media (prefers-reduced-motion: reduce)` override.
+
+No exceptions. Users who have requested reduced motion must never experience unexpected animations.
+
+---
+
+## Animation Types and When to Use Each
+
+### 1. Insertion / Confirmation Animation (e.g. "new item" glow)
+
+**Use when**: An item is added to a list, an order is confirmed, or a card is newly inserted and you want to draw the user's attention to it.
+
+**Implementation**: `@keyframes` in the CSS module. Wrap the inserted element in a container with the animation class.
+
+```css
+/* ✅ CORRECT — insertion glow in CSS module */
+@keyframes newCard {
+  0%   { box-shadow: none; }
+  20%  { box-shadow: 0 0 0 2px #1A7A34, 0 0 24px 6px rgba(26, 122, 52, 0.30); }
+  60%  { box-shadow: 0 0 0 2px #1A7A34, 0 0 24px 6px rgba(26, 122, 52, 0.30); }
+  100% { box-shadow: none; }
+}
+
+.newCard {
+  animation: newCard 2.5s ease-in-out forwards;
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .newCard {
+    animation: none;
+  }
+}
+```
+
+```tsx
+// Usage — wrap inserted element in newCard container
+<div className={styles.newCard}>
+  <OrderCard {...props} />
+</div>
+```
+
+**Canonical "new item" glow values**:
+- Border: `0 0 0 2px #1A7A34`
+- Glow: `0 0 24px 6px rgba(26, 122, 52, 0.30)`
+- Duration: 2–4s (hold at peak for 50–60% of keyframe)
+- Do not change these values — they are the standard confirmation animation
+
+### 2. Hover / Focus Transitions (2-state)
+
+**Use when**: An element changes appearance on hover or focus (color, shadow, scale).
+
+**Implementation**: `transition` property in CSS module. Never use `@keyframes` for 2-state hover changes.
+
+```css
+/* ✅ CORRECT */
+.tile {
+  transition: box-shadow 150ms ease, transform 150ms ease;
+}
+.tile:hover {
+  box-shadow: var(--ld-semantic-elevation-200);
+  transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile {
+    transition: none;
+    transform: none;
+  }
+}
+```
+
+### 3. Slide / Fade Transitions (carousel, tab panels)
+
+**Use when**: Content slides or fades between states (carousel slides, tab panel changes).
+
+**Implementation**: `transition` on `opacity` or `transform`. Short duration (200–300ms).
+
+```css
+.slide {
+  transition: opacity 250ms ease, transform 250ms ease;
+}
+
+.slideHidden {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide {
+    transition: none;
+    transform: none;
+  }
+}
+```
+
+### 4. Spinner / Loading
+
+**Do not create a new spinner.** Use the existing `Spinner` component:
+
+```tsx
+import { Spinner } from '@/components/ui/Spinner';
+
+<Spinner size="medium" />
+```
+
+Never write custom `@keyframes rotate` or custom CSS spinner animations. The `Spinner` component already handles `prefers-reduced-motion` internally.
+
+---
+
+## Standard Durations
+
+Use these durations consistently. Do not invent arbitrary values.
+
+| Category | Duration | Use for |
+|---|---|---|
+| Micro | 150ms | Hover color, focus ring, icon swap |
+| Standard | 250ms | Slide transition, fade, panel open |
+| Complex | 400ms | Multi-step sequences, spring animations |
+| Insertion glow | 2500ms | "New item" confirmation animation |
+
+No animation should exceed 4s total.
+
+---
+
+## Auto-Advance Carousels
+
+Auto-advancing carousels must:
+1. Pause when the user interacts with prev/next controls
+2. Restart the timer after user interaction (optional — confirm with designer)
+3. Disable auto-advance entirely when `prefers-reduced-motion: reduce` is set
+
+```tsx
+useEffect(() => {
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!prefersReduced) {
+    startTimer();
+  }
+  return stopTimer;
+}, []);
+```
+
+See `RULE_CarouselAndScrollPatterns.mdc` for full carousel implementation.
+
+---
+
+## Easing Tokens
+
+Use these consistent easing values:
+
+| Feel | Value | Use for |
+|---|---|---|
+| Standard ease | `ease` | Most transitions |
+| Ease in-out | `ease-in-out` | Glow / insertion animations |
+| Spring bounce | `cubic-bezier(0.34, 1.56, 0.64, 1)` | iOS-style spring (confirm with designer) |
+| Linear | `linear` | Progress bar fill, spinners |
+
+---
+
+## Summary Checklist
+
+Before any animation ships:
+
+- [ ] `@keyframes` used for multi-step sequences; `transition` used for 2-state changes
+- [ ] `prefers-reduced-motion: reduce` override present
+- [ ] Duration is within approved range (150ms–4s)
+- [ ] New spinner? → Use `Spinner` component instead
+- [ ] Auto-advance carousel? → Pauses on user interaction, respects reduced motion
+
+---
+
+## Enforcement Level
+
+**MEDIUM** — Missing `prefers-reduced-motion` override is a compliance failure. Custom spinner implementations and arbitrary durations are style violations.

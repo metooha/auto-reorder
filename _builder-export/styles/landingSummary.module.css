@@ -1,0 +1,89 @@
+/* Landing Summary page styles */
+
+.root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--ld-semantic-color-background-primary, #f8f8f8);
+}
+
+.appRow {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 32px;
+}
+
+.pageInner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pageHeaderContainer {
+  margin-bottom: 24px;
+}
+
+.pageHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pageTitle {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text-primary, #2e2f32);
+}
+
+.titleActions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.contentArea {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+}
+
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.primaryColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.secondaryColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.placeholderCard {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid var(--ld-semantic-color-border-default, #e5e5e5);
+  padding: 24px;
+  min-height: 120px;
+}
+
+@media (max-width: 768px) {
+  .main {
+    padding: 16px;
+  }
+  .contentArea {
+    grid-template-columns: 1fr;
+  }
+}

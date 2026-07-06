@@ -1,0 +1,215 @@
+/* WCPQueueLanding — queue waiting room landing page content */
+
+.landing {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* ── Hero section (authenticated) ── */
+.heroSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-200, 16px);
+  align-self: stretch;
+}
+
+.illustrationWrap {
+  display: flex;
+  width: 75px;
+  height: 75px;
+  justify-content: center;
+  align-items: center;
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+  align-self: stretch;
+}
+
+.heroTitle {
+  color: var(--ld-semantic-color-text-inverse, #fff);
+  text-align: center;
+  font-family: var(--ld-semantic-font-body-medium-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: var(--ld-semantic-font-body-medium-weight-alt, 700);
+  line-height: var(--ld-semantic-font-body-medium-lineheight, 24px);
+}
+
+.heroSubtext {
+  align-self: stretch;
+  color: var(--ld-semantic-color-text-inverse, #fff);
+  text-align: center;
+  font-family: var(--ld-semantic-font-body-medium-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: var(--ld-semantic-font-body-medium-weight-default, 400);
+  line-height: var(--ld-semantic-font-body-medium-lineheight, 24px);
+}
+
+/* ── Unauthenticated hero ── */
+.unauthHero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  align-self: stretch;
+}
+
+.unauthTitle {
+  align-self: stretch;
+  color: var(--ld-semantic-color-text-inverse, #fff);
+  text-align: center;
+  font-family: var(--ld-semantic-font-display-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-display-small-size, 36px);
+  font-weight: var(--ld-semantic-font-display-small-weight-alt, 700);
+  line-height: var(--ld-semantic-font-display-small-lineheight, 48px);
+}
+
+/* ── Product card ── */
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  background: var(--ld-semantic-color-surface, #fff);
+  box-shadow:
+    0 -1px 2px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 1px rgba(0, 0, 0, 0.15);
+  margin-top: var(--ld-primitive-scale-space-300, 24px);
+}
+
+.cardContent {
+  display: flex;
+  padding: var(--ld-primitive-scale-space-200, 16px);
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-200, 16px);
+  align-self: stretch;
+}
+
+/* ── Wait / timer section (authenticated) ── */
+.waitSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+}
+
+.waitGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+}
+
+.waitLabel {
+  color: var(--ld-semantic-color-text, #2E2F32);
+  font-family: var(--ld-semantic-font-body-medium-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: var(--ld-semantic-font-body-medium-weight-alt, 700);
+  line-height: var(--ld-semantic-font-body-medium-lineheight, 24px);
+}
+
+.disclaimer {
+  color: var(--ld-semantic-color-text-subtle, #6D6E71);
+  font-family: var(--ld-semantic-font-caption-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-caption-size, 12px);
+  font-weight: var(--ld-semantic-font-caption-weight-default, 400);
+  line-height: var(--ld-semantic-font-caption-lineheight, 16px);
+}
+
+/* ── Product info row ── */
+.productRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ld-primitive-scale-space-150, 12px);
+  align-self: stretch;
+}
+
+.productImage {
+  width: 104px;
+  height: 104px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: var(--ld-primitive-scale-borderradius-25, 4px);
+  flex-shrink: 0;
+}
+
+.productDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+  flex: 1 0 0;
+  align-self: stretch;
+}
+
+.productDescription {
+  align-self: stretch;
+  color: var(--ld-semantic-color-text, #2E2F32);
+  font-family: var(--ld-semantic-font-body-medium-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: var(--ld-semantic-font-body-medium-weight-default, 400);
+  line-height: var(--ld-semantic-font-body-medium-lineheight, 24px);
+}
+
+.productPricing {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.productPrice {
+  color: var(--ld-semantic-color-text, #2E2F32);
+  font-family: var(--ld-semantic-font-body-medium-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: var(--ld-semantic-font-body-medium-weight-alt, 700);
+  line-height: var(--ld-semantic-font-body-medium-lineheight, 24px);
+}
+
+.productOriginal {
+  color: var(--ld-semantic-color-text-subtle, #6D6E71);
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: var(--ld-semantic-font-body-small-weight-default, 400);
+  line-height: var(--ld-semantic-font-body-small-lineheight, 20px);
+  text-decoration: line-through;
+}
+
+/* ── Account link (unauthenticated) ── */
+.accountLink {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-50, 4px);
+  align-self: stretch;
+  margin-top: var(--ld-primitive-scale-space-200, 16px);
+}
+
+.accountText {
+  color: var(--ld-semantic-color-text-inverse, #fff);
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: var(--ld-semantic-font-body-small-weight-default, 400);
+  line-height: var(--ld-semantic-font-body-small-lineheight, 20px);
+}
+
+.createLink {
+  background: none;
+  border: none;
+  color: var(--ld-semantic-color-text-inverse, #fff);
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: var(--ld-semantic-font-body-small-weight-default, 400);
+  line-height: var(--ld-semantic-font-body-small-lineheight, 20px);
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+}

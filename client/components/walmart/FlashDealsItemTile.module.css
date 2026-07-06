@@ -1,0 +1,186 @@
+/* FlashDealsItemTile — product card for Flash Deals carousel */
+
+.card {
+  position: relative;
+  background: var(--ld-semantic-color-surface, #fff);
+  border: none;
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 0 0 calc((100% - 60px) / 6);
+}
+
+@media (max-width: 1024px) {
+  .card {
+    flex: 0 0 calc((100% - 48px) / 4);
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    flex: 0 0 calc((100% - 24px) / 3);
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    flex: 0 0 calc((100% - 16px) / 2.3);
+  }
+}
+
+/* ── Flag badge — top-left ── */
+.flagWrap {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  z-index: 2;
+  transform-origin: top left;
+  transform: scale(0.75);
+}
+
+/* ── Heart — below flag on right ── */
+.heartWrap {
+  position: absolute;
+  top: 28px;
+  right: 4px;
+  z-index: 4;
+}
+
+/* ── Image area ── */
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  height: 168px;
+  background: var(--ld-semantic-color-surface, #fff);
+  padding: 24px 16px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px)
+    var(--ld-primitive-scale-borderradius-100, 8px) 0 0;
+  overflow: hidden;
+}
+
+@media (max-width: 480px) {
+  .imageWrapper {
+    height: 148px;
+    padding: 20px 12px 8px;
+  }
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* ── Body below image ── */
+.body {
+  padding: 8px 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+/* ── Price row ── */
+.priceRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 1px;
+  flex-wrap: wrap;
+  min-height: 24px;
+}
+
+.priceRowSavings {
+  color: var(--ld-semantic-color-text-positive, #2a8703);
+}
+
+.priceRowSavings .price,
+.priceRowSavings .dollarSign,
+.priceRowSavings .cents {
+  color: inherit;
+}
+
+.prefix {
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text-positive, #2a8703);
+  line-height: 24px;
+  margin-right: 2px;
+}
+
+.dollarSign {
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16px;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  padding-bottom: 6px;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.price {
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  line-height: 20px;
+}
+
+.cents {
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16px;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  padding-bottom: 8px;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Original price + options text row */
+.originalPrice {
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: 14px;
+  color: var(--ld-semantic-color-text-subtle, #515357);
+  text-decoration: line-through;
+  line-height: 20px;
+}
+
+.optionsText {
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: 12px;
+  color: var(--ld-semantic-color-text-subtle, #515357);
+  line-height: 16px;
+  margin: 0;
+}
+
+/* Product name — 2-line clamp */
+.name {
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: 14px;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  line-height: 20px;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Footer — action button ── */
+.footer {
+  padding: 8px 12px 12px;
+  margin-top: auto;
+}

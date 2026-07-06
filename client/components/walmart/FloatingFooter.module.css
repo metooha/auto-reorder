@@ -1,0 +1,48 @@
+.bar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 6px;
+  padding: 6px;
+  border-radius: 9999px;
+
+  /* iOS glass kit — matches BottomNav tabBar */
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.8);
+  border-left: 1px solid rgba(255, 255, 255, 0.5);
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow:
+    -4.5px -4.5px 1.5px -5.25px rgba(255, 255, 255, 0.5) inset,
+    4.5px 4.5px 1.5px -5.25px rgba(255, 255, 255, 0.7) inset,
+    3px 4.5px 1.5px -3px rgba(179, 179, 179, 0.2) inset,
+    -3px -4.5px 1.5px -3px rgba(179, 179, 179, 1) inset,
+    0 0 33px 0 rgba(242, 242, 242, 0.5) inset,
+    0 0 14px 0 rgba(0, 0, 0, 0.11);
+}
+
+/* Buttons fill the bar equally */
+.bar > button {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Fixed bar — standalone fixed-to-viewport usage (e.g. docs demo) */
+.barFixed {
+  position: fixed;
+  bottom: 20px;
+  left: 12px;
+  right: 12px;
+  width: auto;
+  z-index: 100;
+}
+
+@media (min-width: 480px) {
+  .barFixed {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
+}

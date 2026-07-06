@@ -1,0 +1,325 @@
+/* ============================================================
+   [WCP] Heart View
+   Favorites toggle button — circular, heart icon, with desktop
+   callout tooltip and mobile snackbar feedback.
+
+   Token family: input fill / input text-onfill
+   Activated brand color: --wcp-semantic-color-input-text-onfill-activated-brand
+   ============================================================ */
+
+/* ── Custom brand token ─────────────────────────────── */
+:root {
+  --wcp-heart-activated-color: var(--ld-semantic-color-action-fill-primary, #0053e2);
+}
+
+/* ── Wrapper (positions the callout) ─────────────────── */
+.wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ── Heart button ────────────────────────────────────── */
+.heartButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: none;
+  border-radius: var(--ld-primitive-scale-borderradius-round, 9999px);
+  background: var(--ld-semantic-color-action-fill-secondary, #fff);
+  color: var(--ld-semantic-color-input-text-onfill, #2e2f32);
+  cursor: pointer;
+  padding: 0;
+  box-shadow:
+    0 -1px 2px 0 rgba(0, 0, 0, 0.10),
+    0 1px 2px 1px rgba(0, 0, 0, 0.15);
+  transition:
+    background-color 0.15s ease,
+    box-shadow 0.15s ease,
+    color 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+}
+
+/* ── Hover (not activated) ───────────────────────────── */
+.heartButton:hover:not(:disabled):not(.activated) {
+  background: var(--ld-semantic-color-input-fill-hovered, #f2f2f2);
+  box-shadow:
+    0 -1px 4px 0 rgba(0, 0, 0, 0.12),
+    0 2px 4px 1px rgba(0, 0, 0, 0.18);
+}
+
+/* ── Hover (activated) ───────────────────────────────── */
+.heartButton:hover:not(:disabled).activated {
+  box-shadow:
+    0 -1px 4px 0 rgba(0, 0, 0, 0.12),
+    0 2px 4px 1px rgba(0, 0, 0, 0.18);
+}
+
+/* ── Focus-visible ───────────────────────────────────── */
+.heartButton:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline);
+  outline-offset: 2px;
+}
+
+/* ── Pressed / Active ────────────────────────────────── */
+.heartButton:active:not(:disabled) {
+  box-shadow:
+    0 0 1px 0 rgba(0, 0, 0, 0.08),
+    0 1px 2px 0 rgba(0, 0, 0, 0.12);
+  transform: scale(0.96);
+}
+
+/* ── Activated state (favorited) ─────────────────────── */
+.heartButton.activated {
+  background: var(--ld-semantic-color-action-fill-secondary, #fff);
+  color: var(--wcp-heart-activated-color);
+}
+
+/* ── Disabled ────────────────────────────────────────── */
+.heartButton.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Icon wrapper ────────────────────────────────────── */
+.iconWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+/* ── Icon colors ─────────────────────────────────────── */
+.iconOutline {
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.iconFill {
+  color: var(--wcp-heart-activated-color);
+}
+
+/* ── Size: small (32px, 16px icon) ──────────────────── */
+.sizeSmall {
+  width: 32px;
+  height: 32px;
+}
+
+.sizeSmall .iconWrap svg {
+  width: var(--ld-semantic-scale-icon-small, 16px);
+  height: var(--ld-semantic-scale-icon-small, 16px);
+}
+
+/* ── Size: medium (40px, 24px icon) ─────────────────── */
+.sizeMedium {
+  width: 40px;
+  height: 40px;
+}
+
+.sizeMedium .iconWrap svg {
+  width: var(--ld-semantic-scale-icon-medium, 24px);
+  height: var(--ld-semantic-scale-icon-medium, 24px);
+}
+
+/* ── Size: responsive (auto-switches at 900px) ────────── */
+/* Mobile-first: small */
+.sizeResponsive {
+  width: 32px;
+  height: 32px;
+}
+
+.sizeResponsive .iconWrap svg {
+  width: var(--ld-semantic-scale-icon-small, 16px);
+  height: var(--ld-semantic-scale-icon-small, 16px);
+}
+
+/* Desktop: medium */
+@media (min-width: 900px) {
+  .sizeResponsive {
+    width: 40px;
+    height: 40px;
+  }
+
+  .sizeResponsive .iconWrap svg {
+    width: var(--ld-semantic-scale-icon-medium, 24px);
+    height: var(--ld-semantic-scale-icon-medium, 24px);
+  }
+}
+
+/* ── Desktop Callout tooltip ─────────────────────────── */
+/* Hidden on mobile; only visible at 900px+ */
+.callout {
+  display: none;
+}
+
+/* Shared callout text + action styles */
+.calloutText {
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-family: var(--ld-semantic-font-family-sans);
+  font-weight: 700;
+  line-height: 1.4285;
+  color: var(--ld-semantic-color-text-inverse, #fff);
+  text-align: center;
+}
+
+.calloutAction {
+  display: block;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-family: var(--ld-semantic-font-family-sans);
+  font-weight: 400;
+  color: var(--ld-semantic-color-text-inverse, #fff);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  padding: 0;
+  white-space: nowrap;
+  text-align: right;
+  width: 100%;
+}
+
+.calloutAction:hover {
+  opacity: 0.85;
+}
+
+.calloutAction:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Shared nubbin base */
+.calloutArrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  flex-shrink: 0;
+}
+
+@keyframes calloutFadeInLeft {
+  from { opacity: 0; transform: translateY(-50%) translateX(4px); }
+  to   { opacity: 1; transform: translateY(-50%) translateX(0); }
+}
+
+@keyframes calloutFadeInRight {
+  from { opacity: 0; transform: translateY(-50%) translateX(-4px); }
+  to   { opacity: 1; transform: translateY(-50%) translateX(0); }
+}
+
+@keyframes calloutFadeInBottom {
+  from { opacity: 0; transform: translateX(-50%) translateY(-4px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+@keyframes calloutFadeInTop {
+  from { opacity: 0; transform: translateX(-50%) translateY(4px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+@media (min-width: 900px) {
+  /* ── Shared base at desktop ── */
+  .callout {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    position: absolute;
+    background: var(--ld-semantic-color-fill-inverse, #2e2f32);
+    color: var(--ld-semantic-color-text-inverse, #fff);
+    border-radius: 4px;
+    padding: 8px 12px;
+    white-space: nowrap;
+    z-index: 100;
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.20),
+      0 1px 3px rgba(0, 0, 0, 0.12);
+    pointer-events: auto;
+  }
+
+  /* ── LEFT: callout appears to the left, nubbin points right ── */
+  .callout--left {
+    right: calc(100% + 8px);
+    top: 50%;
+    transform: translateY(-50%);
+    animation: calloutFadeInLeft 0.12s ease;
+  }
+
+  .callout--left .calloutArrow {
+    right: -6px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 6px solid var(--ld-semantic-color-fill-inverse, #2e2f32);
+  }
+
+  /* ── RIGHT: callout appears to the right, nubbin points left ── */
+  .callout--right {
+    left: calc(100% + 8px);
+    top: 50%;
+    transform: translateY(-50%);
+    animation: calloutFadeInRight 0.12s ease;
+  }
+
+  .callout--right .calloutArrow {
+    left: -6px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-right: 6px solid var(--ld-semantic-color-fill-inverse, #2e2f32);
+  }
+
+  /* ── BOTTOM: callout appears below, nubbin points up ── */
+  .callout--bottom {
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    animation: calloutFadeInBottom 0.12s ease;
+  }
+
+  .callout--bottom .calloutArrow {
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid var(--ld-semantic-color-fill-inverse, #2e2f32);
+  }
+
+  /* ── TOP: callout appears above, nubbin points down ── */
+  .callout--top {
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    animation: calloutFadeInTop 0.12s ease;
+  }
+
+  .callout--top .calloutArrow {
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid var(--ld-semantic-color-fill-inverse, #2e2f32);
+  }
+}
+
+/* ── Reduced motion ──────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .heartButton {
+    transition: none;
+  }
+
+  .heartButton:active:not(:disabled) {
+    transform: none;
+  }
+
+  @keyframes calloutFadeIn {
+    from { opacity: 1; transform: translateY(-50%) translateX(0); }
+    to   { opacity: 1; transform: translateY(-50%) translateX(0); }
+  }
+}

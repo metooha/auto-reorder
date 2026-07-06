@@ -1,0 +1,610 @@
+/* ── View Order Bottom Sheet ── */
+
+/* ── Overview View ── */
+.overviewWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+  /* 3-layer gradient matching Figma: white fade → blue gradient → base blue */
+  background:
+    linear-gradient(0deg, rgba(255, 255, 255, 0) 47.6%, rgba(255, 255, 255, 0.8) 97.95%),
+    linear-gradient(0deg, rgba(240, 245, 255, 0.8) -42.23%, rgba(226, 235, 252, 0.8) 100%),
+    var(--ld-semantic-color-fill-brand-subtle, #C9DCFD);
+}
+
+/* Bottom section: arch SVG + navy CTA area */
+.bottomSection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin-top: var(--ld-primitive-scale-space-300, 24px);
+}
+
+/* Navy arch SVG — sits above the CTA, curved edge points upward */
+.archSvg {
+  width: 100%;
+  display: block;
+  flex-shrink: 0;
+  /* Pull arch down so its bottom flush-connects with ctaSection */
+  margin-bottom: -1px;
+}
+
+.archPath {
+  fill: var(--ld-semantic-color-action-fill-primary-pressed, #002E99);
+}
+
+/* Title section */
+.titleSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 var(--ld-primitive-scale-space-200, 16px);
+  width: 100%;
+}
+
+.title {
+  text-align: center;
+  font-family: var(--ld-semantic-font-heading-medium-family, 'Everyday Sans UI', sans-serif);
+  font-size: 28px;
+  font-weight: var(--ld-semantic-font-heading-medium-weight-default, 700);
+  line-height: 31px;
+  color: var(--ld-semantic-color-text, #2E2F32);
+  max-width: 343px;
+  margin: 0 auto;
+}
+
+/* Product images row */
+.imagesRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ld-primitive-scale-space-150, 12px);
+  height: 110px;
+  width: 100%;
+  overflow: hidden;
+  margin-top: var(--ld-primitive-scale-space-150, 12px);
+}
+
+.groceryImage {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* Feature card (bullets + delivery row combined) */
+.featureCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: calc(100% - 32px);
+  margin: var(--ld-primitive-scale-space-150, 12px) 16px 0;
+}
+
+/* Feature bullets card */
+.featureBulletsCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-200, 16px);
+  padding: var(--ld-primitive-scale-space-150, 12px);
+  background: rgba(255, 255, 255, 0.72);
+  border-radius: var(--ld-primitive-scale-borderradius-200, 16px) var(--ld-primitive-scale-borderradius-200, 16px) 0 0;
+  border: 1px solid var(--ld-semantic-color-border-brand, #0053e2);
+  border-bottom: none;
+  align-self: stretch;
+}
+
+.featureRow {
+  display: flex;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-150, 12px);
+  align-self: stretch;
+}
+
+/* Blue circle with white icon */
+.featureIconCircle {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--ld-primitive-scale-borderradius-round, 9999px);
+  background: var(--ld-semantic-color-action-fill-primary, #0053e2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--ld-semantic-color-text-on-fill-brand, #ffffff);
+}
+
+.featureText {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: var(--ld-semantic-font-body-small-weight-default, 400);
+  line-height: var(--ld-semantic-font-body-small-lineheight, 20px);
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+/* Delivery time row */
+.deliveryTimeRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: var(--ld-primitive-scale-space-150, 12px) var(--ld-primitive-scale-space-200, 16px);
+  background: var(--ld-semantic-color-fill-brand-subtle, #C9DCFD);
+  border-radius: 0 0 var(--ld-primitive-scale-borderradius-200, 16px) var(--ld-primitive-scale-borderradius-200, 16px);
+  align-self: stretch;
+  cursor: pointer;
+  border: 1px solid var(--ld-semantic-color-border-brand, #0053e2);
+  border-top: none;
+  text-align: left;
+  width: 100%;
+}
+
+.deliveryTimeContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-25, 2px);
+  flex: 1;
+}
+
+.deliveryTimeMain {
+  display: block;
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: var(--ld-semantic-font-body-small-weight-alt, 700);
+  line-height: var(--ld-semantic-font-body-small-lineheight, 20px);
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+.deliveryTimeCaption {
+  display: block;
+  font-family: var(--ld-semantic-font-caption-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-caption-size, 12px);
+  font-weight: var(--ld-semantic-font-caption-weight-default, 400);
+  line-height: var(--ld-semantic-font-caption-lineheight, 16px);
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+.deliveryTimeChevron {
+  flex-shrink: 0;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+/* CTA section — navy background continues from arch fill */
+.ctaSection {
+  padding: var(--ld-primitive-scale-space-200, 16px) var(--ld-primitive-scale-space-200, 16px) var(--ld-primitive-scale-space-300, 24px);
+  width: 100%;
+  background: var(--ld-semantic-color-action-fill-primary-pressed, #002E99);
+}
+
+/* ── Schedule View ── */
+.scheduleWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+}
+
+.scheduleContentLayer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.scheduleBody {
+  display: flex;
+  padding: 0;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-200, 16px);
+}
+
+/* "Delivery preferences" heading inside content */
+.scheduleHeader {
+  font-family: var(--ld-semantic-font-heading-medium-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-heading-medium-size, 20px);
+  font-weight: var(--ld-semantic-font-heading-medium-weight-default, 700);
+  line-height: var(--ld-semantic-font-heading-medium-lineheight, 28px);
+  color: var(--ld-semantic-color-text);
+  margin: 0;
+  padding-top: var(--ld-primitive-scale-space-200, 16px);
+}
+
+/* Name + address block */
+.scheduleAddressSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-50, 4px);
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.scheduleSlotError {
+  margin-bottom: 12px;
+}
+
+.scheduleSlotError a,
+.scheduleSlotError a:hover,
+.scheduleSlotError a:active,
+.scheduleSlotError a:visited,
+.scheduleSlotError a:focus,
+.scheduleSlotError a:focus-visible {
+  color: inherit;
+}
+
+/* Row wrapper containing address block + Change link */
+.scheduleAddressRow {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+  width: 100%;
+}
+
+/* ── Address Picker View ── */
+.addressBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+  padding: 0;
+  width: 100%;
+}
+
+.addressBackRow {
+  padding: 0 var(--ld-primitive-scale-space-200, 16px);
+}
+
+@media (min-width: 768px) {
+  .addressBackRow {
+    padding: 0 var(--ld-primitive-scale-space-300, 24px);
+  }
+}
+
+.addressBackRow {
+  display: flex;
+  align-items: center;
+}
+
+.addressList {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  margin: 0 calc(var(--ld-primitive-scale-space-200, 16px) * -1);
+}
+
+@media (min-width: 768px) {
+  .addressList {
+    margin: 0 calc(var(--ld-primitive-scale-space-300, 24px) * -1);
+  }
+}
+
+.addressRow {
+  display: flex;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-150, 12px);
+  width: 100%;
+  padding: var(--ld-primitive-scale-space-200, 16px) var(--ld-primitive-scale-space-200, 16px);
+  border-bottom: 1px solid var(--ld-semantic-color-separator);
+}
+
+@media (min-width: 768px) {
+  .addressRow {
+    padding: var(--ld-primitive-scale-space-200, 16px) var(--ld-primitive-scale-space-300, 24px);
+  }
+}
+
+.addressRow:last-child {
+  border-bottom: none;
+}
+
+.addressRowMain {
+  display: flex;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-150, 12px);
+  flex: 1 1 auto;
+  min-width: 0;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.addressRowSelected {
+  background: var(--ld-semantic-color-fill-brand-subtle);
+  border-bottom-color: transparent;
+}
+
+.addressRowIcon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  color: var(--ld-semantic-color-text);
+}
+
+.addressRowIconSelected {
+  color: var(--ld-semantic-color-text);
+}
+
+.addressRowText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-25, 2px);
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.addressRowName {
+  font-family: var(--ld-semantic-font-body-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-size, 16px);
+  font-weight: var(--ld-semantic-font-body-weight-alt, 700);
+  line-height: var(--ld-semantic-font-body-lineheight, 24px);
+  color: var(--ld-semantic-color-text);
+}
+
+.addressRowPreferredLabel {
+  display: block;
+  font-family: var(--ld-semantic-font-caption-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-caption-size, 12px);
+  font-weight: var(--ld-semantic-font-caption-weight-default, 400);
+  line-height: var(--ld-semantic-font-caption-lineheight, 16px);
+  color: var(--ld-semantic-color-text);
+}
+
+.addressRowAddress {
+  font-family: var(--ld-semantic-font-caption-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-caption-size, 12px);
+  font-weight: var(--ld-semantic-font-caption-weight-default, 400);
+  line-height: var(--ld-semantic-font-caption-lineheight, 16px);
+  color: var(--ld-semantic-color-text);
+}
+
+.addressRowEdit {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.addressRowEditing {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ld-primitive-scale-space-150, 12px);
+  width: 100%;
+}
+
+.addressRowEditFields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-150, 12px);
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.addressRowEditActions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--ld-primitive-scale-space-200, 16px);
+}
+
+.scheduleName {
+  font-family: var(--ld-semantic-font-body-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-size, 16px);
+  font-weight: var(--ld-semantic-font-body-weight-alt, 700);
+  line-height: var(--ld-semantic-font-body-lineheight, 24px);
+  color: var(--ld-semantic-color-text);
+}
+
+.scheduleAddress {
+  font-family: var(--ld-semantic-font-caption-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-caption-size, 12px);
+  font-weight: var(--ld-semantic-font-caption-weight-default, 400);
+  line-height: var(--ld-semantic-font-caption-lineheight, 16px);
+  color: var(--ld-semantic-color-text-subtle);
+}
+
+/* Horizontal rule divider */
+.scheduleDivider {
+  width: 100%;
+  height: 1px;
+  background: var(--ld-semantic-color-separator);
+  flex-shrink: 0;
+}
+
+/* Frequency picker section */
+.scheduleFrequencySection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-150, 12px);
+}
+
+.scheduleFrequencyLabel {
+  font-family: var(--ld-semantic-font-body-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-size, 16px);
+  font-weight: var(--ld-semantic-font-body-weight-default, 400);
+  line-height: var(--ld-semantic-font-body-lineheight, 24px);
+  color: var(--ld-semantic-color-text);
+}
+
+.scheduleFrequencyChips {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+}
+
+/* Day + time picker section */
+.scheduleDayTimeSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-150, 12px);
+}
+
+.scheduleDayTimeLabel {
+  font-family: var(--ld-semantic-font-body-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-size, 16px);
+  font-weight: var(--ld-semantic-font-body-weight-alt, 700);
+  line-height: var(--ld-semantic-font-body-lineheight, 24px);
+  color: var(--ld-semantic-color-text);
+}
+
+.scheduleDayTimeSubLabel {
+  font-family: var(--ld-semantic-font-caption-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-caption-size, 12px);
+  font-weight: var(--ld-semantic-font-caption-weight-default, 400);
+  line-height: var(--ld-semantic-font-caption-lineheight, 16px);
+  color: var(--ld-semantic-color-text-subtle);
+  margin-top: calc(var(--ld-primitive-scale-space-150, 12px) * -1);
+}
+
+.dayCarouselWrap {
+  padding-bottom: var(--ld-primitive-scale-space-100, 8px);
+}
+
+/* Next delivery info line */
+.scheduleNextDelivery {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: var(--ld-semantic-font-body-small-weight-default, 400);
+  line-height: var(--ld-semantic-font-body-small-lineheight, 20px);
+  color: var(--ld-semantic-color-text-subtle);
+  margin: 0;
+  padding-top: var(--ld-primitive-scale-space-100, 8px);
+}
+
+/* ── Slot sections (InHome + Other delivery options) ── */
+.slotGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-200, 16px);
+  width: 100%;
+}
+
+.slotSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+  width: 100%;
+}
+
+.slotSectionHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-50, 4px);
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+.slotSectionLabel {
+  font-family: var(--ld-semantic-font-body-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-size, 16px);
+  font-weight: var(--ld-semantic-font-body-weight-alt, 700);
+  line-height: var(--ld-semantic-font-body-lineheight, 24px);
+}
+
+.slotList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+  width: 100%;
+}
+
+.slotRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ld-primitive-scale-space-150, 12px);
+  width: 100%;
+  padding: var(--ld-primitive-scale-space-100, 8px) var(--ld-primitive-scale-space-200, 16px);
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  border: 1.5px solid var(--ld-semantic-color-border-strong, #72757a);
+  background: var(--ld-semantic-color-surface, #ffffff);
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.slotRowChecked {
+  border-color: var(--ld-semantic-color-action-border-primary, #0071dc);
+  box-shadow: 0 0 0 0.5px var(--ld-semantic-color-action-border-primary, #0071dc);
+}
+
+.slotRowChecked .slotRadio [data-radio-label] {
+  font-weight: var(--ld-semantic-font-body-medium-weight-alt, 700);
+}
+
+.slotRadio {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.slotMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+  flex-shrink: 0;
+}
+
+.inhomeIcon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.priceStrike {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: var(--ld-semantic-font-body-small-weight-default, 400);
+  color: var(--ld-semantic-color-text-subtle, #5b5e66);
+  text-decoration: line-through;
+}
+
+.priceFree {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: var(--ld-semantic-font-body-small-weight-alt, 700);
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slotRow { transition: none; }
+}
+
+/* ── Schedule CTA ── */
+.scheduleCta {
+  display: flex;
+  padding: var(--ld-primitive-scale-space-300, 24px) var(--ld-primitive-scale-space-200, 16px) var(--ld-primitive-scale-space-200, 16px);
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-200, 16px);
+  width: 100%;
+}
+
+/* Sticky-footer variant — rendered via BottomSheet `actions`, which
+   already provides outer padding + divider, so we only need the
+   internal stack of Save button + link. */
+.scheduleActions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-200, 16px);
+  width: 100%;
+}
+
+.scheduleLinkWrap {
+  display: flex;
+  height: var(--ld-primitive-scale-space-400, 32px);
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .overviewWrapper,
+  .scheduleWrapper {
+    transition: none;
+  }
+}

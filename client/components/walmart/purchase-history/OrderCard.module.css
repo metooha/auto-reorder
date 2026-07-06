@@ -1,0 +1,329 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--ld-semantic-color-separator);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--ld-semantic-color-surface);
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+/* Card body */
+.cardBody {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px;
+}
+
+@media (min-width: 1024px) {
+  .cardBody { gap: 40px; }
+}
+
+.leftCol {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+/* Order meta */
+.orderMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 4px;
+}
+
+.orderTypeChip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ld-semantic-color-text-subtle);
+}
+
+.orderTypeChipText {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.eyebrow {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ld-semantic-color-text-subtle);
+  line-height: 16px;
+}
+
+.orderTypeChip img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.location {
+  font-size: 12px;
+  color: var(--ld-semantic-color-text-subtle);
+}
+
+.seller {
+  font-size: 12px;
+  color: var(--ld-semantic-color-text-subtle);
+}
+
+/* Status heading */
+.statusHeading {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  line-height: 40px;
+  margin: 0;
+}
+
+.statusHeadingDelayed {
+  color: var(--ld-semantic-color-text);
+}
+
+/* Return alert wrapper */
+.returnAlertWrap {
+  margin-top: 4px;
+}
+
+/* ProgressTracker spacing */
+.progressTracker {
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+/* Products */
+.products {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.productImg {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  border-radius: 4px;
+  background: var(--ld-semantic-color-fill-subtle);
+}
+
+/* Service details (auto Care appointments) */
+.serviceDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.vehicleLabel {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  line-height: 20px;
+}
+
+.serviceList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.serviceItem {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ld-semantic-color-text-subtle);
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.serviceItem::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--ld-semantic-color-text-subtle);
+  flex-shrink: 0;
+}
+
+/* Right column: action buttons */
+.rightCol {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+  min-width: 140px;
+}
+
+.actionBtn {
+  width: 100%;
+  min-width: 200px;
+  justify-content: center;
+}
+
+/* ── Rating section ── */
+.ratingSection {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ratingTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  margin: 0;
+  line-height: 20px;
+}
+
+.ratingSubtitle {
+  font-size: 13px;
+  color: var(--ld-semantic-color-text-subtle);
+  margin: 0;
+  line-height: 18px;
+}
+
+/* Interactive overlay wrapper */
+.starsWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin-top: 8px;
+  width: calc(5 * 20px + 4 * 8px);
+  height: 24px;
+}
+
+.ratingDisplay {
+  pointer-events: none;
+  gap: 8px !important;
+}
+
+.starOverlays {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  gap: 8px;
+  height: 100%;
+}
+
+.starOverlayBtn {
+  width: 20px;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.starOverlayBtn:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline);
+  outline-offset: 2px;
+}
+
+.ratingThankYou {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ld-semantic-color-text);
+  margin: 0;
+  line-height: 20px;
+}
+
+/* Footer */
+.cardFooter {
+  border-top: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  font-size: var(--ld-semantic-font-body-small-size);
+  line-height: var(--ld-semantic-font-body-small-lineheight);
+  background: var(--ld-semantic-color-background-subtle);
+}
+
+.footerSpacer {
+  flex: 1;
+}
+
+.orderTotal {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ld-semantic-color-text);
+}
+
+/* Mobile-only chevron */
+.mobileChevron {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .mobileChevron {
+    display: block;
+    margin-left: auto;
+    flex-shrink: 0;
+    color: var(--ld-semantic-color-text-subtle);
+    width: 20px;
+    height: 20px;
+  }
+
+  .orderTypeChip img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .statusHeading {
+    font-size: 17px;
+    line-height: 24px;
+  }
+
+  .cardBody {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px 16px;
+  }
+
+  .rightCol {
+    width: 100%;
+    min-width: unset;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .actionBtn {
+    width: 100%;
+    min-width: unset;
+    justify-content: center;
+  }
+
+  .products {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin-top: 8px;
+  }
+
+  .products::-webkit-scrollbar {
+    display: none;
+  }
+
+  .productImg {
+    width: 56px;
+    height: 56px;
+    flex-shrink: 0;
+  }
+}

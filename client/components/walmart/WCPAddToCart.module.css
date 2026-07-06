@@ -1,0 +1,9 @@
+/* Invisible padding for 44×44px touch target around 24px visual */
+.hitArea {
+  padding: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* Negative margin cancels padding's layout impact in tight tile layouts */
+  margin: -8px;
+}

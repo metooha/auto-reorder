@@ -1,0 +1,307 @@
+# RULE: No Emojis, Use Icons - No Random Images
+
+## Overview
+
+When implementing new designs or responding to user prompts, you MUST NOT use emojis or generate random images. Use the icon library and placeholder patterns instead.
+
+## Hard Rules
+
+### ❌ PROHIBITED: Emojis
+
+**NEVER use emojis in:**
+- Component code
+- UI text
+- Button labels
+- Documentation examples (user-facing)
+- Placeholder content
+
+**Why:**
+- ❌ Emojis are not part of Living Design 3.5
+- ❌ Inconsistent rendering across platforms
+- ❌ Accessibility issues (screen readers)
+- ❌ Not brand-appropriate for Walmart/Sam's Club/enterprise
+- ❌ Can't be themed or customized
+
+### ✅ REQUIRED: Use Icon Library
+
+**Instead of emojis, use icons from:**
+
+```tsx
+import * as Icons from '@/components/icons';
+
+// ❌ DON'T
+<button>Search 🔍</button>
+<div>Settings ⚙️</div>
+<span>Warning ⚠️</span>
+
+// ✅ DO
+<button>
+  <Icons.Search /> Search
+</button>
+<div>
+  <Icons.Settings /> Settings
+</div>
+<span>
+  <Icons.Warning /> Warning
+</span>
+```
+
+**Available icon categories:**
+- Actions: Plus, Edit, Trash, Download, Upload, Settings, etc.
+- Navigation: ChevronRight, ChevronLeft, ChevronUp, ChevronDown, ArrowRight, etc.
+- Status: Check, X, InfoCircle, Warning, ExclamationCircle, CheckCircle, etc.
+- UI: Search, Filter, Menu, MoreHorizontal, Bell, User, etc.
+
+**If icon doesn't exist:**
+1. Check `client/components/icons/index.tsx` for full list
+2. Request new icon from design system team
+3. Use closest available icon temporarily
+4. Document which icon you need
+
+### ❌ PROHIBITED: Random/Generated Images
+
+**NEVER use:**
+- `<img src="https://via.placeholder.com/...">`
+- `<img src="https://picsum.photos/...">`
+- `<img src="https://source.unsplash.com/...">`
+- AI-generated random images (unless explicitly requested by user)
+- Stock photos without user approval
+
+### ✅ REQUIRED: Gray Square Placeholders
+
+**For image placeholders, use gray squares:**
+
+```tsx
+// ❌ DON'T
+<img src="https://via.placeholder.com/400x300" alt="Product" />
+
+// ✅ DO
+<div
+  style={{
+    width: '400px',
+    height: '300px',
+    backgroundColor: 'var(--ld-semantic-color-fill-subtle)',
+    borderRadius: 'var(--ld-primitive-scale-border-radius-100)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: 'var(--ld-semantic-color-text-subtle)',
+    fontSize: 'var(--ld-semantic-font-body-small-size)',
+  }}
+>
+  Image placeholder
+</div>
+```
+
+**Or use a reusable component:**
+
+```tsx
+// Create: client/components/ui/ImagePlaceholder.tsx
+export function ImagePlaceholder({ width, height, label }: { 
+  width: number | string; 
+  height: number | string; 
+  label?: string;
+}) {
+  return (
+    <div
+      style={{
+        width,
+        height,
+        backgroundColor: 'var(--ld-semantic-color-fill-subtle)',
+        borderRadius: 'var(--ld-primitive-scale-border-radius-100)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: 'var(--ld-semantic-color-text-subtle)',
+      }}
+    >
+      {label || 'Image'}
+    </div>
+  );
+}
+
+// Usage
+<ImagePlaceholder width="400px" height="300px" label="Product image" />
+```
+
+---
+
+## When Images ARE Allowed
+
+### ✅ User-Provided Images
+
+**Use images ONLY when:**
+
+1. **User explicitly provides image URL**
+   ```tsx
+   // User says: "Use this image: https://example.com/photo.jpg"
+   <img src="https://example.com/photo.jpg" alt="Description" />
+   ```
+
+2. **User requests AI-generated image**
+   ```tsx
+   // User says: "Generate an image of a sunset"
+   // Then use Media tool to generate image
+   ```
+
+3. **Design/Figma includes actual image src**
+   ```tsx
+   // Figma design has <img src="..."> with real URL
+   <img src={urlFromFigma} alt="..." />
+   ```
+
+4. **User uploads attachment and asks to use it**
+   ```tsx
+   // User: "Add this image to my hero" with attachment
+   <img src={attachmentUrl} alt="..." />
+   ```
+
+---
+
+## Exception Cases
+
+### Documentation Examples
+
+In **internal documentation** (guidelines, README files), emojis MAY be used sparingly for visual organization:
+
+**Allowed in documentation:**
+- ✅ Checkmarks for status
+- 📁 Folder indicators
+- 🔴 Priority markers
+- ⚠️ Warning indicators
+
+**Not allowed in user-facing UI code.**
+
+---
+
+## Violations & Corrections
+
+### ❌ VIOLATION 1: Emoji in Button
+
+```tsx
+// BAD
+<Button variant="primary">
+  Add Item ➕
+</Button>
+```
+
+**Correction:**
+```tsx
+// GOOD
+<Button variant="primary" leading={<Icons.Plus />}>
+  Add Item
+</Button>
+```
+
+### ❌ VIOLATION 2: Random Placeholder Image
+
+```tsx
+// BAD
+<img src="https://via.placeholder.com/600x400" alt="Hero" />
+```
+
+**Correction:**
+```tsx
+// GOOD
+<div
+  style={{
+    width: '600px',
+    height: '400px',
+    backgroundColor: 'var(--ld-semantic-color-fill-subtle)',
+    borderRadius: 'var(--ld-primitive-scale-border-radius-100)',
+  }}
+  aria-label="Hero image placeholder"
+/>
+```
+
+### ❌ VIOLATION 3: Emoji in Status
+
+```tsx
+// BAD
+<span>Status: ✅ Active</span>
+<span>Error: ❌ Failed</span>
+```
+
+**Correction:**
+```tsx
+// GOOD
+<span>
+  <Icons.CheckCircle style={{ color: 'var(--ld-semantic-color-text-positive)' }} />
+  Status: Active
+</span>
+<span>
+  <Icons.ExclamationCircle style={{ color: 'var(--ld-semantic-color-text-negative)' }} />
+  Error: Failed
+</span>
+```
+
+---
+
+## Quick Reference
+
+| Need | ❌ Don't Use | ✅ Use Instead |
+|------|-------------|----------------|
+| Search | 🔍 | `<Icons.Search />` |
+| Settings | ⚙️ | `<Icons.Settings />` |
+| Check | ✅ | `<Icons.Check />` or `<Icons.CheckCircle />` |
+| Error | ❌ | `<Icons.X />` or `<Icons.ExclamationCircle />` |
+| Warning | ⚠️ | `<Icons.Warning />` |
+| Info | ℹ️ | `<Icons.InfoCircle />` |
+| Plus/Add | ➕ | `<Icons.Plus />` |
+| Delete | 🗑️ | `<Icons.Trash />` |
+| Image placeholder | Random URL | Gray `<div>` with LD tokens |
+
+---
+
+## Enforcement
+
+### Code Review Checklist
+
+- [ ] No emoji characters (🔍⚙️✅❌⚠️ℹ️➕🗑️) in TSX/JSX
+- [ ] No placeholder image services (via.placeholder, picsum.photos, unsplash)
+- [ ] All icons use `import * as Icons from '@/components/icons'`
+- [ ] All image placeholders use gray squares with LD tokens
+- [ ] User-provided images have explicit user request
+
+### Automated Detection
+
+```bash
+# Find emojis in code (Unicode emoji ranges)
+grep -r "[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]" client/
+
+# Find placeholder services
+grep -r "placeholder.com\|picsum.photos\|unsplash.com" client/
+
+# Should return 0 results
+```
+
+---
+
+## Benefits
+
+### Why This Matters
+
+**Without this rule:**
+- ❌ Inconsistent visual language (emojis + icons)
+- ❌ Accessibility problems
+- ❌ Random images in production
+- ❌ Can't theme or customize emojis
+- ❌ Platform-specific rendering issues
+
+**With this rule:**
+- ✅ Consistent design system (icons only)
+- ✅ Accessible (proper ARIA labels)
+- ✅ Professional appearance
+- ✅ Themeable icons
+- ✅ Controlled image usage
+
+---
+
+**IMPORTANT**: This is a HARD RULE. No emojis or random images in production code.
+
+**Exceptions**: Only with explicit user request ("use an emoji" or "generate an image").
+
+---
+
+Last updated: 2025-02-14  
+See also: `RULE_IconUsage.md`, `guidelines/design-system/Component-Inventory.md`

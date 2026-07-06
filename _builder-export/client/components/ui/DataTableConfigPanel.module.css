@@ -1,0 +1,65 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 50;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.panel {
+  width: 360px;
+  max-width: 100%;
+  height: 100%;
+  background: var(--ld-semantic-color-fill-surface-primary, #ffffff);
+  box-shadow: var(--ld-semantic-elevation-200, -4px 0 16px rgba(0, 0, 0, 0.12));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--ld-primitive-scale-space-200, 16px);
+  border-bottom: 1px solid var(--ld-semantic-color-border-subtle, #E6E6E8);
+}
+
+.header h3 {
+  margin: 0;
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text-primary, #2E2F32);
+}
+
+.header button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px;
+  color: var(--ld-semantic-color-text-secondary, #515357);
+}
+
+.body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--ld-primitive-scale-space-200, 16px);
+}
+
+.columnItem {
+  display: flex;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+  padding: var(--ld-primitive-scale-space-100, 8px) 0;
+  cursor: pointer;
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  color: var(--ld-semantic-color-text-primary, #2E2F32);
+}
+
+.columnItem input[type="checkbox"] {
+  accent-color: var(--ld-semantic-color-action-fill-primary, #0071DC);
+}

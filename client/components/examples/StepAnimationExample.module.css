@@ -1,0 +1,37 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-400, 32px);
+  padding: var(--ld-primitive-scale-space-300, 24px);
+}
+
+.liveSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-200, 16px);
+}
+
+.sectionTitle {
+  font-family: var(--ld-semantic-font-heading-medium-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-heading-medium-size, 20px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+.sectionDescription {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  color: var(--ld-semantic-color-text-subtle, #606367);
+  line-height: 1.5;
+}
+
+.demoCard {
+  border: 2px dashed var(--ld-semantic-color-border-magic-middle, #3D90EC);
+  border-radius: var(--ld-primitive-scale-borderradius-200, 16px);
+  padding: var(--ld-primitive-scale-space-400, 32px) var(--ld-primitive-scale-space-300, 24px);
+  background: var(--ld-semantic-color-surface, #ffffff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}

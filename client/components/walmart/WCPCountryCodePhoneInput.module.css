@@ -1,0 +1,204 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* ─── Label ─── */
+.label {
+  font-family: var(--ld-semantic-font-body-small-family);
+  font-size: var(--ld-semantic-font-body-small-size);
+  font-weight: var(--ld-semantic-font-body-small-weight-alt, 700);
+  line-height: var(--ld-semantic-font-body-small-lineheight);
+  color: var(--ld-semantic-color-text);
+  margin-bottom: var(--ld-primitive-scale-space-50, 4px);
+}
+
+.labelDisabled {
+  color: var(--ld-semantic-color-text-disabled);
+}
+
+/* ─── Input container — mirrors TextField field-* token family ─── */
+.container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 8px 16px;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: var(--ld-primitive-scale-borderradius-50, 4px);
+  border: var(--ld-semantic-scale-borderwidth-interactive, 1px) solid var(--ld-semantic-color-field-border);
+  background: var(--ld-semantic-color-field-fill);
+  overflow: hidden;
+  transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-width 0.2s ease-in-out;
+}
+
+.container:hover:not(.containerDisabled):not(.containerReadOnly) {
+  border-width: var(--ld-semantic-scale-borderwidth-interactive-hovered, 2px);
+  border-color: var(--ld-semantic-color-field-border-hovered);
+  background: var(--ld-semantic-color-field-fill-hovered);
+}
+
+.container:focus-within:not(.containerDisabled):not(.containerReadOnly) {
+  border-width: var(--ld-semantic-scale-borderwidth-interactive-focused, 2px);
+  border-color: var(--ld-semantic-color-field-border-focused);
+  background: var(--ld-semantic-color-field-fill-focused);
+}
+
+.containerError {
+  border-color: var(--ld-semantic-color-field-border-negative);
+  background: var(--ld-semantic-color-field-fill-negative);
+}
+
+.containerError:hover:not(.containerDisabled) {
+  border-width: var(--ld-semantic-scale-borderwidth-interactive-hovered, 2px);
+  border-color: var(--ld-semantic-color-field-border-negative-hovered);
+  background: var(--ld-semantic-color-field-fill-negative-hovered);
+}
+
+.containerError:focus-within:not(.containerDisabled) {
+  border-width: var(--ld-semantic-scale-borderwidth-interactive-focused, 2px);
+  border-color: var(--ld-semantic-color-field-border-negative-focused);
+  background: var(--ld-semantic-color-field-fill-negative-focused);
+}
+
+.containerDisabled {
+  border-width: var(--ld-semantic-scale-borderwidth-interactive, 1px);
+  border-color: var(--ld-semantic-color-field-border-disabled);
+  background: var(--ld-semantic-color-field-fill-disabled);
+  cursor: not-allowed;
+}
+
+.containerReadOnly {
+  border-color: var(--ld-semantic-color-field-border-disabled);
+  background: var(--ld-semantic-color-field-fill);
+}
+
+/* ─── Country code trigger button ─── */
+.countryTrigger {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  color: var(--ld-semantic-color-field-text-onfill);
+}
+
+.countryTrigger:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.triggerFlag {
+  width: 24px;
+  height: 16px;
+  object-fit: cover;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.triggerAbbr,
+.triggerDialCode {
+  font-size: var(--ld-semantic-font-body-medium-size);
+  font-family: var(--ld-semantic-font-family-sans);
+  color: var(--ld-semantic-color-field-text-onfill);
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.containerDisabled .triggerAbbr,
+.containerDisabled .triggerDialCode {
+  color: var(--ld-semantic-color-field-text-onfill-disabled);
+}
+
+.caret {
+  width: 16px;
+  height: 16px;
+  color: var(--ld-semantic-color-field-text-onfill);
+  flex-shrink: 0;
+}
+
+.containerDisabled .caret {
+  color: var(--ld-semantic-color-field-text-onfill-disabled);
+}
+
+/* ─── Divider ─── */
+.divider {
+  width: 1px;
+  height: 24px;
+  background: var(--ld-semantic-color-separator);
+  flex-shrink: 0;
+}
+
+/* ─── Phone input ─── */
+.phoneInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: var(--ld-semantic-font-body-medium-size);
+  font-family: var(--ld-semantic-font-body-medium-family);
+  color: var(--ld-semantic-color-field-text-onfill);
+  font-weight: var(--ld-semantic-font-body-medium-weight-default, 400);
+  line-height: var(--ld-semantic-font-body-medium-lineheight);
+  min-width: 0;
+}
+
+.phoneInput::placeholder {
+  color: var(--ld-semantic-color-text-subtle);
+}
+
+.phoneInput:disabled {
+  cursor: not-allowed;
+  color: var(--ld-semantic-color-field-text-onfill-disabled);
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 6px 12px;
+    min-height: 48px;
+  }
+}
+
+/* ─── Helper text ─── */
+.helperText {
+  font-family: var(--ld-semantic-font-caption-family);
+  font-size: var(--ld-semantic-font-caption-size);
+  font-weight: var(--ld-semantic-font-caption-weight-default, 400);
+  line-height: var(--ld-semantic-font-caption-lineheight);
+  color: var(--ld-semantic-color-text-subtle);
+  margin: var(--ld-primitive-scale-space-50, 4px) 0 0;
+}
+
+.helperTextDisabled {
+  color: var(--ld-semantic-color-text-disabled);
+}
+
+/* ─── Error row ─── */
+.errorRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.errorIcon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--ld-semantic-color-text-negative);
+  margin-top: 1px;
+}
+
+.errorText {
+  font-family: var(--ld-semantic-font-caption-family);
+  font-size: var(--ld-semantic-font-caption-size);
+  font-weight: var(--ld-semantic-font-caption-weight-default, 400);
+  line-height: var(--ld-semantic-font-caption-lineheight);
+  color: var(--ld-semantic-color-text-negative);
+}

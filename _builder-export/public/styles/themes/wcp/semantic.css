@@ -1,0 +1,54 @@
+/**
+ * WCP (Walmart Commerce Platform) - Semantic Token Overrides
+ * 
+ * INHERITS FROM: base/semantic.css (loaded globally)
+ * OVERRIDES: 30 tokens — Walmart.com brand colors (#0071DC)
+ * 
+ * The WCP theme shifts the primary action color from
+ * LD base blue (#0053E2) to Walmart.com blue (#0071DC).
+ * Everything else inherits from the base theme.
+ */
+
+:root {
+  /* ── Primary Action Colors ── */
+  --ld-semantic-color-action-fill-primary: #0071DC;
+  --ld-semantic-color-action-fill-primary-hovered: #0060B8;
+  --ld-semantic-color-action-fill-primary-pressed: #004C94;
+
+  /* ── Text Brand Colors ── */
+  --ld-semantic-color-text-brand: #0071DC;
+  --ld-semantic-color-text-brand-blue-bold: #004C94;
+
+  /* ── Fill Brand Colors ── */
+  --ld-semantic-color-fill-brand: #0071DC;
+
+  /* ── Border Activated ── */
+  --ld-semantic-color-border-activated: #0071DC;
+
+  /* ── Icon Brand ── */
+  --ld-semantic-color-icon-brand: #0071DC;
+
+  /* ── Focus Outline ── */
+  --ld-semantic-color-action-focus-outline: #0071DC;
+
+  /* ── Top Navigation ── */
+  --ld-semantic-color-topnav-background: #0071DC;
+  --ld-semantic-color-topnav-background-hover: #0060B8;
+  --ld-semantic-color-topnav-background-active: #004C94;
+
+  /* ── Link Colors ── */
+  --ld-semantic-color-action-text-link: #0071DC;
+  --ld-semantic-color-action-text-link-hovered: #004C94;
+  --ld-semantic-color-action-text-link-visited: #693364;
+
+  /* ── Tertiary Action ── */
+  --ld-semantic-color-action-fill-tertiary-hovered: rgba(0, 113, 220, 0.08);
+  --ld-semantic-color-action-fill-tertiary-pressed: rgba(0, 113, 220, 0.16);
+
+  /* ── WCP Extension Tokens ── */
+  --wcp-semantic-color-action-fill-primary-alt: #FFC220;
+  --wcp-semantic-color-action-fill-primary-alt-hovered: #E6A31D;
+  --wcp-semantic-color-action-fill-primary-alt-pressed: #CC851A;
+  --wcp-semantic-color-action-text-onfill-primary-alt: #2E2F32;
+  --wcp-semantic-color-header-background: #0071DC;
+}

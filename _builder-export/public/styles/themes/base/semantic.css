@@ -1,0 +1,164 @@
+/**
+ * Semantic CSS Variables
+ * Maps primitive tokens to semantic meanings for Walmart design system
+ */
+
+:root {
+  /* Background colors */
+  --ld-semantic-color-background: var(--ld-primitive-color-white, #ffffff);
+  --ld-semantic-color-background-inverse: var(--ld-primitive-color-gray-160, #2e2f32);
+  --ld-semantic-color-background-subtle: var(--ld-primitive-color-gray-5, #f8f8f8);
+  
+  /* Border colors */
+  --ld-semantic-color-border: var(--ld-primitive-color-gray-160, #2e2f32);
+  --ld-semantic-color-border-subtle: var(--ld-primitive-color-gray-130, #515357);
+  --ld-semantic-color-border-subtlest: var(--ld-primitive-color-gray-100, #74767c);
+
+  /* Top Navigation colors */
+  --ld-semantic-color-topnav-background: var(--ld-primitive-color-blue-100, #0053e2);
+  --ld-semantic-color-topnav-background-hover: var(--ld-primitive-color-blue-130, #002e99);
+  --ld-semantic-color-topnav-background-active: var(--ld-primitive-color-blue-160, #001e60);
+  --ld-semantic-color-topnav-text: var(--ld-primitive-color-white, #ffffff);
+  
+  /* Action/Button colors */
+  --ld-semantic-color-action-border-secondary: var(--ld-primitive-color-gray-160, #2e2f32);
+  --ld-semantic-color-action-fill-secondary: var(--ld-primitive-color-white, #ffffff);
+  --ld-semantic-color-action-text-onfill-secondary: var(--ld-primitive-color-gray-160, #2e2f32);
+  --ld-semantic-color-action-fill-primary: var(--ld-primitive-color-blue-100, #0053e2);
+  --ld-semantic-color-action-text-onfill-primary: var(--ld-primitive-color-white, #ffffff);
+  
+  /* Text colors */
+  --ld-semantic-color-text: var(--ld-primitive-color-gray-160, #2e2f32);
+  --ld-semantic-color-text-subtle: var(--ld-primitive-color-gray-130, #515357);
+  --ld-semantic-color-text-subtlest: var(--ld-primitive-color-gray-100, #74767c);
+  --ld-semantic-color-text-brand: var(--ld-primitive-color-blue-100, #0053e2);
+  --ld-semantic-color-text-brand-blue-bold: var(--ld-primitive-color-blue-130, #002e99);
+  --ld-semantic-color-text-accent-green: var(--ld-primitive-color-green-100, #2a8703);
+  --ld-semantic-color-text-accent-green-bold: var(--ld-primitive-color-green-130, #1d5f02);
+  
+  /* Fill colors */
+  --ld-semantic-color-fill-accent-blue-subtle: var(--ld-primitive-color-blue-10, #e9f1fe);
+  --ld-semantic-color-fill-brand-subtle: var(--ld-primitive-color-blue-10, #e9f1fe);
+  --ld-semantic-color-fill-warning: var(--ld-primitive-color-spark-100, #ffc220);
+  --ld-semantic-color-fill-warning-subtle: var(--ld-primitive-color-spark-10, #fef6de);
+  
+  /* Typography - Body */
+  --ld-semantic-font-body-small-family: var(--ld-primitive-font-family-sans, 'Everyday Sans UI', 'Helvetica Neue', 'Arial', 'sans-serif');
+  --ld-semantic-font-body-small-size: var(--ld-primitive-font-size-224, 14px);
+  --ld-semantic-font-body-small-lineheight: var(--ld-primitive-font-line-height-320, 20px);
+  --ld-semantic-font-body-small-weight-alt: var(--ld-primitive-font-weight-700, 700);
+  --ld-semantic-font-body-small-weight-default: var(--ld-primitive-font-weight-400, 400);
+
+  --ld-semantic-font-body-medium-family: var(--ld-primitive-font-family-sans, 'Everyday Sans UI', 'Helvetica Neue', 'Arial', 'sans-serif');
+  --ld-semantic-font-body-medium-size: var(--ld-primitive-font-size-256, 16px);
+  --ld-semantic-font-body-medium-lineheight: var(--ld-primitive-font-line-height-384, 24px);
+  --ld-semantic-font-body-medium-weight-alt: var(--ld-primitive-font-weight-700, 700);
+  --ld-semantic-font-body-medium-weight-default: var(--ld-primitive-font-weight-400, 400);
+
+  --ld-semantic-font-body-large-family: var(--ld-primitive-font-family-sans, 'Everyday Sans UI', 'Helvetica Neue', 'Arial', 'sans-serif');
+  --ld-semantic-font-body-large-size: var(--ld-primitive-font-size-288, 18px);
+  --ld-semantic-font-body-large-lineheight: var(--ld-primitive-font-line-height-384, 24px);
+  --ld-semantic-font-body-large-weight-alt: var(--ld-primitive-font-weight-700, 700);
+  --ld-semantic-font-body-large-weight-default: var(--ld-primitive-font-weight-400, 400);
+
+  /* Typography - Caption */
+  --ld-semantic-font-caption-family: var(--ld-primitive-font-family-sans, 'Everyday Sans UI', 'Helvetica Neue', 'Arial', 'sans-serif');
+  --ld-semantic-font-caption-size: var(--ld-primitive-font-size-192, 12px);
+  --ld-semantic-font-caption-lineheight: var(--ld-primitive-font-line-height-256, 16px);
+  --ld-semantic-font-caption-weight-alt: var(--ld-primitive-font-weight-700, 700);
+  --ld-semantic-font-caption-weight-default: var(--ld-primitive-font-weight-400, 400);
+
+  /* Typography - Heading */
+  --ld-semantic-font-heading-small-family: var(--ld-primitive-font-family-sans, 'Everyday Sans UI', 'Helvetica Neue', 'Arial', 'sans-serif');
+  --ld-semantic-font-heading-small-size: var(--ld-primitive-font-size-288, 18px);
+  --ld-semantic-font-heading-small-size-bs: 18px;
+  --ld-semantic-font-heading-small-size-bl: 20px;
+  --ld-semantic-font-heading-small-lineheight: var(--ld-primitive-font-line-height-384, 24px);
+  --ld-semantic-font-heading-small-lineheight-bs: 24px;
+  --ld-semantic-font-heading-small-lineheight-bl: 28px;
+  --ld-semantic-font-heading-small-weight-default: var(--ld-primitive-font-weight-700, 700);
+  --ld-semantic-font-heading-small-weight-alt: var(--ld-primitive-font-weight-400, 400);
+
+  --ld-semantic-font-heading-medium-family: var(--ld-primitive-font-family-sans, 'Everyday Sans UI', 'Helvetica Neue', 'Arial', 'sans-serif');
+  --ld-semantic-font-heading-medium-size: var(--ld-primitive-font-size-320, 20px);
+  --ld-semantic-font-heading-medium-size-bs: 20px;
+  --ld-semantic-font-heading-medium-size-bl: 24px;
+  --ld-semantic-font-heading-medium-lineheight: var(--ld-primitive-font-line-height-448, 28px);
+  --ld-semantic-font-heading-medium-lineheight-bs: 28px;
+  --ld-semantic-font-heading-medium-lineheight-bl: 36px;
+  --ld-semantic-font-heading-medium-weight-default: var(--ld-primitive-font-weight-700, 700);
+  --ld-semantic-font-heading-medium-weight-alt: var(--ld-primitive-font-weight-400, 400);
+
+  --ld-semantic-font-heading-large-family: var(--ld-primitive-font-family-sans, 'Everyday Sans UI', 'Helvetica Neue', 'Arial', 'sans-serif');
+  --ld-semantic-font-heading-large-size: var(--ld-primitive-font-size-384, 24px);
+  --ld-semantic-font-heading-large-size-bs: 24px;
+  --ld-semantic-font-heading-large-size-bl: 32px;
+  --ld-semantic-font-heading-large-lineheight: var(--ld-primitive-font-line-height-512, 32px);
+  --ld-semantic-font-heading-large-lineheight-bs: 32px;
+  --ld-semantic-font-heading-large-lineheight-bl: 40px;
+  --ld-semantic-font-heading-large-weight-default: var(--ld-primitive-font-weight-700, 700);
+  --ld-semantic-font-heading-large-weight-alt: var(--ld-primitive-font-weight-400, 400);
+
+  /* Typography - Display */
+  --ld-semantic-font-display-small-family: var(--ld-primitive-font-family-sans, 'Everyday Sans UI', 'Helvetica Neue', 'Arial', 'sans-serif');
+  --ld-semantic-font-display-small-size: var(--ld-primitive-font-size-448, 28px);
+  --ld-semantic-font-display-small-size-bs: 28px;
+  --ld-semantic-font-display-small-size-bl: 36px;
+  --ld-semantic-font-display-small-lineheight: var(--ld-primitive-font-line-height-576, 36px);
+  --ld-semantic-font-display-small-lineheight-bs: 36px;
+  --ld-semantic-font-display-small-lineheight-bl: 48px;
+  --ld-semantic-font-display-small-weight-default: var(--ld-primitive-font-weight-400, 400);
+  --ld-semantic-font-display-small-weight-alt: var(--ld-primitive-font-weight-700, 700);
+
+  --ld-semantic-font-display-large-family: var(--ld-primitive-font-family-sans, 'Everyday Sans UI', 'Helvetica Neue', 'Arial', 'sans-serif');
+  --ld-semantic-font-display-large-size: var(--ld-primitive-font-size-512, 32px);
+  --ld-semantic-font-display-large-size-bs: 32px;
+  --ld-semantic-font-display-large-size-bl: 42px;
+  --ld-semantic-font-display-large-lineheight: var(--ld-primitive-font-line-height-640, 40px);
+  --ld-semantic-font-display-large-lineheight-bs: 40px;
+  --ld-semantic-font-display-large-lineheight-bl: 52px;
+  --ld-semantic-font-display-large-weight-default: var(--ld-primitive-font-weight-400, 400);
+  --ld-semantic-font-display-large-weight-alt: var(--ld-primitive-font-weight-700, 700);
+
+  /* Typography - Action/Button */
+  --ld-semantic-font-action-weight: var(--ld-primitive-font-weight-700, 700);
+
+  /* Typography - Mono variants */
+  --ld-semantic-font-body-mono-small-family: var(--ld-primitive-font-family-mono, 'Everyday Sans Mono', 'Courier New', 'monospace');
+  --ld-semantic-font-body-mono-medium-family: var(--ld-primitive-font-family-mono, 'Everyday Sans Mono', 'Courier New', 'monospace');
+  --ld-semantic-font-body-mono-large-family: var(--ld-primitive-font-family-mono, 'Everyday Sans Mono', 'Courier New', 'monospace');
+  --ld-semantic-font-caption-mono-family: var(--ld-primitive-font-family-mono, 'Everyday Sans Mono', 'Courier New', 'monospace');
+  
+  /* Spacing */
+  --ld-primitive-scale-space-25: 0.125rem;
+  --ld-primitive-scale-space-50: 0.25rem;
+  --ld-primitive-scale-space-100: 0.5rem;
+  --ld-primitive-scale-space-200: 1rem;
+  
+  /* Border radius */
+  --ld-primitive-scale-borderradius-round: 62.5rem;
+  --ld-primitive-scale-borderradius-50: 0.25rem;
+  
+  /* Icon sizes */
+  --ld-semantic-scale-icon-small: var(--ld-primitive-scale-icon-small, 16px);
+  --ld-semantic-scale-icon-medium: var(--ld-primitive-scale-icon-medium, 24px);
+  --ld-semantic-scale-icon-large: var(--ld-primitive-scale-icon-large, 32px);
+
+  /* Pictogram sizes */
+  --ld-semantic-scale-pictogram-small: var(--ld-primitive-scale-pictogram-small, 48px);
+  --ld-semantic-scale-pictogram-medium: var(--ld-primitive-scale-pictogram-medium, 56px);
+  --ld-semantic-scale-pictogram-large: var(--ld-primitive-scale-pictogram-large, 64px);
+  --ld-semantic-scale-pictogram-xlarge: var(--ld-primitive-scale-pictogram-xlarge, 72px);
+
+  /* Border widths */
+  --ld-semantic-scale-border-width-interactive: var(--ld-primitive-scale-border-width-interactive, 1px);
+  --ld-semantic-scale-border-width-interactive-focused: var(--ld-primitive-scale-border-width-interactive-focused, 2px);
+  --ld-semantic-scale-border-width-interactive-hovered: var(--ld-primitive-scale-border-width-interactive-hovered, 2px);
+  --ld-semantic-scale-border-width-interactive-pressed: var(--ld-primitive-scale-border-width-interactive-pressed, 2px);
+  --ld-semantic-scale-border-width-interactive-activated: var(--ld-primitive-scale-border-width-interactive-activated, 2px);
+  
+  /* Elevations/Shadows */
+  --ld-semantic-elevation-100: 0 0.0625rem 0.125rem 0.0625rem #00000026, 0 -0.0625rem 0.125rem 0 #0000001a;
+  --ld-semantic-elevation-200: 0 0.1875rem 0.3125rem 0.125rem #00000026, 0 -0.0625rem 0.1875rem 0 #0000001a;
+  --ld-semantic-elevation-300: 0 0.3125rem 0.625rem 0.1875rem #00000026, 0 -0.0625rem 0.25rem 0 #0000001a;
+}

@@ -1,0 +1,331 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid var(--ld-semantic-color-separator);
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+/* Social proof banner — spans full card width above the body */
+.socialProofBanner {
+  background: var(--ld-semantic-color-feedback-caution-background, #fffbf0);
+  border-bottom: 1px solid var(--ld-semantic-color-feedback-caution-border, #ffc220);
+  padding: 4px 8px;
+}
+
+.socialProofText {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+}
+
+/* Row containing image + content */
+.cardBody {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+  padding: 8px 8px 12px;
+}
+
+/* Image column */
+.imageCol {
+  min-width: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.imageWrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+}
+
+.productImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Flag badge — sits above the image in natural flow */
+.flag {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  background: var(--ld-semantic-color-fill-inverse);
+  color: var(--ld-semantic-color-text-inverse);
+}
+
+.flagRed {
+  background: var(--ld-semantic-color-text-negative);
+  color: var(--ld-semantic-color-text-inverse);
+}
+
+.flagLightBlue {
+  background: var(--wcp-semantic-color-fill-confidence-subtle, #e9f1fe);
+  color: var(--wcp-semantic-color-text-on-fill-confidence-subtle, #002e99);
+}
+
+/* Favorite button — overlaid on image, top-right */
+.favoriteButton {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  z-index: 10;
+}
+
+/* Sponsored label */
+.sponsored {
+  position: absolute;
+  top: 22px;
+  left: 4px;
+  z-index: 10;
+  font-size: 10px;
+  color: var(--ld-semantic-color-text-subtle);
+}
+
+/* + N sizes badge */
+.sizesBadge {
+  position: absolute;
+  bottom: 6px;
+  left: 4px;
+  z-index: 10;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--ld-semantic-color-surface-secondary, #f2f2f2);
+  color: var(--ld-semantic-color-text);
+  border: 1px solid var(--ld-semantic-color-separator);
+}
+
+/* Content column */
+.contentCol {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+/* Price */
+.priceRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 1px;
+  flex-wrap: wrap;
+  min-height: 24px;
+}
+
+.priceRowSavings {
+  color: var(--ld-semantic-color-text-positive, #2a8703);
+}
+
+.priceRowSavings .price,
+.priceRowSavings .dollarSign,
+.priceRowSavings .cents {
+  color: inherit;
+}
+
+.prefix {
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text-positive, #2a8703);
+  line-height: 24px;
+  margin-right: 2px;
+}
+
+.dollarSign {
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16px;
+  color: var(--ld-semantic-color-text);
+  padding-bottom: 6px;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.price {
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  line-height: 20px;
+}
+
+.cents {
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16px;
+  color: var(--ld-semantic-color-text);
+  padding-bottom: 8px;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.priceStrike {
+  font-size: var(--ld-semantic-font-body-small-size);
+  color: var(--ld-semantic-color-text-subtle);
+  text-decoration: line-through;
+  align-self: flex-end;
+  margin-left: 4px;
+  line-height: 20px;
+}
+
+.unitPrice {
+  font-size: 12px;
+  color: var(--ld-semantic-color-text-subtle);
+  margin: 0;
+}
+
+.productName {
+  font-size: var(--ld-semantic-font-body-small-size);
+  color: var(--ld-semantic-color-text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0;
+}
+
+.cue {
+  font-size: 12px;
+  color: var(--ld-semantic-color-text);
+}
+
+.ratingRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ratingCount {
+  font-size: 12px;
+  color: var(--ld-semantic-color-text-subtle);
+}
+
+.ebt {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ld-semantic-color-text-subtle, #5b5c5e);
+  line-height: 16px;
+}
+
+/* Delivery cues block */
+.deliveryCues {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cueRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--ld-semantic-color-text);
+  line-height: 16px;
+}
+
+.flashIcon {
+  flex-shrink: 0;
+  color: var(--ld-semantic-color-feedback-caution, #f5a623);
+}
+
+/* Brand-bold express delivery badge — dark blue, 2px radius */
+.expressBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  align-self: flex-start;
+  padding: 2px 8px;
+  border-radius: 2px;
+  background: var(--ld-semantic-color-action-fill-primary-pressed, #001e60);
+  color: var(--ld-semantic-color-text-inverse, #fff);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.cueSubtle {
+  color: var(--ld-semantic-color-text-subtle);
+}
+
+/* W+ membership cue rows — primary blue text */
+.cueWplus {
+  color: var(--ld-semantic-color-text-brand, #0053e2);
+}
+
+/* Legacy pickup / stock */
+.pickup {
+  font-size: 12px;
+  color: var(--ld-semantic-color-text);
+}
+
+.pickupBold {
+  font-weight: 700;
+}
+
+.stock {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text-negative);
+}
+
+.addToCart {
+  margin-top: 4px;
+}
+
+/* Match the Add-to-cart / Options button size to the other CTA on the search results page (40px tall, full width) */
+.addToCart {
+  width: 100%;
+}
+
+.addToCart > button {
+  height: 40px;
+  min-height: 40px;
+  width: 100%;
+}
+
+/* Make the activated cart QuantityStepper match the default Add to cart button size (40px tall, full width) */
+.addToCart :global([class*="quantityStepper"]) {
+  width: 100%;
+}
+
+.addToCart :global([class*="quantityStepper"]) > :global([class*="pill"]) {
+  width: 100%;
+  height: 40px;
+  min-height: 40px;
+}
+
+.cartLoadingPill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 40px;
+  border-radius: 9999px;
+  background: var(--wcp-semantic-color-fill-primary, #0071dc);
+  color: #fff;
+  border: none;
+}
+
+.timerBadge {
+  position: absolute;
+  bottom: 6px;
+  left: 4px;
+  z-index: 10;
+}

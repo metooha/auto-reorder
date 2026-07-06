@@ -1,0 +1,127 @@
+.footer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--ld-semantic-color-surface);
+}
+
+/* ── Feedback Section ── */
+.feedbackSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 24px 16px;
+  text-align: center;
+}
+
+.feedbackText {
+  color: var(--ld-semantic-color-text);
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: var(--ld-semantic-font-body-default-size);
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ── Links Container ── */
+.linksContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 16px 8px;
+  gap: 0;
+  border-top: 1px solid var(--ld-semantic-color-separator);
+  border-bottom: 1px solid var(--ld-semantic-color-separator);
+}
+
+.footerLink {
+  display: block;
+  color: var(--ld-semantic-color-text);
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: var(--ld-semantic-font-body-default-size);
+  font-weight: 400;
+  line-height: 1.5;
+  text-decoration: none;
+  padding: 8px 0;
+  transition: color 150ms ease, text-decoration-color 150ms ease;
+}
+
+.footerLink:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  color: var(--ld-semantic-color-link-text-hovered);
+}
+
+.footerLink:active {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  color: var(--ld-semantic-color-link-text-pressed);
+}
+
+.footerLink:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ── Privacy choices link (with icon) ── */
+.privacyChoicesLink {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--ld-semantic-color-text);
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: var(--ld-semantic-font-body-default-size);
+  font-weight: 400;
+  line-height: 1.5;
+  text-decoration: none;
+  padding: 8px 0;
+  transition: color 150ms ease;
+}
+
+.privacyChoicesLink:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  color: var(--ld-semantic-color-link-text-hovered);
+}
+
+.privacyChoicesLink:active {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  color: var(--ld-semantic-color-link-text-pressed);
+}
+
+.privacyChoicesLink:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.privacyIcon {
+  flex-shrink: 0;
+}
+
+/* ── Copyright ── */
+.copyright {
+  color: var(--ld-semantic-color-text-subtle);
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: var(--ld-semantic-font-caption-size);
+  font-weight: 400;
+  line-height: 1.33;
+  margin: 0;
+  padding: 8px 16px 20px;
+}
+
+/* ── Desktop: hide MwebFooter (unless contained) ── */
+@media (min-width: 1024px) {
+  .footer {
+    display: none;
+  }
+  .footerContained {
+    display: flex;
+  }
+}

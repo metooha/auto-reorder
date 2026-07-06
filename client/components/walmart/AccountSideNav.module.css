@@ -1,0 +1,117 @@
+.nav {
+  width: 248px;
+  flex-shrink: 0;
+  background: var(--ld-semantic-color-surface, #ffffff);
+  border-right: 1px solid var(--ld-semantic-color-separator);
+  display: flex;
+  flex-direction: column;
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+}
+
+@media (max-width: 1023px) {
+  .nav {
+    display: none;
+  }
+}
+
+/* User Header */
+.userHeader {
+  padding: 16px 16px 12px;
+}
+
+.userHeaderTop {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.greeting {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  line-height: 32px;
+}
+
+.memberSince {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ld-semantic-color-text-brand-bold);
+  line-height: 16px;
+  margin: 0;
+  padding-left: 40px;
+}
+
+/* Sections */
+.section {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Group title inside the accordion — flush left with SideNavigationItem text */
+.groupTitle {
+  font-size: var(--ld-semantic-font-body-medium-size, 1rem);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  line-height: var(--ld-semantic-font-body-medium-lineheight, 1.5);
+  padding: 16px 0 4px;
+}
+
+/* Nav item inner layout (content inside SideNavigationItem) */
+.navItemInner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.navItemLabel {
+  flex: 1;
+}
+
+/* Collapsible header row */
+.collapsibleHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 12px 12px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  color: var(--ld-semantic-color-text);
+}
+
+.collapsibleHeader:hover {
+  background: var(--ld-semantic-color-fill-subtle);
+}
+
+.collapsibleHeader:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline);
+  outline-offset: -2px;
+}
+
+.collapsibleHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sectionTitleText {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  color: var(--ld-semantic-color-text);
+}
+
+/* Chevron icon rotates based on state */
+.chevronIcon {
+  display: flex;
+  align-items: center;
+  transition: transform 0.15s ease;
+}
+
+[data-state="open"] > .collapsibleHeader .chevronIcon {
+  transform: rotate(180deg);
+}

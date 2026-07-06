@@ -1,0 +1,117 @@
+.root {
+  position: relative;
+  display: inline-block;
+}
+
+/* ── Trigger button ── */
+.trigger {
+  display: flex;
+  align-items: center;
+  height: 52px;
+  padding: 4px 16px 4px 12px;
+  border-radius: 9999px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 100ms;
+  color: var(--ld-semantic-color-top-nav-text-on-fill);
+  font-family: var(--ld-semantic-font-family-sans);
+  white-space: nowrap;
+}
+
+.trigger:hover {
+  background: var(--ld-semantic-color-top-nav-fill-hovered);
+}
+
+.trigger:active {
+  background: var(--ld-semantic-color-top-nav-fill-pressed);
+}
+
+.trigger:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline);
+  outline-offset: 2px;
+}
+
+.triggerIcon {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  color: var(--ld-semantic-color-top-nav-text-on-fill);
+  flex-shrink: 0;
+}
+
+.triggerContent {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.triggerSubtext {
+  font-size: var(--ld-semantic-font-body-small-size);
+  font-weight: var(--ld-semantic-font-body-small-weight-default);
+  line-height: var(--ld-semantic-font-body-small-line-height);
+  color: var(--ld-semantic-color-top-nav-text-on-fill);
+}
+
+.triggerLabel {
+  font-size: var(--ld-semantic-font-body-small-size);
+  font-weight: var(--ld-semantic-font-body-small-weight-alt);
+  line-height: var(--ld-semantic-font-body-small-line-height);
+  color: var(--ld-semantic-color-top-nav-text-on-fill);
+  margin-top: -2px;
+}
+
+/* ── Dropdown panel ── */
+.panel {
+  position: absolute;
+  top: 69px;
+  left: -25px;
+  min-width: 180px;
+  background: var(--ld-semantic-color-surface);
+  border-radius: 0 0 8px 8px;
+  box-shadow: var(--ld-semantic-elevation-200);
+  padding: 8px 0;
+  z-index: 200;
+}
+
+/* ── Menu items ── */
+.item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px 20px;
+  gap: 12px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 100ms;
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+.item:hover {
+  background: var(--ld-semantic-color-surface-hovered);
+}
+
+.item:active {
+  background: var(--ld-semantic-color-fill-accent-blue-subtle);
+}
+
+.item:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline);
+  outline-offset: -2px;
+}
+
+.itemIcon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--ld-semantic-color-text);
+}
+
+.itemLabel {
+  font-size: var(--ld-semantic-font-body-medium-size);
+  font-weight: var(--ld-semantic-font-body-medium-weight-default);
+  line-height: var(--ld-semantic-font-body-medium-line-height);
+  color: var(--ld-semantic-color-text);
+}

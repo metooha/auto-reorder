@@ -1,0 +1,191 @@
+/* ── Backdrop ── */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--ld-semantic-color-scrim, rgba(0, 0, 0, 0.4));
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.backdropOpen {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ── Panel ── */
+.panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 85%;
+  max-width: 360px;
+  z-index: 101;
+  background: var(--ld-semantic-color-surface, #fff);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.panelOpen {
+  transform: translateX(0);
+}
+
+.panelContent {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* ── Header ── */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 24px 16px 16px;
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.greeting {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+  color: var(--ld-semantic-color-text);
+}
+
+.closeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--ld-primitive-scale-borderradius-round, 9999px);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--ld-semantic-color-text);
+  flex-shrink: 0;
+}
+
+.closeButton:hover {
+  background: var(--ld-semantic-color-fill-subtle);
+}
+
+/* ── Menu items ── */
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: var(--ld-semantic-font-body-medium-weight-default, 400);
+  line-height: var(--ld-semantic-font-body-medium-lineheight, 24px);
+  color: var(--ld-semantic-color-text);
+}
+
+.menuItem:hover {
+  background: var(--ld-semantic-color-fill-subtle);
+}
+
+.menuItemIcon {
+  flex-shrink: 0;
+  color: var(--ld-semantic-color-text-subtle);
+}
+
+.menuItemLabel {
+  flex: 1;
+}
+
+.menuItemChevron {
+  flex-shrink: 0;
+  color: var(--ld-semantic-color-text-subtle);
+}
+
+/* ── Menu sections ── */
+.menuSection {
+  display: flex;
+  flex-direction: column;
+  padding: 4px 0;
+}
+
+/* ── Walmart Cash banner ── */
+.cashBanner {
+  padding: 8px 16px;
+}
+
+.cashButton {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--ld-semantic-color-fill-accent-spark-subtle, #FFF8DC);
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  border: none;
+  cursor: pointer;
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+}
+
+.cashButton:hover {
+  opacity: 0.9;
+}
+
+.cashIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--ld-primitive-scale-borderradius-round, 9999px);
+  background: var(--ld-semantic-color-action-fill-primary, #0071dc);
+  color: var(--ld-semantic-color-text-inverse, #ffffff);
+  font-size: 16px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.cashLabel {
+  flex: 1;
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  text-align: left;
+}
+
+.cashChevron {
+  flex-shrink: 0;
+  color: var(--ld-semantic-color-text-subtle);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backdrop {
+    transition: none;
+  }
+  .panel {
+    transition: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .backdrop,
+  .panel {
+    display: none;
+  }
+}

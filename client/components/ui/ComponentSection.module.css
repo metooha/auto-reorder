@@ -1,0 +1,30 @@
+.section {
+  margin-bottom: 48px;
+}
+
+.header {
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+}
+
+.title {
+  font-size: var(--ld-semantic-font-heading-small-size, 1.25rem);
+  font-weight: var(--ld-semantic-font-heading-small-weight, 700);
+  line-height: var(--ld-semantic-font-heading-small-line-height, 1.5rem);
+  font-family: var(--ld-semantic-font-family-sans);
+  color: var(--ld-semantic-color-text-primary, #2E2F32);
+  margin: 0 0 4px;
+}
+
+.description {
+  font-size: var(--ld-semantic-font-body-small-size, 0.875rem);
+  line-height: var(--ld-semantic-font-body-small-line-height, 1.25rem);
+  font-family: var(--ld-semantic-font-family-sans);
+  color: var(--ld-semantic-color-text-subtle, #74767C);
+  margin: 0;
+}
+
+.body {
+  /* Section body — no extra padding, let children control their own spacing */
+}

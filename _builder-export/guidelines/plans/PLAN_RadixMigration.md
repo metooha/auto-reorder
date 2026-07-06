@@ -1,0 +1,210 @@
+# Radix UI Removal — Migration Plan
+
+> **Goal**: Remove all `@radix-ui/react-*` dependencies from the project and replace with native HTML/React implementations that preserve accessibility and behavior.
+
+---
+
+## 1. Current State
+
+**27 Radix packages** in `package.json` (devDependencies).  
+**20 component files** under `client/components/ui/` import from `@radix-ui`.  
+**6 packages** are listed in package.json but never imported anywhere.  
+**6 component files** using Radix are never imported outside their own file (dead code).
+
+---
+
+## 2. Phase 0 — Quick Wins (No Code Changes Required)
+
+Remove unused packages from `package.json` and delete dead-code component files.
+
+### Unused Packages (not imported anywhere in the codebase)
+
+| Package | Action |
+|---|---|
+| `@radix-ui/react-hover-card` | Remove from package.json |
+| `@radix-ui/react-progress` | Remove from package.json |
+| `@radix-ui/react-switch` | Remove from package.json |
+| `@radix-ui/react-tabs` | Remove from package.json |
+| `@radix-ui/react-toast` | Remove from package.json |
+| `@radix-ui/react-separator` | Remove from package.json |
+
+### Dead-Code Component Files (not imported outside their own file)
+
+| File | Radix Package | Action |
+|---|---|---|
+| `client/components/ui/aspect-ratio.tsx` | `react-aspect-ratio` | Delete file, remove package |
+| `client/components/ui/form.tsx` | `react-slot` (type import) | Delete file |
+| `client/components/ui/label.tsx` | `react-label` | Delete file, remove package |
+| `client/components/ui/Popover.tsx` (uppercase) | `react-popover` | Delete file (lowercase `popover.tsx` is the active one) |
+| `client/components/ui/sidebar.tsx` | `react-slot` | Delete file |
+| `client/components/ui/toggle-group.tsx` | `react-toggle-group` | Delete file, remove package |
+
+**After Phase 0**: 21 packages removed or queued for removal. 6 files deleted.
+
+---
+
+## 3. Phase 1 — Example/Demo-Only Components
+
+These components are only imported by their example files in `client/components/examples/` and displayed on component library pages. They are not used in any production page or feature.
+
+**Strategy**: Rewrite each component using native HTML elements, React state, and CSS. The component's public API (props, exported names) must stay identical so examples don't break.
+
+### Priority Order (simplest first)
+
+| # | Component File | Radix Package | Complexity | Replacement Strategy |
+|---|---|---|---|---|
+| 1 | `collapsible.tsx` | `react-collapsible` | Simple | Native `<details>`/`<summary>` or React state + `aria-expanded` |
+| 2 | `toggle.tsx` | `react-toggle` | Simple | `<button>` with `aria-pressed` + React state |
+| 3 | `avatar.tsx` | `react-avatar` | Simple | `<img>` with `onError` fallback to initials `<span>` |
+| 4 | `slider.tsx` | `react-slider` | Simple | Native `<input type="range">` with custom track/thumb CSS |
+| 5 | `accordion.tsx` | `react-accordion` | Medium | `<details>`/`<summary>` or React state + `aria-expanded` + CSS transitions |
+| 6 | `tooltip.tsx` | `react-tooltip` | Medium | CSS `:hover`/`:focus` tooltip with `role="tooltip"` + `aria-describedby`, or React state with portal |
+| 7 | `scroll-area.tsx` | `react-scroll-area` | Medium | Native CSS `overflow: auto` with custom scrollbar styles (`::-webkit-scrollbar`) |
+| 8 | `popover.tsx` (lowercase) | `react-popover` | Medium | React state + portal + `useFloating` positioning (or manual positioning), focus trap, click-outside handler |
+| 9 | `dropdown-menu.tsx` | `react-dropdown-menu` | Medium | `<button>` trigger + positioned `<div role="menu">` with `<div role="menuitem">`, keyboard nav (arrow keys, Escape, Home/End) |
+| 10 | `context-menu.tsx` | `react-context-menu` | Medium | `onContextMenu` handler + positioned menu (same pattern as dropdown-menu) |
+| 11 | `menubar.tsx` | `react-menubar` | Medium | `<div role="menubar">` with `<button role="menuitem">` triggers, sub-menus, arrow key navigation |
+| 12 | `navigation-menu.tsx` | `react-navigation-menu` | Medium | `<nav>` with `<ul>`/`<li>` structure, dropdown sub-menus, keyboard nav |
+| 13 | `alert-dialog.tsx` | `react-alert-dialog` | Medium | Same as Modal but with `role="alertdialog"` and required action buttons |
+| 14 | `command.tsx` | `react-dialog` (type only) | Simple | Remove the type import; use local type definition. Main UI is `cmdk`, not Radix. |
+
+### What each replacement must include
+
+- **Keyboard navigation**: Arrow keys, Escape to close, Enter/Space to activate, Tab for focus management
+- **ARIA attributes**: `role`, `aria-expanded`, `aria-controls`, `aria-haspopup`, `aria-selected`, `aria-checked`, `aria-labelledby`, etc.
+- **Focus management**: Focus trapping for modals/dialogs, return focus on close, `tabindex` management
+- **Click-outside handling**: Close overlays when clicking outside (use a `useClickOutside` hook)
+- **Portal rendering**: Overlays (modals, popovers, dropdowns) should render in a portal to avoid z-index/overflow issues
+- **Animation**: CSS transitions for open/close states using data attributes or CSS classes
+
+---
+
+## 4. Phase 2 — Production-Critical Components
+
+These are used in actual app pages and features. Migration must be done carefully with testing.
+
+| # | Component File | Radix Package | Used By | Complexity | Replacement Strategy |
+|---|---|---|---|---|---|
+| 1 | `Modal.tsx` | `react-dialog` | Example only currently, but Modal is a core UI primitive | Medium | `<dialog>` element (native HTML) with `showModal()`/`close()`, `::backdrop` for overlay, focus trap, Escape to close |
+| 2 | `Checkbox.tsx` | `react-checkbox` | `DataTableCellSelect.tsx`, `MartyFloatingPanel.tsx`, `ComponentTester.tsx`, examples | Medium | Native `<input type="checkbox">` with custom styling via `appearance: none` + pseudo-elements for indicator, `aria-checked` |
+| 3 | `Radio.tsx` + `radio-group.tsx` | `react-radio-group` | Examples, `FormGroupExample.tsx` | Medium-High | Native `<input type="radio">` with `name` grouping, custom styling, remove MutationObserver (use React state/context instead of watching Radix data attributes) |
+| 4 | `Select.tsx` | `react-select` | `Index.tsx` (app page), examples | **High** | Native `<select>` with custom dropdown overlay, or a custom listbox pattern (`<div role="listbox">` + `<div role="option">`). Must support: keyboard nav, portal positioning, error states, helper text, `aria-activedescendant` |
+
+### Select.tsx — Detailed Replacement Plan
+
+This is the most complex migration item. The current implementation uses ~15 Radix primitives.
+
+**Option A: Native `<select>` element**
+- Pros: Full browser accessibility for free, keyboard nav built in, mobile-friendly
+- Cons: Limited styling control (can't style the dropdown options across browsers)
+- Best for: If visual customization of the dropdown isn't critical
+
+**Option B: Custom listbox pattern**
+- Build a custom component using `role="listbox"` and `role="option"`
+- Implement: trigger button, positioned dropdown portal, keyboard navigation (arrow keys, type-ahead, Home/End), focus management, scroll into view
+- Use CSS for positioning (or a lightweight positioning utility)
+- This is significant work (~300-400 lines) but gives full styling control
+
+**Recommendation**: Option B (custom listbox) to maintain current visual design. Create a shared `useListbox` hook for keyboard navigation logic that can be reused by other components.
+
+---
+
+## 5. Phase 3 — Shared Utilities
+
+Before starting Phase 1-2 replacements, create these reusable utilities:
+
+| Utility | Purpose | Used By |
+|---|---|---|
+| `useClickOutside(ref, handler)` | Close overlays on outside click | Popover, Dropdown, Select, Modal, ContextMenu |
+| `useFocusTrap(ref, active)` | Trap focus inside overlay | Modal, AlertDialog, Dialog |
+| `useEscapeKey(handler)` | Close on Escape press | All overlays |
+| `useListboxNavigation(items)` | Arrow key navigation for list-based components | Select, DropdownMenu, ContextMenu, Menubar, Command |
+| `Portal` component | Render children in a portal | All overlays |
+| `Slot` component | Polymorphic `asChild` pattern | Replace `@radix-ui/react-slot` usage |
+
+**Location**: `client/hooks/` for hooks, `client/components/ui/Portal.tsx` and `client/components/ui/Slot.tsx` for components.
+
+---
+
+## 6. Execution Order
+
+```
+Phase 0  →  Phase 3 (utilities)  →  Phase 1 (demo-only)  →  Phase 2 (production)
+```
+
+1. **Phase 0**: Remove unused packages and dead code files
+2. **Phase 3**: Build shared utilities (hooks + Portal + Slot)
+3. **Phase 1**: Replace demo-only components (simplest first)
+4. **Phase 2**: Replace production components (Checkbox → Radio → Modal → Select)
+
+After each component replacement:
+- Verify the component library page still renders correctly
+- Verify keyboard navigation works (Tab, Enter, Escape, Arrow keys)
+- Verify screen reader announces states correctly
+- Run `pnpm build` to check for type errors
+
+---
+
+## 7. Packages to Remove (Final Checklist)
+
+After all phases are complete, remove these from `package.json`:
+
+| Package | Removed In |
+|---|---|
+| `@radix-ui/react-accordion` | Phase 1 |
+| `@radix-ui/react-alert-dialog` | Phase 1 |
+| `@radix-ui/react-aspect-ratio` | Phase 0 |
+| `@radix-ui/react-avatar` | Phase 1 |
+| `@radix-ui/react-checkbox` | Phase 2 |
+| `@radix-ui/react-collapsible` | Phase 1 |
+| `@radix-ui/react-context-menu` | Phase 1 |
+| `@radix-ui/react-dialog` | Phase 2 |
+| `@radix-ui/react-dropdown-menu` | Phase 1 |
+| `@radix-ui/react-hover-card` | Phase 0 |
+| `@radix-ui/react-label` | Phase 0 |
+| `@radix-ui/react-menubar` | Phase 1 |
+| `@radix-ui/react-navigation-menu` | Phase 1 |
+| `@radix-ui/react-popover` | Phase 1 |
+| `@radix-ui/react-progress` | Phase 0 |
+| `@radix-ui/react-radio-group` | Phase 2 |
+| `@radix-ui/react-scroll-area` | Phase 1 |
+| `@radix-ui/react-select` | Phase 2 |
+| `@radix-ui/react-separator` | Phase 0 |
+| `@radix-ui/react-slider` | Phase 1 |
+| `@radix-ui/react-slot` | Phase 3 |
+| `@radix-ui/react-switch` | Phase 0 |
+| `@radix-ui/react-tabs` | Phase 0 |
+| `@radix-ui/react-toast` | Phase 0 |
+| `@radix-ui/react-toggle` | Phase 1 |
+| `@radix-ui/react-toggle-group` | Phase 0 |
+| `@radix-ui/react-tooltip` | Phase 1 |
+
+---
+
+## 8. Risk Assessment
+
+| Risk | Impact | Mitigation |
+|---|---|---|
+| Accessibility regression | High | Test every component with keyboard and screen reader after replacement |
+| Select.tsx replacement breaks Index.tsx | High | Keep the same public API (props, exports); test the page after migration |
+| Focus management bugs in modals/dialogs | Medium | Use the shared `useFocusTrap` hook consistently |
+| Positioning issues in popovers/dropdowns | Medium | Test at different viewport sizes and scroll positions |
+| Animation differences | Low | Use CSS transitions with consistent timing; match existing animation behavior |
+
+---
+
+## 9. Dependencies After Migration
+
+After full migration, the project will have **zero** `@radix-ui` dependencies. The only external UI-behavior dependency will be `cmdk` (used by `command.tsx` for the command palette). `cmdk` itself depends on `@radix-ui/react-dialog` internally, so if you want to fully remove Radix from the dependency tree, `cmdk` would also need to be replaced or a Radix-free fork used.
+
+---
+
+## 10. Definition of Done
+
+- [ ] All `@radix-ui/react-*` packages removed from `package.json`
+- [ ] `pnpm install` completes with no Radix packages in `node_modules/@radix-ui/`
+- [ ] `pnpm build` succeeds with no errors
+- [ ] All component library pages render and function correctly
+- [ ] All production pages (Index.tsx, LandingSummary.tsx) function correctly
+- [ ] Keyboard navigation works on all interactive components
+- [ ] No accessibility regressions (ARIA attributes, focus management, screen reader support)

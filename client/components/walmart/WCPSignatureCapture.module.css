@@ -1,0 +1,318 @@
+/* ── WCP Signature Capture ───────────────────────────────────────────────── */
+/* Vujahday Script font is loaded globally via index.html */
+
+.capture {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* ── Trigger variant ─────────────────────────────────────────────────────── */
+
+.triggerWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ld-primitive-scale-space-200, 16px);
+  align-self: stretch;
+  background: var(--ld-semantic-color-surface, #fff);
+}
+
+.ctaSubtext {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+  align-self: stretch;
+}
+
+.subText {
+  align-self: stretch;
+  color: var(--ld-semantic-color-text-subtle, #515357);
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: var(--ld-semantic-font-body-small-weight-default, 400);
+  line-height: var(--ld-semantic-font-body-small-lineheight, 1.4286);
+  margin: 0;
+}
+
+@media (min-width: 900px) {
+  .subText {
+    font-size: var(--ld-semantic-font-body-medium-size, 16px);
+    line-height: var(--ld-semantic-font-body-medium-lineheight, 1.5);
+  }
+}
+
+/* ── Terms variant ───────────────────────────────────────────────────────── */
+
+.termsWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+  align-self: stretch;
+  background: var(--ld-semantic-color-surface, #fff);
+}
+
+.titleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+}
+
+.signatureTitle {
+  color: var(--ld-semantic-color-text-onfill, #2E2F32);
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: var(--ld-semantic-font-body-small-weight-alt, 700);
+  line-height: var(--ld-semantic-font-body-small-lineheight, 1.4286);
+}
+
+.changeSigBtn {
+  display: flex;
+  align-items: center;
+  height: var(--ld-primitive-scale-space-400, 32px);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: var(--ld-semantic-color-link-text, #2E2F32);
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: var(--ld-semantic-font-body-small-weight-default, 400);
+  line-height: var(--ld-semantic-font-body-small-lineheight, 1.4286);
+  text-decoration: underline;
+}
+
+/* ── Signature Box ───────────────────────────────────────────────────────── */
+
+.signatureBox {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+  border-radius: var(--ld-primitive-scale-borderradius-50, 4px);
+  border: 1px solid var(--ld-semantic-color-input-border, #B8BABC);
+  background: var(--ld-semantic-color-input-fill, #FFFFFF);
+  position: relative;
+}
+
+.signatureBoxNormal {
+  min-height: 156px;
+  padding: var(--ld-primitive-scale-space-300, 24px) var(--ld-primitive-scale-space-200, 16px);
+  justify-content: space-between;
+}
+
+.signatureBoxShort {
+  min-height: 52px;
+  justify-content: center;
+  align-items: center;
+  background: var(--ld-semantic-color-surface-subtle, #F8F8F8);
+  border: none;
+}
+
+@media (min-width: 900px) {
+  .signatureBoxNormal {
+    min-height: 247px;
+  }
+
+  .signatureBoxShort {
+    min-height: 96px;
+  }
+}
+
+/* Terms signature box = surface-subtle, no border */
+.termsWrapper .signatureBox {
+  height: 100px;
+  min-height: 100px;
+  background: var(--ld-semantic-color-surface-subtle, #F8F8F8);
+  border: none;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+}
+
+.signatureBoxLabel {
+  color: var(--ld-semantic-color-input-text-onfill, #2E2F32);
+  font-family: var(--ld-semantic-font-caption-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-caption-size, 12px);
+  font-weight: var(--ld-semantic-font-caption-weight-alt, 700);
+  line-height: var(--ld-semantic-font-caption-lineheight, 1.3333);
+  position: absolute;
+  top: var(--ld-primitive-scale-space-300, 24px);
+  left: var(--ld-primitive-scale-space-200, 16px);
+}
+
+.signatureBoxInner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-200, 16px);
+  align-self: stretch;
+  flex: 1;
+  justify-content: center;
+}
+
+.signatureName {
+  align-self: stretch;
+  color: var(--ld-semantic-color-input-text-onfill, #2E2F32);
+  text-align: center;
+  font-family: 'Vujahday Script', cursive;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.signatureDivider {
+  height: 1px;
+  align-self: stretch;
+  background: var(--ld-semantic-color-separator, #E3E4E5);
+}
+
+.signedAsText {
+  color: var(--ld-semantic-color-text-onfill-accent-spark-subtle, #662B0D);
+  text-align: center;
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 400;
+  line-height: 20px;
+}
+
+@media (min-width: 900px) {
+  .signedAsText {
+    font-size: var(--ld-semantic-font-body-medium-size, 16px);
+    line-height: 24px;
+  }
+}
+
+/* ── Alert action link ───────────────────────────────────────────────────── */
+
+.alertAction {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: var(--ld-semantic-color-text-onfill-warning-subtle, #662B0D);
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 400;
+  text-decoration: underline;
+  line-height: var(--ld-semantic-font-body-small-lineheight, 1.4286);
+}
+
+/* ── Base variant ────────────────────────────────────────────────────────── */
+
+.baseWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+  align-self: stretch;
+}
+
+.termsText {
+  align-self: stretch;
+  color: var(--ld-semantic-color-text-onfill, #2E2F32);
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 400;
+  line-height: var(--ld-semantic-font-body-small-lineheight, 1.4286);
+  margin: 0;
+}
+
+@media (min-width: 900px) {
+  .termsText {
+    font-size: var(--ld-semantic-font-body-medium-size, 16px);
+    line-height: var(--ld-semantic-font-body-medium-lineheight, 1.5);
+  }
+}
+
+.termsLink {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: var(--ld-semantic-color-link-text, #2E2F32);
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  text-decoration: underline;
+}
+
+.signatureSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-200, 16px);
+  align-self: stretch;
+  margin-top: var(--ld-primitive-scale-space-100, 8px);
+}
+
+.signatureSectionTitle {
+  color: var(--ld-semantic-color-text-onfill, #2E2F32);
+  font-family: var(--ld-semantic-font-body-medium-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: var(--ld-semantic-font-body-medium-weight-alt, 700);
+  line-height: var(--ld-semantic-font-body-medium-lineheight, 1.5);
+  margin: 0;
+}
+
+.requiredFields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+  align-self: stretch;
+}
+
+.requiredLabel {
+  color: var(--ld-semantic-color-text, #2E2F32);
+  font-family: var(--ld-semantic-font-caption-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-caption-size, 12px);
+  font-weight: var(--ld-semantic-font-caption-weight-default, 400);
+  line-height: var(--ld-semantic-font-caption-lineheight, 1.3333);
+  margin: 0;
+}
+
+.checkboxSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-150, 12px);
+  align-self: stretch;
+}
+
+.legalText {
+  align-self: stretch;
+  color: var(--ld-semantic-color-text-subtle, #515357);
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 400;
+  line-height: var(--ld-semantic-font-body-small-lineheight, 1.4286);
+  margin: 0;
+}
+
+/* ── Reauth variant ──────────────────────────────────────────────────────── */
+
+.reauthWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-200, 16px);
+  align-self: stretch;
+  background: var(--ld-semantic-color-surface-overlay, #fff);
+  padding-bottom: 16px;
+}
+
+.holdAndConfirm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-200, 16px);
+  align-self: stretch;
+}
+
+/* ── Reduced motion ──────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

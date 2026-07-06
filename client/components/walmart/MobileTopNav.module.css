@@ -1,0 +1,411 @@
+/* ── MobileTopNav ── */
+
+.root {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+}
+
+.rootNativeBlue {
+  background-color: var(--ld-semantic-color-top-nav-fill);
+}
+
+@media (min-width: 1024px) {
+  .root {
+    display: none;
+  }
+}
+
+/* ── Top bar ── */
+.topBar {
+  padding: 16px !important;
+  padding-bottom: 12px !important;
+}
+
+@media (min-width: 768px) {
+  .topBar {
+    padding: 16px !important;
+  }
+}
+
+.topBarBlue {
+  background-color: var(--ld-semantic-color-top-nav-fill);
+}
+
+.topBarWhite {
+  background-color: var(--ld-semantic-color-surface, #fff);
+}
+
+/* ── Top bar inner row ── */
+.topBarRow {
+  display: flex;
+  align-items: center;
+  gap: 16px !important;
+  min-width: 0;
+}
+
+@media (min-width: 768px) {
+  .topBarRow {
+    gap: 16px !important;
+  }
+}
+
+/* ── Logo ── */
+.logoLink {
+  flex-shrink: 0;
+}
+
+.logoImg {
+  height: 32px;
+  width: 32px;
+  color: var(--ld-primitive-color-spark-100, #ffc220);
+}
+
+@media (min-width: 768px) {
+  .logoImg {
+    height: 36px;
+    width: 36px;
+  }
+}
+
+/* ── Search pill (mweb / non-home standard) ── */
+.searchPill {
+  flex: 1;
+  min-width: 0;
+  background: white;
+  border-radius: var(--ld-primitive-scale-borderradius-round, 9999px);
+  height: 52px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  cursor: pointer;
+  border: none;
+}
+
+@media (min-width: 768px) {
+  .searchPill {
+    padding: 0 24px;
+  }
+}
+
+.searchPillBlue {
+  border: 2px solid transparent;
+}
+
+.searchPillWhite {
+  border: 2px solid var(--ld-semantic-color-action-fill-primary, #0071dc);
+}
+
+/* Native search pill inside the standard topBarRow (non-home pages) */
+.searchPillNative {
+  height: 36px;
+  padding: 6px 8px 6px 16px;
+  border-radius: 100px;
+  gap: 8px;
+}
+
+.searchPillText {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  color: var(--ld-semantic-color-text-subtle, #6d6e72);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
+}
+
+@media (min-width: 768px) {
+  .searchPillText {
+    font-size: var(--ld-semantic-font-body-default-size, 16px);
+  }
+}
+
+.searchPillIcons {
+  display: flex;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-100, 4px);
+  flex-shrink: 0;
+}
+
+.searchButton {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--ld-primitive-scale-borderradius-round, 9999px);
+  background-color: var(--ld-semantic-color-text-brand-bold, #001e60);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: -4px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  flex-shrink: 0;
+}
+
+.searchPillIconBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: var(--ld-semantic-color-text-subtle, #6d6e72);
+}
+
+/* ═══════════════════════════════════════════
+   NATIVE HOME LAYOUT — single blue container
+   ═══════════════════════════════════════════ */
+
+.nativeHomeContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.nativeHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 8px 16px;
+  position: relative;
+}
+
+.greeting {
+  font-family: var(--ld-semantic-font-body-default-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-default-size, 16px);
+  font-weight: var(--ld-semantic-font-body-default-weight-default, 400);
+  line-height: var(--ld-semantic-font-body-default-lineheight, 24px);
+  color: var(--ld-semantic-color-text-inverse, #fff);
+  flex-shrink: 0;
+}
+
+.sparkCenter {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sparkImg {
+  width: 32px;
+  height: 32px;
+}
+
+/* ═══════════════════════════════════════════
+   NATIVE HOME LAYOUT — Inversed variant (white bg, dark text)
+   Used when search modal is open
+   ═══════════════════════════════════════════ */
+
+.nativeHeaderInverse {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 8px 16px;
+  position: relative;
+  background-color: var(--ld-semantic-color-surface, #fff);
+}
+
+.greetingInverse {
+  font-family: var(--ld-semantic-font-body-default-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-default-size, 16px);
+  font-weight: var(--ld-semantic-font-body-default-weight-default, 400);
+  line-height: var(--ld-semantic-font-body-default-lineheight, 24px);
+  color: var(--ld-semantic-color-text, #2e2f32);
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════
+   NATIVE HOME LAYOUT — Row 2: Search pill
+   ═══════════════════════════════════════════ */
+
+.nativeSearchRow {
+  padding: 0 16px 8px 16px;
+}
+
+.nativeSearchPill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px 6px 16px;
+  border-radius: 100px;
+  background: var(--ld-semantic-color-surface, #fff);
+  cursor: pointer;
+  width: 100%;
+}
+
+.nativeSearchIcon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.nativeBarcodeBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.nativeBarcodeIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.headerCartBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+/* ── Native back button (larger for native) ── */
+.nativeBackIcon {
+  width: 32px;
+  height: 32px;
+}
+
+/* ── Delivery banner ── */
+.deliveryBanner {
+  padding: 8px 16px;
+}
+
+.deliveryButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  margin: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.deliveryBannerBlue {
+  background-color: var(--ld-semantic-color-top-nav-fill);
+}
+
+.deliveryBannerWhite {
+  background-color: var(--ld-semantic-color-surface, #fff);
+}
+
+@media (min-width: 1024px) {
+  .deliveryBanner {
+    display: none;
+  }
+}
+
+/* ── Sub nav ── */
+.subNav {
+  padding: var(--ld-primitive-scale-space-50, 4px) var(--ld-primitive-scale-space-200, 16px);
+  display: flex;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-200, 8px);
+  overflow-x: auto;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--ld-semantic-color-fill-accent-blue-subtle);
+}
+
+.subNav::-webkit-scrollbar {
+  display: none;
+}
+
+.subNavHidden {
+  display: none;
+}
+
+/* ── Back button (white variant) ── */
+.backButton {
+  flex-shrink: 0;
+}
+
+/* ── L3 page title bar ── */
+.l3Bar {
+  background: var(--ld-semantic-color-surface, #fff);
+  border-bottom: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+}
+
+.l3BarBlue {
+  background: var(--ld-semantic-color-top-nav-fill, #0071dc);
+  border-bottom: none;
+}
+
+.l3Row {
+  display: flex;
+  align-items: center;
+  padding: var(--ld-primitive-scale-space-300, 12px) var(--ld-primitive-scale-space-400, 16px);
+  gap: var(--ld-primitive-scale-space-300, 12px);
+  min-height: 52px;
+}
+
+.l3BackButton {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.l3BackIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.l3Title {
+  flex: 1;
+  font-size: var(--ld-semantic-font-heading-small-size, 20px);
+  font-weight: var(--ld-semantic-font-heading-small-weight-default, 700);
+  color: var(--ld-semantic-color-text, #2e2f32);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Mega nav icon trigger (native sub-nav) ── */
+.megaNavTrigger {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 9999px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--ld-semantic-color-text-brand-bold, #001e60);
+  transition: background 120ms;
+}
+
+.megaNavTrigger:hover {
+  background: rgba(0, 30, 96, 0.06);
+}
+
+.megaNavTrigger:active {
+  background: rgba(0, 30, 96, 0.12);
+}
+
+.megaNavIcon {
+  width: 20px;
+  height: 20px;
+}

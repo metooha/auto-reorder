@@ -1,0 +1,291 @@
+---
+description: Component sandbox property tester requirements
+alwaysApply: false
+---
+description: Component Sandbox Coverage
+globs:
+alwaysApply: false
+---
+
+## Purpose
+
+**ALL Living Design 3.5 components MUST be included in the Component Sandbox** on the Component Library page. This ensures every component can be interactively tested with all its variants, sizes, and properties.
+
+## Hard Rule
+
+### ✅ REQUIRED
+
+When you create or update ANY LD 3.5 component:
+
+1. **Add to Component Sandbox** in `client/pages/ComponentLibrary.tsx`
+2. **Configure all properties** (variants, sizes, special props)
+3. **Add code generation** for the component
+4. **Add live preview** rendering
+5. **Test all combinations** work correctly
+
+### Component Configuration
+
+Every component MUST have an entry in `componentConfigs`:
+
+```typescript
+const componentConfigs: Record<ComponentType, ComponentConfig> = {
+  YourComponent: {
+    variants: ['variant1', 'variant2'], // All variant options
+    sizes: ['small', 'medium', 'large'], // All size options (or [] if no sizes)
+    supportsFullWidth: boolean,   // Can the component be full-width?
+    supportsIcons: boolean,        // Does it support leading/trailing icons?
+    supportsValue: boolean,        // Does it have a value prop (like Badge)?
+    supportsShape: boolean,        // Does it have shape variants (like IconButton)?
+    supportsUnderline: boolean,    // Does it have underline option (like Link)?
+    supportsDismissible: boolean,  // Can it be dismissed (like Tag)?
+    supportsClickable: boolean,    // Is it clickable (like Tag)?
+    supportsOLQPercentage: boolean, // Does it show percentage (like OLQTag)?
+    // Add new support flags as needed for your component
+  },
+};
+```
+
+### Code Generation
+
+Add a case to `generateCode()`:
+
+```typescript
+case 'YourComponent':
+  return `<YourComponent
+  variant="${variant}"
+  size="${size}"${disabled ? '\n  disabled' : ''}
+>
+  Content
+</YourComponent>`;
+```
+
+### Live Preview
+
+Add a case to `renderPreview()`:
+
+```typescript
+case 'YourComponent':
+  return (
+    <YourComponent
+      variant={variant as any}
+      size={size as any}
+      disabled={disabled}
+    >
+      Preview Content
+    </YourComponent>
+  );
+```
+
+---
+
+## Components That MUST Be Included
+
+### ✅ Currently Supported (7)
+- Button
+- Badge
+- IconButton
+- Link
+- Tag
+- OLQTag
+- Chip
+- FilterChip
+
+### 🔴 MISSING - Must Add (15+)
+
+#### Form Controls
+- [ ] **Checkbox** - variants: default; supports: label, indeterminate, disabled
+- [ ] **DateField** - supports: disabled, error state, helper text
+
+#### Feedback & Messaging
+- [ ] **Alert** - variants: info, success, warning, error; supports: dismissible, title
+- [ ] **ContentMessage** - variants: error, success, permission, critical; sizes: small, large
+
+#### Navigation
+- [ ] **Breadcrumb** - supports: max items, separator, current page
+- [ ] **Menu** / **MenuItem** - variants: default; supports: icon, disabled, selected
+
+#### Layout
+- [ ] **Divider** - variants: horizontal, vertical; supports: label, spacing
+- [ ] **Card** / **CardHeader** / **CardContent** - supports: padding, elevation
+
+#### Other Interactive
+- [ ] **Callout** - supports: position, closable
+- [ ] **Heading** - sizes: large, medium, small; supports: semantic level (h1-h6)
+
+---
+
+## Implementation Checklist
+
+When adding a component to the tester:
+
+### Step 1: Add to ComponentType Union
+```typescript
+type ComponentType = 
+  | 'Button' 
+  | 'Badge'
+  | 'YourNewComponent' // ← Add here
+  | ...;
+```
+
+### Step 2: Add Configuration Object
+```typescript
+YourNewComponent: {
+  variants: [...],
+  sizes: [...],
+  // ... all support flags
+},
+```
+
+### Step 3: Add to generateCode()
+```typescript
+case 'YourNewComponent':
+  return `<YourNewComponent ...>`;
+```
+
+### Step 4: Add to renderPreview()
+```typescript
+case 'YourNewComponent':
+  return <YourNewComponent ...>;
+```
+
+### Step 5: Test
+- [ ] Component appears in dropdown
+- [ ] All variants selectable
+- [ ] All sizes selectable  
+- [ ] All properties toggleable
+- [ ] Generated code is correct
+- [ ] Live preview renders correctly
+- [ ] Copy code button works
+
+---
+
+## Why This Matters
+
+### ❌ Without Property Tester
+
+Developers must:
+- Manually write code to test variants
+- Create separate test pages
+- Can't quickly compare variants
+- Harder to discover component capabilities
+- Inconsistent testing across components
+
+### ✅ With Property Tester
+
+Developers can:
+- ✅ See all variants instantly
+- ✅ Toggle properties interactively
+- ✅ Copy working code immediately
+- ✅ Discover all component features
+- ✅ Test in all themes live
+- ✅ Consistent testing experience
+
+---
+
+## Validation
+
+### Manual Check
+
+1. Open Component Library page
+2. Go to "Component Sandbox" section
+3. Open component dropdown
+4. Verify ALL LD 3.5 components are listed
+
+### Component Count
+
+Current components in library: **25+**  
+Components in tester: **Should match 1:1**
+
+If counts don't match, components are missing.
+
+---
+
+## Update Frequency
+
+**When to update the tester:**
+
+1. ✅ **Immediately** when creating a new LD 3.5 component
+2. ✅ **Immediately** when adding new variants to existing component
+3. ✅ **Immediately** when adding new sizes to existing component
+4. ✅ **Immediately** when adding new properties (dismissible, clickable, etc.)
+
+**This is not optional** - it's part of the component implementation.
+
+---
+
+## Example: Adding Checkbox to Tester
+
+```typescript
+// 1. Add to ComponentType
+type ComponentType = ... | 'Checkbox' | ...;
+
+// 2. Add configuration
+Checkbox: {
+  variants: ['default'],
+  sizes: [],
+  supportsFullWidth: false,
+  supportsIcons: false,
+  supportsValue: false,
+  supportsShape: false,
+  supportsUnderline: false,
+  supportsDismissible: false,
+  supportsClickable: false,
+  supportsOLQPercentage: false,
+  supportsIndeterminate: true, // New flag!
+  supportsLabel: true,          // New flag!
+},
+
+// 3. Add to generateCode()
+case 'Checkbox':
+  return `<Checkbox${checked ? '\n  checked' : ''}${indeterminate ? '\n  indeterminate' : ''}${disabled ? '\n  disabled' : ''}>
+  ${label || 'Label'}
+</Checkbox>`;
+
+// 4. Add to renderPreview()
+case 'Checkbox':
+  return (
+    <Checkbox
+      checked={checked}
+      indeterminate={indeterminate}
+      disabled={disabled}
+      onCheckedChange={setChecked}
+    >
+      {label || 'Label'}
+    </Checkbox>
+  );
+```
+
+---
+
+## Enforcement
+
+### During Code Review
+
+**REJECT** any component PR that doesn't include Component Sandbox updates.
+
+### Component Checklist
+
+Every component implementation MUST include:
+- [ ] Component code (`.tsx`)
+- [ ] Component styles (`.module.css`)
+- [ ] Component guideline (`guidelines/components/ComponentName.md`)
+- [ ] Component example (`client/components/examples/ComponentNameExample.tsx`)
+- [ ] **Property Tester configuration** ← MANDATORY
+
+---
+
+## Benefits
+
+1. **Discoverability** - Developers find all component options
+2. **Documentation** - Live, interactive documentation
+3. **Testing** - Easy to test all combinations
+4. **Consistency** - Same testing UX for all components
+5. **Onboarding** - New developers learn components faster
+6. **Quality** - Forces thinking about all component states
+
+---
+
+**IMPORTANT**: This rule applies to ALL future components without exception.
+
+Last updated: 2025-02-14  
+See also: Component Library page (`client/pages/ComponentLibrary.tsx`)

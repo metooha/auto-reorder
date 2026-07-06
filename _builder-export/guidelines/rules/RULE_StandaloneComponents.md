@@ -1,0 +1,121 @@
+# RULE: Standalone Components Only - No External Dependencies
+
+## Status: ENFORCED (Hard Rule)
+
+## Rule
+
+**ALL UI components MUST be standalone with ZERO external component library dependencies.**
+
+This means:
+- **NO** `@radix-ui/*` packages
+- **NO** `@headlessui/*` packages
+- **NO** `@chakra-ui/*` packages
+- **NO** `@mui/*` packages
+- **NO** `@mantine/*` packages
+- **NO** any other external UI primitive or component library
+
+## What IS Allowed
+
+- **React** and **React DOM** (core framework)
+- **CSS Modules** (`.module.css` files)
+- **Class Variance Authority (CVA)** for variant management
+- **clsx / tailwind-merge** for class name utilities
+- **Internal utilities** (`@/lib/utils`, `cn()`)
+- **Living Design 3.5 tokens** (CSS custom properties)
+- **Native HTML elements** with ARIA attributes
+- **React hooks and context** for state management
+
+## Why This Rule Exists
+
+1. **No vendor lock-in**: External libraries can be deprecated, have breaking changes, or become unmaintained
+2. **Bundle size control**: Only ship code we actually need
+3. **Full control**: We can fix bugs, add features, and customize behavior without waiting for upstream
+4. **Consistency**: All components follow the same patterns and conventions
+5. **Accessibility ownership**: We own and control our ARIA implementation
+
+## How to Build Standalone Components
+
+### Instead of Radix Primitives, Use:
+
+| Radix Pattern | Standalone Replacement |
+|---|---|
+| `Dialog` | Native `<div>` with `role="dialog"`, `aria-modal`, portal, focus trap |
+| `Popover` | Native `<div>` with positioning, click-outside, escape key handling |
+| `Select` | Custom listbox with `role="combobox"` + `role="listbox"` |
+| `Checkbox` | `<button role="checkbox">` with `aria-checked` |
+| `Radio` | `<div role="radiogroup">` with `<button role="radio">` |
+| `Accordion` | `<button>` + collapsible `<div>` with `aria-expanded` |
+| `Tooltip` | Positioned `<div role="tooltip">` with hover/focus listeners |
+| `Toggle` | `<button>` with `aria-pressed` and `data-state` |
+| `Slider` | `<input type="range">` or custom `role="slider"` |
+| `Tabs` | `role="tablist"` + `role="tab"` + `role="tabpanel"` |
+| `Slot` | `React.cloneElement()` to merge props onto children |
+| `Label` | Native `<label>` element |
+| `AspectRatio` | CSS `aspect-ratio` property |
+| `ScrollArea` | CSS `overflow: auto` with styled scrollbar (`::-webkit-scrollbar`) |
+| `Collapsible` | `<div>` with height animation and `aria-expanded` |
+| `Avatar` | `<span>` with `<img>` and fallback logic via `onError` |
+
+### Required Patterns for Interactive Components:
+
+1. **Focus management**: Use `tabIndex`, `onKeyDown`, `ref.focus()`
+2. **Keyboard navigation**: Arrow keys, Home/End, Enter/Space, Escape
+3. **Click outside**: `document.addEventListener('mousedown', ...)` with cleanup
+4. **Portal rendering**: `ReactDOM.createPortal()` for overlays
+5. **Focus trapping**: Cycle focus within modal/dialog boundaries
+6. **ARIA attributes**: `role`, `aria-*` attributes per WAI-ARIA 1.2 patterns
+
+### Template for New Components:
+
+```tsx
+import * as React from 'react';
+import styles from './ComponentName.module.css';
+
+// NO external imports from @radix-ui, @headlessui, etc.
+
+export interface ComponentNameProps {
+  // Define all props
+}
+
+export const ComponentName = React.forwardRef<HTMLElement, ComponentNameProps>(
+  (props, ref) => {
+    // Use native HTML + React state + ARIA attributes
+    return <div ref={ref} role="..." aria-...={...} className={styles.root} />;
+  }
+);
+
+ComponentName.displayName = 'ComponentName';
+```
+
+## Enforcement
+
+### Before Creating Any Component:
+
+1. Check that NO `import` statements reference external UI libraries
+2. Verify all interactivity uses native DOM APIs + React state
+3. Ensure ARIA patterns follow WAI-ARIA 1.2 authoring practices
+4. Use only LD 3.5 semantic tokens for styling
+
+### Code Review Checklist:
+
+- [ ] No `@radix-ui/*` imports
+- [ ] No external UI primitive imports
+- [ ] Uses native HTML elements with proper ARIA roles
+- [ ] Keyboard navigation implemented
+- [ ] Focus management handled
+- [ ] CSS uses only LD 3.5 tokens (no hard-coded values)
+- [ ] Component is self-contained
+
+## Exceptions
+
+**NONE.** This rule has no exceptions. If a pattern seems too complex to implement standalone, break it into smaller pieces. Every Radix/Headless UI pattern can be implemented with native HTML + React + ARIA.
+
+## Related Rules
+
+- `RULE_CreateNewComponent.md` - Full component creation process
+- `RULE_TokenUsageEnforcement.md` - All styling must use LD 3.5 tokens
+- `RULE_DesignSystemEnforcement.md` - Design system compliance
+
+---
+
+Last updated: 2025-02-20

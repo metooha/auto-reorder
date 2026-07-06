@@ -1,0 +1,194 @@
+---
+description: Data-Driven Components
+globs:
+alwaysApply: true
+---
+
+## Purpose
+
+Components like `JumpRightBackIn`, `NewArrivalsCarousel`, and `PurchaseHistory` all use local data arrays to drive rendering. This rule standardizes how demo/static data is structured, named, and typed so agents produce consistent, readable components.
+
+---
+
+## Core Rule
+
+> Static demo data lives in the same `.tsx` file as the component, above the component function, as a typed `const` array with an UPPERCASE name.
+
+---
+
+## Data Array Conventions
+
+### Location
+
+Place data arrays **in the same file** as the component that uses them, **above** the component function:
+
+```tsx
+// client/components/walmart/NewArrivalsCarousel.tsx
+
+// ✅ CORRECT — data defined in the same file, above the component
+const PRODUCTS: ProductTile[] = [ ... ];
+
+export function NewArrivalsCarousel() {
+  return (
+    <div>
+      {PRODUCTS.map((p) => <ProductCard key={p.id} {...p} />)}
+    </div>
+  );
+}
+```
+
+Do not create separate `data.ts` files for demo data unless it is shared across multiple components.
+
+### Naming
+
+- Data arrays: `UPPER_SNAKE_CASE` (e.g., `PRODUCTS`, `SLIDES`, `ORDERS`, `CATEGORIES`)
+- TypeScript interface: `PascalCase` matching the item type (e.g., `ProductTile`, `CarouselSlide`, `OrderSummary`)
+
+### Always define a TypeScript interface
+
+Never use `any[]` or object literals without a type. Define the interface immediately above the data array:
+
+```tsx
+// ✅ CORRECT
+interface ProductTile {
+  id: string;
+  image: string;
+  name: string;
+  price: string;
+  rating?: number;
+  reviewCount?: number;
+}
+
+const PRODUCTS: ProductTile[] = [
+  {
+    id: 'p1',
+    image: '/illustrations/products/shirt.png',
+    name: 'Classic Crew Tee',
+    price: '$12.98',
+    rating: 4.5,
+    reviewCount: 312,
+  },
+];
+```
+
+---
+
+## Static vs Dynamic Data
+
+| Data type | Where it lives |
+|---|---|
+| Demo/static data (hardcoded for display) | Same `.tsx` file, `const ARRAY` above component |
+| User-specific or API data | Passed as props — never hardcoded in component file |
+| Shared demo data (used by multiple components) | `client/data/[name].ts` with named export |
+
+### Props for real data
+
+If a component will eventually receive real API data, accept it as a prop and use the static array as the default:
+
+```tsx
+interface Props {
+  products?: ProductTile[];
+}
+
+export function NewArrivalsCarousel({ products = PRODUCTS }: Props) {
+  ...
+}
+```
+
+---
+
+## Optional Display Properties
+
+For properties that vary per item and control rendering behavior, use optional fields:
+
+```tsx
+interface CarouselSlide {
+  id: string;
+  image: string;
+  alt: string;
+  headline?: string;
+  headlineParts?: string[];    // Multi-line headline — renders each part as a block span
+  objectPosition?: string;     // Image focal point, e.g. 'center top', '30% 50%'
+  ctaLabel?: string;
+  ctaHref?: string;
+}
+```
+
+---
+
+## Multi-Line Text Pattern
+
+Use `headlineParts?: string[]` instead of embedding `\n` in strings. Render each part in a block `<span>`:
+
+```tsx
+// ✅ CORRECT
+{slide.headlineParts
+  ? slide.headlineParts.map((part, i) => (
+      <span key={i} style={{ display: 'block' }}>{part}</span>
+    ))
+  : slide.headline
+}
+
+// ❌ WRONG — newlines in strings are unpredictable in HTML
+headline: "Big savings\non everything"
+```
+
+---
+
+## Image URLs for Demo Data
+
+- Use Walmart product image CDN URLs when available
+- Use Builder.io TEMP URLs extracted from Figma assets
+- Never use `placeholder.com`, `picsum.photos`, or lorem-ipsum image services
+
+```tsx
+// ✅ CORRECT
+image: 'https://i5.walmartimages.com/asr/example-product.jpg'
+
+// ✅ CORRECT — local illustration
+image: '/illustrations/products/shirt.png'
+
+// ❌ WRONG
+image: 'https://picsum.photos/200/200'
+image: 'https://via.placeholder.com/200'
+```
+
+---
+
+## Complete Example
+
+```tsx
+// client/components/walmart/FeaturedCategories.tsx
+
+interface CategoryTile {
+  id: string;
+  label: string;
+  image: string;
+  href: string;
+}
+
+const CATEGORIES: CategoryTile[] = [
+  { id: 'c1', label: 'Electronics', image: '/illustrations/mono-large/Electronics.svg', href: '/electronics' },
+  { id: 'c2', label: 'Clothing', image: '/illustrations/mono-large/Clothing.svg', href: '/clothing' },
+  { id: 'c3', label: 'Grocery', image: '/illustrations/mono-large/Grocery.svg', href: '/grocery' },
+];
+
+export function FeaturedCategories() {
+  return (
+    <div className={styles.grid}>
+      {CATEGORIES.map((cat) => (
+        <a key={cat.id} href={cat.href} className={styles.tile}>
+          <img src={cat.image} alt={cat.label} width={64} height={64} />
+          <span>{cat.label}</span>
+        </a>
+      ))}
+    </div>
+  );
+}
+```
+
+---
+
+## Enforcement Level
+
+**MEDIUM** — Inconsistent data structure naming and untyped arrays make components hard to maintain and extend. Always define the interface and use UPPER_SNAKE_CASE array names.

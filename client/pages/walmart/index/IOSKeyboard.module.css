@@ -1,0 +1,22 @@
+/* iOS system UI colors — intentional simulation of native iOS keyboard */
+.keyboard {
+  background: rgba(204, 207, 211, 0.76);
+  backdrop-filter: blur(10px);
+}
+
+.keyboardText {
+  color: #3A3B3D; /* iOS label color */
+}
+
+.modifierKey {
+  background: #ADB3BC; /* iOS secondary key color */
+}
+
+.suggestionBar {
+  background: rgba(204, 207, 211, 0.76);
+  backdrop-filter: blur(10px);
+}
+
+.subtleText {
+  color: #50555C; /* iOS tertiary label */
+}

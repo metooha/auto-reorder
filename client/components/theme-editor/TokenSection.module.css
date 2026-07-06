@@ -1,0 +1,78 @@
+.section {
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  overflow: hidden;
+  background: var(--ld-semantic-color-surface, #fff);
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--ld-primitive-scale-space-300, 12px) var(--ld-primitive-scale-space-300, 12px);
+  background: var(--ld-semantic-color-fill-subtle, #f8f8f8);
+  border: none;
+  cursor: pointer;
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  text-align: left;
+  transition: background 150ms ease;
+}
+
+.header:hover {
+  background: var(--ld-semantic-color-fill-hovered, rgba(0, 0, 0, 0.06));
+}
+
+.header:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline, #0071dc);
+  outline-offset: -2px;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-200, 8px);
+}
+
+.title {
+  font-size: var(--ld-semantic-font-body-medium-size, 14px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 var(--ld-primitive-scale-space-100, 4px);
+  background: var(--ld-semantic-color-action-fill-primary, #0071dc);
+  color: var(--ld-semantic-color-action-text-on-fill-primary, #fff);
+  border-radius: var(--ld-primitive-scale-borderradius-round, 9999px);
+  font-size: 11px;
+  font-weight: 700;
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+}
+
+.chevron {
+  display: flex;
+  align-items: center;
+  color: var(--ld-semantic-color-text-subtle, #6d6e72);
+  flex-shrink: 0;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  padding: var(--ld-primitive-scale-space-150, 6px) 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header {
+    transition: none;
+  }
+}

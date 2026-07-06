@@ -1,0 +1,213 @@
+/* ── WCP Search Bar ──────────────────────────────────────────────────────── */
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-250, 20px);
+  flex: 1 0 0;
+  max-width: 500px;
+}
+
+/* ── Pill (the rounded input container) ───────────────────────────────────── */
+
+.pill {
+  display: flex;
+  min-height: 48px;
+  padding: var(--ld-primitive-scale-space-150, 12px);
+  justify-content: space-between;
+  align-items: center;
+  flex: 1 0 0;
+  border-radius: var(--ld-primitive-scale-borderradius-round, 9999px);
+  border: var(--ld-primitive-scale-borderwidth-100, 1px) solid var(--ld-semantic-color-field-border, #B8BABC);
+  background: var(--ld-semantic-color-field-fill, #F8F8F8);
+  overflow: hidden;
+  cursor: text;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+/* Hovered state — only on desktop (900+px) via hover */
+@media (min-width: 900px) {
+  .pill:not(.pillDisabled):not(.pillActivated):hover {
+    border-color: var(--ld-semantic-color-field-border-hovered, #8E9093);
+    background: var(--ld-semantic-color-field-fill-hovered, #F0F0F0);
+  }
+}
+
+/* Activated (focused) state */
+.pillActivated {
+  min-height: 48px;
+  padding: var(--ld-primitive-scale-space-50, 4px) var(--ld-primitive-scale-space-50, 4px) var(--ld-primitive-scale-space-50, 4px) var(--ld-primitive-scale-space-150, 12px);
+  border-width: var(--ld-primitive-scale-borderwidth-200, 2px);
+  border-color: var(--ld-semantic-color-field-border-focused, #0053E2);
+  background: var(--ld-semantic-color-field-fill-focused, #FFFFFF);
+}
+
+/* Disabled state */
+.pillDisabled {
+  border-color: var(--ld-semantic-color-field-border-disabled, #E3E4E5);
+  background: var(--ld-semantic-color-field-fill-disabled, #F8F8F8);
+  cursor: not-allowed;
+}
+
+/* ── 900+ desktop adjustments ─────────────────────────────────────────────── */
+
+@media (min-width: 900px) {
+  .pill {
+    min-height: 56px;
+    padding: var(--ld-primitive-scale-space-100, 8px) var(--ld-primitive-scale-space-200, 16px);
+  }
+
+  .pillActivated {
+    min-height: 56px;
+    padding: var(--ld-primitive-scale-space-100, 8px) var(--ld-primitive-scale-space-100, 8px) var(--ld-primitive-scale-space-100, 8px) var(--ld-primitive-scale-space-200, 16px);
+  }
+}
+
+/* ── Icon ─────────────────────────────────────────────────────────────────── */
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  width: var(--ld-semantic-scale-icon-medium, 24px);
+  height: var(--ld-semantic-scale-icon-medium, 24px);
+  flex-shrink: 0;
+}
+
+.searchIcon {
+  width: 24px;
+  height: 24px;
+  color: var(--ld-semantic-color-field-text-subtle-onfill, #515357);
+}
+
+.pillActivated .searchIcon {
+  color: var(--ld-semantic-color-field-text-onfill, #2E2F32);
+}
+
+.pillDisabled .searchIcon {
+  color: var(--ld-semantic-color-field-text-subtle-onfill-disabled, #BABBBB);
+}
+
+/* ── Input area ───────────────────────────────────────────────────────────── */
+
+.inputArea {
+  display: flex;
+  align-items: center;
+  flex: 1 0 0;
+  position: relative;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+  overflow: hidden;
+}
+
+.input {
+  flex: 1 0 0;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  font-family: var(--ld-semantic-font-body-medium-family, 'Everyday Sans UI', -apple-system, Roboto, Helvetica, sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: var(--ld-semantic-font-body-medium-weight-default, 400);
+  line-height: var(--ld-semantic-font-body-medium-lineheight, 1.5);
+  color: var(--ld-semantic-color-field-text-onfill, #2E2F32);
+  /* Remove native search input controls */
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.input::-webkit-search-cancel-button,
+.input::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+.input:disabled {
+  cursor: not-allowed;
+  color: var(--ld-semantic-color-field-text-subtle-onfill-disabled, #BABBBB);
+}
+
+.input::placeholder {
+  color: var(--ld-semantic-color-field-text-subtle-onfill, #515357);
+}
+
+/* Placeholder overlay — shown when not focused */
+.placeholder {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  flex: 1 0 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--ld-semantic-color-field-text-subtle-onfill, #515357);
+  font-family: var(--ld-semantic-font-body-medium-family, 'Everyday Sans UI', -apple-system, Roboto, Helvetica, sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: var(--ld-semantic-font-body-medium-weight-default, 400);
+  line-height: var(--ld-semantic-font-body-medium-lineheight, 1.5);
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+}
+
+.pillDisabled .placeholder {
+  color: var(--ld-semantic-color-field-text-subtle-onfill-disabled, #BABBBB);
+}
+
+/* ── Clear (X) button ─────────────────────────────────────────────────────── */
+
+.clearBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--ld-primitive-scale-space-100, 8px);
+  border: 1px solid transparent;
+  border-radius: var(--ld-primitive-scale-borderradius-round, 9999px);
+  background: transparent;
+  cursor: pointer;
+  color: var(--ld-semantic-color-text, #2E2F32);
+  flex-shrink: 0;
+  transition: background 0.15s ease;
+}
+
+.clearBtn:hover {
+  background: var(--ld-semantic-color-surface-hovered, #F0F0F0);
+}
+
+.clearBtn svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* ── Cancel button ────────────────────────────────────────────────────────── */
+
+.cancelBtn {
+  display: flex;
+  align-items: flex-start;
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: var(--ld-semantic-color-link-text, #2E2F32);
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', -apple-system, Roboto, Helvetica, sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: var(--ld-semantic-font-body-small-weight-default, 400);
+  line-height: var(--ld-semantic-font-body-small-lineheight, 1.4286);
+  text-decoration: underline;
+  white-space: nowrap;
+}
+
+.cancelBtn:hover {
+  opacity: 0.8;
+}
+
+/* ── Reduced motion ───────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .pill,
+  .clearBtn {
+    transition: none;
+  }
+}

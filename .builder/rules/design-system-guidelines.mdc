@@ -1,0 +1,54 @@
+---
+description: Living Design general and React development guidelines
+alwaysApply: false
+---
+## Purpose
+
+This folder is the **Living Design Agent Kit**: agent-readable rules that help tools generate UI that correctly uses Living Design components, tokens, and patterns.
+
+## Non-Negotiables
+
+- **MUST** use existing Living Design components first. Do not re-implement common UI primitives (Button, Input, Modal, etc.) if a Living Design component exists.
+- **MUST** use Living Design tokens (CSS variables) for all visual styling: color, typography, spacing, radius, shadows, motion.
+- **MUST NOT** hardcode hex colors, pixel sizes, font sizes, radii, or shadows.
+- **MUST NOT** invent token names or component APIs. If missing, stop and ask.
+- **MUST** ensure accessibility: keyboard support, focus visibility, semantic HTML, ARIA where needed.
+
+## React-Specific Rules
+
+- **MUST NOT** use components marked `@private` in JSDoc.
+- **MUST NOT** use plain HTML text elements (`<p>`, `<span>`, `<h1>`) without Living Design typography components when available.
+- **MUST NOT** use Tailwind typography classes (`text-lg`, `font-bold`, etc.) or hardcode font-size/weight/line-height.
+- **MUST NOT** reference CSS tokens directly in application code (use component props instead).
+- **MUST** use Living Design typography components (Display, Heading, Body, Caption) when available.
+- **MUST** configure typography through component props (`size`, `weight`, `as`).
+- **MUST** use semantic HTML via the `as` prop.
+
+```tsx
+// CORRECT
+<Body as="p" size="medium" weight="default">Body text.</Body>
+<Heading as="h2" size="large" weight="default">Section Title</Heading>
+
+// WRONG
+<p className="text-base">Text</p>
+<span style={{ fontSize: '16px' }}>Text</span>
+```
+
+## Decision Tree
+
+1. **Need UI styling?** Start with token rules: see [DesignTokens.md](./DesignTokens.md).
+2. **Need a UI element?** Check [ComponentReference.md](./ComponentReference.md) and [Component-Inventory.md](./Component-Inventory.md).
+3. **Need component guidelines?** Check `guidelines/components/[ComponentName].md`.
+
+## Key References
+
+| Resource | File |
+|---|---|
+| Component API Reference | [ComponentReference.md](./ComponentReference.md) |
+| Component Inventory | [Component-Inventory.md](./Component-Inventory.md) |
+| Design Tokens | [DesignTokens.md](./DesignTokens.md) |
+| Enforcement Rules | [../rules/RULE_DesignSystemEnforcement.mdc](../rules/RULE_DesignSystemEnforcement.mdc) |
+| Component Guidelines | [../components/](../components/) |
+| Terminology | [Terminology.md](./Terminology.md) |
+| LLM Integration | [LLMIntegration.md](./LLMIntegration.md) |
+| Component Library Checklist | [ComponentLibraryIntegration.md](./ComponentLibraryIntegration.md) |

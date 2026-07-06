@@ -1,0 +1,38 @@
+/* Amends Banner — Figma "Amend banner / Type=Homepage"
+   Light amber strip at the top of an OrderCard */
+
+.banner {
+  display: flex;
+  height: 48px;
+  padding: 12px 24px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  align-self: stretch;
+  background: var(--ld-semantic-color-feedback-warning-fill-subtle);
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.message {
+  font-size: var(--ld-semantic-font-body-small-size);
+  font-weight: 700;
+  line-height: 20px;
+  color: var(--ld-semantic-color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cta {
+  flex-shrink: 0;
+  font-size: var(--ld-semantic-font-body-small-size);
+  font-weight: 400;
+}

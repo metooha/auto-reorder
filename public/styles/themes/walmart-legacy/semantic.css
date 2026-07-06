@@ -1,0 +1,73 @@
+/**
+ * Walmart Legacy Theme
+ * Generated from LivingDesign Airtable Sync + LD Base
+ *
+ * INHERITANCE: LD Base → WCP → Walmart Legacy
+ * Inherits WCP commerce tokens and Customer persona
+ *
+ * Classic Walmart brand color: #0071dc (original Walmart blue)
+ * Font family: Bogle (legacy Walmart font)
+ */
+
+:root {
+  /* Legacy Walmart brand colors - CLASSIC BLUE (#0071dc) */
+  --ld-semantic-color-action-fill-primary: #0071dc;
+  --ld-semantic-color-action-fill-primary-focused: #0065c7;
+  --ld-semantic-color-action-fill-primary-hovered: #0065c7;
+  --ld-semantic-color-action-fill-primary-pressed: #004fab;
+
+  --ld-semantic-color-text-brand: #0071dc;
+  --ld-semantic-color-border-brand: #0071dc;
+  --ld-semantic-color-border-activated: #0071dc;
+
+  --ld-semantic-color-top-nav-fill: #0071dc;
+
+  /* Focus outline — legacy blue */
+  --ld-semantic-color-action-focus-outline: #0071dc;
+
+  /* Brand fills — legacy blue */
+  --ld-semantic-color-fill-brand: #0071dc;
+  --ld-semantic-color-fill-brand-bold: #003991;
+  --ld-semantic-color-fill-brand-subtle: #e0edfc; /* light legacy-blue tint (was wrongly set to green) */
+
+  /* Text on brand-subtle fill */
+  --ld-semantic-color-text-on-fill-brand-subtle: #004fab;
+
+  /* ── Side Navigation / Page Nav — legacy-blue active highlights ────────── */
+  --ld-semantic-color-page-nav-fill-hovered: #f0f7ff;
+  --ld-semantic-color-page-nav-fill-focused: #f0f7ff;
+  --ld-semantic-color-page-nav-fill-pressed: #e0edfc;
+  --ld-semantic-color-page-nav-fill-activated: #f0f7ff;
+  --ld-semantic-color-page-nav-fill-activated-hovered: #e0edfc;
+  --ld-semantic-color-page-nav-fill-activated-focused: #e0edfc;
+  --ld-semantic-color-page-nav-fill-activated-pressed: #c1daf9;
+
+  /* Active indicator bar — legacy blue */
+  --ld-semantic-color-page-nav-indicator-hovered: #c1daf9;
+  --ld-semantic-color-page-nav-indicator-focused: #c1daf9;
+  --ld-semantic-color-page-nav-indicator-pressed: #a2c7f6;
+  --ld-semantic-color-page-nav-indicator-activated: #0071dc;
+  --ld-semantic-color-page-nav-indicator-activated-hovered: #0071dc;
+  --ld-semantic-color-page-nav-indicator-activated-focused: #0071dc;
+  --ld-semantic-color-page-nav-indicator-activated-pressed: #0065c7;
+
+  /* Legacy Font Family - Bogle (override primitive) */
+  --ld-primitive-font-family-sans: Bogle, 'Everyday Sans UI', -apple-system, Roboto, sans-serif;
+
+  /* Semantic font overrides */
+  --ld-semantic-font-body-large-family: Bogle, 'Everyday Sans UI', -apple-system, Roboto, sans-serif;
+  --ld-semantic-font-body-medium-family: Bogle, 'Everyday Sans UI', -apple-system, Roboto, sans-serif;
+  --ld-semantic-font-body-small-family: Bogle, 'Everyday Sans UI', -apple-system, Roboto, sans-serif;
+  --ld-semantic-font-caption-family: Bogle, 'Everyday Sans UI', -apple-system, Roboto, sans-serif;
+  --ld-semantic-font-display-large-family: Bogle, 'Everyday Sans UI', -apple-system, Roboto, sans-serif;
+  --ld-semantic-font-display-small-family: Bogle, 'Everyday Sans UI', -apple-system, Roboto, sans-serif;
+  --ld-semantic-font-heading-large-family: Bogle, 'Everyday Sans UI', -apple-system, Roboto, sans-serif;
+  --ld-semantic-font-heading-medium-family: Bogle, 'Everyday Sans UI', -apple-system, Roboto, sans-serif;
+  --ld-semantic-font-heading-small-family: Bogle, 'Everyday Sans UI', -apple-system, Roboto, sans-serif;
+  --ld-semantic-font-body-mono-large-family: 'Bogle Mono', 'Courier New', monospace;
+  --ld-semantic-font-body-mono-medium-family: 'Bogle Mono', 'Courier New', monospace;
+  --ld-semantic-font-body-mono-small-family: 'Bogle Mono', 'Courier New', monospace;
+  --ld-semantic-font-caption-mono-family: 'Bogle Mono', 'Courier New', monospace;
+
+  /* Inherits WCP commerce tokens and all LD Base tokens */
+}

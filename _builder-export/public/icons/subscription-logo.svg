@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 32 32">
+  <!-- Recurring/subscription cycle -->
+  <g>
+    <!-- Outer circle path -->
+    <path d="M28 16c0 6.627-5.373 12-12 12S4 22.627 4 16" stroke="#2E2F32" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <!-- Arrow head -->
+    <path d="M28 16l-3-2v4l3-2z" fill="#2E2F32"/>
+    <!-- Bell icon in center for subscriptions -->
+    <path d="M16 10c1.1 0 2 .9 2 2v2c0 1.1.9 2 2 2h1v2H11v-2h1c1.1 0 2-.9 2-2v-2c0-1.1.9-2 2-2zm0 10c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1z" fill="#2E2F32"/>
+  </g>
+</svg>

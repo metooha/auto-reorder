@@ -1,0 +1,17 @@
+/**
+ * Walmart Design System Styles
+ * Main entry point that imports all design system CSS files
+ * 
+ * Import order:
+ * 1. Fonts - Load custom fonts first
+ * 2. Primitive - Base design tokens (colors, spacing, etc.)
+ * 3. Semantic - Semantic mappings of primitive tokens
+ * 4. Theme - Theme-specific overrides and configurations
+ * 5. Tag - Component-specific styles
+ */
+
+@import './fonts.css';
+@import './primitive.css';
+@import './semantic.css';
+@import './theme.css';
+@import './tag.css';

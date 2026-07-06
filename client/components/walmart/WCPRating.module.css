@@ -1,0 +1,129 @@
+/* ── WCP Rating — Interactive Star Rating ── */
+
+/* Wrapper */
+.rating {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.rating--disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* Stars row */
+.stars {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Individual star button */
+.starBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  border-radius: 2px;
+  /* Prevent text-selection highlight on rapid clicking */
+  user-select: none;
+  -webkit-user-select: none;
+  /* Remove default outline; we add our own focus-visible ring */
+  outline: none;
+  transition: transform 0.1s ease;
+  flex-shrink: 0;
+}
+
+.starBtn:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline, #0071dc);
+  outline-offset: 1px;
+  border-radius: 3px;
+}
+
+.starBtn:not(:disabled):hover {
+  transform: scale(1.12);
+}
+
+.starBtn:not(:disabled):active {
+  transform: scale(0.96);
+}
+
+/* SVG inherits the button's size */
+.starSvg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Label below stars */
+.label {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-weight: 400;
+  color: var(--ld-semantic-color-text-subtle, #74767c);
+  line-height: 1.4;
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* Sizes — Mobile-first (< 900px)                                  */
+/* small:  20px stars, 4px gap                                     */
+/* medium: 28px stars, 6px gap                                     */
+/* ─────────────────────────────────────────────────────────────── */
+
+.rating--small .stars {
+  gap: 4px;
+}
+
+.rating--small .starBtn {
+  width: 20px;
+  height: 20px;
+}
+
+.rating--small .label {
+  font-size: 12px;
+}
+
+.rating--medium .stars {
+  gap: 6px;
+}
+
+.rating--medium .starBtn {
+  width: 28px;
+  height: 28px;
+}
+
+.rating--medium .label {
+  font-size: 14px;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* Desktop (≥ 900px) — larger star sizes                           */
+/* small:  24px stars                                              */
+/* medium: 32px stars                                              */
+/* ─────────────────────────────────────────────────────────────── */
+
+@media (min-width: 900px) {
+  .rating--small .starBtn {
+    width: 24px;
+    height: 24px;
+  }
+
+  .rating--small .label {
+    font-size: 13px;
+  }
+
+  .rating--medium .starBtn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .rating--medium .label {
+    font-size: 14px;
+  }
+}

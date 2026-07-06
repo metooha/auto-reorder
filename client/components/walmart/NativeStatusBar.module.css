@@ -1,0 +1,143 @@
+/* ── iOS Status Bar ── */
+.iosStatusBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 54px;
+  width: 100%;
+  padding: 14px 24px 0 24px;
+  color: inherit;
+  font-family: -apple-system, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+  box-sizing: border-box;
+}
+
+.iosLeft {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.iosTime {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.iosCenter {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.iosDynamicIsland {
+  width: 120px;
+  height: 32px;
+  background: #000;
+  border-radius: 20px;
+}
+
+.iosRight {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+/* iOS Battery */
+.iosBattery {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+}
+
+.iosBatteryBody {
+  width: 24px;
+  height: 12px;
+  border: 1.5px solid currentColor;
+  border-radius: 3px;
+  padding: 1.5px;
+  display: flex;
+  align-items: stretch;
+}
+
+.iosBatteryFill {
+  flex: 1;
+  background: currentColor;
+  border-radius: 1px;
+}
+
+.iosBatteryCap {
+  width: 2px;
+  height: 5px;
+  background: currentColor;
+  border-radius: 0 1px 1px 0;
+}
+
+/* ── Android Status Bar ── */
+.androidStatusBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 28px;
+  width: 100%;
+  padding: 4px 16px;
+  color: inherit;
+  font-family: Roboto, 'Google Sans', 'Noto Sans', sans-serif;
+  box-sizing: border-box;
+}
+
+.androidLeft {
+  display: flex;
+  align-items: center;
+}
+
+.androidTime {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+}
+
+.androidRight {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Android Battery */
+.androidBattery {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+}
+
+.androidBatteryBody {
+  width: 20px;
+  height: 10px;
+  border: 1.5px solid currentColor;
+  border-radius: 2px;
+  padding: 1.5px;
+  display: flex;
+  align-items: stretch;
+}
+
+.androidBatteryFill {
+  flex: 1;
+  background: currentColor;
+  border-radius: 1px;
+}
+
+.androidBatteryCap {
+  width: 2px;
+  height: 4px;
+  background: currentColor;
+  border-radius: 0 1px 1px 0;
+}
+
+/* Hide on desktop */
+@media (min-width: 1024px) {
+  .iosStatusBar,
+  .androidStatusBar {
+    display: none;
+  }
+}

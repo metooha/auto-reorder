@@ -1,0 +1,9 @@
+/**
+ * Walmart Business (B2B) - Primitive Token Overrides
+ * 
+ * INHERITS FROM: base/primitive.css (loaded globally)
+ * OVERRIDES: None — B2B uses standard Walmart primitives
+ * 
+ * This file is intentionally empty. All primitive tokens
+ * inherit from the base theme via CSS cascade.
+ */

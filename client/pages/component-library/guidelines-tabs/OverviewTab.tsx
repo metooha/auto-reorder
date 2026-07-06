@@ -1,0 +1,114 @@
+import React from 'react';
+
+export function OverviewTab() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', paddingTop: '24px' }}>
+      <div style={{
+        backgroundColor: 'var(--ld-semantic-color-fill-brand-subtle)',
+        padding: '32px',
+        borderRadius: '8px',
+        borderLeft: '5px solid var(--ld-semantic-color-border-brand)'
+      }}>
+        <h3 style={{
+          fontSize: '20px',
+          fontWeight: '700',
+          color: 'var(--ld-semantic-color-text)',
+          marginBottom: '12px'
+        }}>
+          Living Design 3.5 Portable Kit
+        </h3>
+        <p style={{
+          fontSize: '15px',
+          lineHeight: '1.7',
+          color: 'var(--ld-semantic-color-text-subtle)',
+          marginBottom: '16px'
+        }}>
+          Every Builder.io project benefits from a shared foundation. Without a portable component library, teams
+          build their own buttons, forms, and layouts from scratch -- resulting in visual inconsistencies, duplicated
+          effort, accessibility gaps, and a fragmented user experience across products.
+        </p>
+        <p style={{
+          fontSize: '15px',
+          lineHeight: '1.7',
+          color: 'var(--ld-semantic-color-text-subtle)',
+          marginBottom: '0'
+        }}>
+          The Living Design 3.5 Portable Kit is a self-contained component library designed to travel with any
+          Builder.io project. It bakes in WCAG 2.1 AA accessibility, uses semantic design tokens for theming and
+          dark mode, and provides a consistent visual language that propagates automatically -- no per-component
+          rework required. Drop it into any project, and every surface draws from the same library: you ship faster,
+          stay consistent, and deliver a polished, professional product.
+        </p>
+      </div>
+
+      <div style={{
+        backgroundColor: 'var(--ld-semantic-color-surface)',
+        padding: '32px',
+        borderRadius: '8px',
+        boxShadow: 'var(--ld-semantic-elevation-100)'
+      }}>
+        <h3 style={{
+          fontSize: '20px',
+          fontWeight: '700',
+          color: 'var(--ld-semantic-color-text)',
+          marginBottom: '20px'
+        }}>
+          Rules for Generating New Designs & Importing from Figma
+        </h3>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          {[{
+            num: 1,
+            title: 'Always Search the Library First',
+            desc: <>Before creating any new UI, check <code style={{ backgroundColor: 'var(--ld-semantic-color-fill-subtle)', padding: '2px 6px', borderRadius: '4px', fontSize: '13px' }}>client/components/ui/</code> for existing Living Design 3.5 components. Follow the principle: <strong>Reuse &gt; Adapt &gt; Create</strong>. Only build something new when no existing component or composition of components can solve the need.</>
+          }, {
+            num: 2,
+            title: 'Use Semantic Tokens -- Never Hard-Code Colors or Spacing',
+            desc: <>Every color, spacing value, elevation, and font must reference a Living Design semantic token (e.g. <code style={{ backgroundColor: 'var(--ld-semantic-color-fill-subtle)', padding: '2px 6px', borderRadius: '4px', fontSize: '13px' }}>var(--ld-semantic-color-action-fill-primary)</code>). Hard-coded hex values like <code style={{ backgroundColor: 'var(--ld-semantic-color-fill-subtle)', padding: '2px 6px', borderRadius: '4px', fontSize: '13px' }}>#0071DC</code> bypass theming capabilities and will break when themes or brands change.</>
+          }, {
+            num: 3,
+            title: 'Importing Figma Designs with the Builder.io Plugin',
+            desc: <>When pulling designs from Figma, use the <strong>Builder.io Figma plugin</strong> to convert frames into code. The plugin maps Figma components to our library -- but always verify the output: confirm that imported buttons resolve to <code style={{ backgroundColor: 'var(--ld-semantic-color-fill-subtle)', padding: '2px 6px', borderRadius: '4px', fontSize: '13px' }}>&lt;Button&gt;</code> from our library (not raw HTML), that colors map to semantic tokens (not hex), and that spacing uses LD token values. Treat the plugin output as a starting point, not a finished product.</>
+          }, {
+            num: 4,
+            title: 'Trust the Foundations & Theming Layer',
+            desc: 'Our components ship with built-in accessibility (focus rings, ARIA attributes, keyboard navigation), responsive behavior, and theme support. Do not override these with custom CSS or inline styles. If a component variant doesn\'t exist for your use case, propose adding it to the library rather than creating a one-off workaround. This keeps the system extensible and maintainable.'
+          }, {
+            num: 5,
+            title: 'AI-Generated Code Must Follow the Same Rules',
+            desc: 'Whether code is written by hand, generated by AI, or imported from Figma via Builder.io -- the same standards apply. AI agents are configured with rules that enforce library usage, token-based styling, and component reuse. Review all generated output to confirm it references our canonical components, uses semantic tokens, and follows the import conventions documented in the Code Standards tab.'
+          }].map((rule) => (
+            <div key={rule.num} style={{
+              display: 'flex',
+              gap: '16px',
+              padding: '20px',
+              backgroundColor: 'var(--ld-semantic-color-fill-subtle)',
+              borderRadius: '8px'
+            }}>
+              <div style={{
+                minWidth: '36px',
+                height: '36px',
+                backgroundColor: 'var(--ld-semantic-color-fill-brand-subtle)',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontWeight: '700',
+                fontSize: '16px',
+                color: 'var(--ld-semantic-color-text-brand-bold)'
+              }}>{rule.num}</div>
+              <div>
+                <div style={{ fontWeight: '700', fontSize: '15px', marginBottom: '6px', color: 'var(--ld-semantic-color-text)' }}>
+                  {rule.title}
+                </div>
+                <div style={{ fontSize: '14px', lineHeight: '1.6', color: 'var(--ld-semantic-color-text-subtle)' }}>
+                  {rule.desc}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}

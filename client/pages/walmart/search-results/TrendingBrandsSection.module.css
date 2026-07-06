@@ -1,0 +1,84 @@
+.section {
+  padding: 16px 12px;
+  border-top: 8px solid var(--ld-semantic-color-fill-subtle);
+}
+
+.sectionTitle {
+  font-size: var(--ld-semantic-font-body-large-size);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  margin-bottom: 8px;
+}
+
+.chipRow {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+  scrollbar-width: none;
+}
+
+.chipRow::-webkit-scrollbar {
+  display: none;
+}
+
+.card {
+  background: var(--ld-semantic-color-surface);
+  border-radius: 16px;
+  padding: 12px;
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+}
+
+.cardSection {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.divider {
+  height: 1px;
+  background: var(--ld-semantic-color-separator, #e3e4e5);
+  margin: 4px 0;
+}
+
+.cardLabel {
+  font-size: var(--ld-semantic-font-body-small-size);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  margin-bottom: 4px;
+}
+
+.ratingRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ratingLabel {
+  font-size: 10px;
+  color: var(--ld-semantic-color-text-subtle);
+}
+
+.bodyText {
+  font-size: var(--ld-semantic-font-body-small-size);
+  color: var(--ld-semantic-color-text);
+}
+
+.listItem {
+  font-size: var(--ld-semantic-font-body-small-size);
+  color: var(--ld-semantic-color-text);
+}
+
+.genAiRow {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 4px;
+  margin-top: 12px;
+}
+
+.genAiLabel {
+  font-size: var(--ld-semantic-font-body-small-size);
+  color: var(--ld-semantic-color-text-subtle);
+}

@@ -1,0 +1,1346 @@
+/* ─────────────────────────────────────────────────────
+   ReplenishmentBasket — mobile-only floating basket
+   Anchored to viewport bottom, above BottomNav
+   ───────────────────────────────────────────────────── */
+
+/* Mobile-only: hide on desktop */
+.wrapper {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  pointer-events: none;
+  /* 56px tabBar + 20px Android gestureBar + 16px breathing room above the nav */
+  padding-bottom: calc(56px + 20px + 16px);
+  flex-direction: column;
+  align-items: stretch;
+}
+
+@media (max-width: 1024px) {
+  .wrapper {
+    display: flex;
+  }
+}
+
+/* Smallest mobile: fill full width, no max-width cap */
+@media (max-width: 430px) {
+  .collapsedGroup,
+  .expandedPanel,
+  .footerWrap {
+    max-width: calc(100% - 24px);
+  }
+}
+
+/* When panel is expanded — floating sheet + footer replaces BottomNav */
+.wrapperExpanded {
+  padding-bottom: 20px !important;
+  z-index: 300;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Force visible in docs demo frames */
+.wrapperForceVisible {
+  display: flex !important;
+}
+
+/* Contained mode: absolute positioning for demo frames */
+.wrapperContained {
+  position: absolute !important;
+  padding-bottom: 0 !important;
+}
+
+/* While the typeahead search modal is open: pin the pill 16px from the
+   bottom and place the wrapper above the modal (z-100). */
+:global(body.search-modal-open) .wrapper {
+  z-index: 105;
+  padding-bottom: 16px;
+}
+
+/* ─────────────────────────────────────
+   MORPH WRAPPER — cross-fades + resizes between the
+   default card and the compact pill so the collapsed
+   basket feels like one component changing shape,
+   rather than two components swapping abruptly.
+   ───────────────────────────────────── */
+
+.collapsedMorphWrap {
+  position: relative;
+  align-self: center;
+  margin: 0 12px;
+  width: calc(100% - 24px);
+  max-width: 430px;
+  overflow: hidden;
+  border-radius: 24px;
+  /* Elevation lives on the wrapper (not the child layers) because
+     `overflow: hidden` here — needed to clip content during the
+     height morph — would otherwise cut off a child's own box-shadow. */
+  box-shadow:
+    0 2px 20px 2px rgba(53, 53, 53, 0.05) inset,
+    0 2px 30px 0 rgba(0, 0, 0, 0.05),
+    0 8px 48px -5px rgba(0, 0, 0, 0.14);
+  transition:
+    height 340ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-radius 340ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 340ms ease;
+  animation: bannerSlideUp 350ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.collapsedMorphWrapPill {
+  border-radius: 100px;
+  box-shadow:
+    0 2px 8px 0 rgba(0, 0, 0, 0.10),
+    0 4px 24px -4px rgba(0, 0, 0, 0.14);
+}
+
+.morphLayer {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  /* Intentionally no `bottom`/`inset` — height must stay intrinsic to the
+     layer's own content so we can measure its real offsetHeight and
+     animate the wrapper to it. Stretching to fill the wrapper would make
+     every layer collapse to whatever height the wrapper currently has. */
+  margin: 0 !important;
+  width: 100% !important;
+  max-width: none !important;
+  opacity: 0;
+  transform: scale(0.97);
+  transition:
+    opacity 220ms ease,
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.morphLayerActive {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: all;
+}
+
+/* ─────────────────────────────────────
+   COLLAPSED STATE — compact pill
+   ───────────────────────────────────── */
+
+.collapsedPill {
+  pointer-events: all;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px 8px 8px;
+  border-radius: 100px;
+  background: #fff;
+  box-shadow:
+    0 2px 8px 0 rgba(0, 0, 0, 0.10),
+    0 4px 24px -4px rgba(0, 0, 0, 0.14);
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  margin: 0 12px;
+  width: calc(100% - 24px);
+  max-width: 430px;
+}
+
+.pillIconWrap {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--ld-semantic-color-background-subtle, #f5f5f6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.pillIcon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.pillText {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pillSep {
+  margin: 0 6px;
+  color: var(--ld-semantic-color-separator, #e3e4e5);
+  font-weight: 400;
+}
+
+.pillChevron {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--ld-semantic-color-text-subtle, #5b5c5e);
+}
+
+/* ─────────────────────────────────────
+   COLLAPSED GROUP — banner + bar card
+   ───────────────────────────────────── */
+
+.collapsedGroup {
+  pointer-events: all;
+  margin: 0 12px;
+  width: calc(100% - 24px);
+  max-width: 430px;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  border-radius: 24px;
+  overflow: hidden;
+  padding: 4px;
+  box-shadow:
+    0 2px 20px 2px rgba(53, 53, 53, 0.05) inset,
+    0 2px 30px 0 rgba(0, 0, 0, 0.05),
+    0 8px 48px -5px rgba(0, 0, 0, 0.14);
+}
+
+@keyframes bannerSlideUp {
+  from { transform: translateY(16px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* When scrolled down — hide the card body, show only the banner strip */
+.collapsedGroupScrolled {
+  border-radius: 100px;
+  transition: border-radius 0.25s ease;
+}
+
+.collapsedBarHidden {
+  display: none;
+}
+
+/* Confirmation strip inside the group */
+.confirmBanner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 16px;
+  background: var(--wcp-semantic-color-fill-status, #fff200);
+  color: var(--ld-semantic-color-text, #2E2F32);
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 400;
+  line-height: 1.43;
+  flex-shrink: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transform: none;
+  border-radius: 20px 20px 0 0;
+}
+
+.confirmBanner span {
+  font-weight: 400;
+}
+
+.confirmBanner strong {
+  font-weight: 700;
+}
+
+/* ─────────────────────────────────────
+   COLLAPSED STATE — mini floating card
+   ───────────────────────────────────── */
+
+.collapsedBar {
+  /* When inside .collapsedGroup, sizing/shadow are handled by the group */
+  pointer-events: all;
+  width: 100%;
+  align-self: stretch;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 0; /* group handles rounding */
+  cursor: pointer;
+  text-align: left;
+
+  background: #fff;
+  border: none;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Notification strip — cyan banner, bleeds to card edges */
+.notificationStrip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--ld-semantic-color-fill-accent-cyan-subtle, #e7f6fe);
+  border-radius: 16px 16px 0 0;
+  padding: 6px 12px;
+  margin: -12px -12px 0;
+}
+
+.notifText {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ld-semantic-color-text-subtle, #5b5c5e);
+  line-height: 1.4;
+}
+
+/* Summary row */
+.summaryRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.summaryLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.cartIconWrap {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--ld-semantic-color-background-subtle, #f5f5f6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.cartIcon {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.summaryInfo {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.deliveryLabel {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.totalLabel {
+  font-family: var(--ld-semantic-font-caption-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-caption-size, 12px);
+  font-weight: 400;
+  color: var(--ld-semantic-color-text-subtle, #5b5c5e);
+}
+
+/* Floating icon button (maximize) — ghost variant */
+.floatingIconBtn {
+  display: flex;
+  width: 32px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--ld-primitive-scale-borderradius-round, 9999px);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  color: var(--ld-semantic-color-text-subtle, #5b5c5e);
+}
+
+.floatingIconBtn:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+/* Thumbnail strip */
+.thumbnailRow {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.thumbWrap {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: var(--ld-semantic-color-surface, #fff);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.thumbQtyBadge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  border: 1.5px solid var(--ld-semantic-color-border, #d0d1d3);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.10);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.thumb {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+/* Entrance animation: new thumb slides in from the left and pushes the rest */
+.thumbWrapEnter {
+  animation: thumbEnter 400ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: left center;
+}
+
+@keyframes thumbEnter {
+  0% {
+    width: 0;
+    opacity: 0;
+    transform: translateX(-12px) scale(0.6);
+    margin-right: -6px;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    width: 56px;
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    margin-right: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thumbWrapEnter {
+    animation: none;
+  }
+}
+
+.thumbMore {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text-subtle, #5b5c5e);
+}
+
+/* ─────────────────────────────────────
+   EXPANDED PANEL — full bottom sheet
+   ───────────────────────────────────── */
+
+.expandedPanel {
+  pointer-events: all;
+  /* Same width as collapsed card */
+  width: calc(100% - 24px);
+  max-width: 430px;
+  /* Floats above the floating footer; sits just slightly above the GIC banner
+     (~90px from the top) so the panel always opens to the same height across pages */
+  height: calc(100dvh - 90px);
+  max-height: calc(100dvh - 90px);
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow:
+    0 2px 24px 0 rgba(0, 0, 0, 0.14),
+    0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.panelExpanded {
+  animation: panelSlideUp 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes panelSlideUp {
+  from {
+    transform: translateY(60px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ── Grabber/drag handle ── */
+.grabberArea {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 0 4px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.grabber {
+  width: 36px;
+  height: 4px;
+  border-radius: 9999px;
+  background: var(--ld-semantic-color-fill-accent-gray-subtle, #e3e4e5);
+}
+
+/* ── Panel top header ── */
+.panelTopHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 16px 8px;
+  flex-shrink: 0;
+}
+
+.panelTopHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.sparkIconWrap {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--ld-semantic-color-fill-accent-cyan-subtle, #e7f6fe);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.sparkIconInner {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.panelTopTitle {
+  font-family: var(--ld-semantic-font-body-medium-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.headerIconBadge {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: block;
+  object-fit: contain;
+}
+
+.closeBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--ld-primitive-scale-borderradius-round, 9999px);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.closeBtn:hover {
+  background: var(--ld-semantic-color-background-subtle, #f5f5f6);
+}
+
+.closeIcon {
+  width: 16px;
+  height: 16px;
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+/* ── Yellow countdown banner ── */
+.countdownBanner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 4px 0 12px;
+  padding: 10px 16px;
+  border-radius: 0;
+  background: var(--wcp-semantic-color-fill-status, #ffe082);
+  color: var(--ld-semantic-color-text, #2e2f32);
+  flex-shrink: 0;
+}
+
+.countdownLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.countdownLeft > svg {
+  flex-shrink: 0;
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.countdownText {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 400;
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.countdownText strong {
+  font-weight: 700;
+}
+
+.countdownLink {
+  flex-shrink: 0;
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+}
+
+/* ── Item count label above grid ── */
+.itemCountLabel {
+  display: block;
+  padding: 0 16px;
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 400;
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+/* ── Need to make a change row ── */
+.changeRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  min-height: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  margin: calc(-1 * var(--ld-primitive-scale-space-100, 8px)) 0 0;
+  padding: 16px;
+  background: var(--ld-semantic-color-background-subtle, #f5f5f6);
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.changeRow:hover {
+  background: var(--ld-semantic-color-fill-hover, #eaebee);
+}
+
+.changeRowLabel {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.changeRowChevron {
+  color: var(--ld-semantic-color-text, #2e2f32);
+  flex-shrink: 0;
+}
+
+/* Pinned subtotal footer — lives outside the scrollable content area */
+.subtotalFooter {
+  flex-shrink: 0;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Subtotal row ── */
+.subtotalRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 16px;
+  flex-shrink: 0;
+  background: #fff;
+  z-index: 2;
+}
+
+.subtotalLabel {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.subtotalValue {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.subtotalCurrency {
+  font-size: 16px;
+  margin-right: 2px;
+}
+
+.subtotalCents {
+  font-size: 14px;
+  vertical-align: super;
+  margin-left: 1px;
+}
+
+/* ── Delivery info row (legacy, retained for completeness) ── */
+.deliveryInfoRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 16px 12px;
+  flex-shrink: 0;
+}
+
+.locationIcon {
+  width: 16px;
+  height: 16px;
+  color: var(--ld-semantic-color-text-subtle, #5b5c5e);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.deliveryDetails {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.deliveryTime {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.deliveryAddress {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ld-semantic-color-text-subtle, #5b5c5e);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.settingsBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.settingsBtn:hover {
+  background: var(--ld-semantic-color-background-subtle, #f5f5f6);
+}
+
+.settingsIcon {
+  width: 16px;
+  height: 16px;
+  color: var(--ld-semantic-color-text-subtle, #5b5c5e);
+}
+
+/* ── Content card — fills full width of panel ── */
+.contentCard {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  border-radius: 0;
+  overflow: hidden;
+  flex: 1;
+  min-height: 0;
+}
+
+.contentOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  border-radius: 0 0 var(--basket-content-overlay-radius, 24px) var(--basket-content-overlay-radius, 24px);
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, var(--basket-content-overlay-opacity, 0.9)));
+  pointer-events: none;
+  z-index: 1;
+}
+
+.contentCardInner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+  padding: 8px 0;
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  width: 100%;
+}
+
+.contentCardInnerEdit {
+  padding-bottom: 47px;
+}
+
+/* Item grid — 3 equal columns (default view) */
+.itemGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 0 16px;
+}
+
+/* Item grid — auto-fill columns in edit mode, always ≥ 2 per row, tiles cap at ~155px */
+.itemGridEdit {
+  display: grid;
+  /* min = min(50%-gap, 155px) guarantees at least 2 columns at any container width */
+  grid-template-columns: repeat(auto-fill, minmax(min(calc(50% - 6px), 155px), 1fr));
+  gap: 12px;
+  padding: 0 16px;
+}
+
+/* Action row (Edit items + View all) */
+.actionRow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px 16px;
+}
+
+.viewAllLabel {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.chevronDown {
+  transition: transform 0.2s ease;
+}
+
+.chevronUp {
+  transform: rotate(180deg);
+  transition: transform 0.2s ease;
+}
+
+/* Section separator */
+.sectionSep {
+  flex-shrink: 0;
+  margin: 4px 16px;
+  /* width needs to account for the horizontal margins */
+  width: calc(100% - 32px);
+}
+
+.sectionSepFull {
+  height: 1px;
+  background: var(--ld-semantic-color-separator, #e3e4e5);
+  flex-shrink: 0;
+  margin: 0;
+}
+
+/* ── Suggestions section — horizontal scroll ── */
+.suggestionsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+}
+
+.suggestionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0;
+  padding: 4px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+
+.suggestionTitle {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.suggestionArrow {
+  width: 16px;
+  height: 16px;
+  color: var(--ld-semantic-color-text-subtle, #5b5c5e);
+}
+
+/* Floating pill button — suggestion header "See all" */
+.suggestionFloatingBtn {
+  display: flex;
+  width: 32px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--ld-primitive-scale-borderradius-round, 9999px);
+  background: var(--ld-semantic-color-surface, #fff);
+  box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.10), 0 1px 2px 1px rgba(0, 0, 0, 0.15);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.suggestionFloatingBtn:hover {
+  background: var(--ld-semantic-color-surface-hovered, #e8e8e9);
+}
+
+/* Horizontal scroll for suggestion tiles */
+.suggestionScroll {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  /* negative inline margins so scrolled tiles can bleed to the edge while
+     the suggestionsSection still provides 16px padding around the header */
+  margin: 0 -16px 0 0;
+  padding: 4px 16px 8px 16px;
+  scrollbar-width: none;
+}
+
+.suggestionScroll::-webkit-scrollbar {
+  display: none;
+}
+
+.suggestionTileWrap {
+  flex: 0 0 auto;
+  width: 130px;
+  min-width: 0;
+  scroll-snap-align: start;
+  overflow: hidden;
+}
+
+/* ── Estimated total bar ── */
+.estTotalBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 16px 8px;
+}
+
+.estTotalText {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  line-height: 1.4;
+}
+
+.estTotalMeta {
+  color: var(--ld-semantic-color-text-subtle, #5b5c5e);
+  font-weight: 400;
+}
+
+.estTotalAmount {
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+/* ── Animated stroke button wrapper ── */
+.animatedStrokeWrap {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Rotating glow border sweep using a spinning radial gradient element */
+.strokeAnimation {
+  position: absolute;
+  inset: -3px;
+  border-radius: 9999px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.strokeAnimation::before {
+  content: '';
+  position: absolute;
+  inset: -100%;
+  background: conic-gradient(
+    transparent 0deg,
+    transparent 60deg,
+    rgba(130, 180, 255, 0.95) 120deg,
+    transparent 180deg,
+    transparent 360deg
+  );
+  animation: rotateSweep 2s linear infinite;
+}
+
+.strokeAnimation::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border-radius: 9999px;
+  background: var(--ld-semantic-color-action-fill-primary, #0071dc);
+}
+
+@keyframes rotateSweep {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Ensure the button sits above the stroke animation */
+.animatedStrokeWrap > button {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Driver tip section ── */
+.tipSection {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 16px 12px;
+}
+
+.tipTitle {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  line-height: 24px;
+}
+
+.tipSubtitle {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  line-height: 20px;
+}
+
+.tipRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.tipAmount {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  line-height: 20px;
+}
+
+.tipEditBtn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ld-semantic-color-action-text-primary, #0053e2);
+  text-decoration: underline;
+  line-height: 20px;
+}
+
+.tipEditBtn:hover {
+  color: var(--ld-semantic-color-action-text-primary-hovered, #003db4);
+}
+
+.tipInfo {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ld-semantic-color-text-subtle, #5b5c5e);
+  line-height: 16px;
+  margin-top: 8px;
+}
+
+/* ── Delivery info section ── */
+.deliveryInfoSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 16px 16px 0;
+}
+
+.deliveryInfoTitle {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  line-height: 24px;
+  margin-bottom: 8px;
+}
+
+.deliveryInfoName {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  line-height: 20px;
+}
+
+.deliveryInfoAddress {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  line-height: 20px;
+  margin-bottom: 16px;
+}
+
+.deliveryInfoInnerSep {
+  height: 1px;
+  background: var(--ld-semantic-color-separator, #e3e4e5);
+  margin: 0 0 12px;
+  flex-shrink: 0;
+}
+
+.deliveryInstructionsTitle {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  line-height: 20px;
+  margin-bottom: 2px;
+}
+
+.deliveryInstructionsText {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  line-height: 20px;
+  padding-bottom: 16px;
+}
+
+/* ── Payment section ── */
+.paymentSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 16px 20px;
+}
+
+.paymentTitle {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  line-height: 24px;
+}
+
+.paymentRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.visaBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 26px;
+  border-radius: 4px;
+  background: #1a1f71;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  padding: 4px 5px;
+  box-sizing: border-box;
+}
+
+.visaImg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.paymentCardLabel {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  line-height: 20px;
+}
+
+/* ── Footer wrap — constrains FloatingFooter to match drawer width ── */
+.footerWrap {
+  width: calc(100% - 24px);
+  max-width: 430px;
+  display: flex;
+  pointer-events: all;
+}
+
+/* Force the FloatingFooter bar to stretch and center buttons */
+.footerWrap > div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* ── Driver tip bottom sheet overlay ── */
+.tipSheetOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 200;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.tipSheet {
+  background: #fff;
+  border-radius: 16px 16px 0 0;
+  width: 100%;
+  max-width: 430px;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 34px;
+}
+
+.tipSheetGrabber {
+  width: 32px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--ld-semantic-color-border, #d0d1d3);
+  margin: 12px auto 0;
+  flex-shrink: 0;
+}
+
+.tipSheetHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  position: relative;
+}
+
+.tipSheetTitle {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  text-align: center;
+}
+
+.tipSheetClose {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tipSheetBody {
+  padding: 0 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tipSheetText {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  line-height: 20px;
+  margin: 0;
+}
+
+.tipSheetActions {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Reduced motion overrides ── */
+@media (prefers-reduced-motion: reduce) {
+  .collapsedBar,
+  .panelExpanded,
+  .strokeAnimation {
+    animation: none;
+  }
+}

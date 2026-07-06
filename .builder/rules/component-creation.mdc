@@ -1,0 +1,225 @@
+---
+description: Rules for creating new components
+alwaysApply: false
+---
+description: Component Creation
+globs:
+alwaysApply: false
+---
+
+## Purpose
+
+Define the mandatory process for creating any new UI component — whether LD primitive or WCP product-level. This rule ensures consistency, avoids duplication, and guarantees every component is documented, sandboxed, and theme-compliant.
+
+---
+
+## Pre-Creation Checklist (MANDATORY)
+
+Before writing a single line of code, complete these checks:
+
+- [ ] **Search existing components** in `client/components/ui/` (LD primitives) and `client/components/walmart/` (WCP components)
+- [ ] **Search all 303+ icons** at `/component-library#icons`
+- [ ] **Check guideline docs** in `guidelines/components/` for existing specs
+- [ ] **Verify no duplicates exist** — grep for similar names and functionality
+- [ ] **Determine LD vs WCP** — see decision tree below
+
+**Priority: Reuse > Adapt > Create**
+
+If a similar component exists, extend it with a new variant or compose it — do not create a duplicate.
+
+---
+
+## Decision Tree — LD or WCP?
+
+```
+Is this a general-purpose design primitive (Button, Input, Tag, Spinner)?
+  └─ YES → LD Component (client/components/ui/)
+           Follow RULE_CreateNewComponent.mdc (10-step process)
+
+Is this a Walmart-specific product component (Banner, Card, Tile, Carousel)?
+  └─ YES → WCP Component (client/components/walmart/)
+           Follow RULE_WCPComponentCreation.mdc (lightweight process)
+```
+
+When in doubt: if it contains business logic, Walmart copy, or is only used in Walmart pages → WCP.
+
+---
+
+## File Naming Conventions
+
+| File type | Convention | Example |
+|-----------|-----------|---------|
+| Component | PascalCase | `MyComponent.tsx` |
+| CSS module | PascalCase (match component) | `MyComponent.module.css` |
+| Custom icons | PascalCase in `icons-custom/` | `MyIcon.tsx` |
+
+Never add files to `client/components/icons/` — that is the core LD library. Custom icons go in `client/components/icons-custom/`.
+
+---
+
+## Component File Structure
+
+### Required Exports
+
+- **Named exports only** — never `export default` for components
+- Export the component function and its props interface
+- Export variant type unions for consumer use
+
+```tsx
+// ✅ CORRECT
+export type MyComponentVariant = 'default' | 'brand' | 'inverse';
+
+export interface MyComponentProps {
+  variant?: MyComponentVariant;
+  children: React.ReactNode;
+}
+
+export function MyComponent({ variant = 'default', children }: MyComponentProps) {
+  return <div className={[styles.root, styles[variant]].filter(Boolean).join(' ')}>{children}</div>;
+}
+
+// ❌ WRONG
+export default function MyComponent() { ... }
+```
+
+### Props Design Rules
+
+| Rule | Example |
+|------|---------|
+| String union types for variants — never enums | `type Variant = 'small' \| 'medium' \| 'large'` |
+| Optional with sensible defaults | `variant?: Variant` (default in destructuring) |
+| `UNSAFE_className` for escape hatches | `UNSAFE_className?: string` |
+| `UNSAFE_style` for dynamic overrides | `UNSAFE_style?: React.CSSProperties` |
+| `children` for slot content | `children: React.ReactNode` |
+| `aria-label` for accessibility | `'aria-label'?: string` |
+
+### Variant Class Composition
+
+Always use array join — never switch/if chains:
+
+```tsx
+// ✅ CORRECT
+className={[styles.root, styles[variant], styles[size]].filter(Boolean).join(' ')}
+
+// ❌ WRONG
+let cls = styles.root;
+if (variant === 'brand') cls += ' ' + styles.brand;
+```
+
+---
+
+## CSS Module Requirements
+
+### Semantic Tokens Only (Zero Exceptions)
+
+```css
+/* ✅ CORRECT */
+.root {
+  background: var(--ld-semantic-color-surface, #fff);
+  color: var(--ld-semantic-color-text, #2e2f32);
+  padding: var(--ld-primitive-scale-space-300, 12px);
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+/* ❌ WRONG */
+.root {
+  background: #ffffff;
+  color: #2e2f32;
+  padding: 12px;
+  border-radius: 8px;
+  font-family: 'Everyday Sans UI';
+}
+```
+
+### Responsive Breakpoints (Standard Set)
+
+Every component with layout must handle these breakpoints:
+
+| Breakpoint | Target | Padding |
+|------------|--------|---------|
+| `> 1024px` | Desktop | `24px–32px` |
+| `≤ 1024px` | Tablet | `20px–24px` |
+| `≤ 768px` | Small tablet | `16px` |
+| `≤ 480px` | Phone | `12px` |
+
+### Motion Accessibility
+
+Every animation or transition MUST include:
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  .animated {
+    animation: none;
+    transition: none;
+  }
+}
+```
+
+### Separator vs Border Tokens
+
+- **Dividers / separators**: `var(--ld-semantic-color-separator, #e3e4e5)`
+- **Interactive borders** (inputs, card frames): `var(--ld-semantic-color-border-subtle)`
+
+Never use `border-subtle` for divider lines.
+
+---
+
+## Post-Creation Checklist (MANDATORY)
+
+After creating the component, you MUST complete all of these:
+
+- [ ] **Component library page** — create or update a page under `client/pages/component-library/`
+- [ ] **Route in App.tsx** — register lazy import + route
+- [ ] **Sidebar entry** — add to `ComponentLibraryLayout.tsx` navigation
+- [ ] **Overview.tsx entry** — add card to component overview
+- [ ] **i18n keys** — add `nav` + `desc` keys to all 3 locale files (en, es, fr)
+- [ ] **Sandbox entry** — add to `ComponentTester.tsx` if the component has interactive props
+- [ ] **Theme compliance** — verify with Bodega + Legacy themes, zero hardcoded hex in CSS
+- [ ] **Accessibility** — keyboard nav, focus states, aria attributes, never disable buttons
+
+### Theme Compliance Verification
+
+```bash
+# Must return 0 results for your component's CSS file:
+grep -n "#[0-9a-fA-F]\{6\}" client/components/walmart/MyComponent.module.css
+grep -n "ld-primitive-color-" client/components/walmart/MyComponent.module.css
+```
+
+---
+
+## Grouping Similar Components
+
+When creating a component that is a variant of an existing pattern, add it to the existing component library page rather than creating a new one:
+
+| New component | Add to existing page |
+|---------------|---------------------|
+| New item tile variant | Item Tile page |
+| New carousel type | Carousels & Product Grids page |
+| New banner variant | Promo Banners page |
+| New order card variant | Order & Status Cards page |
+| New dropdown type | Dropdowns page |
+
+Only create a new page when the component represents a genuinely new pattern.
+
+---
+
+## Quick Reference
+
+| Step | Required? | Where |
+|------|-----------|-------|
+| Search existing components | ✅ Always | `client/components/ui/` + `client/components/walmart/` |
+| Named export (no default) | ✅ Always | Component `.tsx` |
+| CSS module with semantic tokens | ✅ Always | Component `.module.css` |
+| Responsive breakpoints | ✅ If layout | CSS module |
+| `prefers-reduced-motion` | ✅ If animated | CSS module |
+| Component Library page | ✅ Always | `client/pages/component-library/` |
+| Route + sidebar + i18n | ✅ Always | `App.tsx` + `ComponentLibraryLayout.tsx` + locales |
+| ComponentTester sandbox | ✅ If interactive | `ComponentTester.tsx` |
+| Theme compliance check | ✅ Always | Run grep commands |
+
+---
+
+## Enforcement Level
+
+**CRITICAL** — Every new component must follow this process. Code reviews MUST reject components that skip the post-creation checklist.

@@ -1,0 +1,435 @@
+# Builder.io Agent Rules
+
+## Component Reuse Policy
+
+### CRITICAL: Always Use Existing Components First
+
+Before creating ANY new UI component, you MUST:
+
+1. **Search for existing components** in these locations (in order):
+   - `client/components/ui/` - Living Design 3.5 components
+   - `client/components/` - Custom application components
+   - Check `guidelines/` folder for component documentation
+   - Check existing imports in similar pages
+
+2. **Check the component inventory**:
+   ```bash
+   # Search for existing components
+   ls client/components/ui/
+   grep -r "export.*function\|export.*const" client/components/ui/
+   ```
+
+3. **Consult design system documentation**:
+   - `guidelines/Button.md`
+   - `guidelines/` folder for all LD 3.5 component specs
+   - Reference implementations in `client/components/ButtonExample.tsx`
+
+### Component Hierarchy (Use in This Order)
+
+1. **Living Design 3.5 Components** (ALWAYS PREFER THESE)
+   - Location: `client/components/ui/` with `.module.css` files
+   - Examples: `Button.tsx`, `ButtonGroup.tsx`, `Tag.tsx`, `OLQTag.tsx`
+   - Import: `import { Button } from '@/components/ui/Button'` (uppercase)
+
+2. **Shadcn/Radix Components** (Use when LD 3.5 not available)
+   - Location: `client/components/ui/` with lowercase names
+   - Examples: `popover.tsx`, `dialog.tsx`, `dropdown-menu.tsx`
+   - Import: `import { Popover } from '@/components/ui/popover'` (lowercase)
+
+3. **Custom Application Components** (Last resort)
+   - Only create when no LD 3.5 or Shadcn equivalent exists
+   - Must follow LD 3.5 design tokens and patterns
+   - Document in guidelines/ folder
+
+### Specific Component Rules
+
+#### Buttons
+- **ALWAYS use**: `client/components/ui/Button.tsx` (uppercase B)
+- **NEVER create**: Custom button elements with inline styles or hard-coded colors
+- **MUST use LD 3.5 tokens**: Button component internally uses all LD semantic tokens
+- **Variants**: `primary`, `secondary`, `tertiary`, `destructive`
+- **Sizes**: `small`, `medium`, `large`
+- **Import**: `import { Button } from '@/components/ui/Button'`
+
+**Token Usage** (Button component uses these internally - DO NOT override):
+- Colors: `var(--ld-semantic-color-action-fill-primary)`, `var(--ld-semantic-color-action-fill-secondary)`, etc.
+- Typography: `var(--ld-semantic-font-family-sans)`
+- Focus: `var(--ld-semantic-color-action-focus-outline)`
+- Border radius: `9999px` (pill-shaped, per LD 3.5 spec)
+
+Example:
+
+// ✅ CORRECT - Uses Button component with tokens
+import { Button } from '@/components/ui/Button';
+<Button variant="primary" size="medium">Click me</Button>
+
+// ❌ WRONG - Custom button with hard-coded colors
+<button className="bg-blue-500 px-4 py-2 rounded-full">Click me</button>
+
+// ❌ WRONG - Hard-coded Walmart blue
+<button className="bg-[#0071DC] text-white rounded-full">Click me</button>
+
+// ❌ WRONG - Overriding Button tokens
+<Button
+  variant="primary"
+  className="bg-[#0071DC]"  // Never override tokens!
+>
+  Click me
+</Button>
+
+
+**Why tokens matter:**
+- ✅ Ensures brand consistency across the app
+- ✅ Enables theme switching (light/dark mode)
+- ✅ Centralizes design updates (change once, updates everywhere)
+- ✅ Maintains Living Design 3.5 compliance
+- ❌ Hard-coded colors break the design system
+- ❌ Inline styles bypass the token system
+
+#### Button Groups
+- **ALWAYS use**: `client/components/ui/ButtonGroup.tsx`
+- **Never use**: Manual flex containers for buttons
+- **Import**: `import { ButtonGroup } from '@/components/ui/ButtonGroup'`
+
+Example:
+
+// ✅ CORRECT
+<ButtonGroup>
+  <Button variant="secondary">Cancel</Button>
+  <Button variant="primary">Save</Button>
+</ButtonGroup>
+
+// ❌ WRONG
+<div className="flex gap-4">
+  <button>Cancel</button>
+  <button>Save</button>
+</div>
+
+
+#### Tags & Badges
+- **For OLQ scores**: Use `client/components/ui/olq-tag.tsx` (OLQTag component)
+- **For general tags**: Use `client/components/ui/tag.tsx` (Tag component)
+- **Never use**: Badge component or custom styled spans for tags
+
+Example:
+```tsx
+// ✅ CORRECT
+import { OLQTag } from '@/components/ui/olq-tag';
+<OLQTag percentage={85} />
+
+// ✅ CORRECT
+import { Tag } from '@/components/ui/tag';
+<Tag variant="success">Active</Tag>
+
+// ❌ WRONG
+<span className="bg-green-100 px-2 py-1 rounded">Active</span>
+```
+
+#### Popovers & Overlays
+- **Use**: `client/components/ui/popover.tsx` (Radix Popover)
+- **Include arrow**: Import and use `PopoverArrow` component
+- **Import**: `import { Popover, PopoverTrigger, PopoverContent, PopoverArrow } from '@/components/ui/popover'`
+
+Example:
+```tsx
+// ✅ CORRECT
+<Popover>
+  <PopoverTrigger>Open</PopoverTrigger>
+  <PopoverContent>
+    <PopoverArrow className="fill-white" />
+    Content here
+  </PopoverContent>
+</Popover>
+```
+
+### Before Creating a New Component
+
+Ask yourself:
+1. ✅ Did I search `client/components/ui/` for existing components?
+2. ✅ Did I check `guidelines/` documentation?
+3. ✅ Did I look at similar pages to see what they use?
+4. ✅ Can I compose existing components to achieve this?
+5. ✅ Is this component truly unique to this feature?
+
+If you answered "no" to any of these, DO NOT create a new component.
+
+### Migration from Old to New
+
+When you find code using old patterns:
+
+**Old Pattern (WRONG)**:
+```tsx
+<button className="h-10 px-4 bg-[#0071DC] text-white rounded-full">
+  Click me
+</button>
+```
+
+**New Pattern (CORRECT)**:
+```tsx
+import { Button } from '@/components/ui/Button';
+<Button variant="primary" size="small">Click me</Button>
+```
+
+### Component Import Paths
+
+**Living Design 3.5 Components (Uppercase)**:
+```tsx
+import { Button, buttonVariants } from '@/components/ui/Button';  // Primary import
+import { ButtonGroup } from '@/components/ui/ButtonGroup';
+import { Tag } from '@/components/ui/tag';
+import { OLQTag } from '@/components/ui/olq-tag';
+```
+
+**IMPORTANT**: The lowercase `button.tsx` file has been DELETED. Always import from uppercase `Button.tsx`.
+```tsx
+// ✅ CORRECT
+import { Button } from '@/components/ui/Button';
+
+// ❌ WRONG - This file no longer exists!
+import { Button } from '@/components/ui/button';
+```
+
+**Shadcn/Radix Components (Lowercase)**:
+```tsx
+import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
+import { Dialog, DialogTrigger, DialogContent } from '@/components/ui/dialog';
+import { Select, SelectTrigger, SelectContent } from '@/components/ui/select';
+```
+
+### Living Design 3.5 Token Usage
+
+**CRITICAL**: All components MUST use LD semantic tokens. NEVER use hard-coded colors or values.
+
+#### Button Component Tokens (Built-in)
+
+The Button component (`client/components/ui/Button.tsx`) uses these tokens internally:
+
+**Action Colors (Primary Button)**:
+```css
+/* These are used inside Button.module.css - DO NOT override */
+background: var(--ld-semantic-color-action-fill-primary);           /* #0071DC - Walmart blue */
+background-hover: var(--ld-semantic-color-action-fill-primary-hovered);  /* #0060B8 */
+background-pressed: var(--ld-semantic-color-action-fill-primary-pressed); /* #004C94 */
+color: var(--ld-semantic-color-action-text-on-fill-primary);        /* #FFFFFF */
+```
+
+**Action Colors (Secondary Button)**:
+```css
+background: var(--ld-semantic-color-action-fill-secondary);         /* #FFFFFF */
+border: var(--ld-semantic-color-action-border-secondary);           /* #74767C */
+color: var(--ld-semantic-color-action-text-secondary);              /* #2E2F32 */
+```
+
+**Action Colors (Destructive Button)**:
+```css
+background: var(--ld-semantic-color-action-fill-destructive);       /* #ea1100 */
+background-hover: var(--ld-semantic-color-action-fill-destructive-hovered);
+```
+
+**Focus State**:
+```css
+outline: var(--ld-semantic-color-action-focus-outline);             /* #0071DC */
+```
+
+#### General Token Usage
+
+When creating NEW components (only if absolutely necessary), use these tokens:
+
+**Colors**:
+```css
+/* ✅ CORRECT - Always use semantic tokens */
+background: var(--ld-semantic-color-action-fill-primary);
+color: var(--ld-semantic-color-text-primary);
+border-color: var(--ld-semantic-color-border-strong);
+
+/* ❌ WRONG - Never hard-code colors */
+background: #0071DC;      /* Use var(--ld-semantic-color-action-fill-primary) */
+color: #2E2F32;           /* Use var(--ld-semantic-color-text-primary) */
+border-color: #BABBBE;    /* Use var(--ld-semantic-color-border-strong) */
+```
+
+**Typography**:
+```css
+/* ✅ CORRECT */
+font-family: var(--ld-semantic-font-family-sans);  /* Everyday Sans UI */
+font-weight: 700;                                   /* Bold for buttons */
+font-size: 14px;  /* Small */
+font-size: 16px;  /* Medium */
+font-size: 18px;  /* Large */
+
+/* ❌ WRONG */
+font-family: 'Arial', sans-serif;
+font-size: 13px;  /* Non-standard size */
+```
+
+**Spacing (for ButtonGroup and layouts)**:
+```css
+/* ✅ CORRECT */
+gap: var(--ld-semantic-spacing-3, 12px);   /* Standard gap */
+gap: var(--ld-semantic-spacing-2, 8px);    /* Tight gap */
+
+/* ❌ WRONG */
+gap: 10px;  /* Arbitrary value */
+```
+
+#### Complete Button Token Reference
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--ld-semantic-color-action-fill-primary` | #0071DC | Primary button background |
+| `--ld-semantic-color-action-fill-primary-hovered` | #0060B8 | Primary button hover |
+| `--ld-semantic-color-action-fill-primary-pressed` | #004C94 | Primary button active |
+| `--ld-semantic-color-action-fill-secondary` | #FFFFFF | Secondary button background |
+| `--ld-semantic-color-action-border-secondary` | #74767C | Secondary button border |
+| `--ld-semantic-color-action-fill-destructive` | #ea1100 | Destructive button background |
+| `--ld-semantic-color-action-focus-outline` | #0071DC | Focus indicator |
+| `--ld-semantic-font-family-sans` | Everyday Sans UI | All buttons |
+| `--ld-semantic-spacing-3` | 12px | Button group gap |
+
+### Enforcement
+
+When reviewing code or making changes:
+
+1. **Run component audit**:
+   ```bash
+   # Find potential violations
+   grep -r "className=\".*bg-\[#" client/pages/
+   grep -r "className=\".*rounded-full.*bg-" client/components/
+   ```
+
+2. **Check imports**:
+   - Ensure Button imports use uppercase: `from '@/components/ui/Button'`
+   - Ensure proper component usage in all new code
+
+3. **Consolidate duplicates**:
+   - If you find multiple similar components, consolidate to ONE
+   - Update all references to use the canonical component
+   - Remove duplicates
+
+### Documentation
+
+When creating a NEW component (only if absolutely necessary):
+
+1. Create the component in `client/components/ui/ComponentName.tsx`
+2. Create CSS module: `client/components/ui/ComponentName.module.css`
+3. Use LD 3.5 semantic tokens exclusively
+4. Create documentation: `guidelines/ComponentName.md`
+5. Create example: `client/components/ComponentNameExample.tsx`
+6. Update this rules file with the new component
+
+### Summary
+
+**Golden Rules**:
+1. 🔍 Search FIRST, create LAST
+2. 📚 Use LD 3.5 components when available
+3. 🎨 Always use semantic design tokens
+4. 🔄 Consolidate duplicates immediately
+5. 📖 Document new components thoroughly
+6. ✅ Import Button from uppercase path: `'@/components/ui/Button'`
+7. 🚫 NEVER create custom buttons with inline styles
+8. 🎯 One canonical component per UI pattern
+
+**Violation Examples (NEVER DO THIS)**:
+```tsx
+// ❌ Custom button
+<button className="px-4 py-2 bg-blue-500 rounded">Click</button>
+
+// ❌ Custom tag
+<span className="bg-red-100 text-red-800 px-2 rounded">Error</span>
+
+// ❌ Manual button group
+<div className="flex gap-4">
+  <button>Cancel</button>
+  <button>Save</button>
+</div>
+
+// ❌ Hard-coded colors
+<div style={{ backgroundColor: '#0071DC' }}>Content</div>
+```
+
+**Correct Examples (ALWAYS DO THIS)**:
+```tsx
+// ✅ Use Button component
+<Button variant="primary">Click</Button>
+
+// ✅ Use Tag component
+<Tag variant="error">Error</Tag>
+
+// ✅ Use ButtonGroup
+<ButtonGroup>
+  <Button variant="secondary">Cancel</Button>
+  <Button variant="primary">Save</Button>
+</ButtonGroup>
+
+// ✅ Use design tokens
+<div style={{ backgroundColor: 'var(--ld-semantic-color-fill-primary)' }}>Content</div>
+```
+
+---
+
+## Living Design 3.5 Component Inventory
+
+### Available Components (USE THESE!)
+
+#### Buttons & Actions
+- ✅ `Button.tsx` - All button needs (primary, secondary, tertiary, destructive)
+- ✅ `ButtonGroup.tsx` - Multiple buttons layout
+- ✅ `IconButton.tsx` - Icon-only buttons (if available)
+
+#### Data Display
+- ✅ `tag.tsx` - Status tags and labels
+- ✅ `olq-tag.tsx` - OLQ percentage badges
+- ✅ `badge.tsx` - Notification badges
+
+#### Overlays
+- ✅ `popover.tsx` - Popovers with arrow support
+- ✅ `dialog.tsx` - Modal dialogs
+- ✅ `alert-dialog.tsx` - Confirmation dialogs
+
+#### Forms
+- ✅ `select.tsx` - Dropdown selects
+- ✅ `input.tsx` - Text inputs
+- ✅ `checkbox.tsx` - Checkboxes
+- ✅ `calendar.tsx` - Date picker
+
+#### Navigation
+- ✅ `Menu.tsx` - Dropdown menus
+
+#### Panels & Drawers
+- ✅ **ALL panels MUST be resizable** - See `guidelines/Panel.md` for complete spec
+- **REQUIRED**: Min width 420px, Max width 800px (or responsive)
+- **REQUIRED**: Resize handle on left edge with visual indicator
+- **REQUIRED**: localStorage persistence of user's preferred width
+- **REQUIRED**: Responsive behavior for small screens
+
+### Component Usage Stats
+
+Last updated: 2025-01-22
+
+- Button: ✅ Standardized across 7+ files
+- Tag: ✅ Implemented with LD 3.5 tokens
+- OLQTag: ✅ Implemented with LD 3.5 tokens
+- ButtonGroup: ✅ Available
+- Popover: ✅ Available with arrow support
+- Panel: ✅ Resizable pattern established (see RecommendationsPanel.tsx)
+
+---
+
+## Panel Design Rule (CRITICAL)
+
+**RULE**: All panel/drawer components MUST be resizable with min/max width constraints.
+
+See `guidelines/Panel.md` for complete implementation requirements including:
+- Width constraints (420px min, 800px max)
+- Resize handle with visual indicator
+- State management and localStorage persistence
+- Responsive behavior
+- Complete code examples
+
+**Reference Implementation**: `client/components/RecommendationsPanel.tsx`
+
+**Exceptions**: Only non-resizable panels are full-screen modals, tooltips, or popovers with documented UX reasons.
+
+---
+
+Remember: **Reuse > Adapt > Create** (in that order!)

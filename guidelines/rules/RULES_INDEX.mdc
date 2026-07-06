@@ -1,0 +1,882 @@
+---
+description: Design System Rules Index
+globs:
+alwaysApply: true
+---
+
+## Purpose
+
+Quick reference for all mandatory design system rules and enforcement policies.
+
+## Critical Rules (ALWAYS ENFORCE)
+
+### 0.5 — Ask Before You Build (MANDATORY — NO EXCEPTIONS)
+**File**: `guidelines/AGENTS.md` → "MANDATORY PRE-TASK PROTOCOL"
+
+**When**: Before writing ANY code for a design or UI request
+
+**Key Requirements**:
+- ✅ ALWAYS ask the designer/requester the relevant pre-launch questions FIRST
+- ✅ Select only the question categories that apply to the task (don't dump the full list)
+- ✅ Wait for answers before implementing
+- ✅ If told "just go ahead," document the assumptions and use defaults from `RULE_PromptDrivenDesign.mdc`
+- ❌ NEVER assume breakpoints, animation feel, navigation behavior, token mapping, or tap target requirements
+- ❌ NEVER start coding a carousel without asking about auto-advance, shadow clipping, and touch targets
+- ❌ NEVER start coding navigation without asking which tab is active and whether animation precedes routing
+
+**Question categories by task type**:
+
+| Task | Ask about |
+|---|---|
+| New page / layout | Breakpoints, tokens, states, data freshness |
+| Carousel / scroll list | Shadow clipping, auto-advance, touch targets |
+| Tabs / nav / buttons | Active state per page, navigation route + delay |
+| Animation / transition | Feel (spring? ease? instant?), duration, timing |
+| Data / content update | Year in dates?, real vs randomized names/addresses |
+
+---
+
+### 0. Dev Server Health Check
+**File**: `RULE_DevServerHealthCheck.mdc`
+
+**When**: After completing ANY code changes
+
+**Key Requirements**:
+- ✅ ALWAYS check dev server logs after finishing changes
+- ✅ ALWAYS restart if compilation errors are found
+- ✅ NEVER wait for the user to report a blank page
+- ✅ Verify clean startup after any restart
+
+---
+
+### 1. Tag and OLQTag Components
+**File**: `RULE_TagComponents.mdc`
+
+**When**: Any status label, category badge, or percentage-coded quality indicator
+
+**Key Requirements**:
+- ALWAYS use `Tag` from `@/components/ui/tag` for status/category labels
+- ALWAYS use `OLQTag` from `@/components/ui/olq-tag` for percentage quality indicators
+- NEVER write a custom `getXStyle()` function returning inline background/color values
+- NEVER hard-code OLQ color thresholds — built into `OLQTag`
+
+**Quick Check**:
+
+// WRONG
+const getOLQStyle = (olq: string) => ({ backgroundColor: '#FBD0CC', ... });
+<div style={getOLQStyle(item.olq)}>{item.olq}</div>
+
+// CORRECT
+import { OLQTag } from '@/components/ui/olq-tag';
+<OLQTag percentage={85} />
+```
+
+---
+
+### 2.5 — Separator Token (ALWAYS ENFORCE — zero exceptions for divider contexts)
+**File**: `RULE_SeparatorToken.mdc`
+
+**When**: ANY time a divider line, section separator, table row border, or subtle section border is needed
+
+**Key Requirements**:
+- ✅ ALWAYS use `var(--ld-semantic-color-separator, #e3e4e5)` for dividers, table row borders, and section separators
+- ✅ gray-20 (`#e3e4e5`) — correct light separator that works across all themes
+- ❌ NEVER use `var(--ld-semantic-color-border-subtle)` for dividers — it resolves inconsistently (some contexts: near-black #515357)
+- `border-subtle` is reserved ONLY for interactive component borders (inputs, interactive card frames)
+
+**Quick Check**:
+```css
+/* ❌ WRONG — too dark or inconsistent for dividers */
+border-bottom: 1px solid var(--ld-semantic-color-border-subtle, #515357);
+
+/* ✅ CORRECT — always use separator for divider lines */
+border-bottom: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+```
+
+---
+
+### 3. Design System Enforcement (Tokens + Icons)
+**File**: `RULE_DesignSystemEnforcement.mdc`
+
+**When**: ALL code - components, pages, styles, and designs
+
+**Key Requirements**:
+- ✅ NEVER use hard-coded hex colors, spacing, or values
+- ✅ NEVER create inline SVG icons
+- ✅ NEVER use external icon libraries (react-icons, heroicons)
+- ✅ ALWAYS use semantic design tokens (624 tokens available)
+- ✅ ALWAYS use icons from centralized library (303 icons)
+- ✅ ALWAYS use LD components (Button, not inline styled buttons)
+
+**Quick Check**:
+```tsx
+/* ❌ WRONG */
+<button style={{ backgroundColor: '#0071DC', padding: '16px' }}>
+  <svg><path d="..."/></svg>
+</button>
+
+/* ✅ CORRECT */
+import { Button } from '@/components/ui/Button';
+import { Search } from '@/components/icons';
+<Button variant="primary" leading={<Search />}>Click</Button>
+```
+
+**New Icon Requirements**:
+- ✅ Square linecap (`strokeLinecap="square"`)
+- ✅ 1.5px stroke width
+- ✅ 20x20 viewBox
+- ✅ currentColor for theming
+
+---
+
+### 4. Icon Usage and Management
+**File**: `RULE_IconUsage.mdc`
+
+**When**: Adding icons to designs, Builder.io imports, new components
+
+**Key Requirements**:
+- ✅ ALWAYS search 304 existing icons first
+- ✅ NEVER create duplicate icons
+- ✅ NEVER add to core `icons/` folder (use `icons-custom/` for new)
+- ✅ ALWAYS check Component Library at `/component-library#icons`
+
+**Quick Check**:
+```tsx
+/* ❌ WRONG - Creating duplicate */
+// Don't create SearchIcon.tsx if Search.tsx exists!
+
+/* ✅ CORRECT - Use existing */
+import { Search } from '@/components/icons';
+```
+
+**Icon Library Stats**:
+- 303 icons available across 15+ categories
+- Core library: `client/components/icons/`
+- Custom icons: `client/components/icons-custom/`
+
+---
+
+### 5. LinkButton and Spot Icon Usage
+**File**: `RULE_LinkButtonAndSpotIcon.mdc`
+
+**When**: Adding link-styled buttons or icon indicators to todo items, action rows, or cards
+
+**Key Requirements**:
+- ✅ ALWAYS use `LinkButton` from `@/components/ui/LinkButton` — never custom inline link buttons
+- ✅ ALWAYS use round Spot Icon pattern (brand-subtle background, `borderRadius: 50%`) — never square placeholders
+- ❌ NEVER override LinkButton color or weight with custom CSS
+- ❌ NEVER use blue bold text for link buttons (LD 3.5 uses regular weight, black text)
+
+**Quick Check**:
+```tsx
+/* ❌ WRONG */
+<button style={{ color: '#0053E2', fontWeight: 700, textDecoration: 'underline' }}>Link</button>
+
+/* ✅ CORRECT */
+import { LinkButton } from '@/components/ui/LinkButton';
+<LinkButton>Link</LinkButton>
+```
+
+---
+
+### 6. Figma Exportable Asset Extraction
+**File**: `RULE_FigmaAssetExtraction.mdc` 🆕
+
+**When**: Implementing Figma designs, extracting assets from design files
+
+**Key Requirements**:
+- ✅ ONLY extract assets marked as "exportable" in Figma
+- ✅ Use exact names provided by designer
+- ✅ Preserve specified file formats (SVG, PNG, WebP)
+- ❌ NEVER extract every visible image/graphic
+- ❌ NEVER rename assets without approval
+- ❌ NEVER convert formats arbitrarily
+
+**Quick Check**:
+```tsx
+/* ✅ CORRECT - Exportable assets with semantic names */
+associate-waving.svg
+network-issue.svg
+associate-glasses.svg
+
+/* ❌ WRONG - Auto-generated or non-exportable */
+Rectangle 123.png
+Untitled.jpg
+temp-image-xyz.webp
+```
+
+**Asset Organization**:
+```
+public/
+  illustrations/  # Production illustrations (exportable)
+  icons/         # Production icons (exportable)
+  images/        # Production images (exportable)
+```
+
+---
+
+### 7. Guidelines Page Sync
+**File**: `RULE_GuidelinesPageSync.mdc`
+
+**When**: After ANY change to files in the `guidelines/` directory
+
+**Key Requirements**:
+- ✅ ALWAYS update `client/pages/component-library/GuidelinesDocIndex.tsx` when adding/removing/renaming guideline files
+- ✅ Add new entries with `name`, `path`, and `purpose` to the correct section in `docSections`
+- ✅ Remove entries for deleted files
+- ✅ Keep the Documentation Index tab on the Guidelines page in sync with actual files
+
+---
+
+## Component and Layout Rules
+
+### 8. Component Reuse Policy
+**Reference**: `design-system/ComponentReference.md`
+
+**When**: Creating any new UI component
+
+**Key Requirements**:
+- Search `client/components/ui/` for custom components FIRST
+- Use Living Design 3.5 components (Button, Tag, ButtonGroup, etc.)
+- Never create custom buttons with inline styles
+- Consolidate duplicates immediately
+
+**Component Priority**:
+1. Living Design 3.5 components (`client/components/ui/`)
+2. Custom components (only if no LD equivalent exists)
+
+---
+
+### 9. Responsive Layout and Page Structure
+**File**: `RULE_ResponsiveLayout.mdc`
+
+**When**: Creating ANY new page, view, or layout component
+
+**Key Requirements**:
+- ✅ MUST use standard shell (DesktopHeader + SubNav + scrollable main)
+- ✅ MUST fill full available width within the shell (no max-width constraints)
+- ✅ MUST use standard breakpoints: 1024px, 768px, 480px
+- ✅ MUST reduce padding at each breakpoint (32 → 24 → 16 → 12)
+- ✅ MUST stack multi-column layouts at 768px
+- ✅ MUST reduce grid columns at 1024px and 768px
+- ✅ MUST scale page title to 24px at 768px
+- ✅ MUST stack form rows vertically at 768px
+- ✅ MUST use 8px spacing multiples
+- ❌ NEVER invent new breakpoints
+- ❌ NEVER omit responsive media queries from grids or multi-column layouts
+
+**Quick Check**:
+```css
+/* ❌ WRONG — max-width constrains content, no breakpoints */
+.page { max-width: 1280px; margin: 0 auto; padding: 40px 60px; }
+.grid { grid-template-columns: repeat(4, 1fr); }
+
+/* ✅ CORRECT — Full width within shell, responsive */
+.page { width: 100%; padding: 24px 32px; }
+.grid { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 1024px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 768px) { .page { padding: 16px; } .grid { grid-template-columns: 1fr; } }
+```
+
+---
+
+### 10. SVG Asset Management, Reuse, and Accessibility
+**File**: `RULE_SVGAssets.mdc`
+
+**When**: Any SVG illustration is needed, added, or referenced
+
+**Key Requirements**:
+- ✅ ALWAYS check `public/illustrations/` for an existing match before generating a new image
+- ✅ ALWAYS tell the user which illustration was chosen and list 2–4 alternatives by filename — never silently pick one
+- ✅ ONLY generate a new image if the Figma design specifies something not in the folder, or the user explicitly requests it
+- ✅ ALWAYS provide `alt` text on every `<img>` using an illustration — the SVG files have NO embedded `<title>` elements
+- ✅ Use `alt=""` + `aria-hidden="true"` only when the illustration is purely decorative
+- ✅ ALWAYS host SVG illustrations locally — never reference CDN URLs with `?format=webp` or `?width=` params
+- ✅ Fulfillment/category pictograms render at 64×64px
+- ❌ NEVER generate a new illustration when a semantically matching one already exists locally
+- ❌ NEVER omit `alt` on an `<img>` tag
+- ❌ NEVER use the filename as alt text (e.g. `alt="Toys.svg"`)
+- ❌ NEVER commit download scripts to source control
+
+**Illustration Folders**:
+```
+public/illustrations/
+  mono-large/          # Large mono category illustrations
+  mono-small/          # Small mono category illustrations
+  spot-illustration/   # Character/scene illustrations (associate-waving, network-issue, etc.)
+```
+
+**Quick Check**:
+```html
+<!-- ❌ WRONG — generating new when existing matches -->
+<!-- Toys.svg already exists locally! -->
+<Media type="gen-image" query="toys illustration" />
+
+<!-- ✅ CORRECT — reuse existing, with proper alt -->
+<img src="/illustrations/mono-large/Toys.svg" alt="Toys" width="64" height="64" />
+
+<!-- ✅ CORRECT — decorative spot illustration -->
+<img src="/illustrations/spot-illustration/associate-waving.svg" alt="" aria-hidden="true" width="160" height="160" />
+
+<!-- ❌ WRONG — CDN re-encodes SVG as WebP → blurry, and no alt -->
+<img src="https://cdn.builder.io/.../icon?format=webp&width=800" />
+```
+
+---
+
+### 11. Card Meta Layout — Icon + Stacked Text Pattern
+**File**: `RULE_CardMetaLayout.mdc`
+
+**When**: Building any card with a type icon, primary label, and secondary detail (location, seller, sublabel)
+
+**Key Requirements**:
+- ✅ Secondary text MUST be nested **inside** the chip text column, NOT a sibling of the chip
+- ✅ Use `flex-direction: column` on the text container
+- ✅ Use `align-items: center` on the chip row (icon vertically centers with text block)
+- ✅ Use `gap: 2px` between primary and secondary label
+- ❌ NEVER place secondary details as siblings of the type chip
+
+**Quick Check**:
+```tsx
+// ❌ WRONG — location disconnected from icon
+<span className={styles.chip}><img/><span>Curbside pickup</span></span>
+<span className={styles.location}>Carrollton Supercenter...</span>
+
+// ✅ CORRECT — location stacked under label, inside chip
+<span className={styles.chip}>
+  <img/>
+  <span className={styles.chipText}>
+    <span>Curbside pickup</span>
+    <span className={styles.location}>Carrollton Supercenter...</span>
+  </span>
+</span>
+```
+
+---
+
+### 23. Overlay Z-Index — Scrim Components Always On Top (HARD RULE — NO EXCEPTIONS)
+**File**: `RULE_OverlayZIndex.mdc`
+
+**When**: ANY component that uses a scrim/backdrop (bottom sheet, modal, dialog, drawer, side panel)
+
+**The Rule**: Any component that renders a scrim is an overlay and MUST appear above ALL application UI — including the desktop header, side nav, and any fixed bars.
+
+**Key Requirements**:
+- ✅ Scrim/backdrop MUST use `z-index: var(--ld-semantic-z-index-modal-backdrop, 1040)`
+- ✅ Overlay panel MUST use `z-index: var(--ld-semantic-z-index-modal, 1050)`
+- ✅ Applies to: Bottom Sheet, Modal, Dialog, Drawer, Side Panel — any scrim-based component
+- ❌ NEVER use `z-index: 50` or `z-index: 51` for scrim-based overlays (buried under header 300, sidebar 200)
+- ❌ NEVER use raw integer z-index values — always use semantic tokens
+
+**Quick Check**:
+```css
+/* ❌ WRONG — buried under nav chrome */
+.overlay { z-index: 50; }
+.sheet   { z-index: 51; }
+
+/* ✅ CORRECT — above everything */
+.overlay { z-index: var(--ld-semantic-z-index-modal-backdrop, 1040); }
+.sheet   { z-index: var(--ld-semantic-z-index-modal, 1050); }
+```
+
+**Z-Index Token Scale**:
+- `1000` — dropdowns/menus
+- `1040` — scrim/backdrop
+- `1050` — modal panel
+- `1060` — popovers
+- `1070` — tooltips
+- `1080` — toasts/notifications
+- `1090` — full-screen overlays
+- `1100` — highest (emergency banners)
+
+---
+
+### 12b. Typography — No Italics (HARD RULE — zero exceptions)
+**File**: `RULE_NoItalics.mdc`
+
+**When**: ALL code — CSS modules, inline styles, component markup
+
+**Key Requirements**:
+- ❌ NEVER use `font-style: italic` in CSS
+- ❌ NEVER use `fontStyle: 'italic'` in inline styles
+- ❌ NEVER use `<i>` tags for visual styling
+- ✅ Use color tokens, font-weight, or size to differentiate text instead
+
+**Quick Check**:
+```css
+/* ❌ WRONG */
+.note { font-style: italic; }
+
+/* ✅ CORRECT */
+.note { color: var(--ld-semantic-color-text-subtle); }
+```
+
+---
+
+### 12a. Accessibility — Never Disable Buttons
+**Scope**: ALL interactive components, modals, forms, and CTAs
+
+**When**: Any time a button's action depends on state (form validity, unsaved changes, selection, etc.)
+
+**Key Requirements**:
+- ✅ ALWAYS keep buttons enabled — use visual cues (label changes) instead of `disabled`
+- ✅ If nothing actionable has happened yet, show a neutral label ("Done", "Close") that safely dismisses
+- ✅ If an action becomes available, change the label to reflect it ("Save changes", "Confirm", etc.)
+- ✅ Use `aria-describedby` or helper text to explain _why_ an action isn't ready, if needed
+- ❌ NEVER add `disabled` to a button because state hasn't changed yet
+- ❌ NEVER show a button that does nothing (grayed-out, cursor-not-allowed) — remove it or change its label
+
+**Quick Check**:
+```tsx
+// ❌ WRONG — blocks keyboard users, confuses screen readers
+<Button variant="primary" disabled={!hasChanges}>Save changes</Button>
+
+// ✅ CORRECT — always enabled, label reflects state
+<Button variant="primary" onClick={() => hasChanges ? save() : dismiss()}>
+  {hasChanges ? 'Save changes' : 'Done'}
+</Button>
+```
+
+**Why this matters**:
+- Disabled buttons can't receive focus — screen readers and keyboard users can't reach them
+- Users with cognitive disabilities can't tell *why* the button is inactive without extra context
+- LD 3.5 accessible design principle: interactive elements must always be reachable
+
+---
+
+### 12. Panel Design Requirements
+**File**: `Panel.md`
+
+**When**: Creating any panel, drawer, or sidebar component
+
+**Key Requirements**:
+- ✅ MUST be resizable (min: 420px, max: 800px)
+- ✅ MUST have resize handle with visual indicator
+- ✅ MUST persist width to localStorage
+- ✅ MUST be responsive for small screens
+
+**Reference Implementation**: `client/components/RecommendationsPanel.tsx`
+
+---
+
+### 15. WCP Component Creation
+**File**: `RULE_WCPComponentCreation.mdc`
+
+**When**: Creating any Walmart-specific (WCP) product component
+
+**Key Requirements**:
+- ✅ Distinguish LD primitives (in `client/components/ui/`) from WCP product components (in `client/components/walmart/`)
+- ✅ WCP components use visual-theme variants: `default | brand | inverse`
+- ✅ Use array join for variant class composition: `[styles.banner, styles[variant]].filter(Boolean).join(' ')`
+- ✅ Render as `<button>` when `onClick` is provided, `<div>` otherwise
+- ✅ Named export only — never `export default`
+- ✅ Requires: Component Library page, route, Overview.tsx entry, i18n keys
+- ❌ Does NOT require ComponentPropertyTester sandbox entry
+- ❌ Does NOT require the 10-step `RULE_CreateNewComponent.mdc` process
+
+---
+
+### 16. Carousel and Scroll Patterns
+**File**: `RULE_CarouselAndScrollPatterns.mdc`
+
+**When**: Building any horizontally scrollable list or auto-advancing carousel
+
+**Key Requirements**:
+- ✅ **Pattern 1** (scroll snap): `overflow-x: auto`, `scroll-snap-type: x mandatory`, tiles use `scroll-snap-align: start`, hide scrollbar with `scrollbar-width: none`
+- ✅ **Pattern 2** (auto-advance): JS `setInterval` with `useRef`, pause on user interaction, always include prev/next `IconButton` with `aria-label`
+- ✅ Use `headlineParts?: string[]` for multi-line headlines (render each in `<span style={{ display: 'block' }}>`)
+- ✅ Apply `objectPosition` as inline style (dynamic per slide)
+- ✅ `UNSAFE_className` is acceptable for circular `IconButton` nav controls
+- ✅ Always include `prefers-reduced-motion: reduce` override to pause or disable animations
+- ❌ NEVER use Pattern 2 without prev/next controls and aria-labels
+
+---
+
+### 17. Inline Style vs CSS Module
+**File**: `RULE_InlineStyleVsCSSModule.mdc`
+
+**When**: Deciding where to put any style value
+
+**Key Requirements**:
+- ✅ CSS modules for ALL static, variant-based, state-based, and token-referenced styles
+- ✅ Inline styles ONLY for truly dynamic per-instance values (objectPosition, drag width, tooltip coordinates)
+- ✅ When using tokens inline, always include a fallback: `var(--ld-semantic-color-text-positive, #1A7A34)`
+- ❌ NEVER hardcode hex colors inline
+- ❌ NEVER put spacing, font, or border-radius values inline (they belong in CSS modules)
+- ❌ NEVER use inline styles for variant-based colors
+
+---
+
+### 18. Animation and Motion
+**File**: `RULE_AnimationAndMotion.mdc`
+
+**When**: Adding any animation, transition, or motion to the UI
+
+**Key Requirements**:
+- ✅ EVERY animation MUST have a `@media (prefers-reduced-motion: reduce)` override — no exceptions
+- ✅ Use `@keyframes` for multi-step sequences; use `transition` for 2-state hover/focus changes
+- ✅ Canonical "new item" glow: `0 0 0 2px #1A7A34, 0 0 24px 6px rgba(26, 122, 52, 0.30)`, 2.5s, ease-in-out
+- ✅ Standard durations: 150ms (micro), 250ms (standard), 400ms (complex), 2500ms (insertion glow)
+- ✅ Auto-advance carousels must pause on user interaction and disable when `prefers-reduced-motion: reduce`
+- ❌ NEVER create a custom spinner — use the existing `Spinner` component
+
+---
+
+### 19. Data-Driven Components
+**File**: `RULE_DataDrivenComponents.mdc`
+
+**When**: Building components that render from local static/demo data arrays
+
+**Key Requirements**:
+- ✅ Static demo data lives in the SAME `.tsx` file as the component, above the component function
+- ✅ Data arrays: `UPPER_SNAKE_CASE` constant names (e.g., `PRODUCTS`, `SLIDES`, `ORDERS`)
+- ✅ Always define a TypeScript interface for the data shape
+- ✅ Use `headlineParts?: string[]` for multi-line text — never `\n` in strings
+- ✅ Use Walmart CDN or local illustration URLs — never placeholder.com or picsum.photos
+- ❌ NEVER hardcode user-specific or real API data in the component file — pass as props
+
+---
+
+### 20. Component Variant Naming
+**File**: `RULE_ComponentVariantNaming.mdc`
+
+**When**: Creating any component with a `variant` prop
+
+**Key Requirements**:
+- ✅ **Action-intent** (LD primitives): `primary | primary-alt | secondary | tertiary | destructive` — for Button, IconButton
+- ✅ **Visual-theme** (WCP components): `default | brand | inverse` — for banners, callouts, promo components
+- ✅ **Status/sentiment** (data display): `success | warning | error | info | neutral` — for Tag, Alert, Badge
+- ✅ Always use a string union type — never an enum
+- ✅ Always include a `default` fallback and make the prop optional
+- ✅ Map variant classes with `styles[variant]` — never switch/if chains
+- ❌ NEVER apply action-intent names (`primary/secondary`) to visual-theme components
+- ❌ NEVER apply visual-theme names (`brand/inverse`) to action components
+
+**`primary-alt` — Walmart+ Membership Button**:
+- Use `variant="primary-alt"` on the `Button` component for ALL Walmart+ membership CTAs
+- Gold (Spark-100 `#ffc220`) fill with dark navy (Blue-160 `#001e60`) text
+- Uses semantic tokens: `--ld-semantic-color-action-fill-primary-alt` and `--ld-semantic-color-action-text-on-fill-primary-alt`
+- Same sizes as `primary`: small, medium, large
+- Disabled state: gray-50 fill, white text (same pattern as other variants)
+
+---
+
+### 22. Theme Compliance for New Components and Pages
+**File**: `RULE_ThemeCompliance.mdc`
+
+**When**: BEFORE marking any new component or page as complete
+
+**Key Requirements**:
+- ✅ EVERY new component and page MUST pass a theme compliance check before it is considered done
+- ✅ ALWAYS use `--ld-semantic-*` tokens in component CSS — never primitive tokens or hardcoded hex values
+- ✅ Primitive tokens (`--ld-primitive-color-*`) are FORBIDDEN in component CSS files
+- ✅ Spacing, font size, border-radius MUST use token vars — never hardcoded px values
+- ✅ Theme-specific visual differences belong in `public/styles/themes/THEME_NAME/semantic.css` — never in the component
+- ✅ Run the automated detection grep commands before completing component work
+- ❌ NEVER hardcode hex colors, even as a "default" — always use `var(--token, fallback)`
+- ❌ NEVER reference `--ld-primitive-color-*` directly in component or page CSS
+
+**Quick Check**:
+```css
+/* ❌ WRONG — breaks theming */
+.nav { background: var(--ld-primitive-color-blue-10, #E9F1FE); color: #002E99; }
+
+/* ✅ CORRECT — themes automatically */
+.nav {
+  background: var(--ld-semantic-color-fill-brand-subtle, #E9F1FE);
+  color: var(--ld-semantic-color-text-brand-bold, #002E99);
+}
+```
+
+**Pre-Completion Checklist**:
+1. Switch to Bodega (green) theme — verify brand colors are green, not blue
+2. Switch to Walmart Legacy theme — verify correct rendering
+3. Run grep for `#[0-9a-fA-F]{6}` in component CSS — must return 0 results
+4. Run grep for `ld-primitive-color-` in component CSS — must return 0 results
+
+---
+
+### 25. Component Creation Process
+**File**: `RULE_ComponentCreation.mdc`
+
+**When**: Creating ANY new UI component (LD primitive or WCP product-level)
+
+**Key Requirements**:
+- ✅ ALWAYS search existing components before creating new ones (Priority: Reuse > Adapt > Create)
+- ✅ Named exports only — never `export default` for components
+- ✅ String union types for variants — never enums
+- ✅ CSS modules with semantic tokens only — zero hardcoded hex
+- ✅ Responsive breakpoints (1024/768/480) and `prefers-reduced-motion` for animations
+- ✅ Post-creation: component library page + route + sidebar + i18n + sandbox entry + theme compliance
+- ❌ NEVER create a component without completing the post-creation checklist
+
+---
+
+### 26. Component Enhancement
+**File**: `RULE_ComponentEnhancement.mdc`
+
+**When**: Modifying or extending an existing component
+
+**Key Requirements**:
+- ✅ All changes MUST be additive — never remove or rename props/variants
+- ✅ New props MUST be optional with defaults
+- ✅ Update component library page to show new variants
+- ✅ Run theme compliance check after changes
+- ❌ NEVER modify LD components in `client/components/ui/` directly — create wrappers instead
+- ❌ NEVER change default values or rename variant strings
+
+---
+
+### 27. Component Library Page
+**File**: `RULE_ComponentLibraryPage.mdc`
+
+**When**: Creating documentation for any component
+
+**Key Requirements**:
+- ✅ MUST use `ComponentPageLayout` wrapper
+- ✅ MUST include interactive demo, all variants/states, and usage notes
+- ✅ Similar components MUST be grouped on a single page
+- ✅ MUST register: route in App.tsx, sidebar in ComponentLibraryLayout.tsx, i18n keys in all 3 locales
+- ❌ NEVER create a standalone page for a variant that belongs on an existing grouped page
+
+---
+
+### 24. Item Tile Components
+**File**: `RULE_ItemTile.mdc`
+
+**When**: Creating any compact product tile in a grid or carousel
+
+**Key Requirements**:
+- ✅ ALWAYS use `WCPItemTile` from `@/components/walmart/WCPItemTile` — never build custom product tiles
+- ✅ ALWAYS use `ItemTileBadgeType` for badges — only `bestseller`, `deal`, `popular`, `rollback`
+- ✅ ALWAYS use `WCPHeartView` with `size="small"` and `calloutPosition="top"` inside tiles
+- ✅ ALWAYS source images from `PRODUCT_IMAGES` constant — never placeholder URLs
+- ✅ Parent grid MUST use `grid-auto-rows: 1fr` for consistent tile height
+- ✅ Two price variants only: default (black) and savings (green with `pricePrefix`)
+- ❌ NEVER hardcode price colors — `.priceRowSavings` handles green via token
+- ❌ NEVER set fixed pixel height on tiles — let the grid equalize them
+- ❌ NEVER use images with baked-in UI overlays (hearts, badges)
+
+**Quick Check**:
+```tsx
+// ❌ WRONG — custom tile
+<div className="myTile">
+  <img src={url} />
+  <span style={{ color: '#2a8703' }}>${price}</span>
+</div>
+
+// ✅ CORRECT — standard component
+<WCPItemTile
+  image={PRODUCT_IMAGES.airFryer}
+  name="Ninja 4 Qt Air Fryer"
+  price="98"
+  cents="00"
+  badge={{ label: 'Best seller', type: 'bestseller' }}
+/>
+```
+
+**Component Spec**: `guidelines/components/ItemTile.md`
+
+---
+
+### 21. Walmart Page Composition
+**File**: `RULE_WalmartPageComposition.mdc`
+
+**When**: Building any Walmart-facing page (`/walmart/*`)
+
+**Key Requirements**:
+- ✅ Page files MUST NOT render shell components (`DesktopHeader`, `MobileTopNav`, `SubNav`, `BottomNav`) — the layout provides them
+- ✅ Standard stacking order: Hero → Promotional rows → Section headers → Content grids → Inline ad banners
+- ✅ Full-bleed sections (hero, carousels): `width: 100%; overflow: hidden` — no `max-width`
+- ✅ Padded content sections: `24px 32px` → `20px 24px` → `16px` → `12px` across breakpoints
+- ❌ NEVER add `max-width` or `margin: 0 auto` to full-bleed sections or `BottomNav`
+
+---
+
+### 14. Purchase History Prompt-Driven Card Patterns
+**File**: `RULE_PurchaseHistoryCardPatterns.mdc`
+
+**When**: User mentions any card pattern on the Purchase History page
+
+**Key Requirements**:
+- ✅ IMMEDIATELY add the card's JSX directly below `<ReviewPromptBanner>` — no flags, no confirmation
+- ✅ ALWAYS wrap the inserted card in `<div className={styles.newCard}>` for the green glow animation
+- ✅ Match on the **exact prompt text** from `OrderCardPatterns.tsx` OR keyword aliases
+- ✅ Define card data as a named constant near the top of `PurchaseHistory.tsx`
+- ✅ When a new pattern is added to `OrderCardPatterns.tsx`, add a row to the mapping table in `RULE_PurchaseHistoryCardPatterns.mdc`
+- ❌ NEVER use boolean flags to show/hide these cards
+
+| Exact prompt (from OrderCardPatterns.tsx) | Component |
+|---|---|
+| "Show a combined card pairing a same-day oil change with a curbside pickup…" | `<CombinedOrderCard>` |
+| "Show a scheduled oil change appointment card with Check in, Reschedule…" | `<AutoCareOrderCard>` |
+| "Show an active curbside order with a countdown to edit and a 'Get it now' button…" | `<CurbsideOrderCard>` |
+| "Show a delayed delivery warning card with options to reschedule, switch to pickup…" | `<DelayedDeliveryCard>` |
+
+---
+
+### 13. Prompt-Driven Design Generation
+**File**: `RULE_PromptDrivenDesign.mdc`
+
+**When**: Writing any design prompt OR implementing a design from a text prompt
+
+**Key Requirements**:
+- ✅ Prompts must answer: What, Who, What it contains, How it fits
+- ✅ Always name states (loading, empty, error) in the prompt
+- ✅ Use semantic role descriptions for color (never hex values in prompts)
+- ✅ Reference existing components by name to anchor the design
+- ✅ AI agents must read existing files before touching any code
+- ✅ Use existing icons (303 available) — never create new icons unless explicitly asked
+- ❌ NEVER create a new component without searching existing ones first
+- ❌ NEVER specify hex values in prompts — describe the semantic role instead
+
+**Quick Check**:
+```
+// Wrong prompt
+"make the eyebrow #001e60 with font-size 14px"
+
+// Correct prompt
+"make the eyebrow use brand-bold text color, body-small size"
+```
+
+**Prompt Templates**: New Page, New Card, New Nav Section, New Banner — all in the rule file.
+
+---
+
+## Design System Resources
+
+### Token Documentation
+- **Primitive tokens**: `styles/primitive.css` (364 lines)
+- **Semantic tokens**: `styles/semantic.css` (648 lines)
+- **Token guide**: `DesignTokens.md` (776 lines)
+
+### Component Documentation
+- **Button**: `Button.md`
+- **Badge**: `Badge.md`
+- **Card**: `Card.md`
+- **Tag**: `Tag.md`
+- **Complete list**: 30+ component guides in `guidelines/`
+
+### Visual Reference
+- **Component Library**: `/component-library`
+- **Sections**: Icons, Buttons, Badges, Breadcrumbs, Links, Icon Buttons, Cards
+
+---
+
+## Common Violations to Avoid
+
+### ❌ Violation #1: Hard-Coded Colors
+```css
+/* WRONG */
+.element { background: #0053e2; color: white; }
+
+/* CORRECT */
+.element { 
+  background: var(--ld-semantic-color-action-fill-primary);
+  color: var(--ld-semantic-color-action-text-on-fill-primary);
+}
+```
+
+### ❌ Violation #2: Duplicate Icons
+```tsx
+/* WRONG */
+// Creating UserIcon.tsx when User.tsx exists
+
+/* CORRECT */
+import { User } from '@/components/icons';
+```
+
+### ❌ Violation #3: Custom Buttons
+```tsx
+/* WRONG */
+<button className="bg-blue-500 px-4 py-2 rounded-full">Click</button>
+
+/* CORRECT */
+import { Button } from '@/components/ui/Button';
+<Button variant="primary">Click</Button>
+```
+
+### ❌ Violation #4: New Tokens
+```css
+/* WRONG */
+:root {
+  --my-custom-color: #1a73e8;
+}
+
+/* CORRECT */
+/* Use existing tokens - they are comprehensive */
+```
+
+---
+
+## Pre-Implementation Checklist
+
+Before creating ANY new component, icon, or design:
+
+- [ ] Searched existing components in `client/components/ui/`
+- [ ] Searched all 303 icons at `/component-library#icons`
+- [ ] Checked relevant guideline docs in `guidelines/`
+- [ ] Verified no duplicates exist
+- [ ] Confirmed using semantic design tokens only
+- [ ] All interactive states included (hover, focus, active, disabled)
+- [ ] Follows LD 3.5 specifications
+
+---
+
+## Quick Links
+
+| Resource | Location |
+|----------|----------|
+| Component API Reference | `guidelines/design-system/ComponentReference.md` |
+| Design System Enforcement | `guidelines/rules/RULE_DesignSystemEnforcement.mdc` |
+| Icon Usage Rule | `guidelines/rules/RULE_IconUsage.mdc` |
+| Token Documentation | `guidelines/design-system/DesignTokens.md` |
+| Component Library | `/component-library` |
+| Icon Library (303 icons) | `/component-library#icons` |
+| Primitive Tokens | `styles/primitive.css` |
+| Semantic Tokens | `styles/semantic.css` |
+| Component Guidelines | `guidelines/components/` (40+ files) |
+
+---
+
+## Workflow for New Designs
+
+### From Builder.io Plugin
+
+1. **Analyze** imported Figma design
+2. **Map** colors → existing semantic tokens
+3. **Map** icons → existing icon library (303 icons)
+4. **Map** components → existing LD 3.5 components
+5. **Generate** code using ONLY existing tokens and components
+6. **Verify** no hard-coded values or duplicates
+7. **Add** all interactive states
+
+### From AI Generation
+
+1. **Identify** design requirements
+2. **Search** existing components and icons first
+3. **Reuse** existing patterns and tokens
+4. **Follow** LD 3.5 specifications exactly
+5. **Validate** against rules before finalizing
+
+---
+
+## Success Criteria
+
+Code is ready when:
+
+- ✅ Zero hard-coded color values
+- ✅ Zero hard-coded spacing values
+- ✅ Zero new tokens created
+- ✅ Zero duplicate components
+- ✅ Zero duplicate icons
+- ✅ All colors use semantic tokens
+- ✅ All icons from existing library
+- ✅ All interactive states included
+- ✅ Follows LD 3.5 specifications
+
+---
+
+**ENFORCEMENT LEVEL**: CRITICAL - NO EXCEPTIONS
+
+All rules are mandatory. Code reviews MUST reject any violations.

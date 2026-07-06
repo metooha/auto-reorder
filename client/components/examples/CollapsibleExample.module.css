@@ -1,0 +1,122 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+/* ─── Section ─── */
+.sectionTitle {
+  font-size: 20px;
+  font-weight: 700;
+  font-family: var(--ld-semantic-font-family-sans);
+  color: var(--ld-semantic-color-text-primary);
+  margin: 0 0 8px;
+}
+
+.sectionDesc {
+  font-size: 14px;
+  color: var(--ld-semantic-color-text-secondary);
+  font-family: var(--ld-semantic-font-family-sans);
+  margin: 0 0 16px;
+}
+
+/* ─── Basic collapsible ─── */
+.collapsibleContainer {
+  max-width: 600px;
+}
+
+.collapsibleHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border: 1px solid var(--ld-semantic-color-border-subtle);
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.collapsibleHeading {
+  font-weight: 600;
+  font-size: 15px;
+  font-family: var(--ld-semantic-font-family-sans);
+  color: var(--ld-semantic-color-text-primary);
+  margin: 0;
+}
+
+.collapsibleItem {
+  padding: 16px;
+  border: 1px solid var(--ld-semantic-color-border-subtle);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  background-color: var(--ld-semantic-color-surface, #ffffff);
+}
+
+.itemName {
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--ld-semantic-font-family-sans);
+  color: var(--ld-semantic-color-text-primary);
+  margin: 0;
+}
+
+.itemDetail {
+  font-size: 12px;
+  color: var(--ld-semantic-color-text-secondary);
+  font-family: var(--ld-semantic-font-family-sans);
+  margin: 4px 0 0;
+}
+
+/* ─── Example list rows ─── */
+.exampleList {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px;
+  border: 1px solid var(--ld-semantic-color-border-subtle);
+  border-radius: 8px;
+  background-color: var(--ld-semantic-color-surface, #ffffff);
+}
+
+/* ─── Shared text base (always applied) ─── */
+.expandableText {
+  font-size: 15px;
+  line-height: 1.5;
+  font-family: var(--ld-semantic-font-family-sans);
+  color: var(--ld-semantic-color-text-primary);
+  margin: 0 0 4px;
+}
+
+/* ─── Inline variant ─── */
+.inlineText {
+  /* inherits .expandableText */
+}
+
+/* Applied only when collapsed */
+.inlineClamped {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  position: relative;
+}
+
+/* The "… Show more" floats to the right on the last visible line */
+.inlineMore {
+  float: right;
+  clear: both;
+  margin-top: -1.5em;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--ld-semantic-color-surface, #ffffff) 20%
+  );
+  padding-left: 24px;
+  white-space: nowrap;
+}
+
+/* ─── Block variant ─── */
+/* Applied only when collapsed — base styles come from .expandableText */
+.blockClamped {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

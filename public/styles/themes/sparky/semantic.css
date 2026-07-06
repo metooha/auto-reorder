@@ -1,0 +1,61 @@
+/**
+ * Sparky Theme (Internal Tools)
+ * Generated from LivingDesign Airtable Sync + LD Base
+ *
+ * INHERITANCE: LD Base → WCP → Sparky
+ * Inherits WCP commerce tokens and Customer persona
+ *
+ * Dark navy brand with cyan backgrounds
+ * Used for internal tools and platforms
+ */
+
+:root {
+  /* Sparky brand colors - DARK NAVY (#001e60) */
+  --ld-semantic-color-action-fill-primary: var(--ld-primitive-color-blue-160, #001e60);
+  --ld-semantic-color-action-fill-primary-focused: var(--ld-primitive-color-blue-170, #080042);
+  --ld-semantic-color-action-fill-primary-hovered: var(--ld-primitive-color-blue-170, #080042);
+  --ld-semantic-color-action-fill-primary-pressed: var(--ld-primitive-color-blue-180, #0e002e);
+
+  --ld-semantic-color-text-brand: var(--ld-primitive-color-blue-100, #0053e2);
+  --ld-semantic-color-border-brand: var(--ld-primitive-color-blue-160, #001e60);
+  --ld-semantic-color-border-activated: var(--ld-primitive-color-blue-160, #001e60);
+
+  /* Top navigation — dark navy */
+  --ld-semantic-color-top-nav-fill: var(--ld-primitive-color-blue-160, #001e60);
+
+  /* Focus outline — dark navy */
+  --ld-semantic-color-action-focus-outline: var(--ld-primitive-color-blue-160, #001e60);
+
+  /* Brand fills — dark navy with cyan subtle */
+  --ld-semantic-color-fill-brand: var(--ld-primitive-color-blue-160, #001e60);
+  --ld-semantic-color-fill-brand-bold: var(--ld-primitive-color-blue-180, #0e002e);
+  --ld-semantic-color-fill-brand-subtle: var(--ld-primitive-color-cyan-10, #e7f6fe);
+
+  /* Text on brand-subtle — cyan toned */
+  --ld-semantic-color-text-on-fill-brand-subtle: var(--ld-primitive-color-cyan-130, #004a70);
+
+  /* Subtle cyan backgrounds (Sparky distinctive style) */
+  --ld-semantic-color-background-subtle: var(--ld-primitive-color-cyan-10, #e7f6fe);
+  --ld-semantic-color-fill-subtle: var(--ld-primitive-color-cyan-10, #e7f6fe);
+  --ld-semantic-color-background-inverse: var(--ld-primitive-color-blue-170, #080042);
+
+  /* ── Side Navigation / Page Nav — navy active highlights + cyan hover ───── */
+  --ld-semantic-color-page-nav-fill-hovered: var(--ld-primitive-color-cyan-5, #f0faff);
+  --ld-semantic-color-page-nav-fill-focused: var(--ld-primitive-color-cyan-5, #f0faff);
+  --ld-semantic-color-page-nav-fill-pressed: var(--ld-primitive-color-cyan-10, #e7f6fe);
+  --ld-semantic-color-page-nav-fill-activated: var(--ld-primitive-color-cyan-5, #f0faff);
+  --ld-semantic-color-page-nav-fill-activated-hovered: var(--ld-primitive-color-cyan-10, #e7f6fe);
+  --ld-semantic-color-page-nav-fill-activated-focused: var(--ld-primitive-color-cyan-10, #e7f6fe);
+  --ld-semantic-color-page-nav-fill-activated-pressed: var(--ld-primitive-color-cyan-20, #c3eafc);
+
+  /* Active indicator bar — dark navy */
+  --ld-semantic-color-page-nav-indicator-hovered: var(--ld-primitive-color-cyan-20, #c3eafc);
+  --ld-semantic-color-page-nav-indicator-focused: var(--ld-primitive-color-cyan-20, #c3eafc);
+  --ld-semantic-color-page-nav-indicator-pressed: var(--ld-primitive-color-cyan-30, #9adaf9);
+  --ld-semantic-color-page-nav-indicator-activated: var(--ld-primitive-color-blue-160, #001e60);
+  --ld-semantic-color-page-nav-indicator-activated-hovered: var(--ld-primitive-color-blue-160, #001e60);
+  --ld-semantic-color-page-nav-indicator-activated-focused: var(--ld-primitive-color-blue-160, #001e60);
+  --ld-semantic-color-page-nav-indicator-activated-pressed: var(--ld-primitive-color-blue-170, #080042);
+
+  /* Inherits WCP commerce tokens and all LD Base tokens */
+}

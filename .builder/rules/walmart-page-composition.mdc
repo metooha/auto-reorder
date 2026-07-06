@@ -1,0 +1,242 @@
+---
+description: Walmart Page Composition
+globs:
+alwaysApply: false
+---
+
+## Purpose
+
+Walmart-facing pages (`/walmart/*`) follow specific layout and component stacking conventions. This rule documents the expected composition order, what the shell already provides, and layout constraints that apply to full-bleed vs content sections.
+
+---
+
+## Page Max-Width (HARD RULE — NO EXCEPTIONS)
+
+All Walmart pages MUST have a max-width of **1660px** with **no left/right padding** on the `contentContainer`. This is enforced by `ResponsiveLayout` via its CSS module.
+
+- `maxWidthFull` and `maxWidth2xl` both resolve to `1660px`
+- The `contentContainer` has **zero** `padding-left` / `padding-right` — individual sections handle their own internal padding
+- Pages pass `maxWidth="full"` to `<ResponsiveLayout>` — this caps at 1660px and centers with `margin: 0 auto`
+- Page-level wrappers (the first `<div>` inside `<ResponsiveLayout>`) must NOT add `px-*` Tailwind classes or CSS `padding-left`/`padding-right`
+
+```css
+/* ✅ CORRECT — ResponsiveLayout handles max-width, no side padding */
+.contentContainer {
+  max-width: 1660px;
+  margin-left: auto;
+  margin-right: auto;
+  /* NO padding-left or padding-right */
+}
+
+/* ❌ WRONG — adding side padding at page wrapper level */
+<div className="px-4 pt-6 pb-32"> /* px-4 adds unwanted side padding */
+```
+
+Individual sections within the page handle their own horizontal padding as needed.
+
+---
+
+## What the Shell Already Provides
+
+Walmart pages are rendered inside a layout shell that already includes:
+
+- `DesktopHeader` — top navigation bar (desktop)
+- `MobileTopNav` — top navigation bar (mobile)
+- `SubNav` — secondary navigation strip (desktop)
+- `BottomNav` — bottom tab bar (mobile)
+
+**Page files (`client/pages/walmart/*.tsx`) must NOT render these shell components.** They are injected by the layout wrapper. Only render the page-specific content sections.
+
+---
+
+## Standard Component Stacking Order
+
+When building a Walmart page, stack sections in this order (top to bottom):
+
+```
+1. Hero / Banner (full-bleed, no horizontal padding)
+2. Promotional rows (JumpRightBackIn, NewArrivalsCarousel, Featured categories)
+3. Section headers with optional "See all" link
+4. Content grids (product tiles, order cards, review prompts)
+5. Inline ad banners between content sections
+6. Footer content (if any — rare on Walmart pages)
+```
+
+Not every page needs every section. Omit sections that aren't part of the design.
+
+---
+
+## Full-Bleed vs Padded Content
+
+### Full-bleed elements (no horizontal padding)
+
+Elements that span the full viewport width:
+- Hero banners
+- Auto-advance carousels (full-width slides)
+- `BottomNav` (already in shell — do not constrain)
+
+```css
+/* ✅ CORRECT — full-bleed section */
+.heroSection {
+  width: 100%;
+  overflow: hidden; /* contain absolutely-positioned children */
+}
+```
+
+Never add custom `max-width` or `margin: 0 auto` to full-bleed sections. The 1660px cap is handled by `ResponsiveLayout` — do not override it.
+
+### Padded content sections
+
+All content sections below the hero use standard responsive padding:
+
+```css
+.section {
+  padding: 24px 32px;
+}
+
+@media (max-width: 1024px) {
+  .section { padding: 20px 24px; }
+}
+
+@media (max-width: 768px) {
+  .section { padding: 16px 16px; }
+}
+
+@media (max-width: 480px) {
+  .section { padding: 12px 12px; }
+}
+```
+
+---
+
+## Section Header Pattern
+
+Section headers with a "See all" link follow this layout:
+
+```tsx
+<div className={styles.sectionHeader}>
+  <h2 className={styles.sectionTitle}>{t('section.title')}</h2>
+  <Link href="/path">{t('section.seeAll')}</Link>
+</div>
+```
+
+```css
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--ld-primitive-scale-space-300, 12px);
+}
+
+.sectionTitle {
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: var(--ld-semantic-font-heading-small-size);
+  font-weight: var(--ld-semantic-font-heading-small-weight);
+  color: var(--ld-semantic-color-text);
+  margin: 0;
+}
+```
+
+---
+
+## BottomNav Constraints
+
+`BottomNav` is provided by the shell and is always full-width. Never:
+- Add `max-width` to `BottomNav`
+- Add `margin: 0 auto` to `BottomNav`
+- Wrap `BottomNav` in a constrained container
+
+The shell positions `BottomNav` at the bottom of the viewport automatically. Page files do not need to handle its positioning.
+
+---
+
+## Page File Template
+
+```tsx
+// client/pages/walmart/MyPage.tsx
+
+import styles from './myPage.module.css';
+import { HeroBanner } from '@/components/walmart/HeroBanner';
+import { NewArrivalsCarousel } from '@/components/walmart/NewArrivalsCarousel';
+
+export default function MyPage() {
+  return (
+    <div className={styles.page}>
+      {/* 1. Hero — full-bleed */}
+      <section className={styles.hero}>
+        <HeroBanner />
+      </section>
+
+      {/* 2. Promotional row */}
+      <section className={styles.section}>
+        <div className={styles.sectionHeader}>
+          <h2 className={styles.sectionTitle}>New arrivals</h2>
+        </div>
+        <NewArrivalsCarousel />
+      </section>
+
+      {/* 3. Content grid */}
+      <section className={styles.section}>
+        ...
+      </section>
+    </div>
+  );
+}
+```
+
+```css
+/* myPage.module.css */
+.page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero {
+  width: 100%;
+  overflow: hidden;
+}
+
+.section {
+  padding: 24px 32px;
+}
+
+@media (max-width: 768px) {
+  .section { padding: 16px; }
+}
+```
+
+---
+
+## Common Violations
+
+```tsx
+// ❌ WRONG — rendering shell components that are already provided
+export default function MyPage() {
+  return (
+    <>
+      <DesktopHeader />   {/* Already in shell — remove this */}
+      <BottomNav />       {/* Already in shell — remove this */}
+      <div>Page content</div>
+    </>
+  );
+}
+
+// ❌ WRONG — constraining full-bleed content
+.heroBanner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+// ❌ WRONG — constraining BottomNav
+.bottomNavWrapper {
+  max-width: 480px;
+  margin: 0 auto;
+}
+```
+
+---
+
+## Enforcement Level
+
+**MEDIUM** — Shell component duplication creates visual glitches (double headers, double nav bars). Full-bleed constraint violations break the page layout on wide viewports. Both are caught in visual review.

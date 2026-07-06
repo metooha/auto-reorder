@@ -1,0 +1,66 @@
+import styles from './DesktopFooter.module.css';
+import { Button } from '@/components/ui/Button';
+
+const PrivacyIcon = () => (
+  <svg width="28" height="12" viewBox="0 0 28 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className={styles.privacyIcon}>
+    <g clipPath="url(#clip0_footer_privacy)">
+      <rect width="28" height="12" rx="6" fill="white" />
+      <path d="M16 0H28V12H12.5L16 0Z" fill="#002E99" />
+      <path d="M23.8525 3.14749C23.6561 2.9511 23.3363 2.95058 23.1394 3.14749L20.9999 5.28692L18.8604 3.14749C18.664 2.9511 18.3442 2.95058 18.1473 3.14749C18.0526 3.24216 18.0027 3.36443 18.0002 3.48957C17.9967 3.62398 18.0456 3.75895 18.1473 3.86063L20.2867 6.00006L18.1473 8.13949C18.0488 8.23799 18 8.36757 18.0009 8.49758C18.0005 8.62612 18.0498 8.75513 18.1473 8.85263C18.3437 9.04903 18.6635 9.04955 18.8604 8.85263L20.9999 6.7132L23.1394 8.85263C23.3357 9.04903 23.6556 9.04955 23.8525 8.85263C24.0494 8.65572 24.0489 8.33588 23.8525 8.13949L21.713 6.00006L23.8525 3.86063C24.0494 3.66372 24.0489 3.34388 23.8525 3.14749Z" fill="white" />
+      <path fillRule="evenodd" clipRule="evenodd" d="M11.0622 3.23732C11.272 3.41687 11.2965 3.7325 11.1169 3.9423L7.03881 8.70756C6.94932 8.81214 6.82067 8.87519 6.68318 8.88187C6.5457 8.88855 6.41155 8.83825 6.31234 8.74284L4.15341 6.66647C3.95437 6.47505 3.9482 6.15853 4.13962 5.95949C4.33104 5.76046 4.64756 5.75429 4.8466 5.94571L6.6236 7.65476L10.3572 3.29209C10.5367 3.08229 10.8524 3.05777 11.0622 3.23732Z" fill="#002E99" />
+    </g>
+    <rect x="0.5" y="0.5" width="27" height="11" rx="5.5" stroke="white" />
+    <defs>
+      <clipPath id="clip0_footer_privacy">
+        <rect width="28" height="12" rx="6" fill="white" />
+      </clipPath>
+    </defs>
+  </svg>
+);
+
+export function DesktopFooter() {
+  return (
+    <footer className={styles.footer}>
+      {/* Feedback Section */}
+      <div className={styles.feedbackSection}>
+        <div className={styles.feedbackContent}>
+          <p className={styles.feedbackText}>We'd love to hear what you think!</p>
+          <Button variant="secondary" size="medium">Give feedback</Button>
+        </div>
+        <div className={styles.feedbackDivider} />
+      </div>
+
+      {/* Blue Links Section */}
+      <div className={styles.linksSection}>
+        <nav className={styles.linksContainer} aria-label="Footer navigation">
+          <a href="#" className={styles.footerLink}>All departments</a>
+          <a href="#" className={styles.footerLink}>Store directory</a>
+          <a href="#" className={styles.footerLink}>Careers</a>
+          <a href="#" className={styles.footerLink}>Our company</a>
+          <a href="#" className={styles.footerLink}>Sell on Walmart.com</a>
+          <a href="#" className={styles.footerLink}>Help</a>
+          <a href="#" className={styles.footerLink}>COVID-19 vaccines scheduler</a>
+          <a href="#" className={styles.footerLink}>Product recalls</a>
+          <a href="#" className={styles.footerLink}>Accessibility</a>
+          <a href="#" className={styles.footerLink}>Tax exempt program</a>
+          <a href="#" className={styles.footerLink}>Get the Walmart App</a>
+          <a href="#" className={styles.footerLink}>Sign up for email</a>
+          <a href="#" className={styles.footerLink}>Safety data sheet</a>
+          <a href="#" className={styles.footerLink}>Terms of use</a>
+          <a href="#" className={styles.footerLink}>Privacy &amp; security</a>
+          <a href="#" className={styles.footerLink}>California Supply Chain Act</a>
+          <a href="#" className={styles.privacyChoicesLink}>
+            <PrivacyIcon />
+            <span>Your privacy choices</span>
+          </a>
+          <a href="#" className={styles.footerLink}>Notice at collection</a>
+          <a href="#" className={styles.footerLink}>Request my personal information</a>
+          <a href="#" className={styles.footerLink}>Brand shop directory</a>
+          <a href="#" className={styles.footerLink}>#IYWYK</a>
+        </nav>
+
+        <p className={styles.copyright}>©2023 Walmart. All rights reserved.</p>
+      </div>
+    </footer>
+  );
+}

@@ -1,0 +1,50 @@
+/* TimeSelector — radio-style time slot list */
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+/* ── Row (each time slot) ── */
+.row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 8px 16px;
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: background 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+}
+
+/* Unselected */
+.rowUnchecked {
+  background: var(--ld-semantic-color-surface, #ffffff);
+  border-color: var(--ld-semantic-color-border-strong, #72757a);
+}
+
+.rowUnchecked:hover:not(.rowDisabled) {
+  background: var(--ld-semantic-color-surface-hovered, #f5f5f5);
+  border-color: var(--ld-semantic-color-action-border-primary, #0071dc);
+}
+
+/* Selected */
+.rowChecked {
+  background: var(--ld-semantic-color-surface, #ffffff);
+  border-color: var(--ld-semantic-color-action-border-primary, #0071dc);
+  box-shadow: 0 0 0 0.5px var(--ld-semantic-color-action-border-primary, #0071dc);
+}
+
+/* Selected label → bold */
+.rowChecked [data-radio-label] {
+  font-weight: var(--ld-semantic-font-body-medium-weight-alt, 700);
+}
+
+/* Disabled */
+.rowDisabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}

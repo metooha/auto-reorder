@@ -1,0 +1,153 @@
+import React from 'react';
+import styles from './SideNavigation.module.css';
+
+/**
+ * Props for SideNavigation container component
+ */
+export interface SideNavigationProps extends Omit<React.ComponentPropsWithoutRef<'nav'>, 'className' | 'style'> {
+  /**
+   * The navigation items (should be SideNavigationItem components)
+   */
+  children: React.ReactNode;
+  
+  /**
+   * ARIA label for the navigation
+   */
+  'aria-label'?: string;
+}
+
+/**
+ * Props for SideNavigationItem component
+ */
+export interface SideNavigationItemProps {
+  /**
+   * The content/label for the navigation item
+   */
+  children: React.ReactNode;
+  
+  /**
+   * The URL to navigate to
+   */
+  href: string;
+  
+  /**
+   * Whether this item represents the current page
+   * Adds aria-current="page" for accessibility
+   * @default false
+   */
+  isCurrent?: boolean;
+  
+  /**
+   * Leading content (typically an icon)
+   */
+  leading?: React.ReactNode;
+  
+  /**
+   * Click handler for the item (for analytics or client-side routing)
+   */
+  onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+  
+  /**
+   * Link target (e.g., "_blank" for external links)
+   */
+  target?: string;
+  
+  /**
+   * Relationship to the linked resource (e.g., "noopener noreferrer")
+   */
+  rel?: string;
+}
+
+/**
+ * SideNavigation - A vertical page navigation component for Living Design 3.5
+ * 
+ * Used for primary navigation in multi-page apps and dashboards. Items are 
+ * grouped together based on related content or categories.
+ * 
+ * @example
+ * ```tsx
+ * <SideNavigation aria-label="Main navigation">
+ *   <SideNavigationItem href="/home" isCurrent>
+ *     Home
+ *   </SideNavigationItem>
+ *   <SideNavigationItem href="/campaigns">
+ *     Campaigns
+ *   </SideNavigationItem>
+ * </SideNavigation>
+ * ```
+ */
+export const SideNavigation = React.forwardRef<HTMLElement, SideNavigationProps>(
+  ({ children, 'aria-label': ariaLabel, ...props }, ref) => {
+    return (
+      <nav
+        ref={ref}
+        aria-label={ariaLabel}
+        {...props}
+      >
+        <ul className={styles.sideNavigation}>
+          {React.Children.map(children, (child, index) => (
+            <li key={index}>
+              {child}
+            </li>
+          ))}
+        </ul>
+      </nav>
+    );
+  }
+);
+
+SideNavigation.displayName = 'SideNavigation';
+
+/**
+ * SideNavigationItem - An individual navigation link within a SideNavigation
+ * 
+ * Renders as an anchor element with proper interactive states (hover, focus, pressed, current).
+ * Use the `isCurrent` prop to indicate the currently active page.
+ * 
+ * The current item displays a 4px blue indicator bar on the left side.
+ * 
+ * @example
+ * ```tsx
+ * <SideNavigationItem 
+ *   href="/campaigns" 
+ *   isCurrent
+ *   leading={<CampaignIcon />}
+ * >
+ *   Campaigns
+ * </SideNavigationItem>
+ * ```
+ */
+export const SideNavigationItem = React.forwardRef<HTMLAnchorElement, SideNavigationItemProps>(
+  ({ children, href, isCurrent = false, leading, onClick, target, rel, ...props }, ref) => {
+    const className = [
+      styles.sideNavigationItem,
+      isCurrent && styles['sideNavigationItem--current'],
+    ]
+      .filter(Boolean)
+      .join(' ');
+
+    return (
+      <a
+        ref={ref}
+        href={href}
+        className={className}
+        onClick={onClick}
+        aria-current={isCurrent ? 'page' : undefined}
+        target={target}
+        rel={rel}
+        {...props}
+      >
+        {leading && (
+          <span className={styles.sideNavigationItem__leading}>
+            {leading}
+          </span>
+        )}
+        <span className={styles.sideNavigationItem__content}>
+          {children}
+        </span>
+      </a>
+    );
+  }
+);
+
+SideNavigationItem.displayName = 'SideNavigationItem';

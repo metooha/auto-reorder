@@ -1,0 +1,90 @@
+---
+description: Figma Image Extraction — Hard Rule
+globs:
+alwaysApply: true
+---
+
+## Purpose
+This rule ensures that every image present in a Figma design is extracted and used in the code. No image visible in the Figma file may be replaced with a gray box, a placeholder, a generic stock photo, or simply omitted.
+
+## Rule Statement (NO EXCEPTIONS)
+
+> **If an `<img>` tag exists in the Figma HTML export, its `src` URL must appear verbatim in the generated code.**
+
+| Allowed | Not Allowed |
+|---|---|
+| ✅ Use the exact Figma `src` URL (`https://api.builder.io/api/v1/image/assets/TEMP/...`) | ❌ Replace with a gray `<div>` or `background-color` placeholder |
+| ✅ Use every `<img>` found in the Figma HTML regardless of layer name | ❌ Omit images because they seem "decorative" or "non-exportable" |
+| ✅ Use Builder.io TEMP URLs as permanent `src` values | ❌ Substitute with Walmart CDN, Pexels, Unsplash, or any other source |
+| ✅ Preserve exact `width` / `height` / `alt` from the Figma `<img>` | ❌ Use icon components or SVGs in place of raster images |
+
+## Mandatory Extraction Process
+
+When reading any Figma design file (`figma-design.html`), before writing any code:
+
+1. **Scan the full HTML** for every `<img src="...">` occurrence.
+2. **List every unique image URL** found.
+3. **Map each image to its visual context** (which component / card / section it belongs to).
+4. **Verify every URL appears** in the final code output before the task is considered complete.
+
+Missing even one image from the Figma is a **blocking error** that must be corrected.
+
+## Image URL Formats
+
+### Builder.io TEMP URLs (primary Figma export format)
+```
+https://api.builder.io/api/v1/image/assets/TEMP/<hash>?width=<n>
+```
+These are valid, permanent production URLs. Use them as-is in `<img src>`.
+
+### Inline / embedded images
+If the Figma HTML uses `data:image/...` base64 inline images, preserve them exactly.
+
+## Examples
+
+### Correct ✅
+```tsx
+// Figma contained: <img src="https://api.builder.io/api/v1/image/assets/TEMP/abc123?width=160" />
+<img
+  src="https://api.builder.io/api/v1/image/assets/TEMP/abc123?width=160"
+  alt="MarioKart Deluxe"
+  width={80}
+  height={80}
+/>
+```
+
+### Wrong ❌ — gray placeholder
+```tsx
+// Figma contained an image but developer used a gray box instead
+<div style={{ width: 80, height: 80, background: '#F2F2F2' }} />
+```
+
+### Wrong ❌ — wrong source
+```tsx
+// Figma had a builder.io URL but developer swapped in a Walmart CDN image
+<img src="https://i5.walmartimages.com/seo/some-product.jpeg" />
+```
+
+### Wrong ❌ — image omitted
+```tsx
+// Figma had a product image in the CTA card but it was skipped entirely
+<div className={styles.ctaCard}>
+  <p>What'd you think?</p>
+  <Button>Review more items</Button>
+  {/* image was here in Figma — must not be omitted */}
+</div>
+```
+
+## Rationale for Change
+
+The previous rule (only extract "exportable" assets) caused product images, illustrations, and ad banners embedded in Figma designs to be silently dropped or replaced with placeholders. This broke fidelity to the design and required manual fixes every iteration. The new rule eliminates ambiguity: **all images present in Figma designs are production assets and must appear in code**.
+
+## Related Rules
+- [RULE_DesignSystemEnforcement](./RULE_DesignSystemEnforcement.mdc)
+- [RULE_IconUsage](./RULE_IconUsage.mdc)
+
+---
+
+**Last Updated**: 2025-05-27
+**Status**: Active — Hard Rule
+**Applies To**: All Figma design implementations

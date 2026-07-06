@@ -1,0 +1,610 @@
+---
+description: Theme Switcher System
+globs:
+alwaysApply: true
+---
+
+## Purpose
+
+The theme switcher allows dynamic swapping of design token sets across the entire application. Themes modify CSS custom properties at the `:root` level, enabling visual customization without code changes to components.
+
+**Key Features:**
+- 🎨 **Dynamic Theme Switching** - Switch themes without page reload
+- 💾 **Persistent Preference** - Theme choice saved to localStorage
+- 🔄 **No Component Changes** - Components reference semantic tokens that update automatically
+- 📦 **Extensible** - Easy to add new themes following documented procedures
+
+---
+
+## Architecture
+
+### File Structure
+
+```
+styles/themes/
+├── base/                      # Default theme (LD 3.5 + WCP)
+│   ├── primitive.css         # ALL primitive tokens (complete set)
+│   └── semantic.css          # ALL semantic tokens (complete set)
+├── walmart-b2b/              # B2B theme
+│   ├── primitive.css         # OVERRIDES ONLY (empty if no changes)
+│   └── semantic.css          # OVERRIDES ONLY (only changed tokens)
+└── [future-theme]/           # Add new themes here
+    ├── primitive.css         # OVERRIDES ONLY
+    └── semantic.css          # OVERRIDES ONLY
+
+client/contexts/
+├── theme-registry.ts         # Theme metadata and configuration
+└── ThemeContext.tsx          # React context for theme management
+
+client/components/
+└── ThemeSwitcher.tsx         # UI component for theme selection
+```
+
+### Inheritance Model
+
+**Key Principle: Base theme contains ALL tokens. Other themes only override what they change.**
+
+1. **Base Theme (Required)**
+   - Contains complete set of primitive tokens (~200 tokens)
+   - Contains complete set of semantic tokens (~257 tokens including WCP)
+   - Always loaded first
+   - All other themes inherit from this
+
+2. **Override Themes (B2B, Dark Mode, etc.)**
+   - Only contain tokens that differ from base
+   - Inherit all other tokens automatically via CSS cascade
+   - Smaller file sizes (only ~30-50 overrides vs 257+ complete tokens)
+   - Clear documentation of what each theme changes
+
+3. **CSS Loading Order**
+   ```html
+   <!-- Base theme (always loaded) -->
+   <link data-theme-base="primitive" href="/styles/themes/base/primitive.css">
+   <link data-theme-base="semantic" href="/styles/themes/base/semantic.css">
+
+   <!-- Theme overrides (loaded on top, only when theme selected) -->
+   <link data-theme-override="primitive" href="/styles/themes/walmart-b2b/primitive.css">
+   <link data-theme-override="semantic" href="/styles/themes/walmart-b2b/semantic.css">
+   ```
+
+### How It Works
+
+1. **Base Always Loaded**: Base theme CSS is loaded on app initialization
+2. **Inheritance via CSS Cascade**: Non-overridden tokens use base values automatically
+3. **Override Loading**: When switching themes, override CSS files are loaded/removed
+4. **Component Updates**: All components automatically update because they reference semantic tokens
+5. **Persistence**: Theme choice is saved to localStorage as `ld-theme`
+
+### Benefits of Inheritance Model
+
+✅ **Smaller theme files** - B2B theme: 96 lines vs 324 lines (70% reduction)
+✅ **Clear intentions** - Easy to see exactly what each theme changes
+✅ **Easier maintenance** - Update base tokens, all themes inherit automatically
+✅ **No duplication** - Spacing, typography, etc. defined once in base
+✅ **Type safety** - All tokens guaranteed to exist (from base)
+✅ **Faster loading** - Smaller override files download faster
+
+---
+
+## Adding a New Theme
+
+### Step 1: Create Theme Files
+
+Create a new directory under `styles/themes/[theme-name]/`:
+
+```bash
+mkdir -p styles/themes/my-new-theme
+```
+
+Create two files:
+- `primitive.css` - Primitive color scales and base values
+- `semantic.css` - Semantic token mappings for components
+
+**When to modify primitives:**
+- Rarely needed unless introducing entirely new color palettes
+- Most themes only modify semantic tokens
+
+**When to modify semantics:**
+- Most common place for theme customization
+- Override action colors, text colors, surface colors, etc.
+
+---
+
+### Step 2: Define Primitive Tokens (primitive.css)
+
+**INHERITANCE MODEL: Most themes don't need to override primitives!**
+
+The primitive file can be empty or minimal. The base theme primitives will be inherited automatically.
+
+**Option A: Empty File (Recommended for Most Themes)**
+
+```css
+/**
+ * My New Theme - Primitive Token Overrides
+ * Generated on [Date]
+ *
+ * INHERITANCE MODEL:
+ * This theme inherits ALL primitive tokens from base theme
+ * No overrides needed unless introducing entirely new color scales
+ */
+
+:root {
+  /* No primitive overrides - inherits all from base theme */
+}
+```
+
+**Option B: Custom Brand Primitives (Only if needed)**
+
+Only add primitives if you need theme-specific colors not in base:
+
+```css
+:root {
+  /* Add only NEW primitives, don't duplicate base ones */
+  --my-theme-primitive-color-custom-100: #FF6B00;
+  --my-theme-primitive-color-custom-110: #E66200;
+  /* etc. */
+}
+```
+
+**❌ DON'T: Copy entire primitive file from base**
+- Creates duplication
+- Makes maintenance harder
+- Defeats the purpose of inheritance
+
+---
+
+### Step 3: Define Semantic Tokens (semantic.css)
+
+**INHERITANCE MODEL: Only override tokens that differ from base!**
+
+The semantic file should ONLY contain tokens you want to change. All other tokens inherit from base automatically.
+
+**Structure:**
+
+```css
+/**
+ * My New Theme - Semantic Token Overrides
+ * Generated on [Date]
+ *
+ * INHERITANCE MODEL:
+ * This theme inherits ALL tokens from the base theme
+ * Only tokens listed below are overridden for this theme
+ *
+ * Description: [What this theme is for]
+ */
+
+:root {
+  /* ========================================
+     PRIMARY BRAND COLORS - OVERRIDES ONLY
+     ======================================== */
+
+  /* Primary Button - CUSTOMIZE THIS */
+  --ld-semantic-color-action-fill-primary: var(--ld-primitive-color-blue-130, #002e99);
+  --ld-semantic-color-action-fill-primary-hovered: var(--ld-primitive-color-blue-140, #002185);
+  --ld-semantic-color-action-fill-primary-pressed: var(--ld-primitive-color-blue-150, #001270);
+
+  /* Focus States - Should match primary */
+  --ld-semantic-color-action-focus-outline: var(--ld-primitive-color-blue-130, #002e99);
+
+  /* Text Colors - Customize for your brand */
+  --ld-semantic-color-text-brand: var(--ld-primitive-color-blue-130, #002e99);
+  --ld-semantic-color-text-activated: var(--ld-primitive-color-blue-160, #001e60);
+  --ld-semantic-color-text-link: var(--ld-primitive-color-blue-130, #002e99);
+
+  /* Border Colors */
+  --ld-semantic-color-border-activated: var(--ld-primitive-color-blue-160, #001e60);
+  --ld-semantic-color-border-brand-bold: var(--ld-primitive-color-blue-160, #001e60);
+
+  /* Icon Colors */
+  --ld-semantic-color-icon-brand: var(--ld-primitive-color-blue-130, #002e99);
+  --ld-semantic-color-icon-activated: var(--ld-primitive-color-blue-160, #001e60);
+}
+
+/*
+ * ═══════════════════════════════════════════════════
+ * INHERITANCE: All other tokens from base theme
+ * ═══════════════════════════════════════════════════
+ *
+ * The following token categories are INHERITED from base theme.
+ * DO NOT copy them into your theme file!
+ *
+ * ✅ INHERITED (Auto-available):
+ * - Spacing tokens: --ld-semantic-spacing-* (~15 tokens)
+ * - Typography tokens: --ld-semantic-font-* (~50+ tokens)
+ * - Border radius tokens: --ld-semantic-border-radius-* (~10 tokens)
+ * - Elevation/shadow tokens: --ld-semantic-elevation-* (3 tokens)
+ * - Negative/positive/warning fills: red, green, orange (consistency)
+ * - Surface colors: --ld-semantic-color-surface-* (~15 tokens)
+ * - Opacity tokens: --ld-semantic-opacity-* (~15 tokens)
+ * - Z-index tokens: --ld-semantic-z-index-* (~10 tokens)
+ * - Duration/timing tokens: --ld-semantic-duration-* (~20 tokens)
+ * - Breakpoint tokens: --ld-semantic-breakpoint-* (5 tokens)
+ * - All other non-overridden color tokens (~150+ tokens)
+ *
+ * ⚠️ IMPORTANT:
+ * - Your theme file should be ~30-100 lines, not 300-800 lines
+ * - If your theme file is huge, you're duplicating instead of inheriting
+ * - Only include tokens you're actually changing!
+ *
+ * 📖 EXAMPLE - What NOT to do:
+ * ❌ DON'T include: --ld-semantic-spacing-200: var(--ld-primitive-scale-space-200, 1rem);
+ * ✅ Instead: Leave it out, it inherits from base automatically
+ */
+```
+
+---
+
+### Step 4: Register Theme
+
+Add to `client/contexts/theme-registry.ts`:
+
+```typescript
+export const AVAILABLE_THEMES: Theme[] = [
+  {
+    id: 'base',
+    name: 'Walmart Connect',
+    description: 'Default Walmart Connect Ad Center theme with Living Design 3.5 + WCP extensions',
+    primitiveCSS: '/styles/themes/base/primitive.css',
+    semanticCSS: '/styles/themes/base/semantic.css',
+    previewColor: '#0053e2',
+  },
+  {
+    id: 'walmart-b2b',
+    name: 'Walmart Business',
+    description: 'Walmart Business B2B platform theme with darker, professional color palette',
+    primitiveCSS: '/styles/themes/walmart-b2b/primitive.css',
+    semanticCSS: '/styles/themes/walmart-b2b/semantic.css',
+    previewColor: '#002e99',
+  },
+  // ADD YOUR NEW THEME HERE
+  {
+    id: 'my-new-theme',
+    name: 'My Theme Display Name',
+    description: 'Brief description of what this theme is for',
+    primitiveCSS: '/styles/themes/my-new-theme/primitive.css',
+    semanticCSS: '/styles/themes/my-new-theme/semantic.css',
+    previewColor: '#FF6B00', // Preview color dot in UI
+  },
+];
+```
+
+**TypeScript Type Update:**
+
+Update the `Theme` interface id type:
+
+```typescript
+export interface Theme {
+  id: 'base' | 'walmart-b2b' | 'my-new-theme'; // Add your theme id here
+  name: string;
+  description: string;
+  primitiveCSS: string;
+  semanticCSS: string;
+  previewColor?: string;
+}
+```
+
+---
+
+### Step 5: Testing Checklist
+
+Before shipping your new theme, verify:
+
+- [ ] **All components render correctly**
+  - Navigate to `/component-library`
+  - Switch to your new theme
+  - Verify all sections display properly
+
+- [ ] **Interactive states work**
+  - Hover states visible
+  - Focus states visible (tab through buttons)
+  - Active/pressed states work
+  - Disabled states look correct
+
+- [ ] **No console errors**
+  - No missing token warnings
+  - No CSS loading errors
+
+- [ ] **Text readability**
+  - Text is readable on all backgrounds
+  - Sufficient contrast (WCAG AA minimum)
+  - Check with color contrast checker
+
+- [ ] **Icons use currentColor**
+  - Icons inherit text color properly
+  - Icon colors update with theme
+
+- [ ] **Button variants distinct**
+  - Primary, secondary, tertiary buttons visually different
+  - Destructive button clearly indicates danger
+
+- [ ] **Brand consistency**
+  - Primary button matches brand color
+  - Brand text color consistent
+  - Focus outlines match primary color
+
+- [ ] **Persistence works**
+  - Switch to theme
+  - Reload page
+  - Verify theme persists
+
+---
+
+## Token Override Principles
+
+### Common Tokens to Override
+
+**Primary Branding:**
+- `--ld-semantic-color-action-fill-primary` - Primary button background
+- `--ld-semantic-color-text-brand` - Brand text color
+- `--ld-semantic-color-border-brand` - Brand border color
+- `--ld-semantic-color-fill-brand` - Brand fill color
+- `--ld-semantic-color-action-focus-outline` - Focus indicator
+
+**Interactive States:**
+- `--ld-semantic-color-action-fill-primary-hovered` - Primary button hover
+- `--ld-semantic-color-action-fill-primary-pressed` - Primary button active
+- `--ld-semantic-color-border-activated` - Activated border
+- `--ld-semantic-color-text-activated` - Activated text
+
+**Surface Overlays:**
+- `--ld-semantic-color-surface-overlay-brand-subtle` - Subtle brand surface
+- `--ld-semantic-color-fill-info` - Info background
+
+### Rarely Override
+
+These should remain consistent across themes:
+- Spacing tokens (`--ld-semantic-spacing-*`)
+- Typography tokens (`--ld-semantic-font-family-sans`)
+- Border radius tokens (`--ld-semantic-border-radius-*`)
+- Animation duration (`--ld-semantic-duration-*`)
+- Structural tokens (elevation, z-index)
+
+### Never Override
+
+These are critical for accessibility:
+- Focus outline visibility tokens (must be visible)
+- Disabled state tokens (must show disabled state)
+- Negative/error tokens (red should stay red)
+- Positive/success tokens (green should stay green)
+
+---
+
+## Theme-Specific Extensions
+
+You can add theme-specific tokens with custom prefixes:
+
+**Example: WCP Extensions in Base Theme**
+
+```css
+/* WCP (Walmart Connect Platform) Extended Tokens */
+--wcp-semantic-color-action-fill-primary-alt: var(--ld-primitive-color-spark-100, #ffc220);
+--wcp-semantic-color-fill-savings-bold: var(--ld-primitive-color-red-100, #ea1100);
+```
+
+**Example: B2B Extensions**
+
+```css
+/* B2B-specific tokens */
+--b2b-semantic-color-premium-surface: var(--ld-primitive-color-purple-10, #efebf2);
+--b2b-semantic-color-enterprise-badge: var(--ld-primitive-color-cyan-100, #0076b3);
+```
+
+**Naming Convention:**
+
+```
+--[theme-prefix]-semantic-[category]-[name]
+```
+
+Examples:
+- `--wcp-semantic-color-action-fill-primary-alt`
+- `--b2b-semantic-color-surface-premium`
+- `--dark-semantic-color-background-elevated`
+
+---
+
+## Example: Base vs B2B Comparison (Inheritance Model)
+
+### What B2B Theme Overrides (30 tokens)
+
+| Token | Base Theme | B2B Override | Impact |
+|-------|-----------|--------------|--------|
+| `action-fill-primary` | `#0053e2` (Walmart blue) | `#002e99` (Navy) ✏️ | Primary buttons darker |
+| `text-brand` | `#0053e2` (Walmart blue) | `#002e99` (Navy) ✏️ | Brand text darker |
+| `border-activated` | `#0053e2` (Walmart blue) | `#001e60` (Navy) ✏️ | Active borders darker |
+| `text-activated` | `#114ab6` (Blue) | `#001e60` (Navy) ✏️ | Active text darker |
+| `wcp-action-fill-primary-alt` | `#ffc220` (Spark yellow) | `#4dbdf5` (Cyan) ✏️ | Alt button different |
+
+✏️ = Explicitly overridden in B2B theme file (30 total)
+
+### What B2B Theme Inherits (227+ tokens)
+
+These are NOT in the B2B theme file - they inherit from base:
+
+| Category | Tokens | Why Inherited |
+|----------|--------|---------------|
+| Spacing | `--ld-semantic-spacing-*` (15 tokens) | Consistency |
+| Typography | `--ld-semantic-font-*` (50+ tokens) | Same fonts |
+| Elevation | `--ld-semantic-elevation-*` (3 tokens) | Same shadows |
+| Border Radius | `--ld-semantic-border-radius-*` (10 tokens) | Same shapes |
+| Error Colors | `--ld-semantic-color-*-negative` (10+ tokens) | Red stays red |
+| Success Colors | `--ld-semantic-color-*-positive` (10+ tokens) | Green stays green |
+| Warning Colors | `--ld-semantic-color-*-warning` (10+ tokens) | Orange stays orange |
+| Duration | `--ld-semantic-duration-*` (20 tokens) | Same animations |
+| Z-index | `--ld-semantic-z-index-*` (10 tokens) | Same layering |
+
+**File Size Comparison:**
+- Base theme semantic.css: 811 lines (complete)
+- B2B theme semantic.css: 96 lines (overrides only) - **88% smaller!**
+
+---
+
+## Troubleshooting
+
+### Theme not switching
+
+**Check:**
+1. Is theme registered in `theme-registry.ts`?
+2. Do CSS files exist at the specified paths?
+3. Check browser console for 404 errors
+4. Verify primitive and semantic paths are correct
+
+**Fix:**
+```typescript
+// Correct paths start with /styles/
+primitiveCSS: '/styles/themes/my-theme/primitive.css', // ✅
+primitiveCSS: 'styles/themes/my-theme/primitive.css',  // ❌ Missing leading /
+```
+
+### Tokens not applying
+
+**Check:**
+1. Are tokens defined in `:root` selector?
+2. Is CSS file loaded? (Check DevTools > Network tab)
+3. Are tokens using correct naming convention?
+4. Check for typos in token names
+
+**Fix:**
+```css
+/* ✅ Correct */
+:root {
+  --ld-semantic-color-action-fill-primary: #002e99;
+}
+
+/* ❌ Wrong - missing :root */
+--ld-semantic-color-action-fill-primary: #002e99;
+```
+
+### Colors not updating
+
+**Check:**
+1. Are components using semantic tokens (not hard-coded colors)?
+2. Did you clear browser cache?
+3. Is the old theme CSS still loaded?
+
+**Fix:**
+In component code:
+```tsx
+// ✅ Correct - uses semantic token
+backgroundColor: 'var(--ld-semantic-color-action-fill-primary)'
+
+// ❌ Wrong - hard-coded color
+backgroundColor: '#0053e2'
+```
+
+### Theme persists incorrectly
+
+**Check:**
+1. localStorage key is `ld-theme`
+2. Theme ID matches registry
+
+**Fix:**
+```javascript
+// Clear localStorage if needed
+localStorage.removeItem('ld-theme');
+```
+
+---
+
+## Best Practices
+
+### DO:
+
+✅ **Test with all components** before shipping
+✅ **Use semantic tokens** in component code, never primitives
+✅ **Document your theme** with clear description and use case
+✅ **Provide preview color** for UI indicator
+✅ **Check accessibility** with contrast checkers
+✅ **Follow naming conventions** for custom tokens
+✅ **Keep spacing/typography consistent** across themes
+
+### DON'T:
+
+❌ **Override accessibility tokens** (focus, disabled states)
+❌ **Use hard-coded colors** in components
+❌ **Change structural tokens** (spacing, elevation)
+❌ **Forget to test** interactive states
+❌ **Skip contrast checking** for text readability
+❌ **Break existing themes** when adding new ones
+❌ **Use inline styles** that override semantic tokens
+
+---
+
+## Advanced: Dark Mode Example
+
+If creating a dark mode theme:
+
+```css
+/**
+ * Dark Mode Theme - Semantic Tokens
+ */
+
+:root {
+  /* Invert backgrounds */
+  --ld-semantic-color-background: var(--ld-primitive-color-gray-180, #171819);
+  --ld-semantic-color-background-inverse: var(--ld-primitive-color-white, #ffffff);
+  --ld-semantic-color-surface: var(--ld-primitive-color-gray-170, #232325);
+  
+  /* Adjust text for dark backgrounds */
+  --ld-semantic-color-text: var(--ld-primitive-color-gray-10, #f1f1f2);
+  --ld-semantic-color-text-subtle: var(--ld-primitive-color-gray-50, #babbbe);
+  
+  /* Keep brand colors recognizable but adjust for contrast */
+  --ld-semantic-color-action-fill-primary: var(--ld-primitive-color-blue-70, #4380ef);
+  --ld-semantic-color-text-brand: var(--ld-primitive-color-blue-60, #5e93f3);
+  
+  /* Borders need to be lighter on dark backgrounds */
+  --ld-semantic-color-border: var(--ld-primitive-color-gray-100, #74767c);
+  --ld-semantic-color-border-subtle: var(--ld-primitive-color-gray-130, #515357);
+}
+```
+
+---
+
+## FAQ
+
+**Q: Can I have more than 2 themes?**
+A: Yes! Add as many themes as needed to `theme-registry.ts`. The UI will show all registered themes.
+
+**Q: Do I need to create both primitive and semantic files?**
+A: Yes, both are required. However, you can copy primitive.css from base if you don't need custom primitives.
+
+**Q: Can themes share CSS files?**
+A: No, each theme should have its own files for clean separation and easier maintenance.
+
+**Q: How do I preview a theme during development?**
+A: Navigate to `/component-library` and use the Theme dropdown in the header.
+
+**Q: Can users switch themes on other pages besides Component Library?**
+A: Yes! The theme applies globally. You can add ThemeSwitcher component to any page.
+
+**Q: What happens if a token is missing in my theme?**
+A: CSS will fall back to the fallback value in `var(--token-name, #fallback)` or show browser default.
+
+**Q: Can I override spacing or font sizes per theme?**
+A: Technically yes, but not recommended. Keep spacing/typography consistent for UX consistency.
+
+---
+
+## Resources
+
+- **Living Design 3.5 Spec**: [Internal docs link]
+- **Primitive Tokens Reference**: `styles/themes/base/primitive.css`
+- **Semantic Tokens Reference**: `styles/themes/base/semantic.css`
+- **Theme Registry**: `client/contexts/theme-registry.ts`
+- **Color Contrast Checker**: https://webaim.org/resources/contrastchecker/
+- **WCAG Guidelines**: https://www.w3.org/WAI/WCAG21/quickref/
+
+---
+
+## Summary
+
+**To add a new theme:**
+
+1. Create theme directory: `styles/themes/[theme-name]/`
+2. Copy and customize `primitive.css` and `semantic.css`
+3. Register theme in `theme-registry.ts`
+4. Test thoroughly on Component Library page
+5. Verify accessibility and contrast
+6. Ship! 🚀
+
+The theme switcher system is designed to be simple, extensible, and maintainable. Follow these guidelines and you'll have a beautiful new theme in no time!

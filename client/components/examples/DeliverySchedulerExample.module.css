@@ -1,0 +1,89 @@
+/* DeliverySchedulerExample styles */
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+  max-width: 480px;
+}
+
+/* ── Section ── */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--ld-semantic-font-family-sans, sans-serif);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  margin: 0;
+}
+
+.availability {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ld-semantic-color-text-subtle, #6d6e72);
+}
+
+.noSlots {
+  font-family: var(--ld-semantic-font-family-sans, sans-serif);
+  font-size: 14px;
+  color: var(--ld-semantic-color-text-subtle, #6d6e72);
+  margin: 0;
+}
+
+/* ── Confirmation strip ── */
+.confirmation {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--ld-semantic-color-fill-positive-subtle, #eaf5e4);
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  border: 1px solid var(--ld-semantic-color-border-positive, #2a8703);
+}
+
+.confirmIcon {
+  flex-shrink: 0;
+  color: var(--ld-semantic-color-text-positive, #2a8703);
+  display: flex;
+  align-items: center;
+}
+
+.confirmText {
+  font-family: var(--ld-semantic-font-family-sans, sans-serif);
+  font-size: 14px;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ── States showcase ── */
+.statesWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.stateRow {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stateLabel {
+  font-family: var(--ld-semantic-font-family-sans, sans-serif);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ld-semantic-color-text-subtle, #6d6e72);
+}

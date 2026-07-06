@@ -1,0 +1,69 @@
+---
+description: Skeleton component specification
+alwaysApply: false
+---
+## Purpose
+
+Skeleton is a low-fidelity shape that approximates a UI element and indicates loading. A group of Skeletons matching a loaded screen improves perceived responsiveness.
+
+## Rules
+
+- **MUST** use the Living Design Skeleton/SkeletonText components.
+- **MUST** match skeleton shapes to the actual content layout.
+- **MUST** use `isMagic` consistently for AI-powered features.
+- **MUST** provide meaningful `aria-label` attributes.
+- **MUST NOT** use hard-coded colors (use design tokens).
+- **MUST NOT** use skeletons for very fast loading operations (<200ms).
+- **SHOULD NOT** mix magic and non-magic skeletons for the same content type.
+
+## Usage
+
+```tsx
+import { Skeleton } from '@/components/ui/Skeleton';
+import { SkeletonText } from '@/components/ui/SkeletonText';
+
+// Rectangle (default, 4px radius)
+<Skeleton width={200} height={20} variant="rectangle" />
+
+// Rounded (pill, for avatars/badges)
+<Skeleton width={48} height={48} variant="rounded" />
+
+// Multi-line text loading
+<SkeletonText lines={3} variant="rectangle" />
+
+// AI content loading
+<Skeleton width="100%" height={200} variant="rectangle" isMagic />
+<SkeletonText lines={4} variant="rectangle" isMagic />
+```
+
+### Variants
+
+- **rectangle**: 4px border radius, for general content blocks.
+- **rounded**: Pill shape (9999px), for avatars, badges, circular elements.
+
+### Magic Mode
+
+Use `isMagic` for AI-generated content loading. Displays a special shimmer animation with staggered delays on SkeletonText lines.
+
+## Migration
+
+```tsx
+// Old (legacy)
+import { Skeleton } from '@/components/ui/skeleton';
+<Skeleton className="h-12 w-12 rounded-full" />
+
+// New (LD 3.5)
+import { Skeleton } from '@/components/ui/Skeleton';
+<Skeleton width={48} height={48} variant="rounded" />
+```
+
+## Accessibility
+
+- Components include `aria-label` (default: "Loading...").
+- Uses `aria-busy="true"` and `role="status"` for live region updates.
+- Customize labels for specific contexts (e.g., "Loading product title").
+
+## Related
+
+- [Skeleton API reference](../../design-system-docs/Skeleton.mdx)
+- [SkeletonText API reference](../../design-system-docs/SkeletonText.mdx)

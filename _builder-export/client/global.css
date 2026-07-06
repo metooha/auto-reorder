@@ -1,0 +1,120 @@
+/** @import must precede all other statements */
+/* Walmart Design System — tokens loaded via styles/index.css
+ * Token chain: fonts.css → primitive.css → semantic.css → theme.css → tag.css
+ * theme.css defines --background, --primary, --foreground, etc. with rgba() values
+ * These are the source of truth for both CSS and Tailwind utilities.
+ */
+@import url("../styles/index.css");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Everyday Sans UI", sans-serif;
+  }
+
+  :where(p, span, li, h1, h2, h3, h4, h5, h6, a, button, label, td, th) {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  pre,
+  code {
+    overflow-x: auto;
+    white-space: pre;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@keyframes rainbow-border {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes slide-up {
+  0% { transform: translateY(100%); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(0.8); }
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes expand-width {
+  0% { width: 32px; opacity: 0.8; }
+  100% { width: 112px; opacity: 1; }
+}
+
+@keyframes search-bar-expand {
+  0% { max-width: 20%; opacity: 0.6; }
+  100% { max-width: 100%; opacity: 1; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.rainbow-border {
+  background: linear-gradient(90deg,
+    var(--ld-primitive-color-blue-100, #0053E2),
+    var(--ld-primitive-color-blue-80, #2e70eb),
+    var(--ld-primitive-color-cyan-50, #4dbdf5),
+    var(--ld-primitive-color-blue-80, #2e70eb),
+    var(--ld-primitive-color-blue-100, #0053E2)
+  );
+  background-size: 200% 200%;
+  animation: rainbow-border 3s linear infinite;
+  padding: 2px;
+  border-radius: 9999px;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.4s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.25s ease-out forwards;
+}
+
+.animate-expand-width {
+  animation: expand-width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.animate-search-bar-expand {
+  animation: search-bar-expand 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--ld-primitive-color-blue-20, #c9dcfd) 0%,
+    var(--ld-primitive-color-blue-80, #2e70eb) 50%,
+    var(--ld-primitive-color-blue-20, #c9dcfd) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}

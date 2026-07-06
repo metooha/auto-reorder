@@ -1,0 +1,52 @@
+.section {
+  padding: 16px 12px;
+  border-top: 8px solid var(--ld-semantic-color-fill-subtle);
+}
+
+.sectionTitle {
+  font-size: var(--ld-semantic-font-body-large-size);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  margin-bottom: 12px;
+}
+
+.chipRow {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+  scrollbar-width: none;
+}
+
+.chipRow::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  /* Allow left edge flag callout to not be clipped */
+  padding-left: 4px;
+  margin-left: -4px;
+  scrollbar-width: none;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.genAiRow {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.genAiLabel {
+  font-size: var(--ld-semantic-font-body-small-size);
+  color: var(--ld-semantic-color-text-subtle);
+}

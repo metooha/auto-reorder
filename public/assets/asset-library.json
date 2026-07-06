@@ -1,0 +1,97 @@
+{
+  "navigation": {
+    "description": "Bottom navigation tab bar icons for mobile Walmart.com experience",
+    "items": {
+      "shop-active": {
+        "path": "/assets/navigation/shop-active.png",
+        "alt": "Shop tab icon in active/selected state - filled shopping bag",
+        "usage": "Mobile bottom nav - active shop tab"
+      },
+      "shop-inactive": {
+        "path": "/assets/navigation/shop-inactive.png",
+        "alt": "Shop tab icon in inactive state - outlined shopping bag",
+        "usage": "Mobile bottom nav - inactive shop tab"
+      },
+      "heart-active": {
+        "path": "/assets/navigation/heart-active.png",
+        "alt": "Favorites tab icon in active/selected state - filled heart",
+        "usage": "Mobile bottom nav - active favorites/my items tab"
+      },
+      "heart-inactive": {
+        "path": "/assets/navigation/heart-inactive.png",
+        "alt": "Favorites tab icon in inactive state - outlined heart",
+        "usage": "Mobile bottom nav - inactive favorites/my items tab"
+      },
+      "user-active": {
+        "path": "/assets/navigation/user-active.png",
+        "alt": "Account tab icon in active/selected state - filled person silhouette",
+        "usage": "Mobile bottom nav - active account tab"
+      },
+      "user-inactive": {
+        "path": "/assets/navigation/user-inactive.png",
+        "alt": "Account tab icon in inactive state - outlined person silhouette",
+        "usage": "Mobile bottom nav - inactive account tab"
+      }
+    }
+  },
+  "logos": {
+    "description": "Walmart brand logos and sub-brand marks",
+    "items": {
+      "walmart-plus-logo": {
+        "path": "/assets/logos/walmart-plus-logo.svg",
+        "alt": "Walmart+ membership program logo - blue W+ mark",
+        "usage": "Walmart+ membership badges, subscription CTAs"
+      },
+      "walmart-cash-logo": {
+        "path": "/assets/logos/walmart-cash-logo.svg",
+        "alt": "Walmart Cash rewards logo - gold coin with W mark",
+        "usage": "Walmart Cash earning/redeeming indicators"
+      },
+      "subscription-logo": {
+        "path": "/assets/logos/subscription-logo.svg",
+        "alt": "Subscribe and Save program logo - recurring delivery icon",
+        "usage": "Product detail subscription option badges"
+      }
+    }
+  },
+  "dashboard": {
+    "description": "Seller Center dashboard analytics screenshots",
+    "items": {
+      "screenshot": {
+        "url": "https://cdn.builder.io/api/v1/image/assets%2F02297b1ff48d4a2f8e4d9ed415c47ecf%2Fc3a06f6f42ec4f12933aad1327cc0377",
+        "alt": "Main dashboard screenshot showing campaign analytics with charts and metrics",
+        "usage": "Dashboard overview, documentation"
+      },
+      "chart": {
+        "url": "https://cdn.builder.io/api/v1/image/assets%2F02297b1ff48d4a2f8e4d9ed415c47ecf%2Ff5cdb3639c9b4824903691b17827989a",
+        "alt": "Analytics chart showing performance trends over time",
+        "usage": "Campaign analytics section"
+      }
+    }
+  },
+  "pictograms-mono-small": {
+    "description": "Large-format mono pictograms aligned with Walmart's core brand identity. Used in cross-functional contexts where Walmart branding (not Walmart+) is primary. Style: flat, monochromatic blue tones. All files stored locally in /illustrations/mono-small/.",
+    "items": {
+      "fulfillment-pickup":  { "path": "/illustrations/mono-small/fulfillment-pickup.svg",  "alt": "Curbside pickup fulfillment icon",        "usage": "Curbside pickup order type indicator in order cards" },
+      "fulfillment-delivery":{ "path": "/illustrations/mono-small/fulfillment-delivery.svg","alt": "Delivery fulfillment icon",               "usage": "Delivery order type indicator in order cards" },
+      "fulfillment-store":   { "path": "/illustrations/mono-small/fulfillment-store.svg",   "alt": "Walmart store fulfillment icon",          "usage": "Store purchase order type indicator in order cards" },
+      "fulfillment-shipping":{ "path": "/illustrations/mono-small/fulfillment-shipping.svg","alt": "Shipping fulfillment icon",               "usage": "Shipping order type indicator in order cards" },
+      "fuel":           { "path": "/illustrations/mono-small/fuel.svg",            "alt": "Fuel pump pictogram",                     "usage": "Fuel savings benefits, gas station promotions, Walmart+ fuel discount" },
+      "plant":          { "path": "/illustrations/mono-small/plant.svg",           "alt": "Potted plant pictogram",                  "usage": "Home & garden category, sustainability messaging, living products" },
+      "digital-delivery":{ "path": "/illustrations/mono-small/digital-delivery.svg","alt": "Digital delivery / mobile app pictogram", "usage": "Digital products, app downloads, digital gift cards" },
+      "wplus-delivery": { "path": "/illustrations/mono-small/wplus-delivery.svg",  "alt": "Walmart+ delivery bag pictogram",          "usage": "Walmart+ free delivery benefit, member delivery perks" },
+      "grocery-reorder":{ "path": "/illustrations/mono-small/grocery-reorder.svg", "alt": "Grocery reorder bag pictogram",            "usage": "Grocery reorder feature, recurring grocery orders, subscribe & save" },
+      "pre-schedule":   { "path": "/illustrations/mono-small/pre-schedule.svg",    "alt": "Pre-scheduled delivery calendar pictogram","usage": "Scheduled delivery slots, advance order booking" },
+      "discounts":      { "path": "/illustrations/mono-small/discounts.svg",       "alt": "Discounts and coupons pictogram",          "usage": "Promotions, member discounts, coupon clipping, savings events" },
+      "delivery-united":{ "path": "/illustrations/mono-small/delivery-united.svg", "alt": "Delivery box with Walmart spark pictogram","usage": "Delivery benefit callouts, order fulfillment messaging" },
+      "ups-dropoff":    { "path": "/illustrations/mono-small/ups-dropoff.svg",     "alt": "UPS drop-off barcode return package",      "usage": "Returns, UPS drop-off locations, package return flow" },
+      "wine-bottle":    { "path": "/illustrations/mono-small/wine-bottle.svg",     "alt": "Wine bottle pictogram",                   "usage": "Alcohol / wine category, adult beverage section, age-gated content" },
+      "reorder":        { "path": "/illustrations/mono-small/reorder.svg",         "alt": "Reorder box with Walmart spark pictogram", "usage": "Reorder feature, repeat purchase prompts, order history reorder CTA" },
+      "tree":           { "path": "/illustrations/mono-small/tree.svg",            "alt": "Tree / sustainability pictogram",          "usage": "Sustainability initiatives, environmental programs, carbon-neutral messaging" },
+      "ev-charging":    { "path": "/illustrations/mono-small/ev-charging.svg",     "alt": "Electric vehicle charging pictogram",      "usage": "EV charging stations, electric vehicle benefits, Walmart+ EV perk" },
+      "storefront":     { "path": "/illustrations/mono-small/storefront.svg",      "alt": "Walmart storefront large pictogram",       "usage": "Store locator, in-store services, curbside pickup, store page headers" },
+      "drone-delivery": { "path": "/illustrations/mono-small/drone-delivery.svg",  "alt": "Drone delivery pictogram",                "usage": "Drone delivery feature, future delivery innovation" },
+      "sports-outdoors":{ "path": "/illustrations/mono-small/sports-outdoors.svg", "alt": "Sports & outdoors / camping tent pictogram","usage": "Sports & outdoors category, camping gear, seasonal outdoor promotions" }
+    }
+  }
+}

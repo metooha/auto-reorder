@@ -1,0 +1,28 @@
+.root {
+  display: none;
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .root {
+    display: block;
+  }
+}
+
+.link {
+  position: absolute;
+  inset: 3px;
+  z-index: 10;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

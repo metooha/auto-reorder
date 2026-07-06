@@ -1,0 +1,149 @@
+---
+description: Component variant naming conventions
+alwaysApply: false
+---
+description: Component Variant Naming
+globs:
+alwaysApply: false
+---
+
+## Purpose
+
+The project has two distinct variant naming conventions that serve different purposes. Agents sometimes mix them — applying action-intent names (`primary/secondary`) to display-purpose components and vice versa. This causes semantic confusion and inconsistency across the codebase.
+
+---
+
+## The Three Variant Conventions
+
+### 1. Action-Intent Variants (LD primitive components)
+
+**Use for**: Components where the variant communicates the **importance or danger** of the action.
+
+**Components**: `Button`, `IconButton`
+
+**Allowed values**: `primary` | `secondary` | `tertiary` | `destructive`
+
+```tsx
+// ✅ CORRECT — communicates action importance
+<Button variant="primary">Save changes</Button>
+<Button variant="secondary">Cancel</Button>
+<Button variant="destructive">Delete account</Button>
+```
+
+### 2. Visual-Theme Variants (WCP product components)
+
+**Use for**: Components where the variant communicates the **visual appearance or brand theme**.
+
+**Components**: `BasicBanner`, `CalloutCard`, `PromoStrip`, and other WCP components
+
+**Allowed values**: `default` | `brand` | `inverse`
+
+```tsx
+// ✅ CORRECT — communicates visual treatment
+<BasicBanner variant="default" />   // Neutral, light background
+<BasicBanner variant="brand" />     // Walmart blue, high-visibility
+<BasicBanner variant="inverse" />   // Dark background, light text
+```
+
+### 3. Status Variants (data display components)
+
+**Use for**: Components where the variant communicates **system state or sentiment**.
+
+**Components**: `Tag`, `Alert`, `Badge`, `Nudge`
+
+**Allowed values**: `success` | `warning` | `error` | `info` | `neutral`
+
+```tsx
+// ✅ CORRECT — communicates system state
+<Tag variant="success">In stock</Tag>
+<Tag variant="warning">Limited</Tag>
+<Tag variant="error">Out of stock</Tag>
+```
+
+---
+
+## Mixing Conventions Is Forbidden
+
+```tsx
+// ❌ WRONG — action-intent names on a visual-theme component
+<BasicBanner variant="primary" />
+<BasicBanner variant="secondary" />
+
+// ❌ WRONG — visual-theme names on an action component
+<Button variant="brand" />
+<Button variant="inverse" />
+
+// ❌ WRONG — status names on an action component
+<Button variant="success" />
+```
+
+---
+
+## Variant Prop Type Rules
+
+- Always use a **string union type**, never an enum
+- Always include a `default` fallback in the type union (except for action-intent variants where `primary` is the semantic default)
+- The prop should always be optional with a default value
+
+```tsx
+// ✅ CORRECT — string union with default
+export type BasicBannerVariant = 'default' | 'brand' | 'inverse';
+
+interface BasicBannerProps {
+  variant?: BasicBannerVariant; // optional, defaults to 'default'
+}
+
+export function BasicBanner({ variant = 'default' }: BasicBannerProps) { ... }
+```
+
+```tsx
+// ❌ WRONG — enum
+enum BannerVariant {
+  Default = 'default',
+  Brand = 'brand',
+}
+```
+
+---
+
+## CSS Class Mapping
+
+Always use `styles[variant]` pattern to apply variant classes — never write switch statements or if/else chains:
+
+```tsx
+// ✅ CORRECT — direct class name lookup
+className={[styles.banner, styles[variant]].filter(Boolean).join(' ')}
+
+// ❌ WRONG — switch chain
+let variantClass: string;
+switch (variant) {
+  case 'brand': variantClass = styles.brand; break;
+  case 'inverse': variantClass = styles.inverse; break;
+  default: variantClass = styles.default;
+}
+```
+
+The CSS module must have a class for every variant value in the type:
+
+```css
+/* ✅ Required — one class per variant value */
+.default { background: var(--ld-semantic-color-background-subtle); }
+.brand   { background: var(--ld-semantic-color-action-fill-primary); }
+.inverse { background: var(--ld-semantic-color-background-inverse); }
+```
+
+---
+
+## Quick Reference
+
+| Convention | Variants | Used by |
+|---|---|---|
+| Action-intent | `primary`, `secondary`, `tertiary`, `destructive` | `Button`, `IconButton` |
+| Visual-theme | `default`, `brand`, `inverse` | WCP product components |
+| Status/sentiment | `success`, `warning`, `error`, `info`, `neutral` | `Tag`, `Alert`, `Badge` |
+
+---
+
+## Enforcement Level
+
+**MEDIUM** — Mixing variant conventions makes component APIs inconsistent and harder to maintain. Every new component must follow the correct convention for its category before merging.

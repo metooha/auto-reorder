@@ -1,0 +1,223 @@
+/* Page template layout styles */
+
+.root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--ld-semantic-color-background-primary, #f8f8f8);
+}
+
+.appRow {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 32px;
+}
+
+.pageContent {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pageTitle {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text-primary, #2e2f32);
+  margin-bottom: 24px;
+}
+
+.alertWrapper {
+  margin-bottom: 16px;
+}
+
+/* Hero section */
+.heroCard {
+  position: relative;
+  background: linear-gradient(135deg, #0071dc 0%, #004c91 100%);
+  border-radius: 12px;
+  padding: 32px;
+  color: #fff;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.heroTitle {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 1;
+}
+
+.heroSubtitle {
+  font-size: 16px;
+  opacity: 0.9;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.heroActions {
+  display: flex;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.heroCircle1 {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.heroCircle2 {
+  position: absolute;
+  bottom: -60px;
+  right: 80px;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Card styles */
+.primaryCardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.primaryCardImage {
+  width: 100%;
+  height: 160px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: var(--ld-semantic-color-background-secondary, #f0f0f0);
+}
+
+.primaryCardTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text-primary, #2e2f32);
+}
+
+.primaryCardDescription {
+  font-size: 14px;
+  color: var(--ld-semantic-color-text-secondary, #74767c);
+  line-height: 1.5;
+}
+
+/* Section header */
+.primarySectionHeader {
+  margin: 24px 0 16px;
+}
+
+.primarySectionTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text-primary, #2e2f32);
+}
+
+/* Secondary cards */
+.secondaryCardRow {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.secondaryStack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.secondaryCardTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text-primary, #2e2f32);
+  margin-bottom: 4px;
+}
+
+.secondaryCardText {
+  font-size: 13px;
+  color: var(--ld-semantic-color-text-secondary, #74767c);
+}
+
+.secondaryCardDescription {
+  font-size: 13px;
+  color: var(--ld-semantic-color-text-secondary, #74767c);
+  line-height: 1.4;
+}
+
+/* Action row */
+.actionRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 0;
+}
+
+.actionTextGroup {
+  flex: 1;
+}
+
+.actionTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ld-semantic-color-text-primary, #2e2f32);
+}
+
+.actionDescription {
+  font-size: 13px;
+  color: var(--ld-semantic-color-text-secondary, #74767c);
+}
+
+/* Image placeholder */
+.imagePlaceholder {
+  width: 100%;
+  height: 160px;
+  border-radius: 8px;
+  background: var(--ld-semantic-color-background-secondary, #f0f0f0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ld-semantic-color-text-secondary, #74767c);
+}
+
+/* Spot icon */
+.spotIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--ld-semantic-color-background-secondary, #f0f0f0);
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .main {
+    padding: 16px;
+  }
+  .secondaryCardRow {
+    grid-template-columns: 1fr;
+  }
+  .heroCard {
+    padding: 24px;
+  }
+  .heroTitle {
+    font-size: 22px;
+  }
+}

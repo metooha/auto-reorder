@@ -1,0 +1,97 @@
+/* MobileHeader — shown only on mobile (<1024px) */
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 16px;
+  background-color: var(--ld-semantic-color-top-nav-fill);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+/* Hide on desktop — DesktopHeader takes over */
+@media (min-width: 1024px) {
+  .header {
+    display: none;
+  }
+}
+
+/* ── Top row: logo + cart ── */
+.topRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.cartButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  color: var(--ld-semantic-color-text-inverse);
+  transition: background 100ms;
+  flex-shrink: 0;
+}
+
+.cartButton:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.cartButton:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-text-inverse);
+  outline-offset: 2px;
+}
+
+/* ── Search row ── */
+.searchRow {
+  width: 100%;
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--ld-semantic-color-surface);
+  border-radius: 9999px;
+  padding: 8px 16px;
+  height: 40px;
+}
+
+.searchIcon {
+  color: var(--ld-semantic-color-text-subtle);
+  flex-shrink: 0;
+}
+
+.searchInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: var(--ld-semantic-font-body-small-size);
+  line-height: 20px;
+  color: var(--ld-semantic-color-text);
+  min-width: 0;
+}
+
+.searchInput::placeholder {
+  color: var(--ld-semantic-color-text-subtle);
+}
+
+/* Remove browser default search input clear button */
+.searchInput::-webkit-search-cancel-button {
+  display: none;
+}

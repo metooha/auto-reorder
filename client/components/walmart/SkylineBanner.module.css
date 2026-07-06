@@ -1,0 +1,111 @@
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  border-radius: 8px;
+  background: var(--ld-semantic-color-fill-subtle);
+  overflow: hidden;
+  padding-left: 16px;
+  width: 100%;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  min-width: 0;
+}
+
+.logo {
+  width: 77px;
+  height: 40px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.textGroup {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.headline {
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: var(--ld-semantic-font-body-small-size);
+  font-weight: 700;
+  line-height: 20px;
+  color: var(--ld-semantic-color-text);
+  white-space: nowrap;
+}
+
+.subtext {
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: var(--ld-semantic-font-body-small-size);
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--ld-semantic-color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  height: 100%;
+}
+
+.sponsored {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.sponsoredLabel {
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ld-semantic-color-text-subtle);
+  white-space: nowrap;
+}
+
+.infoBtn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.infoBtn:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline);
+  border-radius: 50%;
+}
+
+.productImage {
+  height: 64px;
+  width: auto;
+  object-fit: cover;
+  display: block;
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .subtext {
+    display: none;
+  }
+
+  .logo {
+    width: 56px;
+  }
+}

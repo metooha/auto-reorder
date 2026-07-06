@@ -1,0 +1,96 @@
+---
+description: Living Design migration assessment with anti-patterns and remaining work
+alwaysApply: false
+---
+## Purpose
+
+Track ongoing migration from legacy Tailwind patterns to Living Design 3.5 components and tokens.
+
+## Anti-Patterns to Fix
+
+### Hard-coded typography classes
+
+```tsx
+// WRONG — found in 15+ files
+<h1 className="text-[28px] font-bold text-[#2E2F32]">Title</h1>
+<span className="text-[20px]">Text</span>
+
+// CORRECT — Living Design typography
+<Heading as="h1" size="large">Title</Heading>
+<Body size="medium">Text</Body>
+```
+
+### Hard-coded hex colors in className
+
+```tsx
+// WRONG — found in 30+ files
+<h1 className="text-[#2E2F32]">Title</h1>
+<p className="text-[#74767c]">Subtitle</p>
+
+// CORRECT — semantic token via CSS class or style prop
+<Heading>Title</Heading>       // uses var(--ld-semantic-color-text)
+<Body color="subtle">Sub</Body> // uses var(--ld-semantic-color-text-subtle)
+```
+
+### Find violations
+
+```bash
+# Hard-coded hex colors in className
+grep -r 'className=".*text-\[#' client/pages/ client/components/
+grep -r 'className=".*text-\[' client/pages/ client/components/
+
+# Hard-coded font sizes
+grep -r 'className=".*text-\[.*px' client/pages/ client/components/
+```
+
+## Completed Work
+
+| Area | Status |
+|------|--------|
+| Button, ButtonGroup | Done |
+| Card, CardHeader, CardContent | Done |
+| Heading (typography) | Done |
+| Design tokens (semantic.css, primitive.css) | Done |
+| Tag, OLQTag | Done |
+| Typography fonts (Everyday Sans UI) | Done |
+| Theme switching system | Done |
+| Icon library (303 icons) | Done |
+
+## Remaining Work
+
+### Typography Components Needed
+
+- [ ] `Display` — large hero numbers and metrics (currently `text-[32px]`)
+- [ ] `Body` — paragraph text (currently `text-sm`, `text-base`, inline sizes)
+- [ ] `Caption` — small helper text (currently `text-xs`, `text-[12px]`)
+
+These are used heavily across pages but no LD 3.5 component exists yet. Create them following `RULE_CreateNewComponent.mdc`.
+
+### High Priority Pages (typography migration)
+
+| File | Issues |
+|------|--------|
+| `client/pages/Index.tsx` | 8 headings, 50+ Tailwind classes |
+| `client/pages/AllCampaigns.tsx` | 5 headings, 30+ Tailwind classes |
+| `client/pages/AllKeywords.tsx` | 5 headings, 30+ Tailwind classes |
+| `client/pages/Campaign.tsx` | 4 headings, 25+ Tailwind classes |
+| `client/pages/ItemHealth.tsx` | 3 headings, 20+ Tailwind classes |
+| `client/pages/DisplayAdvertisingCampaigns.tsx` | 4 headings, 25+ Tailwind classes |
+
+### High Priority Components (typography migration)
+
+- `MartyFloatingPanel.tsx`, `MartyAssistant.tsx`, `DisplayDashboard.tsx`
+- `RecommendationsPanel.tsx`, `AttributionFilterDropdown.tsx`, `DateRangeFilterDropdown.tsx`
+
+### Legacy → Living Design Component Replacements
+
+See `UI-COMPONENT-REPLACEMENT-PLAN.md` for the full component mapping.
+
+| Component | Status |
+|-----------|--------|
+| Button | Done |
+| Checkbox | Pending |
+| RadioGroup | Pending |
+| Popover | Keep (no LD equivalent yet) |
+| Dialog | Pending |
+| Calendar | Keep (no LD equivalent yet) |

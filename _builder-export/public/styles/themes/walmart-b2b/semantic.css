@@ -1,0 +1,55 @@
+/**
+ * Walmart Business (B2B) - Semantic Token Overrides
+ * 
+ * INHERITS FROM: base/semantic.css (loaded globally)
+ * OVERRIDES: 35 tokens — Navy brand color (#002E99)
+ * 
+ * The B2B theme shifts the primary action color to navy blue
+ * and uses cyan (#4DBDF5) as the alt accent. Everything else
+ * (spacing, typography, shadows, status colors) inherits from base.
+ */
+
+:root {
+  /* ── Primary Action Colors ── */
+  --ld-semantic-color-action-fill-primary: #002E99;
+  --ld-semantic-color-action-fill-primary-hovered: #002185;
+  --ld-semantic-color-action-fill-primary-pressed: #001E60;
+
+  /* ── Text Brand Colors ── */
+  --ld-semantic-color-text-brand: #002E99;
+  --ld-semantic-color-text-brand-blue-bold: #001E60;
+
+  /* ── Fill Brand Colors ── */
+  --ld-semantic-color-fill-brand: #002E99;
+  --ld-semantic-color-fill-accent-blue-subtle: #E9F1FE;
+  --ld-semantic-color-fill-brand-subtle: #E9F1FE;
+
+  /* ── Border Activated ── */
+  --ld-semantic-color-border-activated: #001E60;
+
+  /* ── Icon Brand ── */
+  --ld-semantic-color-icon-brand: #002E99;
+
+  /* ── Focus Outline ── */
+  --ld-semantic-color-action-focus-outline: #002E99;
+
+  /* ── Top Navigation ── */
+  --ld-semantic-color-topnav-background: #002E99;
+  --ld-semantic-color-topnav-background-hover: #002185;
+  --ld-semantic-color-topnav-background-active: #001E60;
+
+  /* ── Link Colors ── */
+  --ld-semantic-color-action-text-link: #002E99;
+  --ld-semantic-color-action-text-link-hovered: #001E60;
+
+  /* ── Tertiary Action ── */
+  --ld-semantic-color-action-fill-tertiary-hovered: rgba(0, 46, 153, 0.08);
+  --ld-semantic-color-action-fill-tertiary-pressed: rgba(0, 46, 153, 0.16);
+
+  /* ── WCP Alt Button (Cyan for B2B) ── */
+  --wcp-semantic-color-action-fill-primary-alt: #4DBDF5;
+  --wcp-semantic-color-action-fill-primary-alt-hovered: #2EACEA;
+  --wcp-semantic-color-action-fill-primary-alt-pressed: #189EE2;
+  --wcp-semantic-color-action-text-onfill-primary-alt: #001E60;
+  --wcp-semantic-color-header-background: #002E99;
+}

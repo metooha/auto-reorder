@@ -1,0 +1,296 @@
+/* ── Row ──────────────────────────────────────────────────────────────────── */
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-200, 8px);
+  padding: var(--ld-primitive-scale-space-150, 6px) var(--ld-primitive-scale-space-300, 12px);
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  transition: background 150ms ease;
+  position: relative;
+}
+
+.row:hover {
+  background: var(--ld-semantic-color-fill-hovered, rgba(0, 0, 0, 0.04));
+}
+
+.row.overridden {
+  background: var(--ld-semantic-color-fill-brand-subtle, #e9f1fe);
+}
+
+/* ── Live swatch (read-only, shows resolved cascade value) ────────────────── */
+.swatch {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--ld-primitive-scale-borderradius-round, 9999px);
+  border: 1.5px solid var(--ld-semantic-color-separator, #e3e4e5);
+  background: transparent;
+}
+
+/* ── Label group ──────────────────────────────────────────────────────────── */
+.labelGroup {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.label {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 600;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tokenName {
+  font-family: 'SFMono-Regular', 'Consolas', 'Liberation Mono', 'Menlo', monospace;
+  font-size: 11px;
+  color: var(--ld-semantic-color-text-subtle, #6d6e72);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Picker wrap (relative container for popover) ─────────────────────────── */
+.pickerWrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* ── Picker trigger button ────────────────────────────────────────────────── */
+.pickerTrigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-150, 6px);
+  height: 30px;
+  padding: 0 var(--ld-primitive-scale-space-200, 8px);
+  background: var(--ld-semantic-color-surface, #fff);
+  border: 1px solid var(--ld-semantic-color-field-border, #babbbe);
+  border-radius: var(--ld-primitive-scale-borderradius-50, 4px);
+  cursor: pointer;
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 12px;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  white-space: nowrap;
+  transition: border-color 150ms ease, background 150ms ease;
+  min-width: 140px;
+  max-width: 180px;
+}
+
+.pickerTrigger:hover {
+  border-color: var(--ld-semantic-color-border-strong, #74767c);
+}
+
+.pickerTrigger:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline, #0071dc);
+  outline-offset: 1px;
+}
+
+.pickerTriggerOpen {
+  border-color: var(--ld-semantic-color-action-focus-outline, #0071dc);
+  background: var(--ld-semantic-color-fill-subtle, #f8f8f8);
+}
+
+.pickerSwatch {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  border-radius: var(--ld-primitive-scale-borderradius-round, 9999px);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  display: inline-block;
+}
+
+.pickerLabel {
+  font-family: 'SFMono-Regular', 'Consolas', 'Liberation Mono', 'Menlo', monospace;
+  font-size: 11px;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pickerPlaceholder {
+  color: var(--ld-semantic-color-text-subtlest, #9fa0a4);
+  flex: 1;
+  font-size: 12px;
+}
+
+.pickerChevron {
+  flex-shrink: 0;
+  color: var(--ld-semantic-color-text-subtle, #6d6e72);
+}
+
+/* ── Popover ──────────────────────────────────────────────────────────────── */
+.popover {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 999;
+  width: 320px;
+  max-height: 420px;
+  display: flex;
+  flex-direction: column;
+  background: var(--ld-semantic-color-surface-overlay, #fff);
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+/* ── Search bar inside popover ────────────────────────────────────────────── */
+.popoverSearch {
+  padding: var(--ld-primitive-scale-space-200, 8px) var(--ld-primitive-scale-space-200, 8px);
+  border-bottom: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  flex-shrink: 0;
+}
+
+.searchInput {
+  width: 100%;
+  height: 32px;
+  padding: 0 var(--ld-primitive-scale-space-200, 8px);
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 13px;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  background: var(--ld-semantic-color-field-fill, #fff);
+  border: 1px solid var(--ld-semantic-color-field-border, #babbbe);
+  border-radius: var(--ld-primitive-scale-borderradius-50, 4px);
+  box-sizing: border-box;
+}
+
+.searchInput::placeholder {
+  color: var(--ld-semantic-color-text-subtlest, #9fa0a4);
+}
+
+.searchInput:focus {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline, #0071dc);
+  outline-offset: 1px;
+  border-color: var(--ld-semantic-color-field-border-focused, #0071dc);
+}
+
+/* ── Scrollable family list ───────────────────────────────────────────────── */
+.familyList {
+  overflow-y: auto;
+  flex: 1;
+  padding: var(--ld-primitive-scale-space-150, 6px) 0;
+}
+
+.familyGroup {
+  padding: var(--ld-primitive-scale-space-100, 4px) var(--ld-primitive-scale-space-300, 12px);
+}
+
+.familyLabel {
+  display: block;
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ld-semantic-color-text-subtlest, #9fa0a4);
+  margin-bottom: var(--ld-primitive-scale-space-100, 4px);
+}
+
+/* ── Chip row (color swatches) ────────────────────────────────────────────── */
+.chipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ld-primitive-scale-space-100, 4px);
+  padding-bottom: var(--ld-primitive-scale-space-150, 6px);
+}
+
+.chip {
+  width: 20px;
+  height: 20px;
+  border-radius: var(--ld-primitive-scale-borderradius-round, 9999px);
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  padding: 0;
+  cursor: pointer;
+  transition: transform 100ms ease, box-shadow 100ms ease, border-color 100ms ease;
+  flex-shrink: 0;
+}
+
+.chip:hover {
+  transform: scale(1.25);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  border-color: rgba(0, 0, 0, 0.3);
+  z-index: 1;
+  position: relative;
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline, #0071dc);
+  outline-offset: 2px;
+}
+
+.chipSelected {
+  border: 2.5px solid var(--ld-semantic-color-action-fill-primary, #0071dc);
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--ld-semantic-color-action-fill-primary, #0071dc);
+  transform: scale(1.15);
+}
+
+.chipSelected:hover {
+  transform: scale(1.25);
+}
+
+/* ── No results ───────────────────────────────────────────────────────────── */
+.noResults {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 13px;
+  color: var(--ld-semantic-color-text-subtle, #6d6e72);
+  padding: var(--ld-primitive-scale-space-400, 16px) var(--ld-primitive-scale-space-300, 12px);
+  margin: 0;
+  text-align: center;
+}
+
+/* ── Reset button ─────────────────────────────────────────────────────────── */
+.resetBtn {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: var(--ld-primitive-scale-borderradius-round, 9999px);
+  color: var(--ld-semantic-color-text-subtle, #6d6e72);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms ease, color 150ms ease, background 150ms ease;
+  padding: 0;
+}
+
+.resetBtn.resetBtnVisible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.resetBtn:hover {
+  background: var(--ld-semantic-color-fill-hovered, rgba(0, 0, 0, 0.08));
+  color: var(--ld-semantic-color-text-negative, #c1281b);
+}
+
+.resetBtn:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline, #0071dc);
+  outline-offset: 2px;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ── Reduced motion ───────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .row,
+  .pickerTrigger,
+  .chip,
+  .resetBtn {
+    transition: none;
+  }
+
+  .chip:hover,
+  .chipSelected {
+    transform: none;
+  }
+}

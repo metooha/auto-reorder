@@ -1,0 +1,292 @@
+/* ── WCPQueueBanner docs page ─────────────────────────────────── */
+
+.page {
+  padding: 32px 48px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sectionTitle {
+  font-family: var(--ld-semantic-font-heading-medium-family);
+  font-size: var(--ld-semantic-font-heading-medium-size, 20px);
+  font-weight: var(--ld-semantic-font-heading-medium-weight, 700);
+  line-height: var(--ld-semantic-font-heading-medium-lineheight);
+  color: var(--ld-semantic-color-text);
+  margin: 0 0 4px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+}
+
+.sectionDesc {
+  font-family: var(--ld-semantic-font-body-small-family);
+  font-size: var(--ld-semantic-font-body-small-size);
+  font-weight: var(--ld-semantic-font-body-small-weight-default);
+  line-height: var(--ld-semantic-font-body-small-lineheight);
+  color: var(--ld-semantic-color-text-subtle);
+  margin: 0 0 16px;
+}
+
+/* ── Banner demo wrappers ────────────────────────────────────── */
+.bannerFrame {
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  overflow: hidden;
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+}
+
+/* Narrow frame to simulate mobile viewport */
+.bannerFrameNarrow {
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  overflow: hidden;
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  max-width: 375px;
+}
+
+.demoLabel {
+  font-family: var(--ld-semantic-font-body-small-family);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--ld-semantic-color-text-subtle);
+  margin-bottom: 8px;
+}
+
+/* ── Variant comparison row ─────────────────────────────────── */
+.variantRow {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.variantCard {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 300px;
+}
+
+/* ── Mobile states row ──────────────────────────────────────── */
+.mobileStatesRow {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.mobileStateCard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 260px;
+  max-width: 380px;
+}
+
+.mobileStateLabel {
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.mobileStateSublabel {
+  font-size: 12px;
+  color: var(--ld-semantic-color-text-subtle, #515357);
+  margin-top: -4px;
+}
+
+/* Phone frame container */
+.phoneFrame {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  display: flex;
+  flex-direction: column;
+  height: 440px;
+  position: relative;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10);
+}
+
+/* Simulated page behind the banner */
+.phonePage {
+  flex: 1;
+  background: var(--ld-semantic-color-background-subtle, #f5f6f7);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.phoneNavBar {
+  height: 48px;
+  background: var(--ld-semantic-color-fill-brand, #0071dc);
+  flex-shrink: 0;
+}
+
+.phonePageContent {
+  flex: 1;
+  padding: 16px;
+  background: repeating-linear-gradient(
+    180deg,
+    var(--ld-semantic-color-background-subtle, #f5f6f7) 0px,
+    var(--ld-semantic-color-background-subtle, #f5f6f7) 40px,
+    var(--ld-semantic-color-separator, #e3e4e5) 40px,
+    var(--ld-semantic-color-separator, #e3e4e5) 41px
+  );
+  background-size: 100% 56px;
+}
+
+/* Slot that holds the banner + snackbar at the phone frame's bottom */
+.phoneBannerSlot {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-300, 24px);
+}
+
+/* Snackbar wrapper inside phone frame — 16px horizontal padding */
+.phoneSnackbarWrap {
+  padding: 0 var(--ld-primitive-scale-space-200, 16px);
+}
+
+/* ── Phone bottom nav slot (uses real BottomNav with contained) ── */
+.phoneBottomNavSlot {
+  flex-shrink: 0;
+}
+
+/* ── Snackbar demo ───────────────────────────────────────────── */
+.snackbarDemo {
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  overflow: hidden;
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+}
+
+/* ── Controls ───────────────────────────────────────────────── */
+.controlRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.controlLabel {
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+}
+
+/* ── Code block ─────────────────────────────────────────────── */
+.codeBlock {
+  background: var(--ld-semantic-color-text, #2e2f32);
+  color: #e8e9ea;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  padding: 20px 24px;
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* ── Do / Don't ─────────────────────────────────────────────── */
+.guidelineGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.guidelineCard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px 24px;
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  background: var(--ld-semantic-color-background-subtle, #f5f6f7);
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+}
+
+.doLabel {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--ld-semantic-color-text-positive, #1a7a34);
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--ld-semantic-color-text-positive, #1a7a34);
+}
+
+.dontLabel {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--ld-semantic-color-text-negative, #c00);
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--ld-semantic-color-text-negative, #c00);
+}
+
+.guidelineText {
+  font-family: var(--ld-semantic-font-body-small-family);
+  font-size: var(--ld-semantic-font-body-small-size);
+  color: var(--ld-semantic-color-text-subtle);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Props table */
+.propsTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--ld-semantic-font-body-small-family);
+  font-size: var(--ld-semantic-font-body-small-size);
+}
+
+.propsTable th {
+  text-align: left;
+  padding: 8px 12px;
+  background: var(--ld-semantic-color-background-subtle, #f5f6f7);
+  border-bottom: 2px solid var(--ld-semantic-color-separator, #e3e4e5);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+}
+
+.propsTable td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  color: var(--ld-semantic-color-text-subtle);
+  vertical-align: top;
+}
+
+.propsTable td:first-child {
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding: 24px 16px 48px;
+    gap: 32px;
+  }
+
+  .guidelineGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .variantRow {
+    flex-direction: column;
+  }
+
+  .mobileStatesRow {
+    flex-direction: column;
+  }
+
+  .mobileStateCard {
+    max-width: 100%;
+  }
+}

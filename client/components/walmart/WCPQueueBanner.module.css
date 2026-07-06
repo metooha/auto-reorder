@@ -1,0 +1,317 @@
+/* WCPQueueBanner — queue status banner with multiple variants */
+
+/* ── Wrapper (lineJoined / warning) ── */
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+  width: 100%;
+}
+
+/* ── Snackbar ── */
+.snackbar {
+  display: flex;
+  min-width: 311px;
+  min-height: 52px;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+  align-self: stretch;
+  border-radius: var(--ld-primitive-scale-borderradius-50, 4px);
+  background: var(--ld-semantic-color-fill-inverse, #2E2F32);
+  box-shadow:
+    0 -1px 4px 0 rgba(0, 0, 0, 0.1),
+    0 5px 10px 3px rgba(0, 0, 0, 0.15);
+  padding: var(--ld-primitive-scale-space-200, 16px);
+}
+
+@media (max-width: 899px) {
+  .snackbar {
+    margin: 0 var(--ld-primitive-scale-space-100, 8px);
+  }
+}
+
+.snackbarContent {
+  display: flex;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+  flex: 1 0 0;
+}
+
+.snackbarText {
+  color: var(--ld-semantic-color-text-inverse, #fff);
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: var(--ld-semantic-font-body-small-weight-default, 400);
+  line-height: var(--ld-semantic-font-body-small-lineheight, 20px);
+}
+
+.snackbarActions {
+  display: flex;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+}
+
+.snackbarActionBtn {
+  background: none;
+  border: none;
+  color: var(--ld-semantic-color-link-text-accent-white, #fff);
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: var(--ld-semantic-font-body-small-weight-default, 400);
+  line-height: var(--ld-semantic-font-body-small-lineheight, 20px);
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.snackbarCloseBtn {
+  display: flex;
+  padding: var(--ld-primitive-scale-space-100, 8px);
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--ld-primitive-scale-borderradius-round, 9999px);
+  background: var(--ld-semantic-color-action-fill-accent-white, #fff);
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+/* ── Banner container (blue bg) ── */
+.bannerContainer {
+  display: flex;
+  padding: var(--ld-primitive-scale-space-100, 8px);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+  align-self: stretch;
+  background: var(--wcp-semantic-color-surface-overlay-brand-bold, #002E99);
+}
+
+.bannerBar {
+  display: flex;
+  padding: var(--ld-primitive-scale-space-150, 12px) var(--ld-primitive-scale-space-100, 8px);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ld-primitive-scale-space-50, 4px);
+  align-self: stretch;
+  border-radius: 4px;
+  background: var(--ld-semantic-color-fill, #fff);
+  box-shadow:
+    0 -1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 3px 5px 2px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 899px) {
+  .bannerBar {
+    padding: var(--ld-primitive-scale-space-100, 8px);
+  }
+}
+
+.barContents {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  row-gap: var(--ld-primitive-scale-space-250, 20px);
+  align-self: stretch;
+  flex-wrap: wrap;
+}
+
+.infoGroup {
+  display: flex;
+  max-width: 415px;
+  align-items: center;
+  align-content: center;
+  gap: 8px var(--ld-primitive-scale-space-100, 8px);
+  flex: 1 0 0;
+  flex-wrap: wrap;
+}
+
+.productThumb {
+  width: 32px;
+  height: 32px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: var(--ld-primitive-scale-borderradius-25, 4px);
+  flex-shrink: 0;
+}
+
+.reservationText {
+  flex: 1 0 0;
+  color: var(--ld-semantic-color-text-onfill, #2E2F32);
+  font-family: var(--ld-semantic-font-body-medium-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: var(--ld-semantic-font-body-medium-weight-default, 400);
+  line-height: var(--ld-semantic-font-body-medium-lineheight, 24px);
+}
+
+/* ── Action group (View | Leave + chevron) ── */
+.actionGroup {
+  display: flex;
+  padding-left: var(--ld-primitive-scale-space-100, 8px);
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-200, 16px);
+}
+
+.linkGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-200, 16px);
+}
+
+.linkBtn {
+  background: none;
+  border: none;
+  color: var(--ld-semantic-color-link-text, #2E2F32);
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: var(--ld-semantic-font-body-small-weight-default, 400);
+  line-height: var(--ld-semantic-font-body-small-lineheight, 20px);
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+}
+
+.divider {
+  width: 1px;
+  height: 16px;
+  background: var(--ld-semantic-color-separator, #e3e4e5);
+}
+
+/* ── Link row (backward-compat) ── */
+.linkRow {
+  display: flex;
+  padding: var(--ld-primitive-scale-space-100, 8px) 0 0;
+  border-top: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+}
+
+.linkRowBtn {
+  background: none;
+  border: none;
+  color: var(--ld-semantic-color-link-text, #2E2F32);
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: var(--ld-semantic-font-body-small-weight-default, 400);
+  line-height: var(--ld-semantic-font-body-small-lineheight, 20px);
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+}
+
+.chevronBtn {
+  display: flex;
+  padding: var(--ld-primitive-scale-space-100, 8px);
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--ld-primitive-scale-borderradius-round, 9999px);
+  background: var(--ld-semantic-color-action-fill-accent-white, #fff);
+  border: none;
+  cursor: pointer;
+  color: var(--ld-semantic-color-text, #2E2F32);
+  box-shadow:
+    0 -1px 2px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 1px rgba(0, 0, 0, 0.15);
+}
+
+/* ── Checkout variant ── */
+.checkoutBanner {
+  display: flex;
+  padding: var(--ld-primitive-scale-space-300, 24px) var(--ld-primitive-scale-space-100, 8px);
+  align-items: center;
+  gap: 4px;
+  align-self: stretch;
+  background: var(--wcp-semantic-color-surface-overlay-brand-bold, #002E99);
+  width: 100%;
+}
+
+@media (max-width: 899px) {
+  .checkoutBanner {
+    padding: var(--ld-primitive-scale-space-50, 4px) var(--ld-primitive-scale-space-100, 8px);
+    max-height: 40px;
+  }
+}
+
+.checkoutContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1 0 0;
+  min-height: 32px;
+}
+
+.checkoutInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+}
+
+.checkoutMessage {
+  color: var(--ld-semantic-color-text-inverse, #fff);
+  font-family: var(--ld-semantic-font-body-medium-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: var(--ld-semantic-font-body-medium-weight-default, 400);
+  line-height: var(--ld-semantic-font-body-medium-lineheight, 24px);
+}
+
+@media (max-width: 899px) {
+  .checkoutMessage {
+    font-size: var(--ld-semantic-font-body-small-size, 14px);
+    line-height: var(--ld-semantic-font-body-small-lineheight, 20px);
+  }
+}
+
+.checkoutCloseBtn {
+  display: flex;
+  padding: var(--ld-primitive-scale-space-100, 8px);
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--ld-primitive-scale-borderradius-round, 9999px);
+  background: var(--ld-semantic-color-action-fill-accent-white, #fff);
+  border: none;
+  cursor: pointer;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+/* ── Error variant ── */
+.errorBanner {
+  display: flex;
+  padding: var(--ld-primitive-scale-space-300, 24px) var(--ld-primitive-scale-space-150, 12px);
+  align-items: flex-start;
+  gap: var(--ld-primitive-scale-space-150, 12px);
+  align-self: stretch;
+  background: var(--wcp-semantic-color-surface-overlay-brand-bold, #002E99);
+  width: 100%;
+}
+
+@media (max-width: 899px) {
+  .errorBanner {
+    padding: var(--ld-primitive-scale-space-150, 12px);
+  }
+}
+
+.errorIcon {
+  flex-shrink: 0;
+  color: var(--ld-semantic-color-text-inverse, #fff);
+  width: 24px;
+  height: 24px;
+}
+
+.errorMessage {
+  flex: 1 0 0;
+  color: var(--ld-semantic-color-text-inverse, #fff);
+  font-family: var(--ld-semantic-font-body-medium-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: var(--ld-semantic-font-body-medium-weight-default, 400);
+  line-height: var(--ld-semantic-font-body-medium-lineheight, 24px);
+}
+
+@media (max-width: 899px) {
+  .errorMessage {
+    font-size: var(--ld-semantic-font-body-small-size, 14px);
+    line-height: var(--ld-semantic-font-body-small-lineheight, 20px);
+  }
+}

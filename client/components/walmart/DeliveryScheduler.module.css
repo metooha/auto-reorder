@@ -1,0 +1,168 @@
+/* DeliveryScheduler — day + time picker for delivery scheduling */
+
+.scheduler {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-200, 16px);
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Section wrapper */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+}
+
+.sectionLabel {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: 700;
+  line-height: var(--ld-semantic-font-body-medium-lineheight, 1.5rem);
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+/* ── Day selector row ── */
+.dayRow {
+  display: flex;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+}
+
+.dayBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: -2px;
+  flex: 1;
+  padding: var(--ld-primitive-scale-space-100, 8px) var(--ld-primitive-scale-space-50, 4px);
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  border: 1.5px solid var(--ld-semantic-color-separator, #e3e4e5);
+  background: var(--ld-semantic-color-surface, #fff);
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.dayBtn:hover {
+  background: var(--ld-semantic-color-surface-hovered, #e8e8e9);
+}
+
+.dayBtnSelected {
+  background: var(--ld-semantic-color-text, #2e2f32);
+  border-color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.dayBtnSelected:hover {
+  background: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.dayLabel {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: 700;
+  line-height: var(--ld-semantic-font-body-medium-lineheight, 1.5rem);
+  color: var(--ld-semantic-color-text, #2e2f32);
+  text-align: center;
+}
+
+.dayBtnSelected .dayLabel {
+  color: #fff;
+}
+
+.dayDate {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-caption-size, 12px);
+  font-weight: 400;
+  line-height: var(--ld-semantic-font-caption-lineheight, 1rem);
+  color: var(--ld-semantic-color-text-subtle, #5b5c5e);
+  text-align: center;
+}
+
+.dayBtnSelected .dayDate {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ── Time selector list ── */
+.timeList {
+  display: flex;
+  flex-direction: column;
+}
+
+.timeRow {
+  display: flex;
+  padding: var(--ld-primitive-scale-space-100, 8px) 0;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-200, 16px);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+}
+
+.timeRow:hover {
+  background: var(--ld-semantic-color-surface-hovered, #f5f5f6);
+  border-radius: var(--ld-primitive-scale-borderradius-050, 4px);
+}
+
+/* Radio circle */
+.radioOuter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--ld-primitive-scale-borderradius-round, 9999px);
+  border: 1px solid var(--ld-semantic-color-text, #2e2f32);
+  background: #fff;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.radioInner {
+  width: 12px;
+  height: 12px;
+  border-radius: var(--ld-primitive-scale-borderradius-round, 9999px);
+  background: var(--ld-semantic-color-text, #2e2f32);
+  animation: radioFill 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes radioFill {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Time label */
+.timeLabel {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: 400;
+  line-height: var(--ld-semantic-font-body-medium-lineheight, 1.5rem);
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.timeLabelSelected {
+  font-weight: 700;
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .scheduler,
+  .radioInner {
+    animation: none !important;
+  }
+}

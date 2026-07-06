@@ -1,0 +1,57 @@
+/**
+ * Cashi MX Theme
+ * Generated from LivingDesign Airtable Sync + LD Base
+ *
+ * INHERITANCE: Inherits LD Base directly
+ *
+ * Cashi MX brand color: #6212b2 (purple)
+ * Mexico financial services
+ */
+
+:root {
+  /* Cashi MX brand colors - PURPLE (#6212b2) */
+  --ld-semantic-color-action-fill-primary: var(--ld-primitive-color-purple-100, #6212b2);
+  --ld-semantic-color-action-fill-primary-focused: var(--ld-primitive-color-purple-120, #500f92);
+  --ld-semantic-color-action-fill-primary-hovered: var(--ld-primitive-color-purple-120, #500f92);
+  --ld-semantic-color-action-fill-primary-pressed: var(--ld-primitive-color-purple-130, #400c75);
+
+  --ld-semantic-color-text-brand: var(--ld-primitive-color-purple-100, #6212b2);
+  --ld-semantic-color-border-brand: var(--ld-primitive-color-purple-100, #6212b2);
+  --ld-semantic-color-border-activated: var(--ld-primitive-color-purple-100, #6212b2);
+
+  /* Top navigation — purple */
+  --ld-semantic-color-top-nav-fill: var(--ld-primitive-color-purple-100, #6212b2);
+
+  /* Focus outline — purple */
+  --ld-semantic-color-action-focus-outline: var(--ld-primitive-color-purple-100, #6212b2);
+
+  /* Brand fills — purple */
+  --ld-semantic-color-fill-brand: var(--ld-primitive-color-purple-100, #6212b2);
+  --ld-semantic-color-fill-brand-bold: var(--ld-primitive-color-purple-160, #1d0659);
+  --ld-semantic-color-fill-brand-subtle: var(--ld-primitive-color-purple-5, #f7f2fc);
+  --ld-semantic-color-text-brand-bold: var(--ld-primitive-color-purple-160, #1d0659);
+  --ld-semantic-color-border-brand-bold: var(--ld-primitive-color-purple-160, #1d0659);
+
+  /* Text on brand-subtle fill */
+  --ld-semantic-color-text-on-fill-brand-subtle: var(--ld-primitive-color-purple-120, #500f92);
+
+  /* ── Side Navigation / Page Nav — purple active highlights ─────────────── */
+  --ld-semantic-color-page-nav-fill-hovered: var(--ld-primitive-color-purple-5, #f7f2fc);
+  --ld-semantic-color-page-nav-fill-focused: var(--ld-primitive-color-purple-5, #f7f2fc);
+  --ld-semantic-color-page-nav-fill-pressed: var(--ld-primitive-color-purple-10, #eedcf9);
+  --ld-semantic-color-page-nav-fill-activated: var(--ld-primitive-color-purple-5, #f7f2fc);
+  --ld-semantic-color-page-nav-fill-activated-hovered: var(--ld-primitive-color-purple-10, #eedcf9);
+  --ld-semantic-color-page-nav-fill-activated-focused: var(--ld-primitive-color-purple-10, #eedcf9);
+  --ld-semantic-color-page-nav-fill-activated-pressed: var(--ld-primitive-color-purple-20, #ddb9f3);
+
+  /* Active indicator bar — purple */
+  --ld-semantic-color-page-nav-indicator-hovered: var(--ld-primitive-color-purple-20, #ddb9f3);
+  --ld-semantic-color-page-nav-indicator-focused: var(--ld-primitive-color-purple-20, #ddb9f3);
+  --ld-semantic-color-page-nav-indicator-pressed: var(--ld-primitive-color-purple-30, #cc96ec);
+  --ld-semantic-color-page-nav-indicator-activated: var(--ld-primitive-color-purple-100, #6212b2);
+  --ld-semantic-color-page-nav-indicator-activated-hovered: var(--ld-primitive-color-purple-100, #6212b2);
+  --ld-semantic-color-page-nav-indicator-activated-focused: var(--ld-primitive-color-purple-100, #6212b2);
+  --ld-semantic-color-page-nav-indicator-activated-pressed: var(--ld-primitive-color-purple-120, #500f92);
+
+  /* Inherits all other tokens from LD Base */
+}

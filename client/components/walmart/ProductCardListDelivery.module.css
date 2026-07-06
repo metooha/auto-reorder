@@ -1,0 +1,404 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 8px 12px;
+  border-bottom: 1px solid var(--ld-semantic-color-separator);
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+.cardBody {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+}
+
+/* ── Image column ── */
+.imageCol {
+  flex: 1 1 0;
+  min-width: 0;
+  flex-shrink: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.imageWrap {
+  width: 100%;
+  height: 148px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.productImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.flag {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  background: var(--ld-semantic-color-fill-inverse);
+  color: var(--ld-semantic-color-text-inverse);
+}
+
+.flagRed {
+  background: var(--ld-semantic-color-text-negative);
+  color: var(--ld-semantic-color-text-inverse);
+}
+
+.flagLightBlue {
+  background: var(--wcp-semantic-color-fill-confidence-subtle, #e9f1fe);
+  color: var(--wcp-semantic-color-text-on-fill-confidence-subtle, #002e99);
+}
+
+.favoriteButton {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  z-index: 10;
+}
+
+/* Option selector under image */
+.optionSection {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.optionLabel {
+  font-size: 12px;
+  color: var(--ld-semantic-color-text-subtle);
+  font-weight: 400;
+}
+
+/* ── Content column ── */
+.contentCol {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+/* Price */
+.priceRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 1px;
+  flex-wrap: wrap;
+  min-height: 24px;
+}
+
+.dollarSign {
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16px;
+  color: var(--ld-semantic-color-text);
+  padding-bottom: 6px;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.price {
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  line-height: 20px;
+}
+
+.cents {
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16px;
+  color: var(--ld-semantic-color-text);
+  padding-bottom: 8px;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.unitPrice {
+  font-size: 12px;
+  color: var(--ld-semantic-color-text-subtle);
+  margin: 0;
+}
+
+.productName {
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  color: var(--ld-semantic-color-text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0;
+}
+
+.ratingRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ratingCount {
+  font-size: 12px;
+  color: var(--ld-semantic-color-text-subtle);
+}
+
+/* ── Delivery cues ── */
+.deliveryCues {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 2px;
+}
+
+.cueRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--ld-semantic-color-text);
+  line-height: 16px;
+}
+
+.cueRowFlash {
+  color: var(--ld-semantic-color-text);
+}
+
+.flashIcon {
+  flex-shrink: 0;
+  color: var(--ld-semantic-color-feedback-caution, #f5a623);
+}
+
+/* Brand-bold express delivery badge ─ dark blue, 2px radius, spark icon */
+.expressBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  align-self: flex-start;
+  padding: 2px 8px;
+  border-radius: 2px;
+  background: var(--ld-semantic-color-action-fill-primary-pressed, #001e60);
+  color: var(--ld-semantic-color-text-inverse, #fff);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+}
+
+.expressBadge .cueBold {
+  font-weight: 700;
+}
+
+.wplusIcon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 13px;
+}
+
+.cueBold {
+  font-weight: 700;
+}
+
+.cueText {
+  color: var(--ld-semantic-color-text-subtle);
+}
+
+/* W+ membership cue text — primary blue */
+.cueWplus {
+  color: var(--ld-semantic-color-text-brand, #0053e2);
+}
+
+.subscribeRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--ld-semantic-color-text);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+}
+
+/* ── CTA row ─ full width at bottom of card ── */
+/* Use CSS grid so both children always occupy exactly 50% regardless of
+   intrinsic content size (button min-content, stepper min-width, etc.) */
+.ctaRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+  margin-top: 12px;
+  align-items: center;
+  width: 100%;
+}
+
+.ctaRow > * {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Match the Add-to-cart button height to the yellow delivery pill (40px) */
+.ctaRow > button {
+  height: 40px;
+  min-height: 40px;
+  width: 100%;
+  min-width: 0;
+}
+
+/* Custom delivery add pill — initial state */
+/* ── Loading pill with WCP spinner ── */
+.loadingPillYellow,
+.loadingPillBlue {
+  flex: 1;
+  height: 40px;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.loadingPillYellow {
+  background: var(--wcp-semantic-color-action-fill-primary-alt, #ffc220);
+}
+
+.loadingPillBlue {
+  background: var(--ld-semantic-color-action-fill-primary, #0053e2);
+}
+
+.deliveryAddPill {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  height: 40px;
+  border-radius: 100px;
+  background: var(--wcp-semantic-color-action-fill-primary-alt, #ffc220);
+  color: var(--wcp-semantic-color-action-text-on-fill-primary-alt, #001e60);
+  border: none;
+  cursor: pointer;
+  font-family: var(--ld-semantic-font-family-sans);
+  padding: 0 12px;
+  transition: background 120ms ease;
+  min-width: 0;
+}
+
+.deliveryAddPill:hover {
+  background: var(--wcp-semantic-color-action-fill-primary-alt-hovered, #ffc836);
+}
+
+.deliveryAddPill:active {
+  background: var(--wcp-semantic-color-action-fill-primary-alt-pressed, #e6a31d);
+}
+
+.deliveryAddText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.deliveryAddLabel {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.deliveryAddSub {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* Delivery / cart stepper wrappers — fill the CTA slot equally */
+.deliveryStepper,
+.cartStepper {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  align-items: stretch;
+}
+
+.deliveryStepper > *,
+.cartStepper > * {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+}
+
+/* Delivery stepper — match the yellow pill default size (40px tall, full width)
+   and stack the count + "delivery" label vertically with regular weight */
+.deliveryStepper :global([class*="quantityStepper"]) {
+  display: flex;
+  width: 100%;
+}
+
+.deliveryStepper :global([class*="pill"]) {
+  display: flex !important;
+  height: 40px !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  width: 100% !important;
+  flex: 1 1 100% !important;
+  box-sizing: border-box !important;
+}
+
+.deliveryStepper :global([class*="slotCenter"]) {
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 0;
+  line-height: 1;
+}
+
+.deliveryStepper :global([class*="countValue"]) {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16px;
+}
+
+.deliveryStepper :global([class*="labelText"]) {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 13px;
+}
+
+/* Cart stepper — match primary CTA height (40px) and exact width of default CTA */
+.cartStepper :global([class*="quantityStepper"]) {
+  display: flex;
+  width: 100%;
+}
+
+.cartStepper :global([class*="pill"]) {
+  display: flex !important;
+  height: 40px !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  width: 100% !important;
+  flex: 1 1 100% !important;
+  box-sizing: border-box !important;
+}

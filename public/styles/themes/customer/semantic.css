@@ -1,0 +1,111 @@
+/**
+ * Customer Theme
+ * Blue & light-blue customer experience
+ *
+ * INHERITANCE: LD Base + WCP
+ * USAGE: Customer-facing applications
+ *
+ * Overrides WCP tokens to use a cohesive blue / light-blue palette
+ * instead of the default mixed palette (yellow spark, red savings, etc.)
+ */
+
+:root {
+  /* ═══════════════════════════════════════════════════════════════ */
+  /* WCP Overrides — Blue & Light-Blue Customer Experience          */
+  /* ═══════════════════════════════════════════════════════════════ */
+
+  /* ── Primary Alt Action (blue instead of spark yellow) ── */
+  --wcp-semantic-color-action-fill-primary-alt: var(--ld-primitive-color-blue-100, #0053e2);
+  --wcp-semantic-color-action-fill-primary-alt-disabled: var(--ld-primitive-color-gray-50, #babbbe);
+  --wcp-semantic-color-action-fill-primary-alt-focused: var(--ld-primitive-color-blue-130, #002e99);
+  --wcp-semantic-color-action-fill-primary-alt-hovered: var(--ld-primitive-color-blue-90, #1a6ce8);
+  --wcp-semantic-color-action-fill-primary-alt-pressed: var(--ld-primitive-color-blue-130, #002e99);
+  --wcp-semantic-color-action-text-on-fill-primary-alt: var(--ld-primitive-color-white, #ffffff);
+  --wcp-semantic-color-action-text-on-fill-primary-alt-disabled: var(--ld-primitive-color-white, #ffffff);
+  --wcp-semantic-color-action-text-on-fill-primary-alt-focused: var(--ld-primitive-color-white, #ffffff);
+  --wcp-semantic-color-action-text-on-fill-primary-alt-hovered: var(--ld-primitive-color-white, #ffffff);
+  --wcp-semantic-color-action-text-on-fill-primary-alt-pressed: var(--ld-primitive-color-white, #ffffff);
+
+  /* ── Borders — blue accent ── */
+  --wcp-semantic-color-border-savings-subtle: var(--ld-primitive-color-blue-130, #002e99);
+  --wcp-semantic-color-border-social: var(--ld-primitive-color-blue-100, #0053e2);
+
+  /* ── Bottom Nav — brand blue ── */
+  --wcp-semantic-color-bottom-nav-fill-brand: var(--ld-primitive-color-blue-130, #002e99);
+  --wcp-semantic-color-bottom-nav-text-on-fill-brand: var(--ld-primitive-color-white, #ffffff);
+
+  /* ── Fill Colors — blue spectrum ── */
+  --wcp-semantic-color-fill-confidence: var(--ld-primitive-color-blue-130, #002e99);
+  --wcp-semantic-color-fill-confidence-alt: var(--ld-primitive-color-blue-100, #0053e2);
+  --wcp-semantic-color-fill-confidence-bold: var(--ld-primitive-color-blue-160, #001e60);
+  --wcp-semantic-color-fill-confidence-subtle: var(--ld-primitive-color-blue-5, #f0f5ff);
+  --wcp-semantic-color-fill-holiday-member: var(--ld-primitive-color-blue-100, #0053e2);
+  --wcp-semantic-color-fill-holiday-restricted: var(--ld-primitive-color-blue-5, #f0f5ff);
+  --wcp-semantic-color-fill-savings-bold: var(--ld-primitive-color-blue-100, #0053e2);
+  --wcp-semantic-color-fill-savings-subtle: var(--ld-primitive-color-blue-5, #f0f5ff);
+  --wcp-semantic-color-fill-scarcity: var(--ld-primitive-color-blue-10, #e0ebfe);
+  --wcp-semantic-color-fill-social: var(--ld-primitive-color-white, #ffffff);
+  --wcp-semantic-color-fill-status: var(--ld-primitive-color-blue-20, #c9dcfd);
+  --wcp-semantic-color-fill-urgent: var(--ld-primitive-color-blue-30, #a9c6f8);
+
+  /* ── Input Colors — blue activated ── */
+  --wcp-semantic-color-input-fill-activated-brand: var(--ld-primitive-color-white, #ffffff);
+  --wcp-semantic-color-input-fill-activated-brand-disabled: var(--ld-primitive-color-white, #ffffff);
+  --wcp-semantic-color-input-fill-activated-brand-focused: var(--ld-primitive-color-blue-5, #f0f5ff);
+  --wcp-semantic-color-input-fill-activated-brand-hovered: var(--ld-primitive-color-blue-5, #f0f5ff);
+  --wcp-semantic-color-input-fill-activated-brand-pressed: var(--ld-primitive-color-blue-10, #e0ebfe);
+  --wcp-semantic-color-input-text-on-fill-activated-brand: var(--ld-primitive-color-blue-100, #0053e2);
+
+  /* ── Notice Colors — blue fills ── */
+  --wcp-semantic-color-notice-fill-brand: var(--ld-primitive-color-blue-100, #0053e2);
+  --wcp-semantic-color-notice-fill-inverse: var(--ld-primitive-color-blue-160, #001e60);
+  --wcp-semantic-color-notice-fill-primary: var(--ld-primitive-color-blue-5, #f0f5ff);
+  --wcp-semantic-color-notice-text-on-fill-brand: var(--ld-primitive-color-white, #ffffff);
+  --wcp-semantic-color-notice-text-on-fill-inverse: var(--ld-primitive-color-white, #ffffff);
+  --wcp-semantic-color-notice-text-on-fill-primary: var(--ld-primitive-color-blue-130, #002e99);
+
+  /* ── Rating Colors — blue tint ── */
+  --wcp-semantic-color-rating-fill-activated: var(--ld-primitive-color-blue-100, #0053e2);
+  --wcp-semantic-color-rating-fill-focused: var(--ld-primitive-color-blue-20, #c9dcfd);
+  --wcp-semantic-color-rating-fill-hovered: var(--ld-primitive-color-blue-20, #c9dcfd);
+  --wcp-semantic-color-rating-fill-pressed: var(--ld-primitive-color-blue-130, #002e99);
+
+  /* ── Surface Colors — light blue overlays ── */
+  --wcp-semantic-color-surface-express: var(--ld-primitive-color-blue-5, #f0f5ff);
+  --wcp-semantic-color-surface-overlay-brand-bold: var(--ld-primitive-color-blue-130, #002e99);
+  --wcp-semantic-color-surface-overlay-brand-subtle: var(--ld-primitive-color-blue-5, #f0f5ff);
+  --wcp-semantic-color-surface-overlay-subtle: var(--ld-primitive-color-gray-5, #f8f8f8);
+
+  /* ── Magic Tokens — override developer theme's green gradient ── */
+  /* Developer theme sets magic-2 to green (#a4fb6c); customer uses the standard blue gradient */
+  --ld-primitive-color-magic-1: #0053e2;
+  --ld-primitive-color-magic-2: #3d90ec;
+  --ld-primitive-color-magic-3: #79cdf6;
+  --ld-primitive-color-magic-4: #e9f1fe;
+  --ld-semantic-color-border-magic-start: #0053e2;
+  --ld-semantic-color-border-magic-middle: #3d90ec;
+  --ld-semantic-color-border-magic-stop: #79cdf6;
+  --ld-semantic-color-text-magic-start: #0053e2;
+  --ld-semantic-color-text-magic-middle: #3d90ec;
+  --ld-semantic-color-text-magic-stop: #79cdf6;
+  --ld-semantic-color-loading-magic: #3d90ec;
+  --ld-semantic-color-loading-magic-subtle: #e9f1fe;
+  --ld-semantic-color-field-border-magic: #0053e2;
+  --ld-semantic-color-field-border-magic-hovered: #0053e2;
+  --ld-semantic-color-field-border-magic-focused: #0053e2;
+
+  /* ── Text on Fill Colors — white on blue ── */
+  --wcp-semantic-color-text-on-fill-confidence: var(--ld-primitive-color-white, #ffffff);
+  --wcp-semantic-color-text-on-fill-confidence-alt: var(--ld-primitive-color-white, #ffffff);
+  --wcp-semantic-color-icon-on-fill-confidence-alt: var(--ld-primitive-color-blue-20, #c9dcfd);
+  --wcp-semantic-color-text-on-fill-confidence-bold: var(--ld-primitive-color-white, #ffffff);
+  --wcp-semantic-color-text-on-fill-confidence-subtle: var(--ld-primitive-color-blue-130, #002e99);
+  --wcp-semantic-color-text-on-fill-holiday-member: var(--ld-primitive-color-white, #ffffff);
+  --wcp-semantic-color-text-on-fill-holiday-restricted: var(--ld-primitive-color-blue-130, #002e99);
+  --wcp-semantic-color-text-on-fill-savings-bold: var(--ld-primitive-color-white, #ffffff);
+  --wcp-semantic-color-text-on-fill-savings-subtle: var(--ld-primitive-color-blue-130, #002e99);
+  --wcp-semantic-color-text-on-fill-scarcity: var(--ld-primitive-color-blue-160, #001e60);
+  --wcp-semantic-color-text-on-fill-social: var(--ld-primitive-color-blue-100, #0053e2);
+  --wcp-semantic-color-text-on-fill-status: var(--ld-primitive-color-blue-160, #001e60);
+  --wcp-semantic-color-text-on-fill-urgent: var(--ld-primitive-color-blue-160, #001e60);
+}

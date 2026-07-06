@@ -1,0 +1,63 @@
+---
+description: Never use italic font-style anywhere in the design system
+globs:
+alwaysApply: false
+---
+
+## Purpose
+
+The Living Design 3.5 type system has no italic text styles. Using `font-style: italic` breaks visual consistency and introduces an unsanctioned typographic treatment. This rule applies to ALL CSS modules, inline styles, and component code — zero exceptions.
+
+---
+
+## The Rule
+
+**NEVER use `font-style: italic` or `fontStyle: 'italic'` anywhere in the codebase.**
+
+- No CSS modules with `font-style: italic`
+- No inline styles with `fontStyle: 'italic'`
+- No `<em>` or `<i>` tags used for visual italicization (semantic `<em>` for emphasis in prose is acceptable only if no italic styling is applied)
+- If text needs visual differentiation, use weight (`font-weight: 600`), size, color tokens, or a `Tag` component instead
+
+---
+
+## Examples
+
+### Correct
+
+
+/* ✅ CORRECT — use subtle color or weight for secondary text */
+.note {
+  font-size: var(--ld-semantic-font-caption-size, 0.75rem);
+  color: var(--ld-semantic-color-text-subtle, #515357);
+}
+```
+
+```tsx
+// ✅ CORRECT — no italic, use color differentiation
+<p style={{ fontSize: 13, color: 'var(--ld-semantic-color-text-subtle)' }}>
+  Additional context here
+</p>
+```
+
+### Wrong
+
+```css
+/* ❌ WRONG — italic is not a sanctioned text style */
+.note {
+  font-style: italic;
+}
+```
+
+```tsx
+// ❌ WRONG — no italic inline styles
+<p style={{ fontStyle: 'italic' }}>Some text</p>
+```
+
+---
+
+## Checklist
+
+- [ ] Zero instances of `font-style: italic` in CSS modules
+- [ ] Zero instances of `fontStyle: 'italic'` in TSX/JSX inline styles
+- [ ] No `<i>` tags used for visual styling (icon wrappers excluded)

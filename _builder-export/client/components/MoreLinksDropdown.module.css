@@ -1,0 +1,82 @@
+.trigger {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  background: white;
+  border: none;
+  cursor: pointer;
+  transition: all 100ms;
+  color: var(--ld-semantic-color-topnav-background-active, #002E99);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+}
+
+.trigger:hover {
+  background: var(--ld-semantic-color-fill-accent-blue-subtle, #F0F3FF);
+}
+
+.trigger:active {
+  background: var(--ld-semantic-color-fill-accent-blue-subtle, #F0F3FF);
+}
+
+.trigger:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline, #0053E2);
+  outline-offset: 2px;
+}
+
+.label {
+  white-space: nowrap;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  margin-left: 4px;
+  color: var(--ld-semantic-color-topnav-background-active, #002E99);
+  transition: transform 100ms;
+}
+
+.trigger[aria-expanded="true"] .icon {
+  transform: rotate(180deg);
+}
+
+.content {
+  background: white;
+  border: 1px solid var(--ld-semantic-color-border-subtle, #D1D5DB);
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 1px rgba(0, 0, 0, 0.15);
+  min-width: 220px;
+  padding: 8px;
+  z-index: 50;
+  margin-top: 8px;
+}
+
+.item {
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--ld-semantic-color-text, #2E2F32);
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-weight: 400;
+  line-height: 20px;
+  border-radius: 4px;
+  transition: background-color 100ms;
+  text-align: left;
+}
+
+.item:hover {
+  background: var(--ld-semantic-color-surface-hovered, #F8F8F8);
+}
+
+.item:active {
+  background: var(--ld-semantic-color-fill-accent-blue-subtle, #F0F3FF);
+}
+
+.item:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline, #0053E2);
+  outline-offset: -2px;
+}

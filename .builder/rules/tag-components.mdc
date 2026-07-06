@@ -1,0 +1,105 @@
+---
+description: Tag and OLQTag Component Usage
+globs:
+alwaysApply: false
+---
+
+## Purpose
+
+Enforce use of `Tag` and `OLQTag` components for all status indicators and percentage-coded labels. Never use manual styled divs with inline color logic.
+
+## Rules
+
+- ALWAYS import `Tag` from `@/components/ui/tag` for status labels, categories, and attributes
+- ALWAYS import `OLQTag` from `@/components/ui/olq-tag` for percentage-coded quality indicators
+- NEVER write a custom `getXStyle()` function that returns inline background/color/border values
+- NEVER use `className="inline-block px-3 py-1 rounded"` with inline styles for status display
+- NEVER hard-code the OLQ color thresholds — they are built into `OLQTag`
+
+## Quick Check
+
+```tsx
+// WRONG — custom styled div with inline color function
+const getOLQStyle = (olq: string) => {
+  const pct = parseFloat(olq);
+  if (pct < 50) return { backgroundColor: '#FBD0CC', color: '#EA1100' };
+  // ...
+};
+<div className="inline-block px-3 py-1 rounded" style={getOLQStyle(item.olq)}>
+  {item.olq}
+</div>
+
+// CORRECT — OLQTag handles all threshold logic internally
+import { OLQTag } from '@/components/ui/olq-tag';
+<OLQTag percentage={85} />
+
+// WRONG — custom span for a status label
+<span style={{ background: '#eaf3e6', color: '#2a8703', padding: '2px 8px' }}>Active</span>
+
+// CORRECT — Tag with semantic variant
+import { Tag } from '@/components/ui/tag';
+<Tag variant="success">Active</Tag>
+```
+
+## Tag Component
+
+**Import**: `import { Tag } from '@/components/ui/tag';`
+
+**Variants**: `default` | `primary` | `secondary` | `success` | `warning` | `destructive` | `info`
+
+**Sizes**: `sm` | `md` | `lg`
+
+**Optional props**: `dismissible`, `onClick`, `icon`, `disabled`
+
+```tsx
+<Tag variant="success" size="md">Active</Tag>
+<Tag variant="warning" size="sm">Pending</Tag>
+<Tag variant="destructive">Rejected</Tag>
+<Tag variant="info" dismissible onDismiss={() => {}}>Filter</Tag>
+```
+
+## OLQTag Component
+
+**Import**: `import { OLQTag } from '@/components/ui/olq-tag';`
+
+**Built-in threshold logic** (do not replicate externally):
+
+| Range | Color | Tokens |
+|-------|-------|--------|
+| < 50% | Red | `--ld-semantic-color-fill-accent-red-subtle` / `--ld-semantic-color-text-accent-red` |
+| 50–79% | Yellow | `--ld-semantic-color-fill-accent-spark-subtle` / `--ld-semantic-color-text-accent-spark` |
+| >= 80% | Green | `--ld-semantic-color-fill-accent-green-subtle` / `--ld-semantic-color-text-accent-green` |
+
+```tsx
+// Pass a numeric percentage — OLQTag picks the color automatically
+<OLQTag percentage={42} />   // red
+<OLQTag percentage={65} />   // yellow
+<OLQTag percentage={92} />   // green
+```
+
+## Migration Pattern
+
+When you find a manual OLQ styled div in any page:
+
+1. Remove the `getOLQStyle` function (or equivalent inline style logic)
+2. Add `import { OLQTag } from '@/components/ui/olq-tag';`
+3. Replace `<div style={getOLQStyle(item.olq)}>{item.olq}</div>` with `<OLQTag percentage={parseFloat(item.olq)} />`
+4. Delete any leftover Tailwind color utilities used only by the old pattern
+
+## Enforcement
+
+Find violations:
+
+```bash
+# Find manual OLQ/status style functions
+grep -r "getOLQStyle\|getStatusStyle\|getColorForPct" client/pages/ client/components/
+
+# Find inline-styled status divs
+grep -r "backgroundColor.*EA1100\|backgroundColor.*FBD0CC\|backgroundColor.*#[0-9a-fA-F]\{6\}" client/pages/
+```
+
+## Related Files
+
+- `client/components/ui/tag.tsx` — Tag component
+- `client/components/ui/olq-tag.tsx` — OLQTag component
+- `guidelines/components/Tag.md` — Full Tag component spec

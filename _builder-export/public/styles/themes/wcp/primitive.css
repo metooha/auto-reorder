@@ -1,0 +1,9 @@
+/**
+ * WCP (Walmart Commerce Platform) - Primitive Token Overrides
+ * 
+ * INHERITS FROM: base/primitive.css (loaded globally)
+ * OVERRIDES: None — WCP uses standard Walmart primitives
+ * 
+ * This file is intentionally empty. All primitive tokens
+ * inherit from the base theme via CSS cascade.
+ */

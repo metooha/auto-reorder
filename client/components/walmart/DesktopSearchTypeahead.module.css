@@ -1,0 +1,236 @@
+.typeahead {
+  position: absolute;
+  top: 100%;
+  left: -3px;
+  right: -3px;
+  border: 2px solid var(--ld-semantic-color-action-focus-outline);
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  background: var(--ld-semantic-color-surface);
+  z-index: 101;
+  max-height: 80vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.typeahead::-webkit-scrollbar {
+  display: none;
+}
+
+/* Separator */
+.separator {
+  height: 1px;
+  background: var(--ld-semantic-color-separator);
+}
+
+/* Suggestions list */
+.suggestionsWrap {
+  padding: 12px 24px;
+}
+
+.suggestionRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 8px;
+  width: 100%;
+  border-radius: 4px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 150ms;
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+.suggestionRow:hover {
+  background: var(--ld-semantic-color-surface-hovered);
+}
+
+.suggestionText {
+  flex: 1;
+  text-align: left;
+  font-size: var(--ld-semantic-font-body-small-size);
+  line-height: var(--ld-semantic-font-body-small-lineheight);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--ld-semantic-color-text);
+}
+
+.suggestionIcon {
+  color: var(--ld-semantic-color-text-subtle);
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}
+
+/* Section */
+.section {
+  padding: 20px;
+}
+
+.sectionPadded {
+  padding: 16px 20px;
+}
+
+.sectionHeading {
+  font-size: var(--ld-semantic-font-body-medium-size);
+  font-weight: var(--ld-semantic-font-body-medium-weight-alt);
+  line-height: var(--ld-semantic-font-body-medium-lineheight);
+  color: var(--ld-semantic-color-text);
+  margin: 0 0 12px 0;
+}
+
+.sectionHeadingRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.myItemsLink {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--ld-semantic-font-body-small-size);
+  text-decoration: underline;
+  color: var(--ld-semantic-color-text);
+  background: none;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: opacity 150ms;
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+.myItemsLink:hover {
+  opacity: 0.8;
+}
+
+/* Tile chip (keep shopping for) */
+.tileButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  width: 72px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+.tileFilter {
+  width: 72px;
+  height: 72px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ld-semantic-color-fill-subtle);
+}
+
+.tileFilterLabel {
+  font-size: 11px;
+  text-align: center;
+  font-weight: 500;
+  line-height: 1.2;
+  padding: 0 4px;
+  color: var(--ld-semantic-color-text);
+}
+
+.tileImage {
+  width: 72px;
+  height: 72px;
+  border-radius: 9999px;
+  overflow: hidden;
+  background: var(--ld-semantic-color-fill-subtle);
+}
+
+.tileImageImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tileLabel {
+  font-size: var(--ld-semantic-font-body-small-size);
+  text-align: center;
+  line-height: 1.2;
+  color: var(--ld-semantic-color-text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Recent search row */
+.recentRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+}
+
+.recentIcon {
+  color: var(--ld-semantic-color-text-subtle);
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}
+
+.recentButton {
+  flex: 1;
+  font-size: var(--ld-semantic-font-body-small-size);
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--ld-semantic-color-text);
+  font-family: var(--ld-semantic-font-family-sans);
+  padding: 0;
+}
+
+.recentButton:hover {
+  text-decoration: underline;
+}
+
+.recentRemoveButton {
+  padding: 4px;
+  border-radius: 9999px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--ld-semantic-color-text-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 150ms;
+}
+
+.recentRemoveButton:hover {
+  background: var(--ld-semantic-color-surface-hovered);
+}
+
+/* Horizontal scroll */
+.scrollRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.scrollList {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  flex: 1;
+  padding-bottom: 4px;
+}
+
+.scrollList::-webkit-scrollbar {
+  display: none;
+}

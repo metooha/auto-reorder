@@ -1,0 +1,67 @@
+/**
+ * Font Face Definitions
+ * Custom fonts loaded from Living Design toolkit
+ */
+
+/* Everyday Sans UI - Variable Font (all weights) */
+@font-face {
+  font-family: 'Everyday Sans UI';
+  src: url('https://cdn.builder.io/o/assets%2F02297b1ff48d4a2f8e4d9ed415c47ecf%2F099e4da207154fa2942287ea8fc9565d?alt=media&token=115d5a1e-d505-4287-913e-609760c8704e&apiKey=02297b1ff48d4a2f8e4d9ed415c47ecf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Everyday Sans Mono - Regular */
+@font-face {
+  font-family: 'Everyday Sans Mono';
+  src: url('https://digitaltoolkit.livingdesign.walmart.com/static/EverydaySansMono-Regular-76b2fdcf3a8ab024e41c5bc84e9ba661.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Everyday Sans Mono - Bold */
+@font-face {
+  font-family: 'Everyday Sans Mono';
+  src: url('https://digitaltoolkit.livingdesign.walmart.com/static/EverydaySansMono-Bold-76fee85c8fa207d8e7b1f49071d14e8b.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Gibson - Regular */
+@font-face {
+  font-family: 'Gibson';
+  src: url('https://cdn.builder.io/o/assets%2F02297b1ff48d4a2f8e4d9ed415c47ecf%2F7f9f99ee5d8241a78fd75dc0becca36a?alt=media&token=1102c962-2d9f-4454-99ce-f7d5be597322&apiKey=02297b1ff48d4a2f8e4d9ed415c47ecf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Gibson - SemiBold */
+@font-face {
+  font-family: 'Gibson';
+  src: url('https://cdn.builder.io/o/assets%2F02297b1ff48d4a2f8e4d9ed415c47ecf%2F7a6e90f488f64d8ca7f42f89c088e106?alt=media&token=1996c008-0d25-49e7-ba5f-098b9ac5bfe6&apiKey=02297b1ff48d4a2f8e4d9ed415c47ecf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Bogle - Regular */
+@font-face {
+  font-family: 'Bogle';
+  src: url('https://cdn.builder.io/o/assets%2F02297b1ff48d4a2f8e4d9ed415c47ecf%2F8afa9372855d4aa282bc809f8be096ef?alt=media&token=95ea9e8d-c60a-4c9b-ab20-c8afb4bf1f58&apiKey=02297b1ff48d4a2f8e4d9ed415c47ecf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Bogle - Bold */
+@font-face {
+  font-family: 'Bogle';
+  src: url('https://cdn.builder.io/o/assets%2F02297b1ff48d4a2f8e4d9ed415c47ecf%2F74ef4caab83d402cb170840a9c13c13e?alt=media&token=b7fbb9bd-d92b-42ee-b2c2-17e6528b17a9&apiKey=02297b1ff48d4a2f8e4d9ed415c47ecf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}

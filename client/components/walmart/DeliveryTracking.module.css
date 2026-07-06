@@ -1,0 +1,404 @@
+/* ============================================================
+   Delivery Tracking Screen
+   ============================================================ */
+
+.screen {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  background: #FEFEFE;
+  overflow: hidden;
+  animation: slideUp 350ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.screen.exiting {
+  animation: slideDown 280ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(0); }
+  to { transform: translateY(100%); }
+}
+
+/* ---- Top Navigation ---- */
+.topNav {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  background: rgba(255, 255, 255, 0.80);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  position: relative;
+  z-index: 2;
+}
+
+.navHeader {
+  display: flex;
+  height: 64px;
+  padding: 0 16px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.floatingBtn {
+  display: flex;
+  width: 40px;
+  height: 40px;
+  padding: var(--ld-primitive-scale-space-100, 8px);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--ld-primitive-scale-borderradius-round, 9999px);
+  background: var(--ld-semantic-color-action-fill-secondary, #fff);
+  box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.10), 0 1px 2px 1px rgba(0, 0, 0, 0.15);
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.floatingBtn:hover {
+  background: var(--ld-semantic-color-action-fill-secondary-hovered, #f5f5f5);
+}
+
+.navTitle {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--ld-semantic-color-text-brand-bold, #001E60);
+  font-family: var(--ld-semantic-font-heading-medium-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-heading-medium-size, 20px);
+  font-weight: 700;
+  line-height: var(--ld-semantic-font-heading-medium-lineheight, 28px);
+}
+
+/* ---- Map ---- */
+.mapSection {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.mapImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 375 / 352;
+  object-fit: cover;
+}
+
+/* ---- Ring Wrapper — overlaps map bottom and card top ---- */
+.ringWrapper {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  margin-top: -101px;
+  margin-bottom: -101px;
+  pointer-events: none;
+}
+
+/* ---- Card ---- */
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 112px 16px 0;
+  gap: 16px;
+  border-radius: var(--ld-primitive-scale-borderradius-400, 32px) var(--ld-primitive-scale-borderradius-400, 32px) 0 0;
+  background: var(--ld-semantic-color-surface-overlay, #fff);
+  position: relative;
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.card::-webkit-scrollbar {
+  display: none;
+}
+
+/* ---- Progress Ring ---- */
+.progressRing {
+  position: relative;
+  width: 202px;
+  height: 202px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.ringSvg {
+  position: absolute;
+  inset: 0;
+  width: 202px;
+  height: 202px;
+  transform: rotate(-90deg) scaleX(-1);
+}
+
+.ringBg {
+  fill: var(--ld-semantic-color-surface-overlay, #fff);
+}
+
+.ringTrack {
+  fill: none;
+  stroke: var(--ld-semantic-color-background-subtle, #F2F3F3);
+  stroke-width: 24;
+}
+
+.ringStroke {
+  fill: none;
+  stroke-width: 24;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s linear;
+}
+
+/* Magic gradient color stops */
+.ringGradientStop1 {
+  stop-color: var(--ld-semantic-color-loading-magic-subtle, #E9F1FE);
+}
+
+.ringGradientStop2 {
+  stop-color: var(--ld-semantic-color-loading-magic, #3D90EC);
+}
+
+.ringGradientStop3 {
+  stop-color: var(--ld-semantic-color-field-border-magic, #0053E2);
+}
+
+.ringCenter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+  z-index: 1;
+}
+
+.ringTime {
+  font-family: var(--ld-semantic-font-display-large-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-display-large-size, 32px);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--ld-semantic-color-text, #2E2F32);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.ringLabel {
+  font-family: var(--ld-semantic-font-body-medium-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+/* ---- Address ---- */
+.addressBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-50, 4px);
+  width: 100%;
+}
+
+.addressTitle {
+  font-family: var(--ld-semantic-font-heading-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-heading-small-size, 18px);
+  font-weight: 700;
+  line-height: 1.33;
+  color: var(--ld-semantic-color-text, #2E2F32);
+  text-align: center;
+}
+
+.addressRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+}
+
+.addressText {
+  font-family: var(--ld-semantic-font-body-medium-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+/* ---- Products ---- */
+.productsSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.productsTitle {
+  font-family: var(--ld-semantic-font-heading-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-heading-small-size, 18px);
+  font-weight: 700;
+  line-height: 1.33;
+  color: var(--ld-semantic-color-text, #2E2F32);
+  text-align: center;
+}
+
+.productTiles {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  width: 100%;
+}
+
+.productTiles::-webkit-scrollbar {
+  display: none;
+}
+
+.productTile {
+  width: 74px;
+  height: 74px;
+  border-radius: 28px;
+  overflow: hidden;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+/* ---- Payment ---- */
+.paymentRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding-bottom: 24px;
+}
+
+.paymentLabel {
+  font-family: var(--ld-semantic-font-body-medium-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+.paymentValue {
+  font-family: var(--ld-semantic-font-body-medium-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+.paymentCard {
+  font-family: var(--ld-semantic-font-body-medium-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+/* ---- Footer ---- */
+.footer {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--ld-primitive-scale-space-100, 8px) 16px var(--ld-primitive-scale-space-200, 16px);
+}
+
+.footerBar {
+  display: flex;
+  width: 100%;
+  padding: var(--ld-primitive-scale-space-150, 12px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+  border-radius: 32px;
+  background: var(--ld-semantic-color-surface-overlay, rgba(255, 255, 255, 0.72));
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  box-shadow:
+    0 2px 20px 2px rgba(53, 53, 53, 0.05) inset,
+    1px 0.5px 0 0 rgba(255, 255, 255, 0.60) inset,
+    -1px -1px 0 0 rgba(255, 255, 255, 0.40) inset,
+    0 0 5px 0 rgba(255, 255, 255, 0.15) inset,
+    0 2px 30px 0 rgba(0, 0, 0, 0.05),
+    0 8px 72px -5px rgba(0, 0, 0, 0.10);
+}
+
+.footerBar > button {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.footerBtnContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ld-primitive-scale-space-50, 4px);
+}
+
+.footerGetItNowLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: -4px;
+}
+
+.footerSubLabel {
+  font-family: var(--ld-semantic-font-caption-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-caption-size, 12px);
+  font-weight: 700;
+  line-height: var(--ld-semantic-font-caption-lineheight, 16px);
+}
+
+/* ---- Home indicator ---- */
+.homeIndicator {
+  flex-shrink: 0;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.homeIndicator::after {
+  content: '';
+  width: 134px;
+  height: 5px;
+  background: var(--ld-semantic-color-text, #2E2F32);
+  border-radius: 9999px;
+  opacity: 0.2;
+}
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  .screen,
+  .screen.exiting {
+    animation-duration: 0ms;
+    transition-duration: 0ms;
+  }
+
+  .ringStroke {
+    transition-duration: 0ms;
+  }
+}

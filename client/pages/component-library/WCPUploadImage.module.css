@@ -1,0 +1,147 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-500, 40px);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-200, 16px);
+}
+
+.sectionTitle {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  margin: 0;
+  line-height: 28px;
+}
+
+.sectionDesc {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 14px;
+  color: var(--ld-semantic-color-text-subtle);
+  margin: 0;
+  line-height: 20px;
+}
+
+/* ── Demo card ── */
+.demoCard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--ld-semantic-color-surface);
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  padding: 24px;
+}
+
+.cardLabel {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ld-semantic-color-text-subtle);
+}
+
+.cardNote {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 13px;
+  color: var(--ld-semantic-color-text-subtle);
+  margin: 0;
+  line-height: 18px;
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ── Grid of demo cards ── */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 899px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Interactive demo controls ── */
+.interactiveDemo {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.controlLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 14px;
+  color: var(--ld-semantic-color-text);
+  cursor: pointer;
+}
+
+.controlCheckbox {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--ld-semantic-color-action-fill-primary, #0071dc);
+  cursor: pointer;
+}
+
+.clearBtn {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 14px;
+  color: var(--ld-semantic-color-link-text, #0071dc);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.clearBtn:hover {
+  opacity: 0.8;
+}
+
+/* ── Usage list ── */
+.usageList {
+  list-style: disc;
+  padding-left: 20px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.usageList li {
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: 14px;
+  color: var(--ld-semantic-color-text);
+  line-height: 20px;
+}
+
+.usageList code {
+  background: var(--ld-semantic-color-fill-subtle, #f8f8f8);
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  border-radius: 3px;
+  padding: 1px 5px;
+  font-family: 'SF Mono', 'Roboto Mono', monospace;
+  font-size: 12px;
+}

@@ -1,0 +1,291 @@
+---
+description: Item Tile Component Rules
+globs:
+alwaysApply: false
+---
+
+## Purpose
+
+Rules and conventions for creating Item Tile components and their variants. Item Tiles are compact product cards used in 2×2 category grids within horizontally scrollable carousels. They display a product image, badge, heart/favorite toggle, price, and product name.
+
+---
+
+## Component Location
+
+```
+client/components/walmart/WCPItemTile.tsx       # Component
+client/components/walmart/WCPItemTile.module.css # Styles
+```
+
+**Import**:
+```tsx
+import { WCPItemTile, WCPItemTileProps, ItemTileBadgeType } from '@/components/walmart/WCPItemTile';
+```
+
+---
+
+## HARD RULES (No Exceptions)
+
+### 1. Always Use WCPItemTile — Never Build Custom Product Tiles
+
+- **ALWAYS** use `WCPItemTile` for any compact product tile in a grid or carousel
+- **NEVER** create a one-off product tile with inline styles or a local component
+- **NEVER** duplicate the price layout logic — it lives in `WCPItemTile` only
+
+```tsx
+// ❌ WRONG — custom product tile
+<div className="myTile">
+  <img src={product.image} />
+  <span>${product.price}.{product.cents}</span>
+  <p>{product.name}</p>
+</div>
+
+// ✅ CORRECT — use the standard component
+<WCPItemTile
+  image={product.image}
+  name={product.name}
+  price="24"
+  cents="88"
+  badge={{ label: 'Best seller', type: 'bestseller' }}
+/>
+```
+
+### 2. Badge Types — Use Only the Defined Set
+
+Four badge types are supported. Each maps to a specific `WCPFlag` variant:
+
+| `ItemTileBadgeType` | WCPFlag variant | Visual |
+|---|---|---|
+| `'bestseller'` | `savings-bold` | Solid red |
+| `'deal'` | `savings-subtle` | Light red tint |
+| `'popular'` | `confidence-subtle` | Light blue tint |
+| `'rollback'` | `holiday-restricted` | Dark charcoal |
+
+- **NEVER** invent new badge types without adding them to the `ItemTileBadgeType` union and `BADGE_VARIANT_MAP`
+- **NEVER** pass raw `WCPFlagVariant` strings — always use the `badge` prop with `{ label, type }`
+
+### 3. Price Layout — Two Variants Only
+
+**Default price** (black text):
+```tsx
+<WCPItemTile price="98" cents="00" />
+// Renders: $98⁰⁰
+```
+
+**Savings price** (green text with "Now" prefix):
+```tsx
+<WCPItemTile
+  price="169"
+  cents="98"
+  pricePrefix="Now"
+  originalPrice="$200.00"
+  priceSuffix="/mo"
+/>
+// Renders: Now $169⁹⁸/mo  (green)
+//          $200.00          (strikethrough)
+```
+
+**Rules**:
+- `pricePrefix` triggers the green savings style — when present, all price elements turn green
+- `originalPrice` renders as a strikethrough line below the price row
+- `priceSuffix` (e.g. "/mo") renders at the baseline of the price
+- Dollar sign and cents are superscript (14px) relative to the main price (24px)
+- **NEVER** hardcode price colors — the `.priceRowSavings` class handles the green color via `var(--ld-semantic-color-text-positive)`
+
+### 4. Heart / Favorite Toggle
+
+- **ALWAYS** use `WCPHeartView` with `size="small"` inside item tiles
+- **ALWAYS** use `calloutPosition="top"` so the tooltip appears above the heart (not clipped by adjacent tiles)
+- The heart is positioned at `top: 20px; right: 4px` on the tile (below the flag badge)
+- Heart `z-index: 4` is higher than flag `z-index: 2` so the callout is never covered
+
+```tsx
+// ✅ CORRECT — inside WCPItemTile (already wired)
+<WCPHeartView size="small" calloutPosition="top" />
+
+// ❌ WRONG — wrong size or position for item tiles
+<WCPHeartView size="medium" calloutPosition="left" />
+```
+
+### 5. Image Requirements
+
+- Image area is fixed at `145px` height with `object-fit: contain`
+- Images should be product photos on white/transparent backgrounds
+- Use CDN URLs from `PRODUCT_IMAGES` constant — never `placeholder.com` or `picsum.photos`
+- **NEVER** use images with baked-in UI elements (hearts, badges, shadows)
+
+### 6. Consistent Tile Sizing
+
+- Tiles MUST use `height: 100%` to fill their grid cell
+- The body section uses `flex: 1; min-height: 72px` to ensure uniform height
+- The parent grid MUST use `grid-auto-rows: 1fr` so all tiles in a row match height
+- **NEVER** set a fixed pixel height on the tile — let the grid equalize them
+
+```css
+/* ✅ CORRECT — parent grid */
+.productGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 1fr;
+  gap: 8px;
+}
+```
+
+---
+
+## Category Card Pattern
+
+Item tiles are typically displayed inside category cards within a drag-scrollable carousel. The standard pattern is:
+
+```
+Section
+├── Header row (title + "View all" link)
+└── Scroll row (drag-scrollable, horizontal)
+    ├── Category card (320px wide, subtle background)
+    │   ├── Category header (title + "Shop all" link)
+    │   └── 2×2 product grid
+    │       ├── WCPItemTile
+    │       ├── WCPItemTile
+    │       ├── WCPItemTile
+    │       └── WCPItemTile
+    ├── Category card ...
+    └── Category card ...
+```
+
+### Category Card Specs
+
+| Property | Value |
+|---|---|
+| Width | 320px (340px at 768px+, 290px at 480px-) |
+| Background | `var(--ld-semantic-color-background-subtle, #f5f5f5)` |
+| Border radius | `var(--ld-primitive-scale-borderradius-100, 8px)` |
+| Padding | `12px` |
+| Gap (between header and grid) | `8px` |
+| Grid gap | `8px` |
+
+### Scroll Row Specs
+
+| Property | Value |
+|---|---|
+| Direction | Horizontal flex |
+| Gap | `12px` |
+| Overflow | `overflow-x: auto` with hidden scrollbar |
+| Snap | `scroll-snap-type: x mandatory` / `scroll-snap-align: start` |
+| Drag scroll | Use `useDragScroll` hook for mouse drag support |
+
+### Category Header Specs
+
+| Element | Font size | Weight | Token |
+|---|---|---|---|
+| Category title | 16px | 700 | `--ld-semantic-color-text` |
+| "Shop all" link | 12px | 400 | `--ld-semantic-color-link-text` (underlined) |
+
+---
+
+## Creating New Item Tile Variants
+
+When adding a new variant to WCPItemTile, follow this checklist:
+
+1. **Add the type** to the `ItemTileBadgeType` union in `WCPItemTile.tsx`
+2. **Add the mapping** to `BADGE_VARIANT_MAP` (must map to an existing `WCPFlagVariant`)
+3. **Add the prop** to `WCPItemTileProps` interface if it's a new feature (not just a badge)
+4. **Add CSS** to `WCPItemTile.module.css` using semantic tokens only
+5. **Update the component library** page at `client/pages/component-library/ItemTile.tsx`
+6. **Update this rule file** with the new variant documentation
+
+### Adding a New Badge Type
+
+```tsx
+// 1. Add to the type union
+export type ItemTileBadgeType = 'bestseller' | 'deal' | 'popular' | 'rollback' | 'newtype';
+
+// 2. Add the flag variant mapping
+const BADGE_VARIANT_MAP: Record<ItemTileBadgeType, WCPFlagVariant> = {
+  bestseller: 'savings-bold',
+  deal: 'savings-subtle',
+  popular: 'confidence-subtle',
+  rollback: 'holiday-restricted',
+  newtype: 'confidence-bold',  // ← map to existing WCPFlag variant
+};
+```
+
+### Adding a New Tile Feature (e.g., rating stars, "Add to cart" button)
+
+1. Add the prop to `WCPItemTileProps` — make it optional with a clear JSDoc comment
+2. Render conditionally inside the `.body` div, after the price row
+3. Use existing LD components (e.g., `<Rating>`, `<Button>`) — never custom elements
+4. Add CSS to `WCPItemTile.module.css` using semantic tokens
+5. Ensure the new feature doesn't break consistent tile height (use `flex` layout)
+
+---
+
+## Product Image Data
+
+Product images are centralized in `client/components/walmart/productImages.ts` as the `PRODUCT_IMAGES` constant.
+
+**Rules**:
+- **ALWAYS** add new product images to `PRODUCT_IMAGES` — never inline CDN URLs in component data
+- **ALWAYS** use descriptive camelCase keys (e.g., `countertopBlender`, `hoboBagGreen`)
+- **NEVER** use images with baked-in UI overlays (hearts, badges, price tags)
+- **NEVER** use `placeholder.com`, `picsum.photos`, or other placeholder services
+
+```tsx
+// ✅ CORRECT — reference from centralized constant
+import { PRODUCT_IMAGES } from '@/components/walmart/productImages';
+
+const product = {
+  image: PRODUCT_IMAGES.countertopBlender,
+  name: 'VAVSEA Countertop Blender',
+  price: '49',
+  cents: '99',
+};
+```
+
+---
+
+## Z-Index Layering (Within a Tile)
+
+| Layer | Z-index | Element |
+|---|---|---|
+| Flag badge | `2` | `.flagWrap` — top-left corner |
+| Heart button + callout | `4` | `.heartWrap` — top-right, below flag |
+
+The heart has a higher z-index than the flag so that the "Add to favorites" callout tooltip is never obscured by a neighboring tile's flag badge.
+
+---
+
+## Token Reference (WCPItemTile CSS)
+
+| Element | Token |
+|---|---|
+| Tile background | `var(--ld-semantic-color-surface)` |
+| Border radius | `var(--ld-primitive-scale-borderradius-100)` |
+| Price text (default) | `var(--ld-semantic-color-text)` |
+| Price text (savings) | `var(--ld-semantic-color-text-positive)` |
+| Original price text | `var(--ld-semantic-color-text-subtle)` |
+| Product name | `var(--ld-semantic-color-text)` |
+| Font family | `var(--ld-semantic-font-family-sans)` |
+
+---
+
+## Accessibility
+
+- Heart button includes `aria-label` ("Add to favorites" / "Remove from favorites") and `aria-pressed`
+- Product image includes `alt` text set to the product name
+- Product name is clamped to 1 line with `text-overflow: ellipsis` — full name is accessible via the `alt` attribute on the image
+- Flag badge is rendered as a `<span>` with visible text — screen readers can read the badge label
+
+---
+
+## Pre-Implementation Checklist
+
+Before creating any new item tile usage or variant:
+
+- [ ] Using `WCPItemTile` — not a custom tile component
+- [ ] Badge type exists in `ItemTileBadgeType` union
+- [ ] Images sourced from `PRODUCT_IMAGES` constant
+- [ ] Parent grid uses `grid-auto-rows: 1fr` for equal height
+- [ ] Heart uses `size="small"` and `calloutPosition="top"`
+- [ ] All colors use semantic tokens (no hardcoded hex)
+- [ ] Price layout follows the two defined variants (default or savings)
+- [ ] Component library page updated if new variant added

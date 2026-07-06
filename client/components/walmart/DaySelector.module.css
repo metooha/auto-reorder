@@ -1,0 +1,75 @@
+/* DaySelector — horizontal row of circular day-picker buttons */
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+/* ── Each day circle button ── */
+.dayBtn {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  background: none;
+  padding: 0;
+  transition: background 150ms ease, border-color 150ms ease, color 150ms ease, box-shadow 150ms ease;
+  font-family: inherit;
+  flex-shrink: 0;
+}
+
+.dayBtn:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-border-primary, #0071dc);
+  outline-offset: 2px;
+}
+
+/* Unselected */
+.dayBtnUnselected {
+  border-color: var(--ld-semantic-color-separator, #e3e4e5);
+  background: var(--ld-semantic-color-fill-brand-subtle, #ebf5ff);
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.dayBtnUnselected:hover:not(.dayBtnDisabled) {
+  background: var(--ld-semantic-color-fill-brand-subtle, #ebf5ff);
+  border-color: var(--ld-semantic-color-action-border-primary, #0071dc);
+  color: var(--ld-semantic-color-action-fill-primary, #0071dc);
+}
+
+/* Selected */
+.dayBtnSelected {
+  background: var(--ld-semantic-color-action-fill-primary, #0071dc);
+  border-color: var(--ld-semantic-color-action-fill-primary, #0071dc);
+  color: var(--ld-semantic-color-action-text-onfill-primary, #ffffff);
+}
+
+.dayBtnSelected:hover:not(.dayBtnDisabled) {
+  background: var(--ld-semantic-color-action-fill-primary-hovered, #005cb9);
+  border-color: var(--ld-semantic-color-action-fill-primary-hovered, #005cb9);
+}
+
+/* Disabled */
+.dayBtnDisabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Day label text ── */
+.dayLabel {
+  font-family: var(--ld-semantic-font-body-medium-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: var(--ld-semantic-font-body-medium-weight-alt, 700);
+  line-height: var(--ld-semantic-font-body-medium-lineHeight, 24px);
+  font-kerning: none;
+  font-feature-settings: 'liga' off;
+  color: inherit;
+  user-select: none;
+  pointer-events: none;
+}

@@ -1,0 +1,723 @@
+/* ── Modal wrapper ─────────────────────────────────────────────────────────── */
+.modalWrap {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: var(--ld-semantic-z-index-modal, 1050);
+  transform: translate(-50%, -50%);
+  width: 95vw;
+  max-width: 800px;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--ld-semantic-color-surface, #ffffff);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+  animation: modalIn 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translate(-50%, -48%) scale(0.96); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+/* ── Header ────────────────────────────────────────────────────────────────── */
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 12px 16px 20px;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--ld-semantic-color-separator);
+}
+
+.modalTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  margin: 0;
+  line-height: 1.3;
+}
+
+/* Large title variant for appointment details */
+.modalTitleLarge {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  margin: 0;
+  line-height: 1.3;
+}
+
+/* Header with back button */
+.headerWithBack {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ── Close button wrapper for confirmed state ─────────────────────────────── */
+.closeBtnWrap {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+/* ── Scrollable bodies ─────────────────────────────────────────────────────── */
+.modalScrollBody {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* Details view full scrollable body */
+.detailsScrollBody {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Edit steps (calendar / time) body */
+.editStepBody {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 20px 20px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.editStepHint {
+  font-size: 14px;
+  color: var(--ld-semantic-color-text-subtle);
+  margin: 0;
+}
+
+/* ── Body padding ──────────────────────────────────────────────────────────── */
+.checkInBody {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* ── Calendar ──────────────────────────────────────────────────────────────── */
+.calendar {
+  border: 1px solid var(--ld-semantic-color-separator);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.calNav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 8px;
+  border-bottom: 1px solid var(--ld-semantic-color-separator);
+}
+
+.calMonthLabel {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ld-semantic-color-text);
+}
+
+.calGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 8px 4px;
+  gap: 2px;
+  justify-items: center;
+}
+
+.calDayHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ld-semantic-color-text-subtle);
+}
+
+.calDay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--ld-semantic-color-text);
+  border-radius: 50%;
+  transition: background 120ms;
+  font-family: inherit;
+  flex-shrink: 0;
+}
+
+.calDay:hover:not(:disabled) {
+  background: var(--ld-semantic-color-fill-subtle);
+}
+
+.calDaySelected {
+  background: var(--ld-semantic-color-action-fill-primary) !important;
+  color: var(--ld-semantic-color-text-inverse) !important;
+  font-weight: 700;
+}
+
+.calDayPast {
+  color: var(--ld-semantic-color-text-disabled);
+  cursor: not-allowed;
+}
+
+/* ── Time chips ────────────────────────────────────────────────────────────── */
+.timeChips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* ── Section label ─────────────────────────────────────────────────────────── */
+.sectionLabel {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  margin: 0;
+}
+
+/* ── Footer ────────────────────────────────────────────────────────────────── */
+.modalFooter {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 16px;
+  padding: 12px 20px 16px;
+  flex-shrink: 0;
+  border-top: 1px solid var(--ld-semantic-color-separator);
+}
+
+.footerButtonGroup {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.fullWidthBtn {
+  flex: 1;
+  justify-content: center;
+}
+
+.halfWidthBtn {
+  flex: 1;
+  justify-content: center;
+}
+
+/* ── Confirmed / success state ─────────────────────────────────────────────── */
+.confirmedBody {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px 32px 32px;
+  gap: 16px;
+}
+
+.successIcon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--ld-semantic-color-action-fill-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.confirmedTitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  margin: 0;
+}
+
+.confirmedText {
+  font-size: 15px;
+  color: var(--ld-semantic-color-text-subtle);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ── Check-in detail card ──────────────────────────────────────────────────── */
+.detailCard {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  border: 1px solid var(--ld-semantic-color-separator);
+  border-radius: 8px;
+  background: var(--ld-semantic-color-fill-subtle);
+}
+
+.detailInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.detailHeading {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  margin: 0;
+}
+
+.detailSub {
+  font-size: 13px;
+  color: var(--ld-semantic-color-text-subtle);
+  margin: 0;
+}
+
+.detailVehicle {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ld-semantic-color-text);
+  margin: 4px 0 0;
+}
+
+.detailServices {
+  margin: 4px 0 0;
+  padding-left: 0;
+  list-style: none;
+  font-size: 13px;
+  color: var(--ld-semantic-color-text-subtle);
+  line-height: 1.6;
+}
+
+.checkInNote {
+  font-size: 13px;
+  color: var(--ld-semantic-color-text-subtle);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   APPOINTMENT DETAILS VIEW
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── Service header row ────────────────────────────────────────────────────── */
+.apptServiceRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid var(--ld-semantic-color-separator);
+}
+
+.apptServiceIcon {
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.apptServiceInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.apptServiceName {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  margin: 0;
+}
+
+.apptServiceDesc {
+  font-size: 13px;
+  color: var(--ld-semantic-color-text-subtle);
+  margin: 0;
+}
+
+.apptServicePrice {
+  font-size: 13px;
+  color: var(--ld-semantic-color-text-subtle);
+  margin: 0;
+}
+
+/* ── Blue callout ──────────────────────────────────────────────────────────── */
+.apptCallout {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 16px 20px;
+  padding: 14px 14px 14px 16px;
+  border-radius: 8px;
+  background: var(--ld-semantic-color-fill-info-subtle);
+}
+
+.apptCalloutTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.apptCalloutTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  margin: 0;
+  line-height: 1.3;
+  padding-top: 2px;
+}
+
+.apptCalloutText {
+  font-size: 14px;
+  color: var(--ld-semantic-color-text);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ── Editable appointment fields ───────────────────────────────────────────── */
+.apptFields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 4px 20px 20px;
+}
+
+.apptFieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.apptFieldLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ld-semantic-color-text-subtle);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+/* Clickable/editable field */
+.apptFieldValue {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--ld-semantic-color-separator);
+  border-radius: 8px;
+  background: var(--ld-semantic-color-surface, #ffffff);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--ld-semantic-color-text);
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 150ms;
+  text-align: left;
+}
+
+.apptFieldValue:hover {
+  border-color: var(--ld-semantic-color-action-fill-primary);
+}
+
+/* Open/expanded state of editable field */
+.apptFieldValueOpen {
+  border-color: var(--ld-semantic-color-action-fill-primary);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+/* Inline expand panel — appears below the field button */
+.fieldExpandPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--ld-semantic-color-action-fill-primary);
+  border-top: none;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background: var(--ld-semantic-color-surface, #ffffff);
+}
+
+/* Static (non-editable) field */
+.apptFieldValueStatic {
+  display: flex;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1px solid var(--ld-semantic-color-separator);
+  border-radius: 8px;
+  background: var(--ld-semantic-color-fill-subtle);
+  font-size: 15px;
+  color: var(--ld-semantic-color-text-subtle);
+  font-family: inherit;
+}
+
+/* ── Info list rows ────────────────────────────────────────────────────────── */
+.apptListRows {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--ld-semantic-color-separator);
+}
+
+.apptListRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  border: none;
+  border-bottom: 1px solid var(--ld-semantic-color-separator);
+  background: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  transition: background 120ms;
+  color: var(--ld-semantic-color-text);
+}
+
+.apptListRow:last-child {
+  border-bottom: none;
+}
+
+/* Open/expanded state for Est. total row */
+.apptListRowOpen {
+  border-bottom: none;
+}
+
+.apptListRow:hover {
+  background: var(--ld-semantic-color-fill-subtle);
+}
+
+.apptListRowContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.apptListRowLabel {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  line-height: 1.3;
+}
+
+.apptListRowValue {
+  font-size: 13px;
+  color: var(--ld-semantic-color-text-subtle);
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   RECEIPT INLINE PANEL (under Est. total row)
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+.receiptInlinePanel {
+  display: flex;
+  flex-direction: column;
+  background: var(--ld-semantic-color-fill-subtle);
+  border-bottom: 1px solid var(--ld-semantic-color-separator);
+}
+
+.receiptInlineLines {
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+}
+
+.receiptInlineOrderSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 20px 20px;
+  border-top: 1px solid var(--ld-semantic-color-separator);
+}
+
+/* Flex label for lines with an inline icon (e.g. Temporary hold) */
+.receiptLineLabelFlex {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--ld-semantic-color-text);
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   RECEIPT VIEW
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+.receiptBody {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Line items */
+.receiptLines {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 24px;
+}
+
+.receiptLine {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--ld-semantic-color-separator);
+  gap: 16px;
+}
+
+.receiptLineLabel {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--ld-semantic-color-text);
+}
+
+.receiptLineBold {
+  font-weight: 700;
+}
+
+.receiptLineValue {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--ld-semantic-color-text);
+  flex-shrink: 0;
+}
+
+/* Total row */
+.receiptLineTotal {
+  border-bottom: none;
+  padding-top: 18px;
+  padding-bottom: 8px;
+}
+
+.receiptLineTotalLabel {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+}
+
+.receiptLineTotalValue {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+}
+
+/* Order section with barcode */
+.receiptOrderSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px 24px 32px;
+  border-top: 2px solid var(--ld-semantic-color-separator);
+  margin-top: 8px;
+}
+
+.receiptOrderNum {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ld-semantic-color-text);
+  margin: 0;
+  font-family: var(--ld-semantic-font-family-mono, 'Courier New', monospace);
+}
+
+/* CSS barcode using repeating gradient */
+.receiptBarcode {
+  height: 60px;
+  width: 100%;
+  border-radius: 2px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    #1a1a1a 0px,   #1a1a1a 2px,
+    transparent    2px,   transparent    5px,
+    #1a1a1a 5px,   #1a1a1a 6px,
+    transparent    6px,   transparent    8px,
+    #1a1a1a 8px,   #1a1a1a 11px,
+    transparent    11px,  transparent    13px,
+    #1a1a1a 13px,  #1a1a1a 14px,
+    transparent    14px,  transparent    17px,
+    #1a1a1a 17px,  #1a1a1a 20px,
+    transparent    20px,  transparent    22px,
+    #1a1a1a 22px,  #1a1a1a 23px,
+    transparent    23px,  transparent    27px,
+    #1a1a1a 27px,  #1a1a1a 29px,
+    transparent    29px,  transparent    31px,
+    #1a1a1a 31px,  #1a1a1a 33px,
+    transparent    33px,  transparent    36px,
+    #1a1a1a 36px,  #1a1a1a 37px,
+    transparent    37px,  transparent    40px,
+    #1a1a1a 40px,  #1a1a1a 42px,
+    transparent    42px,  transparent    45px,
+    #1a1a1a 45px,  #1a1a1a 47px,
+    transparent    47px,  transparent    48px,
+    #1a1a1a 48px,  #1a1a1a 51px,
+    transparent    51px,  transparent    54px,
+    #1a1a1a 54px,  #1a1a1a 55px,
+    transparent    55px,  transparent    58px,
+    #1a1a1a 58px,  #1a1a1a 60px,
+    transparent    60px,  transparent    62px,
+    #1a1a1a 62px,  #1a1a1a 64px,
+    transparent    64px,  transparent    67px
+  );
+  background-size: 67px 100%;
+}
+
+/* ── Legal text ────────────────────────────────────────────────────────────── */
+.apptLegalText {
+  font-size: 12px;
+  color: var(--ld-semantic-color-text-subtle);
+  text-align: center;
+  padding: 16px 24px 20px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.apptLegalLink {
+  color: var(--ld-semantic-color-text-subtle);
+  text-decoration: underline;
+}
+
+.apptLegalLink:hover {
+  color: var(--ld-semantic-color-text);
+}
+
+/* ── Mobile: bottom sheet ────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  .modalWrap {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: none;
+    width: 100%;
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: 16px 16px 0 0;
+    animation: sheetIn 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes sheetIn {
+    from { transform: translateY(100%); }
+    to   { transform: translateY(0); }
+  }
+}

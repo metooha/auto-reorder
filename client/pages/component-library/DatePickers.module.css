@@ -1,0 +1,134 @@
+/* DatePickers page layout */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 24px;
+}
+
+.sectionTitle {
+  font-family: var(--ld-semantic-font-family-sans, sans-serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  margin: 0;
+}
+
+.sectionDesc {
+  font-family: var(--ld-semantic-font-family-sans, sans-serif);
+  font-size: 14px;
+  color: var(--ld-semantic-color-text-subtle, #6d6e72);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.sectionDesc code {
+  font-family: monospace;
+  font-size: 13px;
+  background: var(--ld-semantic-color-fill-surface-secondary, #f5f5f6);
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+/* ── Card / preview frame ── */
+.card {
+  background: var(--ld-semantic-color-surface, #ffffff);
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  padding: 32px;
+  box-shadow: var(--ld-semantic-elevation-100);
+}
+
+/* ── Prop table ── */
+.propTable {
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  overflow: hidden;
+  background: var(--ld-semantic-color-surface, #fff);
+}
+
+.propRowHeader {
+  display: grid;
+  grid-template-columns: 160px 80px 1fr;
+  gap: 16px;
+  padding: 8px 16px;
+  background: var(--ld-semantic-color-fill-surface-secondary, #f5f5f6);
+  border-bottom: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  font-family: var(--ld-semantic-font-family-sans, sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ld-semantic-color-text-subtle, #6d6e72);
+}
+
+.propRow {
+  display: grid;
+  grid-template-columns: 160px 80px 1fr;
+  align-items: start;
+  gap: 16px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+}
+
+.propRow:last-child {
+  border-bottom: none;
+}
+
+.propName {
+  font-family: monospace;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.propRequired {
+  font-family: var(--ld-semantic-font-family-sans, sans-serif);
+  font-size: 12px;
+  color: var(--ld-semantic-color-text-negative, #a20c00);
+  font-weight: 600;
+}
+
+.propOptional {
+  font-family: var(--ld-semantic-font-family-sans, sans-serif);
+  font-size: 12px;
+  color: var(--ld-semantic-color-text-subtle, #6d6e72);
+}
+
+.propDesc {
+  font-family: var(--ld-semantic-font-family-sans, sans-serif);
+  font-size: 13px;
+  color: var(--ld-semantic-color-text-subtle, #6d6e72);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ── Import code box ── */
+.importBox {
+  background: var(--ld-semantic-color-fill-surface-secondary, #f5f5f6);
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  padding: 16px;
+}
+
+.importBox code {
+  font-family: monospace;
+  font-size: 13px;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  line-height: 1.8;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .card {
+    padding: 16px;
+  }
+
+  .propRow,
+  .propRowHeader {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}

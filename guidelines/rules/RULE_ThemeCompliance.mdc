@@ -1,0 +1,276 @@
+---
+description: Theme Compliance for New Components and Pages
+globs:
+alwaysApply: true
+---
+
+## Purpose
+
+Every new component and page MUST be built to work correctly across ALL available themes without any additional work after the fact. This rule prevents token violations and untested theming from reaching production.
+
+---
+
+## The Hard Rule
+
+> **No new component or page is considered complete until it passes a theme compliance check.**
+
+This means: before marking any component or page as done, you MUST verify that it renders correctly when the theme is switched from the default Walmart theme to at least one alternate theme (e.g., Bodega/green, Walmart Legacy/Bogle).
+
+---
+
+## What "Theme Compliant" Means
+
+A component or page is theme compliant when ALL of the following are true:
+
+| Requirement | Compliant | Non-Compliant |
+|---|---|---|
+| Colors use semantic tokens | `var(--ld-semantic-color-text-brand-bold)` | `#002E99` or `var(--ld-primitive-color-blue-130)` |
+| Backgrounds use semantic tokens | `var(--ld-semantic-color-fill-brand-subtle)` | `#EBF1FF` or `rgba(0,46,153,0.1)` |
+| Spacing uses token vars | `var(--ld-semantic-spacing-200, 1rem)` | `padding: 16px` |
+| Typography uses semantic font tokens | `var(--ld-semantic-font-body-small-size)` | `font-size: 14px` |
+| Border radius uses primitive tokens | `var(--ld-primitive-scale-borderradius-100)` | `border-radius: 8px` |
+| No primitive color tokens used directly | ✅ Never references `--ld-primitive-color-*` | ❌ References `--ld-primitive-color-blue-10` in CSS |
+| Colors change correctly when theme switches | ✅ Brand-subtle turns green in Bodega theme | ❌ Stays blue in Bodega theme |
+| Icon colors inherit from context | `color: inherit` | `fill: #0071DC` |
+
+---
+
+## Prohibited Patterns
+
+### ❌ Hardcoded Hex Colors
+```css
+/* WRONG — does not theme */
+.banner { background: #EBF1FF; color: #002E99; }
+
+/* CORRECT — themes with the active brand */
+.banner {
+  background: var(--ld-semantic-color-fill-accent-blue-subtle, #EBF1FF);
+  color: var(--ld-semantic-color-text-onfill-accent-blue-subtle, #002E99);
+}
+```
+
+### ❌ Direct Primitive Token References in Component CSS
+```css
+/* WRONG — primitive tokens bypass the theme override layer */
+.nav { background: var(--ld-primitive-color-blue-10, #E9F1FE); }
+.link { color: var(--ld-primitive-color-blue-130, #002E99); }
+
+/* CORRECT — semantic tokens override at the theme level */
+.nav { background: var(--ld-semantic-color-fill-brand-subtle, #E9F1FE); }
+.link { color: var(--ld-semantic-color-text-brand-bold, #002E99); }
+```
+
+### ❌ Hardcoded Spacing, Font Size, and Border Radius
+```css
+/* WRONG — bypasses scale system */
+.card { padding: 16px; font-size: 14px; border-radius: 8px; }
+
+/* CORRECT — uses token scale */
+.card {
+  padding: var(--ld-semantic-spacing-200, 1rem);
+  font-size: var(--ld-semantic-font-body-small-size, 0.875rem);
+  border-radius: var(--ld-primitive-scale-borderradius-100, 0.5rem);
+}
+```
+
+### ❌ Inline Style Hardcodes
+```tsx
+/* WRONG — inline hardcodes never theme */
+<div style={{ backgroundColor: '#0071DC', color: 'white', padding: '16px' }}>
+
+/* CORRECT — inline styles only for truly dynamic values, tokens used even inline */
+<div style={{ backgroundColor: 'var(--ld-semantic-color-action-fill-primary, #0071DC)' }}>
+```
+
+---
+
+## Token Tier Hierarchy
+
+Use tokens in this order of preference. Never skip levels.
+
+```
+Semantic tokens  ←  ALWAYS use these in component CSS
+    ↓ resolves to
+Primitive tokens  ←  NEVER reference directly in components
+    ↓ resolves to
+Hard values       ←  Only as fallbacks inside var() calls
+```
+
+**In component `.module.css` files**: ALWAYS use `--ld-semantic-*` tokens.
+
+**In theme override files** (`public/styles/themes/THEME_NAME/semantic.css`): Override `--ld-semantic-*` tokens to point to different `--ld-primitive-*` values.
+
+**Example theme override** (Bodega — green theme):
+```css
+/* public/styles/themes/bodega/semantic.css */
+:root {
+  /* Override brand tokens to green for Bodega theme */
+  --ld-semantic-color-fill-brand-subtle: var(--ld-primitive-color-green-10, #eaf3e6);
+  --ld-semantic-color-text-brand-bold: var(--ld-primitive-color-green-160, #0d2901);
+  --ld-semantic-color-fill-brand-bold: var(--ld-primitive-color-green-160, #0d2901);
+}
+```
+
+This means: a component using `var(--ld-semantic-color-fill-brand-subtle)` automatically turns green in the Bodega theme with **zero changes to the component itself**.
+
+---
+
+## Pre-Completion Theme Checklist
+
+Before marking any component or page as complete, verify:
+
+- [ ] Open the app and switch to **Bodega (green)** theme
+- [ ] Verify all brand colors render in green (not blue)
+- [ ] Verify text colors, backgrounds, and borders all respond to the theme
+- [ ] Switch to **Walmart Legacy (Bogle)** theme
+- [ ] Verify the component renders correctly in that theme
+- [ ] Switch back to **default Walmart** theme
+- [ ] Verify nothing was broken by the theme-override test
+
+If any theme renders incorrectly, the fix is NEVER to add hardcoded colors. The fix is ALWAYS to:
+1. Identify which hardcoded value or primitive token is the culprit
+2. Replace it with the correct semantic token
+3. If no semantic token maps to the desired visual, add a theme override in `public/styles/themes/THEME_NAME/semantic.css`
+
+---
+
+## When a New Theme-Specific Override IS Required
+
+Some design decisions are intentionally different per brand. In these cases, add the override to the theme's semantic file — never to the component.
+
+**Example**: Bodega uses a green SubNav, Walmart uses a blue SubNav.
+
+```css
+/* client/components/walmart/SubNav.module.css */
+/* ✅ Uses semantic token — will change with theme */
+.subNav {
+  background: var(--ld-semantic-color-fill-brand-subtle, #EBF1FF);
+}
+
+/* public/styles/themes/bodega/semantic.css */
+/* ✅ Theme override — only Bodega gets green SubNav */
+:root {
+  --ld-semantic-color-fill-brand-subtle: var(--ld-primitive-color-green-10, #eaf3e6);
+}
+```
+
+This approach means:
+- The component CSS never changes for theming
+- New themes are added by editing only the theme override file
+- Existing themes continue to work without modification
+
+---
+
+## Available Themes
+
+| Theme ID | Brand | Key Difference |
+|---|---|---|
+| `walmart` (default) | Walmart | Blue brand colors |
+| `bodega` | Bodega | Green brand colors |
+| `walmart-legacy` | Walmart (Bogle font) | Green SubNav + Bogle typography |
+| `sams-club` | Sam's Club | Sam's Club brand colors |
+| `developer` | Developer/Debug | Token debug view |
+
+---
+
+## Common Semantic Tokens by Category
+
+### Brand Colors (theme-sensitive — these WILL change per theme)
+```css
+--ld-semantic-color-fill-brand-subtle     /* Subtle brand fill (SubNav, banners) */
+--ld-semantic-color-fill-brand-bold       /* Bold brand fill */
+--ld-semantic-color-text-brand            /* Brand body text */
+--ld-semantic-color-text-brand-bold       /* Bold brand text (headers, labels) */
+--ld-semantic-color-border-brand          /* Brand borders */
+--ld-semantic-color-border-brand-bold     /* Bold brand borders */
+```
+
+### Action Colors (mapped to brand — these WILL change per theme for action tints)
+```css
+--ld-semantic-color-action-fill-primary            /* Primary button fill */
+--ld-semantic-color-action-fill-primary-hovered
+--ld-semantic-color-action-fill-primary-pressed
+--ld-semantic-color-action-text-on-fill-primary    /* Text ON primary button */
+--ld-semantic-color-action-focus-outline
+```
+
+### Surface / Fill (generally stable)
+```css
+--ld-semantic-color-surface                /* Default surface (white) */
+--ld-semantic-color-fill-subtle            /* Subtle fill (light gray) */
+--ld-semantic-color-fill-inverse           /* Dark/inverse fill */
+--ld-semantic-color-fill-accent-blue-subtle /* Accent blue-subtle (not brand) */
+```
+
+### Text (generally stable)
+```css
+--ld-semantic-color-text                   /* Primary text */
+--ld-semantic-color-text-subtle            /* Secondary/muted text */
+--ld-semantic-color-text-inverse           /* Text on dark background */
+--ld-semantic-color-text-onfill-brand      /* Text on brand-filled surface */
+--ld-semantic-color-text-onfill-inverse    /* Text on inverse-filled surface */
+```
+
+### Spacing (stable — does not change per theme)
+```css
+--ld-semantic-spacing-50     /* 4px */
+--ld-semantic-spacing-100    /* 8px */
+--ld-semantic-spacing-200    /* 16px */
+--ld-semantic-spacing-300    /* 24px */
+--ld-semantic-spacing-400    /* 32px */
+--ld-semantic-spacing-component-padding-small   /* 8px */
+--ld-semantic-spacing-component-padding-medium  /* 12px */
+--ld-semantic-spacing-component-padding-large   /* 16px */
+```
+
+### Typography (stable — does not change per theme)
+```css
+--ld-semantic-font-family-sans
+--ld-semantic-font-body-small-size         /* 0.875rem / 14px */
+--ld-semantic-font-body-small-weight-default /* 400 */
+--ld-semantic-font-body-small-weight-alt   /* 700 */
+--ld-semantic-font-body-small-line-height
+--ld-semantic-font-body-medium-size        /* 1rem / 16px */
+--ld-semantic-font-body-large-size
+--ld-semantic-font-heading-small-size
+--ld-semantic-font-heading-medium-size
+--ld-semantic-font-heading-large-size
+```
+
+---
+
+## Automated Token Violation Detection
+
+Run these checks before completing any component work:
+
+```bash
+# Find hardcoded hex colors in component and page CSS
+grep -rn "#[0-9a-fA-F]\{6\}\|#[0-9a-fA-F]\{3\}" client/components/ client/pages/ --include="*.css"
+
+# Find direct primitive color token usage in component CSS (should never appear)
+grep -rn "ld-primitive-color-" client/components/ client/pages/ --include="*.css"
+
+# Find hardcoded pixel values in CSS properties that should use tokens
+grep -rn "font-size: [0-9]\|padding: [0-9]\|border-radius: [0-9]" client/components/ client/pages/ --include="*.css"
+
+# Find hardcoded inline colors in TSX files
+grep -rn "backgroundColor: '#\|color: '#\|background: '#" client/components/ client/pages/ --include="*.tsx"
+```
+
+---
+
+## Enforcement Level
+
+**CRITICAL — NO EXCEPTIONS**
+
+Every component and page, at every PR, must pass the theme compliance check before being merged. Code that uses hardcoded colors or primitive tokens directly must be rejected in review.
+
+---
+
+## Related Rules
+
+- `RULE_DesignSystemEnforcement.mdc` — token enforcement details and component requirements
+- `RULE_InlineStyleVsCSSModule.mdc` — when inline styles are allowed (only for dynamic values)
+- `RULE_ThemeSwitcher.mdc` — how the theme switcher works and how themes are structured
+- `RULE_ThemeAddition.mdc` — how to add a new brand theme
+- `RULE_WCPComponentCreation.mdc` — WCP component creation process (uses theme-compliant tokens)

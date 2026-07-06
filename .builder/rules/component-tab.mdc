@@ -1,0 +1,100 @@
+---
+description: Tab component specification
+alwaysApply: false
+---
+## Purpose
+
+Tab Navigation allows page-level navigation between sets of content with a selected state. Provides a consistent, accessible way to organize and switch between views of related content.
+
+## Rules
+
+- **MUST** use the Living Design Tab components (`import { Tabs, TabList, Tab, TabPanel } from '@/components/ui/tabs'`).
+- **MUST** always wrap content in `TabPanel` for proper semantics.
+- **MUST NOT** create custom tab components or manually styled tab buttons.
+- **MUST NOT** nest tabs within tabs.
+- **MUST NOT** exceed 5 tabs without considering alternative patterns.
+- **SHOULD** keep tab labels short (1-2 words).
+- **SHOULD** use `smallScreen` mode for mobile-responsive layouts.
+
+## Usage
+
+```tsx
+import { Tabs, TabList, Tab, TabPanel } from '@/components/ui/tabs';
+
+// Uncontrolled
+<Tabs defaultValue="tab1">
+  <TabList>
+    <Tab value="tab1">Overview</Tab>
+    <Tab value="tab2">Analytics</Tab>
+    <Tab value="tab3">Reports</Tab>
+  </TabList>
+  <TabPanel value="tab1">Overview content</TabPanel>
+  <TabPanel value="tab2">Analytics content</TabPanel>
+  <TabPanel value="tab3">Reports content</TabPanel>
+</Tabs>
+
+// Controlled
+const [tab, setTab] = useState('overview');
+<Tabs value={tab} onValueChange={setTab}>
+  <TabList>
+    <Tab value="overview">Overview</Tab>
+    <Tab value="analytics">Analytics</Tab>
+  </TabList>
+  <TabPanel value="overview">...</TabPanel>
+  <TabPanel value="analytics">...</TabPanel>
+</Tabs>
+
+// With trailing badges
+<Tab value="active" trailing={<Tag variant="neutral" size="small">24</Tag>}>
+  Active campaigns
+</Tab>
+
+// Mobile responsive
+<TabList smallScreen>...</TabList>
+```
+
+## Migration
+
+```tsx
+// Old (legacy)
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+<TabsList><TabsTrigger value="t1">Tab 1</TabsTrigger></TabsList>
+<TabsContent value="t1">Content</TabsContent>
+
+// New (LD 3.5)
+import { Tabs, TabList, Tab, TabPanel } from '@/components/ui/tabs';
+<TabList><Tab value="t1">Tab 1</Tab></TabList>
+<TabPanel value="t1">Content</TabPanel>
+```
+
+Key renames: `TabsList` -> `TabList`, `TabsTrigger` -> `Tab`, `TabsContent` -> `TabPanel`.
+
+## Do / Don't
+
+### Do
+
+- Keep tab labels short (1-2 words).
+- Use controlled mode when syncing tab state with URL.
+- Show counts with trailing Tags.
+- Enable `smallScreen` mode for mobile layouts.
+
+### Don't
+
+- Nest tabs within tabs.
+- Use long multi-word labels that wrap or truncate.
+- Exceed 5 tabs (consider dropdown or different pattern).
+- Manually implement tabs with custom buttons.
+- Override LD 3.5 tokens.
+
+## Accessibility
+
+- `role="tablist"`, `role="tab"`, `role="tabpanel"` applied automatically.
+- `aria-selected`, `aria-disabled` managed by component.
+- Arrow Left/Right navigates between tabs; Enter/Space activates.
+- Clear focus rings using LD 3.5 focus outline tokens.
+
+## Related
+
+- [TabNavigation API reference](../../design-system-docs/TabNavigation.mdx)
+- [TabNavigationItem API reference](../../design-system-docs/TabNavigationItem.mdx)
+- [Tag](./Tag.md) for trailing badge counts

@@ -1,0 +1,357 @@
+/* Button Base Styles */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ld-primitive-scale-space-100);
+  font-family: var(--ld-semantic-font-family-sans);
+  font-weight: 700;
+  border-radius: 9999px; /* Fully rounded pill shape */
+  border: var(--ld-semantic-scale-border-width-interactive-focused) solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--ld-primitive-duration-200) ease-in-out;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.button:focus-visible {
+  outline: var(--ld-semantic-scale-border-width-interactive-focused) solid var(--ld-semantic-color-action-focus-outline);
+  outline-offset: var(--ld-primitive-scale-space-50);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+/* Size Variants
+   Vertical padding is 0 — height is set by min-height and flexbox centering.
+   Horizontal padding controls hug width — consistent per size.
+*/
+.button--size-small {
+  padding: 0 var(--ld-primitive-scale-space-200); /* 0 16px */
+  font-size: var(--ld-semantic-font-body-small-size);
+  line-height: 1;
+  min-height: 32px;
+}
+
+.button--size-medium {
+  padding: 0 var(--ld-primitive-scale-space-300); /* 0 24px */
+  font-size: var(--ld-semantic-font-body-medium-size);
+  line-height: 1;
+  min-height: 40px;
+}
+
+.button--size-large {
+  padding: 0 var(--ld-primitive-scale-space-300); /* 0 24px — same as medium for consistent hug */
+  font-size: var(--ld-semantic-font-body-large-size);
+  line-height: 1;
+  min-height: 48px;
+}
+
+/* Full Width */
+.button--fullWidth {
+  width: 100%;
+}
+
+/* Primary Variant */
+.button--variant-primary {
+  background-color: var(--ld-semantic-color-action-fill-primary);
+  color: var(--ld-semantic-color-action-text-on-fill-primary);
+  border-color: var(--ld-semantic-color-action-fill-primary);
+}
+
+.button--variant-primary:hover:not(:disabled) {
+  background-color: var(--ld-semantic-color-action-fill-primary-hovered);
+  border-color: var(--ld-semantic-color-action-fill-primary-hovered);
+  color: var(--ld-semantic-color-action-text-on-fill-primary-hovered);
+}
+
+.button--variant-primary:active:not(:disabled) {
+  background-color: var(--ld-semantic-color-action-fill-primary-pressed);
+  border-color: var(--ld-semantic-color-action-fill-primary-pressed);
+  color: var(--ld-semantic-color-action-text-on-fill-primary-pressed);
+}
+
+.button--variant-primary:disabled {
+  background-color: var(--ld-semantic-color-action-fill-primary-disabled);
+  border-color: var(--ld-semantic-color-action-fill-primary-disabled);
+  color: var(--ld-semantic-color-action-text-on-fill-primary-disabled);
+}
+
+/* Primary Alt Variant — Walmart+ membership (Spark gold fill, navy text) */
+.button--variant-primary-alt {
+  background-color: var(--wcp-semantic-color-action-fill-primary-alt, #ffc220);
+  color: var(--wcp-semantic-color-action-text-on-fill-primary-alt, #001e60);
+  border-color: var(--wcp-semantic-color-action-fill-primary-alt, #ffc220);
+}
+
+.button--variant-primary-alt:hover:not(:disabled) {
+  background-color: var(--wcp-semantic-color-action-fill-primary-alt-hovered, #ffc836);
+  border-color: var(--wcp-semantic-color-action-fill-primary-alt-hovered, #ffc836);
+  color: var(--wcp-semantic-color-action-text-on-fill-primary-alt-hovered, #001e60);
+}
+
+.button--variant-primary-alt:focus-visible {
+  background-color: var(--wcp-semantic-color-action-fill-primary-alt-focused, #e6a31d);
+  border-color: var(--wcp-semantic-color-action-fill-primary-alt-focused, #e6a31d);
+  color: var(--wcp-semantic-color-action-text-on-fill-primary-alt-focused, #001e60);
+}
+
+.button--variant-primary-alt:active:not(:disabled) {
+  background-color: var(--wcp-semantic-color-action-fill-primary-alt-pressed, #e6a31d);
+  border-color: var(--wcp-semantic-color-action-fill-primary-alt-pressed, #e6a31d);
+  color: var(--wcp-semantic-color-action-text-on-fill-primary-alt-pressed, #001e60);
+}
+
+.button--variant-primary-alt:disabled {
+  background-color: var(--wcp-semantic-color-action-fill-primary-alt-disabled, #babbbe);
+  border-color: var(--wcp-semantic-color-action-fill-primary-alt-disabled, #babbbe);
+  color: var(--wcp-semantic-color-action-text-on-fill-primary-alt-disabled, #ffffff);
+}
+
+/* Secondary Variant */
+.button--variant-secondary {
+  background-color: var(--ld-semantic-color-action-fill-secondary);
+  color: var(--ld-semantic-color-action-text-on-fill-secondary);
+  border-width: 1px;
+  border-color: var(--ld-semantic-color-action-border-secondary);
+}
+
+.button--variant-secondary:hover:not(:disabled) {
+  background-color: var(--ld-semantic-color-action-fill-secondary-hovered);
+  border-color: var(--ld-semantic-color-action-border-secondary-hovered);
+  color: var(--ld-semantic-color-action-text-on-fill-secondary-hovered);
+}
+
+.button--variant-secondary:active:not(:disabled) {
+  background-color: var(--ld-semantic-color-action-fill-secondary-pressed);
+  border-color: var(--ld-semantic-color-action-border-secondary-pressed);
+  color: var(--ld-semantic-color-action-text-on-fill-secondary-pressed);
+}
+
+.button--variant-secondary:disabled {
+  background-color: var(--ld-semantic-color-action-fill-secondary-disabled);
+  border-color: var(--ld-semantic-color-action-border-secondary-disabled);
+  color: var(--ld-semantic-color-action-text-on-fill-secondary-disabled);
+}
+
+/* Tertiary Variant */
+.button--variant-tertiary {
+  background-color: var(--ld-semantic-color-action-fill-tertiary);
+  color: var(--ld-semantic-color-action-text-on-fill-tertiary);
+  border-width: 1px;
+  border-color: var(--ld-semantic-color-action-border-tertiary);
+}
+
+.button--variant-tertiary:hover:not(:disabled) {
+  background-color: var(--ld-semantic-color-action-fill-tertiary-hovered);
+  border-color: var(--ld-semantic-color-action-border-tertiary-hovered);
+  color: var(--ld-semantic-color-action-text-on-fill-tertiary-hovered);
+}
+
+.button--variant-tertiary:active:not(:disabled) {
+  background-color: var(--ld-semantic-color-action-fill-tertiary-pressed);
+  border-color: var(--ld-semantic-color-action-border-tertiary-pressed);
+  color: var(--ld-semantic-color-action-text-on-fill-tertiary-pressed);
+}
+
+.button--variant-tertiary:disabled {
+  background-color: var(--ld-semantic-color-action-fill-tertiary-disabled);
+  border-color: var(--ld-semantic-color-action-border-tertiary-disabled);
+  color: var(--ld-semantic-color-action-text-on-fill-tertiary-disabled);
+}
+
+/* Destructive Variant */
+.button--variant-destructive {
+  background-color: var(--ld-semantic-color-action-fill-negative);
+  color: var(--ld-semantic-color-action-text-on-fill-negative);
+  border-color: var(--ld-semantic-color-action-fill-negative);
+}
+
+.button--variant-destructive:hover:not(:disabled) {
+  background-color: var(--ld-semantic-color-action-fill-negative-hovered);
+  border-color: var(--ld-semantic-color-action-fill-negative-hovered);
+  color: var(--ld-semantic-color-action-text-on-fill-negative-hovered);
+}
+
+.button--variant-destructive:active:not(:disabled) {
+  background-color: var(--ld-semantic-color-action-fill-negative-pressed);
+  border-color: var(--ld-semantic-color-action-fill-negative-pressed);
+  color: var(--ld-semantic-color-action-text-on-fill-negative-pressed);
+}
+
+.button--variant-destructive:disabled {
+  background-color: var(--ld-semantic-color-action-fill-negative-disabled);
+  border-color: var(--ld-semantic-color-action-fill-negative-disabled);
+  color: var(--ld-semantic-color-action-text-on-fill-negative-disabled);
+}
+
+/* Icon Containers */
+.button__leading,
+.button__trailing {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.button__leading {
+  margin-left: -4px;
+}
+
+.button__trailing {
+  margin-right: -4px;
+}
+
+.button__content {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Icon sizing based on button size */
+.button--size-small .button__leading svg,
+.button--size-small .button__trailing svg {
+  width: 16px;
+  height: 16px;
+}
+
+.button--size-medium .button__leading svg,
+.button--size-medium .button__trailing svg {
+  width: 20px;
+  height: 20px;
+}
+
+.button--size-large .button__leading svg,
+.button--size-large .button__trailing svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Loading State */
+.button--loading {
+  cursor: wait;
+  pointer-events: none;
+}
+
+/* Override disabled opacity so loading button appears at full opacity */
+.button--loading:disabled {
+  opacity: 1;
+}
+
+/* Spinner animation */
+@keyframes button-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.button__spinner {
+  display: block;
+  flex-shrink: 0;
+  animation: button-spin 0.75s linear infinite;
+  transform-origin: center;
+  /* Conic gradient mask replicates the LD 3.5 angular gradient fade:
+     transparent at the trailing edge (3 o'clock), solid through the arc body,
+     fading back to transparent at the leading tip */
+  -webkit-mask-image: conic-gradient(
+    from 90deg at 50% 50%,
+    transparent 0deg,
+    black 138.6deg,
+    black 270deg,
+    transparent 360deg
+  );
+  mask-image: conic-gradient(
+    from 90deg at 50% 50%,
+    transparent 0deg,
+    black 138.6deg,
+    black 270deg,
+    transparent 360deg
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button__spinner {
+    animation: none;
+  }
+}
+
+/* ── Sub-label ── */
+
+.button__labelGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: -4px;
+  line-height: 1.2;
+  flex: 1;
+  text-align: left;
+}
+
+.button__subLabel {
+  font-family: var(--ld-semantic-font-caption-family);
+  font-size: var(--ld-semantic-font-caption-size, 0.75rem);
+  font-weight: 700;
+  line-height: var(--ld-semantic-font-caption-line-height, 1rem);
+  opacity: 0.85;
+}
+
+/* ── Animated stroke / "magic" border ── */
+
+@property --stroke-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.button--strokeOn {
+  position: relative;
+  isolation: isolate;
+}
+
+.button--strokeOn::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 9999px;
+  background: conic-gradient(
+    from var(--stroke-angle),
+    transparent 0%,
+    var(--ld-semantic-color-action-fill-primary, #0071dc) 15%,
+    rgba(226, 235, 255, 0.6) 35%,
+    transparent 50%,
+    var(--ld-semantic-color-action-fill-primary, #0071dc) 65%,
+    rgba(226, 235, 255, 0.6) 80%,
+    transparent 100%
+  );
+  z-index: -1;
+  animation: stroke-rotate 4s linear infinite;
+  /* Mask out the center so only the outer ring (border) is visible */
+  -webkit-mask:
+    linear-gradient(#000, #000) content-box,
+    linear-gradient(#000, #000);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000, #000) content-box,
+    linear-gradient(#000, #000);
+  mask-composite: exclude;
+  padding: 3px;
+}
+
+@keyframes stroke-rotate {
+  to { --stroke-angle: 360deg; }
+}
+
+/* Hide the existing component border on secondary/tertiary when strokeOn is active */
+.button--variant-secondary.button--strokeOn,
+.button--variant-tertiary.button--strokeOn {
+  border-color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button--strokeOn::before {
+    animation: none;
+    background: var(--ld-semantic-color-action-fill-primary, #0071dc);
+    opacity: 0.3;
+  }
+}

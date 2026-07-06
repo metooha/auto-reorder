@@ -1,0 +1,158 @@
+---
+description: Design System Enforcement
+globs:
+alwaysApply: true
+---
+
+## Purpose
+
+This rule ensures ALL code follows Living Design 3.5 (LD 3.5) design system principles: approved design tokens, icon library components, and LD components exclusively. Hard-coded values are strictly prohibited.
+
+---
+
+## 1. Design Token Enforcement
+
+### Rules
+
+- **MUST** use semantic tokens for all colors, spacing, typography, border-radius, elevation, and transitions.
+- **MUST NOT** use hard-coded hex colors, RGB values, or color names.
+- **MUST NOT** use hard-coded px/rem values for spacing or font sizes.
+- **MUST NOT** use primitive tokens directly (use semantic tokens instead).
+- **MUST NOT** create new custom CSS variables or design tokens.
+- **MUST** use state-specific tokens for interactive elements (hover, focus, pressed, disabled).
+
+### Token Categories
+
+| Category | Token Pattern | Example |
+|---|---|---|
+| Colors | `var(--ld-semantic-color-*)` | `var(--ld-semantic-color-text)` |
+| Spacing | `var(--ld-primitive-scale-space-*)` | `var(--ld-primitive-scale-space-200)` (16px) |
+| Typography | `var(--ld-semantic-font-*)` | `var(--ld-semantic-font-body-small-size)` |
+| Border Radius | `var(--ld-primitive-scale-borderradius-*)` | `var(--ld-primitive-scale-borderradius-100)` (8px) |
+| Elevation | `var(--ld-semantic-elevation-*)` | `var(--ld-semantic-elevation-100)` |
+| Transitions | `var(--ld-primitive-duration-*)` | `var(--ld-primitive-duration-200)` |
+| Icon Sizes | `var(--ld-semantic-scale-icon-*)` | `var(--ld-semantic-scale-icon-small)` (16px) |
+| Border Width | `var(--ld-semantic-scale-borderwidth-*)` | `var(--ld-semantic-scale-borderwidth-interactive)` |
+
+### Exceptions (Must Have Inline Comment)
+
+- Exact component height specs from LD 3.5 (e.g., `height: 32px; /* LD 3.5 spec */`)
+- Unit-less values (`flex: 1`, `opacity: 0.8`, `z-index: 1000`)
+- Transform values (`rotate(45deg)`)
+
+### Do / Don't
+
+```css
+/* WRONG */
+.card { background: #ffffff; padding: 16px; border-radius: 8px; color: #2e2f32; }
+
+/* CORRECT */
+.card {
+  background: var(--ld-semantic-color-surface);
+  padding: var(--ld-primitive-scale-space-200);
+  border-radius: var(--ld-primitive-scale-borderradius-100);
+  color: var(--ld-semantic-color-text);
+}
+```
+
+### Separator Token Rule
+
+All structural borders (card dividers, list separators, table rows, tab underlines) **MUST** use `--ld-semantic-color-separator`. Use specific border tokens only for interactive elements, semantic borders (info/error/warning), and focus outlines.
+
+---
+
+## 2. Icon Enforcement
+
+### Rules
+
+- **MUST** use icons from `client/components/icons/` (303+ icons available).
+- **MUST** import from `@/components/icons` only.
+- **MUST NOT** create inline SVGs.
+- **MUST NOT** use external icon libraries (`react-icons`, `heroicons`, `lucide-react`, etc.).
+
+### When Creating New Icons
+
+If a needed icon does not exist after thorough search:
+
+- **ViewBox**: `viewBox="0 0 20 20"`
+- **Stroke**: `strokeLinecap="square"`, `strokeWidth="1.5"`, `stroke="currentColor"`
+- **Location**: `client/components/icons/IconName.tsx`
+- **Export**: Add to `client/components/icons/index.tsx`
+
+### Do / Don't
+
+```tsx
+// WRONG
+import { FaHome } from 'react-icons/fa';
+<svg width="24" height="24"><path d="..." /></svg>
+
+// CORRECT
+import { Home } from '@/components/icons';
+<Home style={{ width: 20, height: 20 }} />
+```
+
+---
+
+## 3. Component Enforcement
+
+### Rules
+
+- **MUST** use LD 3.5 components before creating custom elements.
+- **MUST** use `<Button>` for all buttons (never raw `<button>` with styles).
+- **MUST** use `<Tag>` for all tags/badges (never styled `<span>`).
+- **MUST** use `<DataTable>` for all tabular data (never raw `<table>`).
+- **MUST** use `<Tabs, TabList, Tab, TabPanel>` for all tabs.
+- **MUST** use `<Checkbox>`, `<Radio>`, `<Select>`, `<TextField>`, `<TextArea>` for form elements.
+- **MUST** use Radix/Shadcn portal-based components for overlays.
+- **MUST NOT** modify existing LD components in `client/components/ui/`.
+- **MUST NOT** override component tokens with hard-coded values.
+
+### Import Conventions
+
+```tsx
+// LD 3.5 Components (uppercase)
+import { Button } from '@/components/ui/Button';
+import { Tag } from '@/components/ui/tag';
+import { Rating } from '@/components/ui/Rating';
+
+// Shadcn/Radix Components (lowercase)
+import { Popover } from '@/components/ui/popover';
+import { Dialog } from '@/components/ui/dialog';
+```
+
+---
+
+## Enforcement Checklist
+
+Before committing code, verify:
+
+- [ ] No hard-coded hex colors (`#0071DC`, `#FFFFFF`, etc.)
+- [ ] No hard-coded px values for spacing or font sizes
+- [ ] No inline SVG icons
+- [ ] No external icon library imports
+- [ ] All buttons use `<Button>` component
+- [ ] All icons imported from `@/components/icons`
+- [ ] All colors use `var(--ld-semantic-color-*)`
+- [ ] Theme switching tested and working
+
+### Automated Detection
+
+```bash
+# Hard-coded colors
+grep -r "#[0-9a-fA-F]\{6\}" client/pages/ client/components/
+
+# Inline SVGs
+grep -r "<svg" client/pages/ client/components/ --include="*.tsx"
+
+# External icon imports
+grep -r "react-icons\|heroicons\|lucide-react" client/ --include="*.tsx"
+```
+
+---
+
+## Related
+
+- [Design Tokens reference](../design-system/DesignTokens.md)
+- Token source: `client/styles/themes/base/semantic.css` and `primitive.css`
+- Icon library: `client/components/icons/`
+- Component library: `/component-library` page

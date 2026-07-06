@@ -1,0 +1,55 @@
+/**
+ * Sam's Club - Semantic Token Overrides
+ * 
+ * INHERITS FROM: base/semantic.css (loaded globally), then wcp/semantic.css
+ * OVERRIDES: 30 tokens — Sam's Club brand colors (#0060A9 primary, #00809E accent)
+ * 
+ * Sam's Club uses a deep blue primary with teal accents.
+ * This overrides the WCP theme (which overrides base).
+ * Inheritance chain: base → WCP → Sam's Club
+ */
+
+:root {
+  /* ── Primary Action Colors ── */
+  --ld-semantic-color-action-fill-primary: #0060A9;
+  --ld-semantic-color-action-fill-primary-hovered: #004A82;
+  --ld-semantic-color-action-fill-primary-pressed: #003561;
+
+  /* ── Text Brand Colors ── */
+  --ld-semantic-color-text-brand: #0060A9;
+  --ld-semantic-color-text-brand-blue-bold: #003561;
+
+  /* ── Fill Brand Colors ── */
+  --ld-semantic-color-fill-brand: #0060A9;
+  --ld-semantic-color-fill-accent-blue-subtle: #E7F6FE;
+  --ld-semantic-color-fill-brand-subtle: #E7F6FE;
+
+  /* ── Border Activated ── */
+  --ld-semantic-color-border-activated: #003561;
+
+  /* ── Icon Brand ── */
+  --ld-semantic-color-icon-brand: #0060A9;
+
+  /* ── Focus Outline ── */
+  --ld-semantic-color-action-focus-outline: #0060A9;
+
+  /* ── Top Navigation ── */
+  --ld-semantic-color-topnav-background: #0060A9;
+  --ld-semantic-color-topnav-background-hover: #004A82;
+  --ld-semantic-color-topnav-background-active: #003561;
+
+  /* ── Link Colors ── */
+  --ld-semantic-color-action-text-link: #0060A9;
+  --ld-semantic-color-action-text-link-hovered: #003561;
+
+  /* ── Tertiary Action ── */
+  --ld-semantic-color-action-fill-tertiary-hovered: rgba(0, 96, 169, 0.08);
+  --ld-semantic-color-action-fill-tertiary-pressed: rgba(0, 96, 169, 0.16);
+
+  /* ── WCP Alt Button (Teal for Sam's Club) ── */
+  --wcp-semantic-color-action-fill-primary-alt: #00809E;
+  --wcp-semantic-color-action-fill-primary-alt-hovered: #006A83;
+  --wcp-semantic-color-action-fill-primary-alt-pressed: #005A6F;
+  --wcp-semantic-color-action-text-onfill-primary-alt: #FFFFFF;
+  --wcp-semantic-color-header-background: #0060A9;
+}

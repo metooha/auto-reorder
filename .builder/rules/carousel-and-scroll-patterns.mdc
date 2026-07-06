@@ -1,0 +1,253 @@
+---
+description: Carousel and Scroll Patterns
+globs:
+alwaysApply: false
+---
+
+## Purpose
+
+Two carousel/scroll patterns exist in the project. This rule defines when to use each, how to implement them correctly, and which shared requirements apply to both.
+
+---
+
+## Pattern 1 — Horizontal Scroll Snap
+
+**Use when**: Horizontally scrollable list of same-sized tiles (product cards, order cards, category chips).
+
+**Reference implementation**: `client/components/walmart/NewArrivalsCarousel.tsx`
+
+### When to use this pattern
+
+- Tiles are the same size
+- No auto-advance needed
+- User controls scrolling manually (touch/mouse)
+- More than ~4 tiles that won't all fit on screen
+
+### CSS implementation
+
+```css
+/* Scroll container */
+.carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: var(--ld-primitive-scale-space-300, 12px);
+  padding: var(--ld-primitive-scale-space-200, 8px) var(--ld-primitive-scale-space-400, 16px);
+  /* Required: inner padding so card shadows don't get clipped */
+}
+
+/* Hide scrollbar visually */
+.carousel {
+  scrollbar-width: none; /* Firefox */
+}
+.carousel::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+/* Individual tiles */
+.tile {
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  width: 148px; /* Mobile */
+}
+
+@media (min-width: 768px) {
+  .tile { width: 180px; }
+}
+
+@media (min-width: 1024px) {
+  .tile { width: 200px; }
+}
+```
+
+### Shadow clipping rule
+
+If tiles have `box-shadow` elevation, add vertical padding **inside** the scroll container — never wrap with `overflow: hidden`:
+
+```css
+/* ✅ CORRECT — padding inside scroll container lets shadows breathe */
+.carousel {
+  padding: 8px 16px;
+}
+
+/* ❌ WRONG — clips shadows */
+.carouselWrapper {
+  overflow: hidden;
+}
+```
+
+### No JS required
+
+Basic scroll snap requires zero JavaScript. Only add JS if implementing scroll-to-index or keyboard arrow navigation.
+
+---
+
+## Pattern 2 — Auto-Advance Full-Bleed Carousel
+
+**Use when**: Full-width hero with auto-advancing slides and manual prev/next controls (promotional banners, hero campaigns).
+
+**Reference implementation**: `client/components/walmart/JumpRightBackIn.tsx`
+
+### When to use this pattern
+
+- Slides are full-width (full-bleed)
+- Content auto-advances on a timer
+- User can manually prev/next through slides
+- Each slide has distinct imagery and headline
+
+### JS implementation
+
+```tsx
+const INTERVAL_MS = 5000;
+const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+function startTimer() {
+  timerRef.current = setInterval(() => {
+    setActiveIndex((i) => (i + 1) % slides.length);
+  }, INTERVAL_MS);
+}
+
+function stopTimer() {
+  if (timerRef.current) clearInterval(timerRef.current);
+}
+
+// Start on mount, clear on unmount
+useEffect(() => {
+  startTimer();
+  return stopTimer;
+}, []);
+
+// Pause on manual navigation, restart after user interaction
+function goTo(index: number) {
+  stopTimer();
+  setActiveIndex(index);
+  startTimer(); // restart after interaction
+}
+```
+
+### Prev/Next controls
+
+Always use `IconButton` with explicit `aria-label`:
+
+```tsx
+import { IconButton } from '@/components/ui/IconButton';
+import { ChevronLeft, ChevronRight } from '@/components/icons';
+
+<IconButton
+  aria-label="Previous slide"
+  icon={<ChevronLeft />}
+  UNSAFE_className={styles.navButton}
+  onClick={() => goTo((activeIndex - 1 + slides.length) % slides.length)}
+/>
+<IconButton
+  aria-label="Next slide"
+  icon={<ChevronRight />}
+  UNSAFE_className={styles.navButton}
+  onClick={() => goTo((activeIndex + 1) % slides.length)}
+/>
+```
+
+`UNSAFE_className` is acceptable here to apply circular button styling to `IconButton` — this is one of the approved uses.
+
+### Slide data pattern
+
+Each slide object should include an `objectPosition` for image focal point control, and optionally `headlineParts` for multi-line headlines:
+
+```ts
+interface CarouselSlide {
+  id: string;
+  image: string;
+  alt: string;
+  objectPosition?: string;       // e.g. 'center top', '30% 50%'
+  headline?: string;             // Single-line headline
+  headlineParts?: string[];      // Multi-line headline (renders each part in <span>)
+  ctaLabel?: string;
+  ctaHref?: string;
+}
+```
+
+### Multi-line headline rendering
+
+Use `headlineParts` instead of `\n` in strings. Render each part in a block `<span>`:
+
+```tsx
+{slide.headlineParts
+  ? slide.headlineParts.map((part, i) => (
+      <span key={i} style={{ display: 'block' }}>{part}</span>
+    ))
+  : slide.headline
+}
+```
+
+### Dynamic image position
+
+Apply `objectPosition` as an inline style because it is dynamic per slide:
+
+```tsx
+<img
+  src={slide.image}
+  alt={slide.alt}
+  className={styles.slideImage}
+  style={{ objectPosition: slide.objectPosition ?? 'center' }}
+/>
+```
+
+This is one of the approved uses of inline styles — the value varies per data item and cannot be expressed in a CSS module.
+
+---
+
+## Shared Requirements (Both Patterns)
+
+### aria-labels on all controls
+
+Every interactive control (prev/next buttons, pagination dots) must have an `aria-label`:
+
+```tsx
+<button aria-label="Go to slide 3" />
+<button aria-label="Next slide" />
+```
+
+### prefers-reduced-motion
+
+Auto-advancing carousels must respect the user's motion preference:
+
+```tsx
+useEffect(() => {
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!prefersReduced) {
+    startTimer();
+  }
+  return stopTimer;
+}, []);
+```
+
+For CSS transitions on slide changes:
+
+```css
+.slide {
+  transition: opacity 300ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide {
+    transition: none;
+  }
+}
+```
+
+---
+
+## Choosing the Right Pattern
+
+| Situation | Pattern |
+|---|---|
+| Product tiles, order history cards, category chips | Pattern 1 — Scroll Snap |
+| Hero campaign, full-width promotional banner | Pattern 2 — Auto-Advance |
+| Manual-only full-width slider (no timer) | Pattern 2 (disable `setInterval`) |
+| Mixed-size content that should scroll | Pattern 1 (remove `scroll-snap-type` if needed) |
+
+---
+
+## Enforcement Level
+
+**HIGH** — Agents must use one of these two patterns when building carousel or scroll components. Do not implement a third pattern from scratch.

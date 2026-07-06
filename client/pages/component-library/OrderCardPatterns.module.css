@@ -1,0 +1,116 @@
+/* ── Page wrapper ─────────────────────────────────────────────────────────── */
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+/* ── Prompts table ────────────────────────────────────────────────────────── */
+.tableWrapper {
+  border-radius: 8px;
+  border: 1px solid var(--ld-semantic-color-separator, #E3E4E5);
+  overflow: hidden;
+  margin-bottom: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 480px;
+}
+
+/* ── Pattern card ─────────────────────────────────────────────────────────── */
+.patternCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-radius: 12px;
+  border: 1px solid var(--ld-semantic-color-separator, #E3E4E5);
+  overflow: hidden;
+  background-color: var(--ld-semantic-color-fill-surface-primary, #fff);
+}
+
+.patternLabel {
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid var(--ld-semantic-color-separator, #E3E4E5);
+}
+
+.patternLabelText {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text-subtle, #74767C);
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+.patternPreview {
+  padding: 24px 20px;
+}
+
+/* ── Copy prompt button ───────────────────────────────────────────────────── */
+.copyButton {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 20px;
+  border: none;
+  border-top: 1px solid var(--ld-semantic-color-separator, #E3E4E5);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease;
+  font-family: var(--ld-semantic-font-family-sans);
+  box-sizing: border-box;
+}
+
+.copyButtonLabel {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.copyButtonPrompt {
+  display: block;
+  font-size: 13px;
+  color: var(--ld-semantic-color-text, #2E2F32);
+  line-height: 1.5;
+}
+
+.copyIcon {
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition: color 0.15s ease;
+}
+
+/* ── Mobile ───────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .stack {
+    gap: 24px;
+  }
+
+  .patternPreview {
+    padding: 16px 12px;
+  }
+
+  .patternLabel {
+    padding: 12px 16px 10px;
+  }
+
+  .copyButton {
+    padding: 12px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stack {
+    gap: 20px;
+  }
+
+  .patternPreview {
+    padding: 12px 8px;
+  }
+}

@@ -1,0 +1,5 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  border-top: 8px solid var(--ld-semantic-color-fill-subtle);
+}

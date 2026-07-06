@@ -1,0 +1,78 @@
+---
+description: Page Section Spacing — gap rules, separator breathing room, demo frame padding
+globs:
+  - "client/pages/**/*.tsx"
+  - "client/pages/**/*.module.css"
+alwaysApply: false
+---
+
+## Page Section Gap Rule (HARD RULE)
+
+All page-level sections must use consistent vertical spacing between them.
+
+
+/* ✅ CORRECT — consistent section gaps */
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-400, 32px);
+}
+
+/* ❌ WRONG — inconsistent margins */
+.section1 { margin-bottom: 24px; }
+.section2 { margin-bottom: 16px; }
+.section3 { margin-bottom: 32px; }
+```
+
+### Rules
+
+- Use `gap` on the page flex container — not individual `margin-bottom` on sections
+- Desktop gap: `var(--ld-primitive-scale-space-400)` (32px)
+- Tablet gap: `var(--ld-primitive-scale-space-300)` (24px)
+- Phone gap: `var(--ld-primitive-scale-space-200)` (16px)
+
+## Separator Breathing Room
+
+When a `Divider` or border separates sections, ensure equal spacing above and below:
+
+```css
+/* ✅ CORRECT — equal breathing room */
+.divider {
+  margin-block: var(--ld-primitive-scale-space-300, 24px);
+}
+
+/* ❌ WRONG — uneven spacing */
+.divider {
+  margin-top: 8px;
+  margin-bottom: 24px;
+}
+```
+
+## Demo Frame / Component Library Padding
+
+Component library demo frames (sandbox areas) use specific padding:
+
+```css
+.demoFrame {
+  padding: var(--ld-primitive-scale-space-400, 32px);
+  background: var(--ld-semantic-color-background-subtle);
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+}
+```
+
+## Section Header + "See All" Pattern
+
+Section headers with action links follow this layout:
+
+```css
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: var(--ld-primitive-scale-space-200, 16px);
+}
+```
+
+- Title uses `--ld-semantic-font-heading-small-*` tokens
+- "See all" link uses `Link` component with `default` variant
+- Never use a `Button` for "See all" — it's navigation, not an action

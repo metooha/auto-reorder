@@ -1,0 +1,281 @@
+/* GettingStartedProductManager styles */
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-top: 24px;
+}
+
+/* Intro banner */
+.introBanner {
+  background: var(--ld-semantic-color-fill-brand-subtle);
+  padding: 24px 32px;
+  border-radius: 8px;
+  border-left: 5px solid var(--ld-semantic-color-border-brand);
+}
+
+.introTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  margin-bottom: 8px;
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+.introText {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ld-semantic-color-text-subtle);
+  margin: 0;
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+/* Section headers */
+.sectionHeader {
+  margin-top: 8px;
+}
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  margin: 0 0 4px;
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+.sectionSubtitle {
+  font-size: 14px;
+  color: var(--ld-semantic-color-text-subtle);
+  margin: 0;
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+/* Workflow grid */
+.workflowGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.workflowCard {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  background: var(--ld-semantic-color-surface);
+  border-radius: 8px;
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+}
+
+.workflowStep {
+  min-width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--ld-semantic-color-fill-brand-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--ld-semantic-color-text-brand-bold);
+  flex-shrink: 0;
+}
+
+.workflowTitle {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--ld-semantic-color-text);
+  margin-bottom: 2px;
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+.workflowRole {
+  font-size: 12px;
+  color: var(--ld-semantic-color-text-brand);
+  font-weight: 600;
+  margin-bottom: 6px;
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+.workflowDetail {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ld-semantic-color-text-subtle);
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+/* Use case grid */
+.useCaseGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+.useCaseCard {
+  padding: 16px;
+  background: var(--ld-semantic-color-fill-subtle);
+  border-radius: 8px;
+}
+
+.useCaseCategory {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  margin-bottom: 8px;
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+.useCaseChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.useCaseChip {
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  background: var(--ld-semantic-color-surface);
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  color: var(--ld-semantic-color-text);
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+.browseLink {
+  font-size: 14px;
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+.browseLink a {
+  color: var(--ld-semantic-color-link-text);
+  text-decoration: none;
+}
+
+.browseLink a:hover {
+  text-decoration: underline;
+}
+
+/* PRD Template */
+.templateWrapper {
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.templateHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--ld-semantic-color-fill-subtle);
+  border-bottom: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+}
+
+.templateLabel {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+.copyBtn {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--ld-semantic-color-action-border-secondary);
+  background: var(--ld-semantic-color-surface);
+  color: var(--ld-semantic-color-text);
+  cursor: pointer;
+  font-family: var(--ld-semantic-font-family-sans);
+  transition: background 0.15s;
+}
+
+.copyBtn:hover {
+  background: var(--ld-semantic-color-fill-subtle);
+}
+
+.templateBody {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.templateSection {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+}
+
+.templateSection:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.templateSectionTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+  margin-bottom: 4px;
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+.templateSectionDesc {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ld-semantic-color-text-subtle);
+  margin-bottom: 8px;
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+.templateSectionExample {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ld-semantic-color-text);
+  background: var(--ld-semantic-color-fill-subtle);
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+.exampleLabel {
+  font-weight: 700;
+  color: var(--ld-semantic-color-text-brand);
+}
+
+/* Tips */
+.tipsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tipItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--ld-semantic-color-fill-subtle);
+  border-radius: 6px;
+}
+
+.tipNumber {
+  min-width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--ld-semantic-color-fill-brand-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--ld-semantic-color-text-brand-bold);
+  flex-shrink: 0;
+}
+
+.tipText {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ld-semantic-color-text);
+  font-family: var(--ld-semantic-font-family-sans);
+}

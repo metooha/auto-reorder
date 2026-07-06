@@ -1,0 +1,114 @@
+---
+description: Overlay Z-Index Rule
+globs:
+alwaysApply: false
+---
+
+# Rule — Overlay Z-Index (HARD RULE — NO EXCEPTIONS)
+
+## The Rule
+
+**Any component that uses a scrim (backdrop/overlay dim) is an overlay component and MUST render above ALL application UI — including the desktop header, side navigation, sub-navigation, and any fixed bars.**
+
+This is not a suggestion. Bottom sheets, modals, side panels, and drawers are inherently full-interruption UI. A scrim that peeks behind nav chrome destroys the illusion of modal focus and breaks accessibility expectations.
+
+---
+
+## Z-Index Token Hierarchy
+
+The design system defines a strict stacking order via semantic tokens. Use these — never raw integers.
+
+| Token | Value | Layer |
+|---|---|---|
+| `--ld-semantic-z-index-base` | `0` | Normal flow |
+| `--ld-semantic-z-index-dropdown` | `1000` | Dropdowns, menus |
+| `--ld-semantic-z-index-sticky` | `1020` | Sticky table headers |
+| `--ld-semantic-z-index-fixed` | `1030` | Fixed bars (SubNav) |
+| `--ld-semantic-z-index-modal-backdrop` | `1040` | **Scrim / backdrop** |
+| `--ld-semantic-z-index-modal` | `1050` | **Overlay panel (sheet, dialog, drawer)** |
+| `--ld-semantic-z-index-popover` | `1060` | Popovers |
+| `--ld-semantic-z-index-tooltip` | `1070` | Tooltips |
+| `--ld-semantic-z-index-notification` | `1080` | Toasts, snackbars |
+| `--ld-semantic-z-index-overlay` | `1090` | Full-screen takeovers |
+| `--ld-semantic-z-index-top` | `1100` | Highest (emergency banners) |
+
+### Competing UI elements in this project
+
+| Element | z-index |
+|---|---|
+| Desktop header (`DesktopHeader`) | `300` |
+| Component library side nav | `200` |
+| Sub-navigation (`SubNav`) | `98` |
+| Bottom nav (`BottomNav`) | `50` |
+
+All overlay components at `1040+` comfortably clear all of these.
+
+---
+
+## Required Pattern — All Overlay Components
+
+```css
+/* ✅ CORRECT — scrim uses modal-backdrop token */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--ld-semantic-z-index-modal-backdrop, 1040);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* ✅ CORRECT — panel sits one level above its own scrim */
+.sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--ld-semantic-z-index-modal, 1050);
+}
+```
+
+```css
+/* ❌ WRONG — arbitrary low values are buried under nav chrome */
+.overlay { z-index: 50; }   /* lost behind header (300) and sidebar (200) */
+.sheet   { z-index: 51; }
+```
+
+---
+
+## What Counts as an Overlay Component
+
+A component is an overlay if it:
+
+- Renders a **scrim** (dim backdrop behind the panel)
+- Blocks interaction with the page beneath it
+- Represents a **modal / interruptive** experience
+
+Examples:
+
+| Component | Scrim? | Is Overlay? |
+|---|---|---|
+| Bottom Sheet (`WCPRichMediaSheet`, `BottomSheet`) | ✅ | ✅ |
+| Modal / Dialog | ✅ | ✅ |
+| Side Panel / Drawer | ✅ | ✅ |
+| Popover / Tooltip | ❌ | ❌ — use popover/tooltip tokens |
+| Dropdown / Menu | ❌ | ❌ — use dropdown token (1000) |
+| Toast / Snackbar | ❌ | ❌ — use notification token (1080) |
+
+---
+
+## Implementation Checklist
+
+Before completing any overlay component:
+
+- [ ] Scrim/backdrop uses `z-index: var(--ld-semantic-z-index-modal-backdrop, 1040)` — never a raw integer
+- [ ] Panel/sheet uses `z-index: var(--ld-semantic-z-index-modal, 1050)` — one level above its scrim
+- [ ] Tested with side nav open — sheet covers it completely
+- [ ] Tested with desktop header visible — sheet covers it completely
+- [ ] Never use `z-index: 50` or `z-index: 51` for scrim-based components
+
+---
+
+## Why Low Z-Index Is Wrong
+
+The pattern `z-index: 50` / `z-index: 51` only works in isolation — when the app has no fixed navigation. Once a persistent header (z-index: 300) or sidebar (z-index: 200) exists, any overlay at 50 renders beneath it. The scrim appears to cover the content but the nav bars stay on top, creating a broken "half-modal" that looks and behaves incorrectly.
+
+The token system at 1040+ was designed precisely for this: everything below 1000 is application chrome, everything above 1000 is ephemeral overlay UI.

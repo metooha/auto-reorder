@@ -1,0 +1,93 @@
+/* MenuItem Base - matches LD 3.5 Figma specifications exactly */
+.menuItem {
+  display: flex;
+  padding: var(--ld-primitive-scale-space-100) var(--ld-primitive-scale-space-200);
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-100);
+  align-self: stretch;
+  width: 100%;
+  border: none;
+  background: var(--ld-semantic-color-action-fill-transparent);
+  font-family: var(--ld-semantic-font-body-small-family);
+  font-size: var(--ld-semantic-font-body-small-size);
+  font-weight: var(--ld-semantic-font-body-small-weight-default);
+  line-height: var(--ld-semantic-font-body-small-lineheight);
+  color: var(--ld-semantic-color-action-text-on-fill-transparent);
+  text-align: left;
+  cursor: pointer;
+  border-radius: 0;
+  transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+  white-space: nowrap;
+  font-kerning: none;
+  font-feature-settings: 'liga' off;
+}
+
+/* Hover state */
+.menuItem:hover:not(:disabled) {
+  background: var(--ld-semantic-color-fill-hovered);
+  color: var(--ld-semantic-color-action-text-on-fill-transparent-hovered);
+}
+
+/* Focus state */
+.menuItem:focus-visible {
+  outline: none;
+  background: var(--ld-semantic-color-fill-focused);
+  color: var(--ld-semantic-color-action-text-on-fill-transparent-focused);
+}
+
+/* Active/Pressed state */
+.menuItem:active:not(:disabled) {
+  background: var(--ld-semantic-color-fill-pressed);
+  color: var(--ld-semantic-color-action-text-on-fill-transparent-pressed);
+}
+
+/* Disabled state */
+.menuItem:disabled {
+  color: var(--ld-semantic-color-action-text-on-fill-transparent-disabled);
+  cursor: not-allowed;
+  opacity: 1;
+  background: var(--ld-semantic-color-action-fill-transparent);
+}
+
+/* Selected state (for checkboxes or radio items) */
+.menuItem--selected {
+  background-color: var(--ld-semantic-color-surface-activated);
+  color: var(--ld-semantic-color-text);
+  font-weight: var(--ld-semantic-font-body-small-weight-default, 400);
+}
+
+.menuItem--selected:hover:not(:disabled) {
+  background-color: var(--ld-semantic-color-surface-activated-hovered);
+  color: var(--ld-semantic-color-text);
+}
+
+/* Leading icon */
+.menuItem__leadingIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--ld-semantic-scale-icon-small);
+  height: var(--ld-semantic-scale-icon-small);
+}
+
+.menuItem__leadingIcon svg {
+  width: var(--ld-semantic-scale-icon-small);
+  height: var(--ld-semantic-scale-icon-small);
+}
+
+/* Icon color in selected state */
+.menuItem--selected .menuItem__leadingIcon {
+  color: var(--ld-semantic-color-text);
+}
+
+.menuItem--selected .menuItem__leadingIcon svg {
+  color: var(--ld-semantic-color-text);
+}
+
+/* Content wrapper */
+.menuItem__content {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

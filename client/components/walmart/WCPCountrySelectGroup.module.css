@@ -1,0 +1,129 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+/* ─── Description ─── */
+.description {
+  font-size: var(--ld-semantic-font-body-medium-size);
+  font-family: var(--ld-semantic-font-family-sans);
+  color: var(--ld-semantic-color-text);
+  font-weight: 400;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ─── Country list ─── */
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ─── Country row (card slot style) ─── */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 8px 8px 4px;
+  background: var(--ld-semantic-color-surface);
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.10), 0 1px 2px 1px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  text-align: left;
+  transition: box-shadow 0.15s ease;
+}
+
+.row:hover {
+  box-shadow: 0 -1px 4px 0 rgba(0, 0, 0, 0.12), 0 2px 6px 1px rgba(0, 0, 0, 0.20);
+}
+
+.row:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline);
+  outline-offset: 2px;
+}
+
+/* ─── Radio ─── */
+.radio {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin: 4px;
+}
+
+.radioEmpty {
+  display: block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ld-semantic-color-text);
+  background: var(--ld-semantic-color-surface);
+}
+
+.radioSelected {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--ld-semantic-color-text);
+  border: 2px solid var(--ld-semantic-color-text);
+}
+
+.radioDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ld-semantic-color-surface);
+}
+
+/* ─── Flag ─── */
+.flag {
+  width: 24px;
+  height: 16px;
+  object-fit: cover;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* ─── Country name ─── */
+.name {
+  flex: 1;
+  font-size: var(--ld-semantic-font-body-medium-size);
+  font-family: var(--ld-semantic-font-family-sans);
+  color: var(--ld-semantic-color-text);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.nameSelected {
+  font-weight: 700;
+}
+
+/* ─── Dial code ─── */
+.dialCode {
+  font-size: var(--ld-semantic-font-body-small-size);
+  font-family: var(--ld-semantic-font-family-sans);
+  color: var(--ld-semantic-color-text-subtle);
+  font-weight: 400;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ─── Footer disclaimer ─── */
+.footer {
+  font-size: var(--ld-semantic-font-caption-size);
+  font-family: var(--ld-semantic-font-family-sans);
+  color: var(--ld-semantic-color-text);
+  margin: 0;
+  line-height: 1.33;
+  white-space: pre-line;
+}

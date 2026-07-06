@@ -1,0 +1,117 @@
+.root {
+  position: relative;
+  display: inline-block;
+}
+
+/* ── Trigger button ── */
+.trigger {
+  display: flex;
+  align-items: center;
+  height: 52px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 100ms;
+  color: var(--ld-semantic-color-topnav-text, #fff);
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  white-space: nowrap;
+}
+
+.trigger:hover {
+  background: var(--ld-semantic-color-topnav-background-hover, #004D99);
+}
+
+.trigger:active {
+  background: var(--ld-semantic-color-topnav-background-active, #003366);
+}
+
+.trigger:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline, #0053E2);
+  outline-offset: 2px;
+}
+
+.triggerIcon {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  color: var(--ld-semantic-color-topnav-text, #fff);
+  flex-shrink: 0;
+}
+
+.triggerContent {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.triggerSubtext {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--ld-semantic-color-topnav-text, #fff);
+}
+
+.triggerLabel {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  color: var(--ld-semantic-color-topnav-text, #fff);
+  margin-top: -2px;
+}
+
+/* ── Dropdown panel ── */
+.panel {
+  position: absolute;
+  top: 69px;
+  left: -25px;
+  min-width: 180px;
+  background: var(--ld-semantic-color-surface, #fff);
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.10), 0 4px 12px 0 rgba(0, 0, 0, 0.15);
+  padding: 8px 0;
+  z-index: 200;
+}
+
+/* ── Menu items ── */
+.item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px 20px;
+  gap: 12px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 100ms;
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+}
+
+.item:hover {
+  background: var(--ld-semantic-color-surface-hovered, #F8F8F8);
+}
+
+.item:active {
+  background: var(--ld-semantic-color-fill-accent-blue-subtle, #E9F1FE);
+}
+
+.item:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline, #0053E2);
+  outline-offset: -2px;
+}
+
+.itemIcon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}
+
+.itemLabel {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--ld-semantic-color-text, #2E2F32);
+}

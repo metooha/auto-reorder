@@ -1,0 +1,79 @@
+---
+description: AppSidebar component specification
+alwaysApply: false
+---
+## Purpose
+
+AppSidebar is the shared sidebar navigation component used across all pages. Each page defines its own menu items; the component is reused but navigation content is unique per page.
+
+## Rules
+
+- **MUST** use the existing `AppSidebar` component (`import { AppSidebar } from '@/components/ui/AppSidebar'`).
+- **MUST** define menu items in the page file, not in AppSidebar.
+- **MUST** search `client/components/icons/` before importing any icon. Never use external icon libraries.
+- **MUST NOT** create a new sidebar or side navigation component.
+- **MUST NOT** copy menu items from another page. Each page has its own navigation context.
+- **MUST NOT** rely on default menu items for production pages (defaults are for dev/prototyping only).
+
+## Usage
+
+```tsx
+import { AppSidebar } from '@/components/ui/AppSidebar';
+import type { SidebarMenuItem } from '@/components/ui/AppSidebar';
+import { Home, ListBox, Cart } from '@/components/icons';
+
+const menuItems: SidebarMenuItem[] = [
+  { id: 'home', label: 'Home', Icon: Home, route: '/' },
+  { id: 'catalog', label: 'Catalog', Icon: ListBox, route: '/catalog',
+    submenuItems: [
+      { id: 'sub1', label: 'Sub page', route: '/catalog/sub1' },
+    ],
+  },
+  { id: 'orders', label: 'Orders', Icon: Cart },
+];
+
+<AppSidebar menuItems={menuItems} />
+```
+
+### Props
+
+| Prop | Type | Description |
+|---|---|---|
+| `menuItems` | `SidebarMenuItem[]` | Required in practice. Page-specific navigation items. |
+| `activeMenuItem` | `string` | Controlled active item ID. Auto-detected from route if omitted. |
+| `onMenuItemClick` | `(itemId: string) => void` | Callback when a menu item is clicked. |
+
+### Common Sidebar Icons
+
+| Purpose | Import |
+|---|---|
+| Home | `Home` |
+| Catalog | `ListBox` |
+| Orders | `Cart` |
+| Payments | `CreditCard` |
+| Performance | `Speedometer` |
+| Analytics | `BarGraph` |
+| Advertising | `TargetArrow` |
+| Notifications | `Megaphone` |
+| Tools | `Toolbox` |
+| Uploads | `Upload` |
+
+## Do / Don't
+
+### Do
+
+- Define menu items in each page file.
+- Search `client/components/icons/` for icons before any import.
+- Read sidebar navigation items from Figma designs when implementing.
+
+### Don't
+
+- Create a new sidebar component.
+- Copy menu items from another page.
+- Import icons from `lucide-react`, `react-icons`, `heroicons`, or other external packages.
+
+## Related
+
+- [SideNavigation API reference](../../design-system-docs/SideNavigation.mdx)
+- [SideNavigationItem API reference](../../design-system-docs/SideNavigationItem.mdx)
+- Icon library: `client/components/icons/`

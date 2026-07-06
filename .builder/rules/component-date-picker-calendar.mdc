@@ -1,0 +1,62 @@
+---
+description: DatePickerCalendar component specification
+alwaysApply: false
+---
+## Purpose
+
+The DatePickerCalendar provides a visual calendar interface for date selection with support for single, multiple, and range selection modes.
+
+## Rules
+
+- **MUST** use the Living Design DatePickerCalendar component.
+- **MUST NOT** override colors with hard-coded values.
+- **MUST** use `fromDate`/`toDate` to restrict selection when appropriate.
+- **SHOULD** combine with DatePicker component for text input + calendar.
+
+## Usage
+
+```tsx
+import { DatePickerCalendar } from '@/components/ui/DatePickerCalendar';
+
+// Single selection
+<DatePickerCalendar mode="single" value={date} onSelect={setDate} />
+
+// Range selection
+<DatePickerCalendar mode="range" selected={{ from: start, to: end }} onSelect={setRange} />
+
+// With week numbers (Walmart weeks, Sat-Fri)
+<DatePickerCalendar mode="single" value={date} onSelect={setDate} showWeekNumbers weekStartsOn={6} />
+```
+
+### Selection Modes
+
+- **single**: Select a single date.
+- **multiple**: Select multiple dates.
+- **range**: Select a start and end date.
+
+## Migration
+
+```tsx
+// Old (legacy)
+import { Calendar } from '@/components/ui/calendar';
+<Calendar mode="single" selected={date} onSelect={setDate} />
+
+// New (LD 3.5)
+import { DatePickerCalendar } from '@/components/ui/DatePickerCalendar';
+<DatePickerCalendar mode="single" value={date} onSelect={setDate} />
+```
+
+Key changes: `selected` -> `value` for single mode, built-in LD 3.5 styling, week numbers support.
+
+## Accessibility
+
+- Navigation buttons have `aria-label` attributes.
+- Day buttons have `aria-label` with full date.
+- Selected dates have `aria-selected="true"`.
+- Keyboard navigation supported through native button focus.
+
+## Related
+
+- [DatePicker API reference](../../design-system-docs/DatePicker.mdx)
+- [DateRangePicker](./DateRangePicker.md) for range selection with action buttons
+- [DateField](./DateField.md) for manual date entry

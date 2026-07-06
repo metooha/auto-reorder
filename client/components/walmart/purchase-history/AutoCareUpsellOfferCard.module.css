@@ -1,0 +1,359 @@
+.card {
+  border-radius: var(--ld-primitive-scale-borderradius-150, 10px);
+  overflow: hidden;
+  font-family: var(--ld-semantic-font-family-sans);
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  display: grid;
+  grid-template-columns: 220px 1fr;
+}
+
+/* ── Left panel: offer badge ─────────────────────────── */
+.offerPanel {
+  background: var(--ld-semantic-color-fill-brand-bold, #001e60);
+  padding: var(--ld-primitive-scale-space-600, 24px) var(--ld-primitive-scale-space-500, 20px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-300, 12px);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Illustration — fades in from bottom of offer panel */
+.offerIllustration {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 55%;
+  object-fit: cover;
+  object-position: center top;
+  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.85) 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.85) 100%);
+  pointer-events: none;
+}
+
+/* Content wrapper — sits above illustration and decorative circles */
+.offerContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-300, 12px);
+  position: relative;
+  z-index: 1;
+  flex: 1;
+}
+
+/* Decorative circles */
+.offerPanel::before,
+.offerPanel::after {
+  content: '';
+  position: absolute;
+  border-radius: var(--ld-primitive-scale-borderradius-round, 9999px);
+  background: rgba(255, 255, 255, 0.06);
+  pointer-events: none;
+}
+
+.offerPanel::before {
+  width: 140px;
+  height: 140px;
+  bottom: -40px;
+  right: -50px;
+}
+
+.offerPanel::after {
+  width: 80px;
+  height: 80px;
+  top: -20px;
+  left: -20px;
+}
+
+.memberBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-125, 5px);
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: var(--ld-primitive-scale-borderradius-round, 9999px);
+  padding: var(--ld-primitive-scale-space-075, 3px) var(--ld-primitive-scale-space-250, 10px) var(--ld-primitive-scale-space-075, 3px) var(--ld-primitive-scale-space-150, 6px);
+  width: fit-content;
+}
+
+.memberBadgeText {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-action-text-on-fill-primary, #ffffff);
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.sparkIcon {
+  width: 14px;
+  height: 14px;
+  filter: brightness(0) invert(1);
+  flex-shrink: 0;
+}
+
+.discountBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-050, 2px);
+}
+
+.discountPct {
+  font-size: 48px;
+  font-weight: 900;
+  color: var(--ld-semantic-color-action-text-on-fill-primary, #ffffff);
+  line-height: 1;
+  letter-spacing: -2px;
+}
+
+.discountOff {
+  font-size: var(--ld-semantic-font-heading-xsmall-size, 16px);
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: var(--ld-primitive-scale-space-050, 2px);
+}
+
+.discountService {
+  font-size: var(--ld-semantic-font-body-small-size, 13px);
+  color: rgba(255, 255, 255, 0.65);
+  font-weight: 500;
+}
+
+.countdown {
+  display: flex;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-125, 5px);
+  margin-top: var(--ld-primitive-scale-space-100, 4px);
+}
+
+.countdownDot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--ld-primitive-scale-borderradius-round, 9999px);
+  background: rgba(255, 255, 255, 0.7);
+  flex-shrink: 0;
+  animation: pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .countdownDot {
+    animation: none;
+  }
+}
+
+.countdownText {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Value bullets */
+.valueBullets {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-200, 8px);
+}
+
+.valueBullet {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ld-primitive-scale-space-150, 6px);
+  font-family: var(--ld-semantic-font-caption-family);
+  font-size: var(--ld-semantic-font-caption-size, 0.75rem);
+  font-weight: var(--ld-semantic-font-caption-weight-default, 400);
+  line-height: var(--ld-semantic-font-caption-line-height, 1rem);
+  color: var(--ld-semantic-color-text-subtle);
+}
+
+.valueBulletIcon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  color: var(--ld-semantic-color-text-brand, #0053e2);
+  margin-top: 1px;
+}
+
+/* ── Right panel: details ────────────────────────────── */
+.detailPanel {
+  padding: var(--ld-primitive-scale-space-500, 20px) var(--ld-primitive-scale-space-600, 24px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-400, 16px);
+  background: var(--ld-semantic-color-surface);
+}
+
+.detailEyebrow {
+  font-family: var(--ld-semantic-font-caption-family);
+  font-size: var(--ld-semantic-font-caption-size, 0.75rem);
+  font-weight: var(--ld-semantic-font-caption-weight-alt, 700);
+  line-height: var(--ld-semantic-font-caption-line-height, 1rem);
+  color: var(--ld-semantic-color-text-subtle);
+  margin: 0 0 var(--ld-primitive-scale-space-100, 4px);
+}
+
+.detailHeading {
+  font-family: var(--ld-semantic-font-heading-small-family);
+  font-size: var(--ld-semantic-font-heading-small-size-b-s, 1.125rem);
+  font-weight: var(--ld-semantic-font-heading-small-weight-default, 700);
+  line-height: var(--ld-semantic-font-heading-small-line-height-b-s, 1.5rem);
+  color: var(--ld-semantic-color-text-primary);
+  margin: 0;
+}
+
+/* Vehicle row */
+.vehicleRow {
+  display: flex;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-200, 8px);
+  padding: var(--ld-primitive-scale-space-250, 10px) var(--ld-primitive-scale-space-300, 12px);
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  background: var(--ld-semantic-color-background-subtle, #F5F5F6);
+}
+
+.vehicleIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--ld-semantic-color-text-subtle);
+  flex-shrink: 0;
+}
+
+.vehicleInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-025, 1px);
+}
+
+.vehicleName {
+  font-family: var(--ld-semantic-font-body-small-family);
+  font-size: var(--ld-semantic-font-body-small-size, 0.875rem);
+  font-weight: var(--ld-semantic-font-body-small-weight-alt, 700);
+  line-height: var(--ld-semantic-font-body-small-line-height, 1.25rem);
+  color: var(--ld-semantic-color-text-primary);
+}
+
+.vehicleSub {
+  font-family: var(--ld-semantic-font-caption-family);
+  font-size: var(--ld-semantic-font-caption-size, 0.75rem);
+  font-weight: var(--ld-semantic-font-caption-weight-default, 400);
+  line-height: var(--ld-semantic-font-caption-line-height, 1rem);
+  color: var(--ld-semantic-color-text-subtle);
+}
+
+/* Pricing */
+.priceRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-150, 6px) var(--ld-primitive-scale-space-250, 10px);
+}
+
+.priceNew {
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--ld-semantic-color-text-positive);
+  line-height: 1.2;
+  flex-shrink: 0;
+}
+
+.priceOld {
+  font-size: var(--ld-semantic-font-body-default-size, 14px);
+  color: var(--ld-semantic-color-text-subtle);
+  text-decoration: line-through;
+  flex-shrink: 0;
+}
+
+.priceSaving {
+  font-family: var(--ld-semantic-font-caption-family);
+  font-size: var(--ld-semantic-font-caption-size, 0.75rem);
+  font-weight: var(--ld-semantic-font-caption-weight-alt, 700);
+  line-height: var(--ld-semantic-font-caption-line-height, 1rem);
+  color: var(--ld-semantic-color-text-positive);
+  background: var(--ld-semantic-color-fill-positive-subtle);
+  padding: var(--ld-primitive-scale-space-050, 2px) var(--ld-primitive-scale-space-200, 8px);
+  border-radius: var(--ld-primitive-scale-borderradius-050, 4px);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Fine print */
+.finePrint {
+  font-size: 11px;
+  color: var(--ld-semantic-color-text-subtlest, #9A9BA1);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ld-primitive-scale-space-200, 8px);
+  margin-top: auto;
+}
+
+/* ── Responsive ──────────────────────────────────────── */
+@media (max-width: 640px) {
+  .card {
+    grid-template-columns: 1fr;
+  }
+
+  /* Offer panel becomes a compact horizontal strip */
+  .offerPanel {
+    padding: var(--ld-primitive-scale-space-300, 12px) var(--ld-primitive-scale-space-400, 16px);
+    flex-direction: row;
+    align-items: center;
+    gap: var(--ld-primitive-scale-space-400, 16px);
+  }
+
+  .offerContent {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--ld-primitive-scale-space-300, 12px);
+  }
+
+  .discountBlock {
+    flex-direction: row;
+    align-items: baseline;
+    gap: var(--ld-primitive-scale-space-100, 4px);
+  }
+
+  .discountPct {
+    font-size: 28px;
+    letter-spacing: -1px;
+  }
+
+  .discountOff {
+    font-size: 13px;
+    margin-top: 0;
+    align-self: flex-start;
+    padding-top: 2px;
+  }
+
+  .discountService {
+    display: none;
+  }
+
+  .countdown {
+    margin-top: 0;
+  }
+
+  .detailPanel {
+    padding: var(--ld-primitive-scale-space-400, 16px);
+    gap: var(--ld-primitive-scale-space-300, 12px);
+  }
+
+  .actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}

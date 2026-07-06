@@ -1,0 +1,275 @@
+.header {
+  display: none;
+  align-items: center;
+  padding: 16px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--ld-semantic-color-topnav-background, #002E99);
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+}
+
+@media (min-width: 1024px) {
+  .header {
+    display: flex;
+  }
+}
+
+.headerContent {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  width: 52px;
+  height: 52px;
+  padding: 8px;
+  background: transparent;
+  transition: all 100ms;
+  text-decoration: none;
+}
+
+.logo:hover {
+  background: var(--ld-semantic-color-topnav-background-hover, #004D99);
+}
+
+.logo:active {
+  background: var(--ld-semantic-color-topnav-background-active, #003366);
+}
+
+.logo:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline, #0053E2);
+  outline-offset: 2px;
+}
+
+.logoImage {
+  width: 36px;
+  height: 36px;
+}
+
+/* GIC (Geo Intent & Capabilities) Section */
+.gicSection {
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  height: 52px;
+  position: relative;
+  background: var(--ld-semantic-color-topnav-background-hover, #004D99);
+  width: auto;
+}
+
+.gicButton {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 52px;
+  border-radius: 9999px;
+  transition: all 100ms;
+  background: transparent;
+  border: none;
+  padding: 0 12px;
+  color: var(--ld-semantic-color-topnav-text, #FFFFFF);
+  cursor: pointer;
+}
+
+.gicButton:hover {
+  background: var(--ld-semantic-color-topnav-background-active, #003366);
+}
+
+.gicButton:active {
+  background: var(--ld-semantic-color-topnav-background-active, #003366);
+}
+
+.gicButton:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline, #0053E2);
+  outline-offset: 2px;
+}
+
+.gicContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.gicIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.gicIcon img,
+.gicIcon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.gicText {
+  flex: 1;
+  text-align: left;
+  width: 232px;
+}
+
+.gicLabel {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  color: var(--ld-semantic-color-topnav-text, #FFFFFF);
+  white-space: nowrap;
+}
+
+.gicSubtext {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--ld-semantic-color-topnav-text, #FFFFFF);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+.separator {
+  padding: 0 4px;
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gicChevron {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ld-semantic-color-topnav-text, #FFFFFF);
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.gicChevron svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Navigation */
+.nav {
+  margin-left: auto;
+}
+
+.navList {
+  display: flex;
+  height: 52px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.reorderItem {
+  margin-left: 16px;
+  position: relative;
+}
+
+.reorderButton {
+  display: flex;
+  align-items: center;
+  height: 52px;
+  padding: 8px 12px;
+  border-radius: 9999px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 100ms;
+  color: var(--ld-semantic-color-topnav-text, #FFFFFF);
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+}
+
+.reorderButton:hover {
+  background: var(--ld-semantic-color-topnav-background-hover, #004D99);
+}
+
+.reorderButton:active {
+  background: var(--ld-semantic-color-topnav-background-active, #003366);
+}
+
+.reorderButton:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline, #0053E2);
+  outline-offset: 2px;
+}
+
+.reorderIcon {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  color: var(--ld-semantic-color-topnav-text, #FFFFFF);
+}
+
+.reorderContent {
+  text-align: left;
+  white-space: nowrap;
+}
+
+.reorderSubtext {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--ld-semantic-color-topnav-text, #FFFFFF);
+}
+
+.reorderLabel {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  color: var(--ld-semantic-color-topnav-text, #FFFFFF);
+  margin-top: -4px;
+}
+
+.accountItem {
+  margin-left: 8px;
+  position: relative;
+}
+
+.cartItem {
+  margin-left: 8px;
+  position: relative;
+}
+
+.cartButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 52px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  transition: all 100ms;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--ld-semantic-color-topnav-text, #FFFFFF);
+  width: 60px;
+}
+
+.cartButton:hover {
+  background: var(--ld-semantic-color-topnav-background-hover, #004D99);
+}
+
+.cartButton:active {
+  background: var(--ld-semantic-color-topnav-background-active, #003366);
+}
+
+.cartButton:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline, #0053E2);
+  outline-offset: 2px;
+}

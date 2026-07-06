@@ -1,0 +1,111 @@
+/* ── WCPQueueItemCard ─────────────────────────────────────────────────────── */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  background: var(--ld-semantic-color-surface, #fff);
+  box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.10),
+              0 1px 2px 1px rgba(0, 0, 0, 0.15);
+}
+
+.cardContent {
+  display: flex;
+  padding: var(--ld-primitive-scale-space-200, 16px);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+  align-self: stretch;
+}
+
+/* ── Timer + estimated wait row ──────────────────────────────────────────── */
+
+.timerRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+}
+
+.timerLabel {
+  flex: 1 0 0;
+  font-family: var(--ld-semantic-font-body-small-family);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: var(--ld-semantic-font-body-small-weight-default, 400);
+  line-height: var(--ld-semantic-font-body-small-lineheight);
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+/* ── Product description row ─────────────────────────────────────────────── */
+
+.productRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ld-primitive-scale-space-150, 12px);
+  align-self: stretch;
+}
+
+.productImg {
+  width: 40px;
+  height: 40px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: var(--wcp-semantic-scale-flag-borderRadius, 4px);
+  flex-shrink: 0;
+}
+
+.productImgPlaceholder {
+  width: 40px;
+  height: 40px;
+  background: var(--ld-semantic-color-separator, #e3e4e5);
+  border-radius: var(--wcp-semantic-scale-flag-borderRadius, 4px);
+  flex-shrink: 0;
+}
+
+.productDescription {
+  flex: 1 0 0;
+  font-family: var(--ld-semantic-font-body-small-family);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: var(--ld-semantic-font-body-small-weight-default, 400);
+  line-height: var(--ld-semantic-font-body-small-lineheight);
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+/* ── Pricing ─────────────────────────────────────────────────────────────── */
+
+.pricing {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+
+.currentPrice {
+  font-family: var(--ld-semantic-font-body-medium-family);
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: var(--ld-semantic-font-body-medium-weight-alt, 700);
+  line-height: var(--ld-semantic-font-body-medium-lineheight);
+  color: var(--ld-semantic-color-text, #2e2f32);
+  text-align: right;
+}
+
+.originalPrice {
+  font-family: var(--ld-semantic-font-body-small-family);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: var(--ld-semantic-font-body-small-weight-default, 400);
+  line-height: var(--ld-semantic-font-body-small-lineheight);
+  color: var(--ld-semantic-color-text-subtle, #74767c);
+  text-decoration: line-through;
+  text-align: right;
+}
+
+/* ── Actions row ─────────────────────────────────────────────────────────── */
+
+.actionsRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+}

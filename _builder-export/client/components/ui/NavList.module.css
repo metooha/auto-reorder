@@ -1,0 +1,94 @@
+/* NavList Container - LD 3.5 compliant */
+.navList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-25, 0.125rem);
+  padding: var(--ld-primitive-scale-space-75, 0.375rem);
+  background-color: var(--ld-semantic-color-background-subtle, #f8f8f8);
+  border-radius: var(--ld-primitive-scale-border-radius-50, 0.25rem);
+  min-width: 10rem;
+}
+
+/* NavList with border (for use in popovers/dropdowns) */
+.navList--bordered {
+  border: var(--ld-primitive-scale-border-width-100, 0.0625rem) solid var(--ld-semantic-color-border-subtle, #e6e6e6);
+}
+
+/* NavListItem - Interactive list item */
+.navListItem {
+  display: flex;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-100, 0.5rem);
+  padding: var(--ld-primitive-scale-space-100, 0.5rem) var(--ld-primitive-scale-space-75, 0.375rem);
+  border-radius: var(--ld-primitive-scale-border-radius-50, 0.25rem);
+  
+  /* Typography - Body Small */
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: var(--ld-semantic-font-body-small-size, 0.875rem);
+  line-height: var(--ld-semantic-font-body-small-lineheight, 1.25rem);
+  font-weight: var(--ld-semantic-font-body-small-weight-default, 400);
+  
+  /* Interactive styling */
+  background-color: var(--ld-semantic-color-action-fill-transparent);
+  color: var(--ld-semantic-color-action-text-on-fill-transparent);
+  cursor: pointer;
+  border: none;
+  text-align: left;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+  user-select: none;
+}
+
+/* Hover state */
+.navListItem:hover:not(:disabled):not(.navListItem--selected) {
+  background-color: var(--ld-semantic-color-action-fill-transparent-hovered);
+  color: var(--ld-semantic-color-action-text-on-fill-transparent-hovered);
+}
+
+/* Focus state */
+.navListItem:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline);
+  outline-offset: 2px;
+}
+
+/* Pressed/Active state */
+.navListItem:active:not(:disabled):not(.navListItem--selected) {
+  background-color: var(--ld-semantic-color-action-fill-transparent-pressed);
+  color: var(--ld-semantic-color-action-text-on-fill-transparent-pressed);
+}
+
+/* Selected/Current state */
+.navListItem--selected {
+  background-color: var(--ld-semantic-color-action-fill-primary);
+  color: var(--ld-semantic-color-action-text-on-fill-primary);
+  font-weight: 700;
+}
+
+.navListItem--selected:hover:not(:disabled) {
+  background-color: var(--ld-semantic-color-action-fill-primary-hovered);
+  color: var(--ld-semantic-color-action-text-on-fill-primary);
+}
+
+/* Disabled state */
+.navListItem:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  color: var(--ld-semantic-color-action-text-on-fill-transparent-disabled);
+}
+
+/* Leading icon */
+.navListItem__leading {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Content wrapper */
+.navListItem__content {
+  flex: 1;
+  min-width: 0;
+}

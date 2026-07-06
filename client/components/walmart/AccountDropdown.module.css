@@ -1,0 +1,185 @@
+.root {
+  position: relative;
+  display: inline-block;
+}
+
+/* ── Trigger button ── */
+.trigger {
+  display: flex;
+  align-items: center;
+  height: 52px;
+  padding: 4px 16px 4px 12px;
+  border-radius: 9999px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 100ms;
+  color: var(--ld-semantic-color-top-nav-text-on-fill);
+  font-family: var(--ld-semantic-font-family-sans);
+  white-space: nowrap;
+  gap: 8px;
+}
+
+.trigger:hover {
+  background: var(--ld-semantic-color-top-nav-fill-hovered);
+}
+
+.trigger:active {
+  background: var(--ld-semantic-color-top-nav-fill-pressed);
+}
+
+.trigger:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline);
+  outline-offset: 2px;
+}
+
+.triggerIcon {
+  width: 16px;
+  height: 16px;
+  color: var(--ld-semantic-color-top-nav-text-on-fill);
+  flex-shrink: 0;
+}
+
+.triggerContent {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.triggerSubtext {
+  font-size: var(--ld-semantic-font-body-small-size);
+  font-weight: var(--ld-semantic-font-body-small-weight-default);
+  line-height: var(--ld-semantic-font-body-small-line-height);
+  color: var(--ld-semantic-color-top-nav-text-on-fill);
+}
+
+.triggerLabel {
+  font-size: var(--ld-semantic-font-body-small-size);
+  font-weight: var(--ld-semantic-font-body-small-weight-alt);
+  line-height: var(--ld-semantic-font-body-small-line-height);
+  color: var(--ld-semantic-color-top-nav-text-on-fill);
+  margin-top: -2px;
+}
+
+/* ── Dropdown panel ── */
+.panel {
+  position: absolute;
+  top: 69px;
+  right: 0;
+  min-width: 220px;
+  background: var(--ld-semantic-color-surface);
+  border-radius: 0 0 8px 8px;
+  box-shadow: var(--ld-semantic-elevation-200);
+  padding: 8px 0;
+  z-index: 200;
+}
+
+/* ── Menu items ── */
+.item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px 20px;
+  gap: 12px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 100ms;
+  font-family: var(--ld-semantic-font-family-sans);
+}
+
+.item:hover {
+  background: var(--ld-semantic-color-surface-hovered);
+}
+
+.item:active {
+  background: var(--ld-semantic-color-fill-accent-blue-subtle);
+}
+
+.item:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline);
+  outline-offset: -2px;
+}
+
+.itemIcon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--ld-semantic-color-text);
+}
+
+.itemLabel {
+  font-size: var(--ld-semantic-font-body-medium-size);
+  font-weight: var(--ld-semantic-font-body-medium-weight-default);
+  line-height: var(--ld-semantic-font-body-medium-line-height);
+  color: var(--ld-semantic-color-text);
+}
+
+/* ── W+ trigger icon (larger than standard icon) ── */
+.triggerIconWPlus {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* ── Sign-in CTA (logged-out dropdown) ── */
+.signInCta {
+  padding: 16px 16px 8px;
+}
+
+.signInButton {
+  display: block;
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 9999px;
+  border: none;
+  background: var(--ld-semantic-color-action-fill-primary, #0071dc);
+  color: var(--ld-semantic-color-text-on-action-primary, #fff);
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: var(--ld-semantic-font-body-medium-size);
+  font-weight: var(--ld-semantic-font-body-medium-weight-alt);
+  line-height: var(--ld-semantic-font-body-medium-line-height);
+  cursor: pointer;
+  text-align: center;
+  transition: opacity 100ms;
+}
+
+.signInButton:hover {
+  opacity: 0.9;
+}
+
+.signInButton:active {
+  opacity: 0.8;
+}
+
+.signInButton:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline);
+  outline-offset: 2px;
+}
+
+/* ── Separator ── */
+.separator {
+  height: 1px;
+  background: var(--ld-semantic-color-separator);
+  margin: 8px 0;
+  border: none;
+}
+
+/* Panel adjustments for narrow viewports */
+@media (max-width: 768px) {
+  .panel {
+    min-width: 180px;
+  }
+}
+
+/* ── Sign-out loading overlay ── */
+.signOutOverlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ld-semantic-color-surface);
+  z-index: 9999;
+}

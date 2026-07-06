@@ -1,0 +1,103 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-500, 40px);
+  padding: var(--ld-primitive-scale-space-400, 32px);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-200, 16px);
+}
+
+.sectionTitle {
+  font-family: var(--ld-semantic-font-heading-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-heading-small-size, 20px);
+  font-weight: var(--ld-semantic-font-heading-small-weight, 700);
+  line-height: var(--ld-semantic-font-heading-small-lineheight, 1.3);
+  color: var(--ld-semantic-color-text);
+  margin: 0;
+}
+
+.sectionDesc {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: var(--ld-semantic-font-body-small-weight-default, 400);
+  line-height: var(--ld-semantic-font-body-small-lineheight, 1.43);
+  color: var(--ld-semantic-color-text-subtle);
+  margin: 0;
+}
+
+/* ── Variant grid ─────────────────────────────────────────────────────────── */
+.variantGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 343px);
+  gap: var(--ld-primitive-scale-space-300, 24px);
+  flex-wrap: wrap;
+}
+
+.variantCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+}
+
+.variantLabel {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text-subtle);
+}
+
+/* ── Live demo ────────────────────────────────────────────────────────────── */
+.liveDemo {
+  max-width: 343px;
+}
+
+/* ── Controls ─────────────────────────────────────────────────────────────── */
+.controlRow {
+  display: flex;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-100, 8px);
+  flex-wrap: wrap;
+}
+
+.controlLabel {
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text-subtle);
+}
+
+/* ── Code block ───────────────────────────────────────────────────────────── */
+.codeBlock {
+  background: var(--ld-semantic-color-background-subtle);
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  padding: var(--ld-primitive-scale-space-200, 16px);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ld-semantic-color-text);
+  overflow-x: auto;
+  white-space: pre;
+  margin: 0;
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 1200px) {
+  .variantGrid {
+    grid-template-columns: repeat(2, 343px);
+  }
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding: var(--ld-primitive-scale-space-200, 16px);
+  }
+
+  .variantGrid {
+    grid-template-columns: 1fr;
+  }
+}

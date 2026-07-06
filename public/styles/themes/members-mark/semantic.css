@@ -1,0 +1,81 @@
+/**
+ * Member's Mark Theme
+ * Generated from LivingDesign Airtable Sync + LD Base
+ *
+ * INHERITANCE: LD Base → WCP → Sam's Club → Member's Mark
+ * Inherits Sam's Club brand + WCP commerce tokens
+ *
+ * Member's Mark private label brand
+ * Dark gray with beige top nav
+ */
+
+:root {
+  /* WCP Primary Alt Button — Member's Mark membership CTA (Brand dark gray) */
+  --wcp-semantic-color-action-fill-primary-alt: var(--ld-primitive-color-gray-140, #283645);
+  --wcp-semantic-color-action-fill-primary-alt-hovered: var(--ld-primitive-color-gray-150, #1e2a37);
+  --wcp-semantic-color-action-fill-primary-alt-focused: var(--ld-primitive-color-gray-150, #1e2a37);
+  --wcp-semantic-color-action-fill-primary-alt-pressed: var(--ld-primitive-color-gray-160, #151f29);
+  --wcp-semantic-color-action-fill-primary-alt-disabled: var(--ld-primitive-color-gray-10, #eaf1f5);
+  --wcp-semantic-color-action-text-on-fill-primary-alt: var(--ld-primitive-color-white, #ffffff);
+  --wcp-semantic-color-action-text-on-fill-primary-alt-hovered: var(--ld-primitive-color-white, #ffffff);
+  --wcp-semantic-color-action-text-on-fill-primary-alt-focused: var(--ld-primitive-color-white, #ffffff);
+  --wcp-semantic-color-action-text-on-fill-primary-alt-pressed: var(--ld-primitive-color-white, #ffffff);
+  --wcp-semantic-color-action-text-on-fill-primary-alt-disabled: var(--ld-primitive-color-gray-50, #a7b7c4);
+
+  /* Member's Mark brand colors - DARK GRAY */
+  --ld-semantic-color-action-border-secondary: #283645;
+  --ld-semantic-color-action-border-secondary-focused: #283645;
+  --ld-semantic-color-action-border-secondary-hovered: #283645;
+  --ld-semantic-color-action-border-secondary-pressed: var(--ld-primitive-color-gray-160, #2e2f32);
+  
+  /* Beige top navigation */
+  --ld-semantic-color-top-nav-fill: #fcf6f0;
+  --ld-semantic-color-top-nav-separator: #fcf6f0;
+  --ld-semantic-color-top-nav-text-on-fill: #151f29;
+  --ld-semantic-color-top-nav-text-on-fill-focused: #151f29;
+  --ld-semantic-color-top-nav-text-on-fill-hovered: #151f29;
+  --ld-semantic-color-top-nav-text-on-fill-pressed: #151f29;
+  
+  --ld-semantic-color-surface-brand: #fcf6f0;
+
+  /* Font Family - Gibson (override primitive, same as Sam's Club parent) */
+  --ld-primitive-font-family-sans: Gibson, 'Everyday Sans UI', -apple-system, Roboto, sans-serif;
+
+  /* Semantic font overrides */
+  --ld-semantic-font-body-large-family: Gibson, 'Everyday Sans UI', -apple-system, Roboto, sans-serif;
+  --ld-semantic-font-body-medium-family: Gibson, 'Everyday Sans UI', -apple-system, Roboto, sans-serif;
+  --ld-semantic-font-body-small-family: Gibson, 'Everyday Sans UI', -apple-system, Roboto, sans-serif;
+  --ld-semantic-font-caption-family: Gibson, 'Everyday Sans UI', -apple-system, Roboto, sans-serif;
+  --ld-semantic-font-display-large-family: Gibson, 'Everyday Sans UI', -apple-system, Roboto, sans-serif;
+  --ld-semantic-font-display-small-family: Gibson, 'Everyday Sans UI', -apple-system, Roboto, sans-serif;
+  --ld-semantic-font-heading-large-family: Gibson, 'Everyday Sans UI', -apple-system, Roboto, sans-serif;
+  --ld-semantic-font-heading-medium-family: Gibson, 'Everyday Sans UI', -apple-system, Roboto, sans-serif;
+  --ld-semantic-font-heading-small-family: Gibson, 'Everyday Sans UI', -apple-system, Roboto, sans-serif;
+
+  /* Focus outline — Sam's Club blue (inherited brand) */
+  --ld-semantic-color-action-focus-outline: var(--ld-primitive-color-blue-130, #0062ad);
+
+  /* Brand fills — inherit Sam's Club blue */
+  --ld-semantic-color-fill-brand: var(--ld-primitive-color-blue-130, #0062ad);
+  --ld-semantic-color-fill-brand-subtle: var(--ld-primitive-color-blue-5, #f0f7ff);
+
+  /* ── Side Navigation / Page Nav — Sam's Club blue highlights ───────────── */
+  --ld-semantic-color-page-nav-fill-hovered: var(--ld-primitive-color-blue-5, #f0f7ff);
+  --ld-semantic-color-page-nav-fill-focused: var(--ld-primitive-color-blue-5, #f0f7ff);
+  --ld-semantic-color-page-nav-fill-pressed: var(--ld-primitive-color-blue-10, #e0effc);
+  --ld-semantic-color-page-nav-fill-activated: var(--ld-primitive-color-blue-5, #f0f7ff);
+  --ld-semantic-color-page-nav-fill-activated-hovered: var(--ld-primitive-color-blue-10, #e0effc);
+  --ld-semantic-color-page-nav-fill-activated-focused: var(--ld-primitive-color-blue-10, #e0effc);
+  --ld-semantic-color-page-nav-fill-activated-pressed: var(--ld-primitive-color-blue-20, #c1def9);
+
+  /* Active indicator bar — Member's Mark dark gray brand */
+  --ld-semantic-color-page-nav-indicator-hovered: var(--ld-primitive-color-blue-20, #c1def9);
+  --ld-semantic-color-page-nav-indicator-focused: var(--ld-primitive-color-blue-20, #c1def9);
+  --ld-semantic-color-page-nav-indicator-pressed: var(--ld-primitive-color-blue-30, #9acbf7);
+  --ld-semantic-color-page-nav-indicator-activated: #283645;
+  --ld-semantic-color-page-nav-indicator-activated-hovered: #283645;
+  --ld-semantic-color-page-nav-indicator-activated-focused: #283645;
+  --ld-semantic-color-page-nav-indicator-activated-pressed: #1e2a37;
+
+  /* Inherits Sam's Club brand + WCP commerce tokens */
+}

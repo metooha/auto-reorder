@@ -1,0 +1,216 @@
+/* ── Compact wrapper (hideHeader mode) — no animated border ── */
+.compactWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px 16px 4px;
+}
+
+.compactWrapper .separator {
+  margin: 0;
+}
+
+/* ── Wrapper + animated stroke border ─────────────────────── */
+.wrapper {
+  position: relative;
+  border-radius: var(--ld-primitive-scale-borderradius-200, 16px);
+  /* padding creates the stroke gap */
+  padding: 2px;
+}
+
+/* Rotating conic gradient that creates the animated dashed stroke border */
+.strokeBorder {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--stroke-angle, 0deg),
+    #7c6bf3 0%,
+    #5b6cfa 20%,
+    #c084fc 40%,
+    #7c6bf3 60%,
+    #5b6cfa 80%,
+    #c084fc 100%
+  );
+  animation: strokeSpin 3s linear infinite;
+  /* mask the center out so only a thin ring shows */
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1.5px;
+}
+
+@keyframes strokeSpin {
+  from { --stroke-angle: 0deg; }
+  to   { --stroke-angle: 360deg; }
+}
+
+/* Register the custom property for smooth animation */
+@property --stroke-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+/* Dashed overlay — makes the stroke look dashed */
+.strokeBorder::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1.5px dashed rgba(124, 107, 243, 0.55);
+}
+
+/* ── Card body ─────────────────────────────────────────────── */
+.card {
+  position: relative;
+  background: var(--ld-semantic-color-surface, #fff);
+  border-radius: calc(var(--ld-primitive-scale-borderradius-200, 16px) - 2px);
+  padding: var(--ld-primitive-scale-space-400, 16px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-400, 16px);
+}
+
+/* ── Header row ─────────────────────────────────────────────── */
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ld-primitive-scale-space-300, 12px);
+}
+
+.headerLabel {
+  font-family: var(--ld-semantic-font-family-sans, sans-serif);
+  font-size: var(--ld-semantic-font-body-default-size, 16px);
+  color: var(--ld-semantic-color-text, #2e2f32);
+  margin: 0;
+}
+
+.headerMeta {
+  font-weight: 400;
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.headerTotal {
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+/* ── Separator ──────────────────────────────────────────────── */
+.separator {
+  height: 1px;
+  background: var(--ld-semantic-color-separator, #e3e4e5);
+  margin: 0 calc(var(--ld-primitive-scale-space-400, 16px) * -1);
+}
+
+/* ── Line items ─────────────────────────────────────────────── */
+.lineItems {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-200, 8px);
+}
+
+.lineRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ld-primitive-scale-space-200, 8px);
+}
+
+.lineLabel {
+  font-family: var(--ld-semantic-font-family-sans, sans-serif);
+  font-size: var(--ld-semantic-font-body-default-size, 16px);
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.lineLabelBold {
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.lineMeta {
+  font-weight: 400;
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.lineValue {
+  font-family: var(--ld-semantic-font-family-sans, sans-serif);
+  font-size: var(--ld-semantic-font-body-default-size, 16px);
+  color: var(--ld-semantic-color-text, #2e2f32);
+  white-space: nowrap;
+}
+
+/* ── Payment row ─────────────────────────────────────────────── */
+.paymentRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ld-primitive-scale-space-200, 8px);
+}
+
+.paymentLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.paymentTitle {
+  font-family: var(--ld-semantic-font-family-sans, sans-serif);
+  font-size: var(--ld-semantic-font-body-default-size, 16px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.paymentMethod {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.paymentMask {
+  font-family: var(--ld-semantic-font-family-sans, sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  color: var(--ld-semantic-color-text-subtle, #6d6e72);
+}
+
+/* ── Payment amount — large price display ────────────────────── */
+.paymentAmount {
+  display: flex;
+  align-items: flex-start;
+  line-height: 1;
+}
+
+.paymentDollar {
+  font-family: var(--ld-semantic-font-family-sans, sans-serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  margin-top: 4px;
+}
+
+.paymentDollars {
+  font-family: var(--ld-semantic-font-family-sans, sans-serif);
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  letter-spacing: -0.02em;
+}
+
+.paymentCents {
+  font-family: var(--ld-semantic-font-family-sans, sans-serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  margin-top: 4px;
+}
+
+/* ── Reduced motion ──────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .strokeBorder {
+    animation: none;
+    background: linear-gradient(135deg, #7c6bf3, #5b6cfa, #c084fc);
+  }
+}

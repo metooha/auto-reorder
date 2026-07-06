@@ -1,0 +1,369 @@
+/* ============================================================
+   [WCP] Country Select Dropdown
+   Desktop dropdown for single or multi country selection
+   ============================================================ */
+
+.root {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ── Label ─────────────────────────────────────────── */
+.label {
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 600;
+  font-family: var(--ld-semantic-font-family-sans);
+  color: var(--ld-semantic-color-text);
+  line-height: 1.4;
+}
+
+/* ── Trigger button ─────────────────────────────────── */
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: 44px;
+  padding: 0 12px;
+  background: var(--ld-semantic-color-action-fill-secondary);
+  border: 1.5px solid var(--ld-semantic-color-border-interactive, #74767c);
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: var(--ld-semantic-font-family-sans);
+  color: var(--ld-semantic-color-text);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.trigger:hover:not(:disabled) {
+  border-color: var(--ld-semantic-color-text);
+}
+
+.trigger:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline);
+  outline-offset: 2px;
+}
+
+.triggerOpen {
+  border-color: var(--ld-semantic-color-text);
+  box-shadow: 0 0 0 1px var(--ld-semantic-color-text);
+}
+
+.triggerDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.triggerContent {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1;
+}
+
+.triggerFlag {
+  width: 20px;
+  height: 14px;
+  object-fit: cover;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.triggerText {
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  font-weight: 400;
+  color: var(--ld-semantic-color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.triggerPlaceholder {
+  font-size: var(--ld-semantic-font-body-medium-size, 16px);
+  color: var(--ld-semantic-color-text-subtle, #74767c);
+}
+
+.multiCountBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  background: var(--ld-semantic-color-action-fill-primary);
+  color: var(--ld-semantic-color-action-text-on-fill-primary);
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--ld-semantic-font-family-sans);
+  flex-shrink: 0;
+}
+
+/* ── Chevron ─────────────────────────────────────────── */
+.chevron {
+  display: flex;
+  align-items: center;
+  color: var(--ld-semantic-color-text);
+  transition: transform 0.15s ease;
+  flex-shrink: 0;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+/* ── Dropdown panel ──────────────────────────────────── */
+.dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  min-width: 100%;
+  width: max-content;
+  max-width: 380px;
+  background: var(--ld-semantic-color-surface);
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.08);
+  z-index: 200;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Search ──────────────────────────────────────────── */
+.searchWrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+}
+
+.searchIcon {
+  display: flex;
+  align-items: center;
+  color: var(--ld-semantic-color-text-subtle, #74767c);
+  flex-shrink: 0;
+}
+
+.searchInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-family: var(--ld-semantic-font-family-sans);
+  color: var(--ld-semantic-color-text);
+}
+
+.searchInput::placeholder {
+  color: var(--ld-semantic-color-text-subtle, #74767c);
+}
+
+.searchClear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--ld-semantic-color-text-subtle, #74767c);
+  border-radius: 50%;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.searchClear:hover {
+  background: var(--ld-semantic-color-surface-hovered);
+  color: var(--ld-semantic-color-text);
+}
+
+/* ── Country list ────────────────────────────────────── */
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 6px 0;
+  display: flex;
+  flex-direction: column;
+  max-height: 240px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.emptyState {
+  padding: 12px 16px;
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-family: var(--ld-semantic-font-family-sans);
+  color: var(--ld-semantic-color-text-subtle, #74767c);
+  text-align: center;
+}
+
+/* ── Country row ─────────────────────────────────────── */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--ld-semantic-font-family-sans);
+  color: var(--ld-semantic-color-text);
+  transition: background 0.1s ease;
+}
+
+.row:hover {
+  background: var(--ld-semantic-color-surface-hovered);
+}
+
+.row:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline);
+  outline-offset: -2px;
+}
+
+/* ── Selection control ───────────────────────────────── */
+.selectionControl {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Radio */
+.radio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ld-semantic-color-text);
+  background: var(--ld-semantic-color-surface);
+}
+
+.radioEmpty {
+  border-color: var(--ld-semantic-color-border-interactive, #74767c);
+}
+
+.radioSelected {
+  background: var(--ld-semantic-color-text);
+  border-color: var(--ld-semantic-color-text);
+}
+
+.radioDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ld-semantic-color-surface);
+}
+
+/* Checkbox */
+.checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 3px;
+  border: 1.5px solid var(--ld-semantic-color-border-interactive, #74767c);
+  background: var(--ld-semantic-color-surface);
+}
+
+.checkboxChecked {
+  background: var(--ld-semantic-color-text);
+  border-color: var(--ld-semantic-color-text);
+  color: var(--ld-semantic-color-surface);
+}
+
+/* ── Flag ────────────────────────────────────────────── */
+.flag {
+  width: 20px;
+  height: 14px;
+  object-fit: cover;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* ── Name ────────────────────────────────────────────── */
+.name {
+  flex: 1;
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 400;
+  color: var(--ld-semantic-color-text);
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.nameSelected {
+  font-weight: 600;
+}
+
+/* ── Dial code ───────────────────────────────────────── */
+.dialCode {
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  color: var(--ld-semantic-color-text-subtle, #74767c);
+  font-weight: 400;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── Multi confirm footer ────────────────────────────── */
+.footer {
+  border-top: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  padding: 10px 12px;
+}
+
+.confirmBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 40px;
+  background: var(--ld-semantic-color-action-fill-primary);
+  color: var(--ld-semantic-color-action-text-on-fill-primary);
+  border: none;
+  border-radius: 9999px;
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 700;
+  font-family: var(--ld-semantic-font-family-sans);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.confirmBtn:hover {
+  background: var(--ld-semantic-color-action-fill-primary-hovered);
+}
+
+.confirmBtn:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-focus-outline);
+  outline-offset: 2px;
+}
+
+.confirmCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 9px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* ── Reduced motion ──────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .chevron,
+  .trigger,
+  .row,
+  .confirmBtn {
+    transition: none;
+  }
+}

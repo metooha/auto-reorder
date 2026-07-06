@@ -1,0 +1,47 @@
+---
+description: Purchase History page patterns — side nav, order cards, SVG icons, review banners
+globs:
+  - "client/pages/purchase-history/**/*.tsx"
+  - "client/components/**/PurchaseHistory*.tsx"
+alwaysApply: false
+---
+
+## Side Navigation
+
+- Side nav container padding: `var(--ld-primitive-scale-space-300)` (12px)
+- Use `AppSidebar` with `menuItems` — never recreate sidebar structure
+- Active state must highlight current page route
+
+## Order Card Layout
+
+- Each order card is a `Card` component with no border (parent provides frame)
+- Card sections: Order header → Item rows → Action footer
+- Item rows use a horizontal layout: image (80x80) + details column + price column
+- Fulfillment status uses `Tag` component with status variants (`success`, `warning`, `info`)
+
+## SVG Fulfillment Icons
+
+- Use local SVGs from `public/illustrations/` for fulfillment type icons (delivery, pickup, shipping)
+- Render at 64x64px with proper `alt` text
+- Never generate new illustrations when matching ones exist locally
+- Never use CDN URLs with `?format=webp` for SVG files
+
+## ReviewPromptBanner
+
+- Appears after delivered orders to prompt customer reviews
+- Uses product image from order data (never placeholder)
+- CTA button uses `Button` variant `secondary`, size `small`
+- Displays star rating prompt using `Rating` component
+
+## AmendsBanner
+
+- Appears when order has substitutions or issues
+- Uses `Callout` component with `info` variant
+- Action link uses `Link` component — never raw `<a>` tag
+- Must be dismissible with close `IconButton`
+
+## Related Rules
+
+- `.builder/rules/component-card.mdc` — Card component spec
+- `.builder/rules/component-tag.mdc` — Tag variants and usage
+- `.builder/rules/svg-assets.mdc` — SVG asset management

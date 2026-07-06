@@ -1,0 +1,439 @@
+/* ════════════════════════════════════════════════════════════════════════
+   [WCP] Rich Media Sheet — Styles
+   Standalone WCP bottom sheet component for media-rich experiences.
+
+   Sizing, animation and placement intentionally mirror the LD BottomSheet:
+   - position: fixed; left/right/bottom: 0 on mobile
+   - max-height: 90vh  |  fixed mode: 80vh
+   - animation: slideUp 300ms cubic-bezier(0.32, 0.72, 0, 1)
+   - overlay: fadeIn 200ms ease-out
+   - shadow: var(--ld-semantic-elevation-300)
+
+   WCP-only additions over LD:
+   - 6 header variants (title, title-subtitle, logo-left, logo-center, inverse, none)
+   - 3 surface themes (default, brand, media)
+   - Desktop (768px+): centered 768px modal using left/right margins (NO transform
+     so it does NOT conflict with vaul's translateY slide animation)
+   - Breakpoint mirrors LD BottomSheet exactly: 768px
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* ── Overlay — identical to LD BottomSheet ────────────────────────────── */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  /* Scrim = overlay component — must be above ALL UI (header 300, sidebar 200) */
+  z-index: var(--ld-semantic-z-index-modal-backdrop, 1040);
+  background: var(--ld-semantic-color-scrim, rgba(0, 0, 0, 0.5));
+  animation: fadeIn 200ms ease-out;
+}
+
+/* ── Sheet Container — matches LD BottomSheet sizing & animation ──────── */
+
+.sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* Sheet sits one level above its own scrim */
+  z-index: var(--ld-semantic-z-index-modal, 1050);
+  display: flex;
+  flex-direction: column;
+  /* Top corners only on mobile, same as LD BottomSheet */
+  border-top-left-radius: var(--ld-primitive-scale-borderradius-200, 16px);
+  border-top-right-radius: var(--ld-primitive-scale-borderradius-200, 16px);
+  /* Matches LD BottomSheet max-height */
+  max-height: 90vh;
+  /* Match LD BottomSheet shadow token */
+  box-shadow: var(--ld-semantic-elevation-300, 0 -2px 8px rgba(0, 0, 0, 0.1));
+  /* Matches LD BottomSheet slideUp animation exactly */
+  animation: slideUp 300ms cubic-bezier(0.32, 0.72, 0, 1);
+  outline: none;
+  /* Clips children to the sheet's rounded corners */
+  overflow: hidden;
+}
+
+/* Fixed height mode — matches LD BottomSheet */
+.sheetFixed {
+  height: 80vh;
+}
+
+/* Content-driven height — matches LD BottomSheet */
+.sheetContent {
+  height: auto;
+}
+
+/*
+ * Desktop (768px+): centered 768px modal, all-corner radius.
+ * Matches LD BottomSheet breakpoint and width exactly.
+ *
+ * IMPORTANT: We use left/right margin math instead of transform: translateX(-50%)
+ * because vaul uses transform: translateY() for the slide animation.
+ * Using a translate-based centering on top of that creates a conflict where the
+ * animation jumps. Using calc() on left/right avoids any transform collision.
+ */
+@media (min-width: 768px) {
+  .sheet {
+    left: calc(50% - 384px);   /* 384px = half of 768px */
+    right: calc(50% - 384px);
+    width: 768px;
+    border-radius: var(--ld-primitive-scale-borderradius-200, 16px);
+  }
+}
+
+/* ── Surface Variants ─────────────────────────────────────────────────── */
+
+.surface--default {
+  background: var(--ld-semantic-color-surface-overlay, #ffffff);
+}
+
+.surface--brand {
+  background: var(--wcp-semantic-color-surface-overlay-brand-subtle, #F0F5FF);
+}
+
+.surface--brand-bold {
+  /* Full brand-blue — use with inverse chrome (drag handle, close button auto-inverted) */
+  background: var(--ld-semantic-color-fill-brand, #0071DC);
+}
+
+.surface--brand-gradient {
+  background:
+    linear-gradient(0deg, rgba(255, 255, 255, 0.00) 47.6%, rgba(255, 255, 255, 0.80) 97.95%),
+    linear-gradient(0deg, rgba(240, 245, 255, 0.80) -42.23%, rgba(226, 235, 252, 0.80) 100%),
+    linear-gradient(0deg, rgba(201, 220, 253, 0.80) 0%, rgba(201, 220, 253, 0.80) 100%),
+    rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(36px);
+  -webkit-backdrop-filter: blur(36px);
+  border: 0.72px solid rgba(255, 255, 255, 0.6);
+}
+
+.surface--media {
+  /* Content provides the background color via full-bleed children */
+  background: var(--ld-semantic-color-fill, #ffffff);
+}
+
+/* ── Drag Handle (Grabber) ────────────────────────────────────────────── */
+
+.grabber {
+  width: 36px;
+  height: 4px;
+  border-radius: var(--ld-primitive-scale-borderradius-round, 9999px);
+  background: var(--ld-semantic-color-separator, #D9DADC);
+  align-self: center;
+  flex-shrink: 0;
+  margin: 8px auto 0;
+  pointer-events: none;
+}
+
+.grabberInverse {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* ── Close Button ─────────────────────────────────────────────────────── */
+
+.closeButton {
+  display: flex;
+  padding: var(--ld-primitive-scale-space-100, 8px);
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--ld-primitive-scale-borderradius-round, 9999px);
+  border: 1px solid transparent;
+  background: var(--ld-semantic-color-action-fill-transparent, transparent);
+  cursor: pointer;
+  color: var(--ld-semantic-color-text, #2E2F32);
+  flex-shrink: 0;
+  transition: background 150ms;
+}
+
+.closeButton:hover {
+  background: var(--ld-semantic-color-surface-hovered, rgba(0, 0, 0, 0.05));
+}
+
+.closeButton:focus-visible {
+  outline: 2px solid var(--ld-semantic-color-action-border-primary, #0053E2);
+  outline-offset: 2px;
+}
+
+.closeButtonInverse {
+  background: var(--ld-semantic-color-action-fill-accent-white, rgba(255, 255, 255, 0.15));
+  color: var(--ld-semantic-color-text-inverse, #ffffff);
+}
+
+.closeButtonInverse:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ── Header — matches LD BottomSheet header padding rules ────────────── */
+
+/* Base header (title / title-subtitle / logo variants) */
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex-shrink: 0;
+  /* Mobile padding — same as LD BottomSheet .header */
+  padding: 0;
+}
+
+/* Row: grabber + title + close button */
+.headerRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ld-primitive-scale-space-200, 16px);
+  /* Mobile: 8px padding, same as LD BottomSheet */
+  padding: var(--ld-primitive-scale-space-100, 8px);
+}
+
+@media (min-width: 768px) {
+  .headerRow {
+    /* Desktop: 16px padding, same as LD BottomSheet */
+    padding: var(--ld-primitive-scale-space-200, 16px);
+  }
+}
+
+/* Title frame: center-aligned layout */
+.headerTitleFrame {
+  flex: 1 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--ld-primitive-scale-space-100, 8px) 0;
+}
+
+.headerTitle {
+  flex: 1 0 0;
+  color: var(--ld-semantic-color-text, #2E2F32);
+  text-align: center;
+  font-family: var(--ld-semantic-font-heading-small-family, 'Everyday Sans UI', -apple-system, Roboto, sans-serif);
+  font-size: var(--ld-semantic-font-heading-small-size, 18px);
+  font-weight: var(--ld-semantic-font-heading-small-weight-default, 700);
+  line-height: var(--ld-semantic-font-heading-small-lineheight, 1.4);
+  margin: 0;
+}
+
+.headerSubtitle {
+  flex: 1 0 0;
+  color: var(--ld-semantic-color-text-subtle, #5b5c5e);
+  text-align: left;
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', -apple-system, Roboto, sans-serif);
+  font-size: var(--ld-semantic-font-caption-size, 12px);
+  font-weight: var(--ld-semantic-font-body-small-weight-default, 400);
+  line-height: var(--ld-semantic-font-caption-lineheight, 1.4);
+  margin: 0;
+  margin-top: 4px;
+}
+
+/* Divider under title-subtitle header */
+.headerDivider {
+  height: 1px;
+  background: var(--ld-semantic-color-separator, #D9DADC);
+}
+
+/* ── Brand-bold surface: non-inverse header chrome overrides ─────────── */
+
+/* Transparent header bg so the brand-bold sheet color shows through */
+.headerBrandBold {
+  background: transparent;
+}
+
+/* Title text on brand-bold surface uses inverse (white) color */
+.headerTitleBoldSurface {
+  color: var(--ld-semantic-color-text-inverse, #ffffff);
+}
+
+/* Subtitle text on brand-bold surface */
+.headerSubtitleBoldSurface {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ── Inverse header (brand-blue background) ───────────────────────────── */
+
+.headerInverse {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex-shrink: 0;
+  border-top-left-radius: var(--ld-primitive-scale-borderradius-200, 16px);
+  border-top-right-radius: var(--ld-primitive-scale-borderradius-200, 16px);
+  background: var(--ld-semantic-color-fill-brand, #0053E2);
+}
+
+@media (min-width: 768px) {
+  .headerInverse {
+    border-radius: var(--ld-primitive-scale-borderradius-200, 16px)
+      var(--ld-primitive-scale-borderradius-200, 16px)
+      0 0;
+  }
+}
+
+.headerTitleInverse {
+  flex: 1 0 0;
+  color: var(--ld-semantic-color-text-inverse, #ffffff);
+  text-align: center;
+  font-family: var(--ld-semantic-font-heading-small-family, 'Everyday Sans UI', -apple-system, Roboto, sans-serif);
+  font-size: 18px;
+  font-weight: var(--ld-semantic-font-heading-small-weight-default, 700);
+  line-height: var(--ld-semantic-font-heading-small-lineheight, 1.4);
+  margin: 0;
+}
+
+@media (min-width: 900px) {
+  .headerTitleInverse {
+    font-size: var(--ld-semantic-font-heading-small-size, 20px);
+  }
+}
+
+.headerDividerInverse {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ── Logo headers ─────────────────────────────────────────────────────── */
+
+.headerLogoLeft {
+  flex: 1 0 0;
+  display: flex;
+  align-items: center;
+  padding: var(--ld-primitive-scale-space-100, 8px) 0;
+  min-height: 40px;
+}
+
+.headerLogoCenter {
+  flex: 1 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--ld-primitive-scale-space-100, 8px) 0
+    var(--ld-primitive-scale-space-100, 8px)
+    var(--ld-primitive-scale-space-700, 56px);
+  min-height: 40px;
+}
+
+/* ── No-title header (close button only) ──────────────────────────────── */
+
+.headerNone {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex-shrink: 0;
+}
+
+.headerNoneRow {
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--ld-primitive-scale-space-100, 8px);
+}
+
+@media (min-width: 900px) {
+  .headerNoneRow {
+    padding: var(--ld-primitive-scale-space-200, 16px);
+  }
+}
+
+/* ── Content Area — no forced padding (consumer owns layout) ──────────── */
+
+.contentArea {
+  overflow-y: auto;
+  flex-shrink: 1;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* In fixed-height mode content fills remaining vertical space */
+.contentAreaFixed {
+  flex: 1 0 0;
+}
+
+/* ── Footer — matches LD BottomSheet .actions section ────────────────── */
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+
+/* Footer background inherits surface variant */
+.footer--default {
+  background: var(--ld-semantic-color-surface-overlay, #ffffff);
+}
+
+.footer--brand {
+  background: var(--wcp-semantic-color-surface-overlay-brand-subtle, #F0F5FF);
+}
+
+.footer--brand-bold {
+  background: var(--ld-semantic-color-fill-brand, #0071DC);
+}
+
+.footer--brand-gradient {
+  background: transparent;
+}
+
+.footer--media {
+  background: var(--ld-semantic-color-surface-overlay, #ffffff);
+}
+
+/* Divider matches LD BottomSheet .divider */
+.footerDivider {
+  height: 1px;
+  align-self: stretch;
+  background: var(--ld-semantic-color-separator, #D9DADC);
+  position: relative;
+}
+
+/* Action padding matches LD BottomSheet .actionContainer */
+.footerActions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+  overflow: hidden;
+  position: relative;
+  /* Mobile: 16px — same as LD BottomSheet */
+  padding: var(--ld-primitive-scale-space-200, 16px);
+  gap: var(--ld-primitive-scale-space-100, 8px);
+}
+
+@media (min-width: 768px) {
+  .footerActions {
+    /* Desktop: 24px — same as LD BottomSheet */
+    padding: var(--ld-primitive-scale-space-300, 24px);
+  }
+}
+
+/* ── Animations — identical to LD BottomSheet ─────────────────────────── */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+/* Accessibility: respect reduced motion — same as LD BottomSheet */
+@media (prefers-reduced-motion: reduce) {
+  .sheet {
+    animation: none;
+  }
+  .overlay {
+    animation: none;
+  }
+}
+
+/* Screen-reader only — visually hidden but accessible to assistive technology */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

@@ -1,0 +1,150 @@
+/* WCPRatingDisplay — Non-interactive aggregate rating component
+   Living Design 3.5 semantic tokens */
+
+/* ─── Wrapper ─────────────────────────────────────────────────── */
+.wrapper {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px; /* ld-primitive-scale-space-50 */
+}
+
+/* ─── Inverse (white stars on dark background) ────────────────── */
+.starsInverse {
+  filter: brightness(0) invert(1);
+}
+
+/* ─── Content pattern ─────────────────────────────────────────── */
+.content {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Small size — caption typography (12px) */
+.wrapper--small .content {
+  gap: 4px; /* ld-primitive-scale-space-50 */
+}
+
+/* Medium size — body-medium typography (16px) */
+.wrapper--medium .content {
+  gap: 8px; /* ld-primitive-scale-space-100 */
+}
+
+/* ─── Left group: count + link ─────────────────────────────────── */
+.leftGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px; /* ld-primitive-scale-space-50 */
+}
+
+/* ─── Count ────────────────────────────────────────────────────── */
+.count {
+  color: var(--ld-semantic-color-text-subtle, #515357);
+  text-align: center;
+  font-kerning: none;
+  font-feature-settings: 'liga' off;
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', -apple-system, Roboto, Helvetica, sans-serif);
+  font-weight: 400;
+}
+
+.wrapper--small .count {
+  font-size: 12px;
+  line-height: 1.333; /* 133.333% */
+}
+
+.wrapper--medium .count {
+  font-size: 16px;
+  line-height: 1.5; /* 150% */
+}
+
+/* Inverse count */
+.wrapper--inverse .count {
+  color: var(--ld-semantic-color-text-inverse, #ffffff);
+}
+
+/* ─── Link ─────────────────────────────────────────────────────── */
+.link {
+  color: var(--ld-semantic-color-link-text, #2e2f32);
+  font-kerning: none;
+  font-feature-settings: 'liga' off;
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', -apple-system, Roboto, Helvetica, sans-serif);
+  font-weight: 400;
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: auto;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.link:hover {
+  text-decoration: none;
+}
+
+.wrapper--small .link {
+  font-size: 12px;
+  line-height: 1.333;
+}
+
+.wrapper--medium .link {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Inverse link */
+.wrapper--inverse .link {
+  color: var(--ld-semantic-color-link-text-accent-white, #ffffff);
+}
+
+/* ─── Pipe separator ───────────────────────────────────────────── */
+.pipe {
+  color: var(--ld-semantic-color-text-subtlest, #74767c);
+  font-kerning: none;
+  font-feature-settings: 'liga' off;
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', -apple-system, Roboto, Helvetica, sans-serif);
+  font-weight: 400;
+  user-select: none;
+}
+
+.wrapper--small .pipe {
+  font-size: 12px;
+  line-height: 1.333;
+}
+
+.wrapper--medium .pipe {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Inverse pipe */
+.wrapper--inverse .pipe {
+  color: var(--ld-semantic-color-text-inverse, #ffffff);
+}
+
+/* ─── Trailing text ────────────────────────────────────────────── */
+.text {
+  color: var(--ld-semantic-color-text-subtle, #515357);
+  text-align: center;
+  font-kerning: none;
+  font-feature-settings: 'liga' off;
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', -apple-system, Roboto, Helvetica, sans-serif);
+  font-weight: 400;
+}
+
+.wrapper--small .text {
+  font-size: 12px;
+  line-height: 1.333;
+}
+
+.wrapper--medium .text {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Inverse trailing text */
+.wrapper--inverse .text {
+  color: var(--ld-semantic-color-text-inverse, #ffffff);
+}

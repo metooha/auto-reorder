@@ -1,0 +1,191 @@
+/**
+ * Tag Component Styles
+ * Uses CSS variables from the design system for colors, spacing, borders, radius, and typography.
+ */
+
+.tag {
+  /* Typography - using design system font */
+  font-family: 'Everyday Sans Mono', monospace;
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-normal);
+  line-height: 1.4;
+  
+  /* Layout */
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  
+  /* Border and radius */
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--color-border);
+  border-radius: var(--radius-tag);
+  
+  /* Default colors */
+  background-color: var(--color-muted);
+  color: var(--color-foreground);
+  
+  /* Transitions */
+  transition: all 0.2s ease-in-out;
+}
+
+/* Tag Variants */
+.tag-primary {
+  background-color: var(--color-primary);
+  color: var(--color-primary-foreground);
+  border-color: var(--color-primary);
+}
+
+.tag-secondary {
+  background-color: var(--color-secondary);
+  color: var(--color-secondary-foreground);
+  border-color: var(--color-border);
+}
+
+.tag-success {
+  background-color: var(--color-success);
+  color: var(--color-success-foreground);
+  border-color: var(--color-success);
+}
+
+.tag-warning {
+  background-color: var(--color-warning);
+  color: var(--color-warning-foreground);
+  border-color: var(--color-warning);
+}
+
+.tag-destructive {
+  background-color: var(--color-destructive);
+  color: var(--color-destructive-foreground);
+  border-color: var(--color-destructive);
+}
+
+.tag-info {
+  background-color: var(--color-info);
+  color: var(--color-info-foreground);
+  border-color: var(--color-info);
+}
+
+/* Outline variants */
+.tag-outline {
+  background-color: transparent;
+  color: var(--color-foreground);
+  border-color: var(--color-border);
+}
+
+.tag-outline-primary {
+  background-color: transparent;
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.tag-outline-success {
+  background-color: transparent;
+  color: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.tag-outline-warning {
+  background-color: transparent;
+  color: var(--color-warning);
+  border-color: var(--color-warning);
+}
+
+.tag-outline-destructive {
+  background-color: transparent;
+  color: var(--color-destructive);
+  border-color: var(--color-destructive);
+}
+
+.tag-outline-info {
+  background-color: transparent;
+  color: var(--color-info);
+  border-color: var(--color-info);
+}
+
+/* Size variants */
+.tag-sm {
+  font-size: var(--text-xs);
+  padding: 1px 6px;
+}
+
+.tag-md {
+  font-size: var(--text-sm);
+  padding: 2px 8px;
+}
+
+.tag-lg {
+  font-size: var(--text-base);
+  padding: 4px 12px;
+}
+
+/* Interactive tag with dismiss button */
+.tag-dismissible {
+  padding-right: 4px;
+}
+
+.tag-dismiss-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  margin-left: 4px;
+  background: transparent;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.tag-dismiss-button:hover {
+  opacity: 1;
+}
+
+.tag-dismiss-button:focus {
+  outline: 2px solid var(--color-ring);
+  outline-offset: 1px;
+}
+
+/* Clickable/interactive tags */
+.tag-clickable {
+  cursor: pointer;
+}
+
+.tag-clickable:hover {
+  opacity: 0.85;
+}
+
+.tag-clickable:active {
+  opacity: 0.7;
+}
+
+.tag-clickable:focus {
+  outline: 2px solid var(--color-ring);
+  outline-offset: 2px;
+}
+
+/* Disabled state */
+.tag-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Icon in tag */
+.tag-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+/* Dark mode support */
+.dark .tag {
+  border-color: var(--color-border);
+}

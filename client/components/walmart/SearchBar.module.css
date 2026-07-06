@@ -1,0 +1,113 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 4px;
+  padding: 0 16px 12px;
+}
+
+.backButton {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: var(--ld-semantic-color-text);
+}
+
+.searchArea {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 4px;
+  padding-right: 16px;
+}
+
+/* Decorative AI rainbow border — intentional brand animation */
+.rainbowBorder {
+  flex: 1;
+  width: 78%;
+  padding: 2px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #ffc220, #76c043, #1a9fd0, #ea1100);
+  background-size: 300% 100%;
+  animation: rainbowShift 3s ease infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rainbowBorder {
+    animation: none;
+    background: var(--ld-semantic-color-action-fill-primary);
+  }
+}
+
+.activeBorder {
+  padding: 2px;
+  border-radius: 9999px;
+  border: 2px solid var(--ld-semantic-color-text);
+  flex: 1;
+  width: 78%;
+}
+
+@keyframes rainbowShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.inputContainer {
+  background: var(--ld-semantic-color-surface);
+  border-radius: 9999px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 42px;
+  cursor: pointer;
+}
+
+.queryText {
+  flex: 1;
+  width: 100%;
+  color: var(--ld-semantic-color-text-subtle);
+  font-size: var(--ld-semantic-font-body-medium-size);
+  font-weight: 300;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.actionButtons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.circleButton {
+  width: 32px;
+  height: 32px;
+  border-radius: 9999px;
+  border: 1px solid var(--ld-semantic-color-separator);
+  background: var(--ld-semantic-color-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  padding: 0;
+  color: var(--ld-semantic-color-text);
+}
+
+@media (max-width: 480px) {
+  .wrapper {
+    padding: 0 12px 10px;
+    gap: 2px;
+  }
+
+  .inputContainer {
+    padding: 6px 10px;
+    height: 38px;
+  }
+}

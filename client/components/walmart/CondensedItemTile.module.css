@@ -1,0 +1,410 @@
+/* CondensedItemTile — compact circular-image tile used in grocery lists
+   Uses a unified render with CSS transitions for smooth edit ↔ default */
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  transform: scale(1);
+  transition: transform 0.525s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.tileEdit {
+  /* Tiles in edit mode grow back with staggered delay */
+  transition-delay: var(--item-delay, 0ms);
+}
+
+.tileLoading {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* ── Image area ── */
+.imageArea {
+  position: relative;
+  width: 100%;
+  height: auto;
+  flex-shrink: 0;
+  aspect-ratio: 1 / 1;
+  /* overflow must be visible so the stepper badge isn't clipped */
+  overflow: visible;
+  transition:
+    width 0.7s cubic-bezier(0.25, 0.1, 0.25, 1),
+    height 0.7s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* Clips the image + checkmark to the rounded shape without clipping the stepper */
+.imageClip {
+  position: absolute;
+  inset: 0;
+  border-radius: 22.857px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 1);
+}
+
+/* Edit mode: image area fills the grid column */
+.imageAreaEdit {
+  width: 100%;
+  height: auto;
+}
+
+/* Fill-container mode: image area fills its grid cell (suggestion grid) */
+.imageAreaFill {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  overflow: visible;
+}
+
+.imageFill {
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  object-fit: contain;
+}
+
+.image {
+  width: calc(100% - 16px);
+  height: calc(100% - 16px);
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  transition:
+    left 0.7s cubic-bezier(0.25, 0.1, 0.25, 1),
+    top 0.7s cubic-bezier(0.25, 0.1, 0.25, 1),
+    transform 0.7s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* Edit mode: center the image */
+.imageEdit {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* ── Add to cart — top-right of image area ── */
+.addToCartWrap {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  justify-content: flex-end;
+  align-items: center;
+  transition: opacity 0.29s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* LD count badge shown in place of stepper for basket items —
+   white circle with gray border to match the design spec */
+.quantityBadge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 24px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  background: #fff !important;
+  color: var(--ld-semantic-color-text, #2e2f32) !important;
+  border: 1.5px solid var(--ld-semantic-color-border, #d0d1d3) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.10);
+  font-size: 12px !important;
+  line-height: 1 !important;
+}
+
+/* ── Checkmark icon — top-left, 44×44 hit area ── */
+.checkIcon {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: inline-flex;
+  min-width: 44px;
+  min-height: 44px;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--ld-primitive-scale-borderradius-round, 9999px);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 2;
+  /* Hidden by default, animated in */
+  opacity: 0;
+  transform: scale(0);
+  pointer-events: none;
+  transition:
+    opacity 0.35s cubic-bezier(0.25, 0.1, 0.25, 1),
+    transform 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.checkIconVisible {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+  /* Spring-like overshoot for the checkmark */
+  transition:
+    opacity 0.35s cubic-bezier(0.25, 0.1, 0.25, 1) 0.15s,
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s;
+}
+
+.checkIcon:hover {
+  background: var(--ld-semantic-color-surface-hovered, #e8e8e9);
+}
+
+.checkSvg {
+  width: var(--ld-semantic-scale-icon-medium, 24px);
+  height: var(--ld-semantic-scale-icon-medium, 24px);
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.checkSvgUnchecked {
+  width: var(--ld-semantic-scale-icon-medium, 24px);
+  height: var(--ld-semantic-scale-icon-medium, 24px);
+  color: var(--ld-semantic-color-text-subtlest, #74767c);
+}
+
+/* ── Price row ── */
+.priceRow {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 var(--ld-primitive-scale-space-100, 8px) 4px var(--ld-primitive-scale-space-100, 8px);
+  align-items: flex-start;
+  align-self: stretch;
+}
+
+.priceInner {
+  display: flex;
+  padding-right: 4px;
+  justify-content: center;
+  align-items: flex-start;
+  flex: 0 0 auto;
+}
+
+/* Price parts */
+.dollarSign {
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: var(--ld-semantic-font-body-large-size, 1.125rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  font-kerning: none;
+  font-feature-settings: 'liga' off;
+  vertical-align: top;
+  padding-top: 0;
+}
+
+.price {
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  font-kerning: none;
+  font-feature-settings: 'liga' off;
+}
+
+.cents {
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: 0.65rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  font-kerning: none;
+  font-feature-settings: 'liga' off;
+  vertical-align: top;
+  align-self: flex-start;
+}
+
+/* Inline unit/size tag */
+.tagText {
+  font-family: var(--ld-semantic-font-family-sans);
+  font-size: var(--ld-semantic-font-caption-size, 12px);
+  font-weight: 400;
+  line-height: 1;
+  color: var(--ld-semantic-color-text-subtle, #5b5c5e);
+  font-kerning: none;
+  font-feature-settings: 'liga' off;
+  white-space: nowrap;
+  padding-left: 4px;
+  align-self: flex-start;
+}
+
+/* Product name — always visible below price */
+.productName {
+  padding: 0 var(--ld-primitive-scale-space-100, 8px) var(--ld-primitive-scale-space-50, 4px);
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-caption-size, 12px);
+  font-weight: 400;
+  line-height: var(--ld-semantic-font-caption-lineheight, 1rem);
+  color: var(--ld-semantic-color-text, #2e2f32);
+  font-kerning: none;
+  font-feature-settings: 'liga' off;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* ═══════════════════════════════════════════════
+   EDIT DETAILS — name + stepper, animated expand
+   ═══════════════════════════════════════════════ */
+
+.editDetails {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transform: scaleY(0.97);
+  transform-origin: top center;
+  pointer-events: none;
+  transition:
+    max-height 0.385s cubic-bezier(0.25, 0.1, 0.25, 1),
+    opacity 0.385s cubic-bezier(0.25, 0.1, 0.25, 1),
+    transform 0.385s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.editDetailsVisible {
+  max-height: 200px;
+  opacity: 1;
+  transform: scaleY(1);
+  pointer-events: auto;
+  filter: none;
+  flex: 1;
+}
+
+/* Product name — 2-line clamp, fills available vertical space */
+.editName {
+  flex: 1;
+  align-self: stretch;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 400;
+  line-height: var(--ld-semantic-font-body-small-lineheight, 1.25rem);
+  color: var(--ld-semantic-color-text, #2e2f32);
+  font-kerning: none;
+  font-feature-settings: 'liga' off;
+  margin-bottom: 2px;
+  padding: 0 var(--ld-primitive-scale-space-100, 8px);
+}
+
+/* Quantity stepper — pill row (−/count/+) */
+.quantityStepper {
+  display: flex;
+  min-width: 108px;
+  min-height: 32px;
+  padding: var(--ld-primitive-scale-space-50, 4px);
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-50, 4px);
+  align-self: stretch;
+  border-radius: var(--ld-primitive-scale-borderradius-round, 9999px);
+  border: 1px solid var(--ld-semantic-color-action-border-secondary, #2e2f32);
+  background: var(--ld-semantic-color-action-fill-secondary, #fff);
+}
+
+.stepperBtn {
+  display: flex;
+  padding: var(--ld-primitive-scale-space-50, 4px);
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-50, 4px);
+  border-radius: var(--ld-primitive-scale-borderradius-round, 9999px);
+  background: var(--ld-semantic-color-action-fill-secondary, #fff);
+  border: none;
+  cursor: pointer;
+}
+
+.stepperBtn:hover {
+  background: var(--ld-semantic-color-action-fill-secondary-hovered, #f0f0f0);
+}
+
+.stepperBtnIcon {
+  width: var(--ld-semantic-scale-icon-small, 16px);
+  height: var(--ld-semantic-scale-icon-small, 16px);
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.stepperCount {
+  flex: 1 0 0;
+  text-align: center;
+  font-family: var(--ld-semantic-font-family-sans, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 700;
+  line-height: var(--ld-semantic-font-body-small-lineheight, 1.25rem);
+  color: var(--ld-semantic-color-text, #2e2f32);
+  font-kerning: none;
+  font-feature-settings: 'liga' off;
+}
+
+/* ═══════════════════════════════════════════════
+   ANIMATION CLASSES — applied by parent
+   ═══════════════════════════════════════════════ */
+
+/* Scale-shrink: pre-shrink before layout swap */
+.tileShrink {
+  transform: scale(0.9);
+  transition: transform 0.175s ease-out;
+}
+
+/* Scale-grow: grow back after layout swap, staggered */
+.tileGrow {
+  transform: scale(1);
+  transition: transform 0.525s cubic-bezier(0.25, 0.1, 0.25, 1);
+  transition-delay: var(--item-delay, 0ms);
+}
+
+/* Legacy bounce-in animation (kept for backwards compat) */
+.itemBounceIn {
+  animation: bounceIn 420ms ease-out backwards;
+  animation-delay: var(--item-delay, 0ms);
+}
+
+@keyframes bounceIn {
+  0%   { transform: scale(0.65); opacity: 0; }
+  50%  { transform: scale(1.06); opacity: 1; }
+  70%  { transform: scale(0.97); opacity: 1; }
+  85%  { transform: scale(1.02); opacity: 1; }
+  100% { transform: scale(1.0);  opacity: 1; }
+}
+
+.itemBounceOut {
+  animation: bounceOut 250ms ease-in forwards;
+  animation-delay: var(--item-delay, 0ms);
+}
+
+@keyframes bounceOut {
+  0%   { transform: scale(1.0);  opacity: 1; }
+  30%  { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(0.6);  opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile,
+  .tileEdit,
+  .checkIcon,
+  .checkIconVisible,
+  .editDetails,
+  .editDetailsVisible,
+  .imageArea,
+  .image,
+  .addToCartWrap,
+  .tileShrink,
+  .tileGrow,
+  .itemBounceIn,
+  .itemBounceOut {
+    animation: none !important;
+    transition: none !important;
+  }
+}

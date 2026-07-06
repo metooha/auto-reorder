@@ -1,0 +1,122 @@
+---
+description: Component Enhancement
+globs:
+alwaysApply: true
+---
+
+## Purpose
+
+Define the rules for modifying or extending existing components without breaking consumers. This applies to adding variants, sizes, props, or visual changes to any LD or WCP component.
+
+---
+
+## Core Principle — Additive Only
+
+Never remove or rename existing props, variant values, or exported types. All changes must be backward-compatible.
+
+```tsx
+// ✅ CORRECT — extending a union type
+// Before:
+export type ItemTileBadgeType = 'bestseller' | 'deal' | 'popular' | 'rollback';
+// After:
+export type ItemTileBadgeType = 'bestseller' | 'deal' | 'popular' | 'rollback' | 'clearance';
+
+// ❌ WRONG — renaming breaks consumers
+// Before:
+export type ItemTileBadgeType = 'bestseller' | 'deal';
+// After:
+export type ItemTileBadgeType = 'best-seller' | 'deal'; // ← renames 'bestseller'
+```
+
+---
+
+## Enhancement Checklist
+
+### Before Making Changes
+
+- [ ] Read the existing component code and understand its full API
+- [ ] Check all usages across the codebase (`grep -r "ComponentName" client/`)
+- [ ] Verify the change won't break any existing consumer
+- [ ] Check `guidelines/components/` for a spec doc that may need updating
+
+### Making the Change
+
+- [ ] Add new variant values to existing string union types
+- [ ] Add new optional props (never required — that breaks existing call sites)
+- [ ] Add new CSS classes for new variants — never modify existing class styles unless fixing a bug
+- [ ] Map new variants using `styles[variant]` pattern — never add new switch/if branches
+
+### After Making Changes
+
+- [ ] Update the component library page to show the new variant/state
+- [ ] Update ComponentTester sandbox if the component is listed there
+- [ ] Run theme compliance check on the modified CSS
+- [ ] Test that all existing usages still render correctly
+
+---
+
+## Adding a New Variant
+
+```tsx
+// Step 1: Extend the type
+export type ButtonSize = 'small' | 'medium' | 'large' | 'xlarge'; // added 'xlarge'
+
+// Step 2: Add CSS class (the styles[size] pattern auto-maps it)
+/* In CSS module: */
+.xlarge {
+  height: 56px;
+  padding: 0 var(--ld-primitive-scale-space-600, 24px);
+  font-size: var(--ld-semantic-font-body-large-size, 18px);
+}
+
+// Step 3: No component code changes needed if using styles[size] pattern
+```
+
+## Adding a New Optional Prop
+
+```tsx
+// Step 1: Add to interface (must be optional)
+interface MyComponentProps {
+  variant?: Variant;
+  size?: Size;
+  compact?: boolean; // ← new optional prop
+}
+
+// Step 2: Use with a default in destructuring
+export function MyComponent({ variant = 'default', compact = false }: MyComponentProps) {
+  return (
+    <div className={[styles.root, compact ? styles.compact : ''].filter(Boolean).join(' ')}>
+      ...
+    </div>
+  );
+}
+```
+
+---
+
+## What NOT to Do
+
+| Action | Why it's wrong |
+|--------|---------------|
+| Remove a prop | Breaks all existing consumers |
+| Rename a variant value | Breaks all existing consumers |
+| Change default values | Changes behavior for existing consumers |
+| Modify existing CSS class styles | May break visual appearance elsewhere |
+| Add required props | Breaks all existing call sites |
+| Change export type (named → default) | Breaks all import statements |
+
+---
+
+## LD Components — Extra Restrictions
+
+Files in `client/components/ui/` are design-system primitives. **Never modify them directly.** Instead:
+- Create a wrapper component that composes the original
+- Or request the change through the design system team
+
+WCP components in `client/components/walmart/` can be modified directly following the rules above.
+
+---
+
+## Enforcement Level
+
+**HIGH** — Backward-incompatible changes to component APIs must be rejected in code review.

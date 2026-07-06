@@ -1,0 +1,156 @@
+.scrim {
+  position: fixed;
+  inset: 0;
+  background: var(--ld-semantic-color-scrim, rgba(0, 0, 0, 0.5));
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  z-index: 100;
+}
+
+.sheet {
+  width: 100%;
+  max-width: 375px;
+  border-radius: var(--ld-primitive-scale-borderradius-200, 16px) var(--ld-primitive-scale-borderradius-200, 16px) 0 0;
+  overflow: hidden;
+  position: relative;
+  animation: slideUp 400ms ease-out;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sheet {
+    animation: none;
+  }
+}
+
+.background {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: var(--ld-primitive-scale-space-150, 12px);
+  gap: var(--ld-primitive-scale-space-250, 20px);
+}
+
+.grabber {
+  width: 47px;
+  height: 5px;
+  border-radius: 91px;
+  opacity: 0.3;
+  background: var(--ld-semantic-color-text-accent-cyan, #74767C);
+}
+
+.innerContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: stretch;
+  padding-bottom: var(--ld-primitive-scale-space-300, 24px);
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-25, 2px);
+  align-self: stretch;
+}
+
+.title {
+  align-self: stretch;
+  color: var(--ld-semantic-color-text, #2E2F32);
+  text-align: center;
+  font-family: var(--ld-semantic-font-display-large-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-display-large-size, 32px);
+  font-weight: var(--ld-semantic-font-display-large-weight-alt, 700);
+  line-height: var(--ld-semantic-font-display-large-lineheight, 40px);
+  padding: 0 var(--ld-primitive-scale-space-200, 16px);
+}
+
+.titleUnderline {
+  text-decoration: underline;
+}
+
+.changeDayTime {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--ld-semantic-color-text, #2E2F32);
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: var(--ld-semantic-font-body-small-weight-default, 400);
+  line-height: var(--ld-semantic-font-body-small-lineheight, 20px);
+  text-decoration: underline;
+  padding: var(--ld-primitive-scale-space-100, 8px);
+}
+
+.visual {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+}
+
+.groceriesImage {
+  width: 100%;
+  max-width: 519px;
+  height: auto;
+}
+
+.curatedRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-50, 4px);
+  align-self: stretch;
+}
+
+.curatedText {
+  color: var(--ld-semantic-color-text, #2E2F32);
+  font-family: var(--ld-semantic-font-body-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: 15px;
+  font-weight: var(--ld-semantic-font-body-small-weight-default, 400);
+  line-height: 22px;
+}
+
+.ctaSection {
+  display: flex;
+  padding: 0 var(--ld-primitive-scale-space-200, 16px);
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-300, 24px);
+  align-self: stretch;
+}
+
+.subtitle {
+  color: var(--ld-semantic-color-text-inverse, #FFFFFF);
+  text-align: center;
+  font-family: var(--ld-semantic-font-heading-small-family, 'Everyday Sans UI', sans-serif);
+  font-size: var(--ld-semantic-font-heading-small-size, 18px);
+  font-weight: var(--ld-semantic-font-heading-small-weight-default, 700);
+  line-height: var(--ld-semantic-font-heading-small-lineheight, 24px);
+}
+
+.buttonWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+}

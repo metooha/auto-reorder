@@ -1,0 +1,146 @@
+---
+description: Card Meta Layout — Icon + Stacked Text Pattern
+globs:
+alwaysApply: true
+---
+
+## Purpose
+
+Define the standard layout pattern for card meta sections that combine a large pictogram icon with stacked text labels (type label + secondary detail). This applies to order cards, product cards, fulfillment cards, and any similar "icon + label + sublabel" row.
+
+---
+
+## The Pattern
+
+When a card needs to show:
+- A **type icon** (fulfillment method, category, status)
+- A **primary label** (e.g., "Curbside pickup", "Delivery")
+- A **secondary detail** below the label (e.g., store location, seller name, ETA)
+
+...the layout must follow the **icon-left / text-column-right** structure:
+
+```
+┌─────────────────────────────────────────┐
+│  [64×64 icon]  Primary label            │
+│                Secondary detail text    │
+└─────────────────────────────────────────┘
+```
+
+### JSX Structure
+
+```tsx
+<span className={styles.orderTypeChip}>
+  <img
+    src="/illustrations/mono-small/fulfillment-pickup.svg"
+    alt=""
+    aria-hidden="true"
+    width={64}
+    height={64}
+  />
+  <span className={styles.orderTypeChipText}>
+    <span>Curbside pickup</span>
+    {location && <span className={styles.location}>{location}</span>}
+  </span>
+</span>
+```
+
+### CSS
+
+```css
+/* The chip row — icon left, text column right */
+.orderTypeChip {
+  display: flex;
+  align-items: center;   /* vertically center icon with text block */
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ld-semantic-color-text-subtle, #74767C);
+}
+
+.orderTypeChip img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* The text column — primary label above, secondary below */
+.orderTypeChipText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.location {
+  font-size: 12px;
+  color: var(--ld-semantic-color-text-subtle, #74767C);
+}
+```
+
+---
+
+## Rules
+
+### DO
+
+- ✅ Place secondary text (location, sublabel) **inside** the chip text column, **not** as a sibling to the chip
+- ✅ Use `flex-direction: column` on the text container so label and detail stack vertically
+- ✅ Use `align-items: center` on the chip row so the icon centers against the text block
+- ✅ Use `gap: 2px` between primary and secondary text for tight visual grouping
+- ✅ Render icons at 64×64 for fulfillment/category pictograms
+
+### DO NOT
+
+- ❌ Place secondary text as a sibling of the chip in a column — it disconnects it visually from the icon
+- ❌ Render type icons smaller than 40×40 — they become illegible
+- ❌ Use `align-items: flex-start` on the chip row unless the icon should pin to the top edge
+
+---
+
+## Common Mistake
+
+```tsx
+// ❌ WRONG — location is a sibling of the chip, not nested inside it
+<div className={styles.orderMeta}>
+  <span className={styles.orderTypeChip}>
+    <img src="/assets/illustrations/mono-small/fulfillment-pickup.svg" width={64} height={64} />
+    <span>Curbside pickup</span>
+  </span>
+  <span className={styles.location}>Carrollton Supercenter at 1213 Trinity Mills Rd</span>
+</div>
+
+// ✅ CORRECT — location is nested inside the chip text column
+<div className={styles.orderMeta}>
+  <span className={styles.orderTypeChip}>
+    <img src="/assets/illustrations/mono-small/fulfillment-pickup.svg" width={64} height={64} />
+    <span className={styles.orderTypeChipText}>
+      <span>Curbside pickup</span>
+      <span className={styles.location}>Carrollton Supercenter at 1213 Trinity Mills Rd</span>
+    </span>
+  </span>
+</div>
+```
+
+---
+
+## When This Pattern Applies
+
+Use this pattern any time a card shows:
+- Fulfillment type chips (curbside, delivery, shipping, in-store)
+- Order source labels with location detail
+- Product seller info ("Sold by X | Fulfilled by Y")
+- Category badges with a subtitle
+- Any status chip where secondary context belongs to the chip, not the card
+
+---
+
+## Related Rules
+
+- [RULE_SVGAssets](./RULE_SVGAssets.mdc)
+- [RULE_ResponsiveLayout](./RULE_ResponsiveLayout.mdc)
+
+---
+
+**Last Updated**: 2025-05-27
+**Status**: Active
+**Applies To**: Order cards, product cards, fulfillment UI, any icon + label + sublabel pattern

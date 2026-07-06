@@ -1,0 +1,221 @@
+/* ── WCPSignatureCapture docs page ──────────────────────────── */
+
+.page {
+  padding: 32px 48px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sectionTitle {
+  font-family: var(--ld-semantic-font-heading-medium-family);
+  font-size: var(--ld-semantic-font-heading-medium-size, 20px);
+  font-weight: var(--ld-semantic-font-heading-medium-weight, 700);
+  line-height: var(--ld-semantic-font-heading-medium-lineheight);
+  color: var(--ld-semantic-color-text);
+  margin: 0 0 4px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+}
+
+.sectionDesc {
+  font-family: var(--ld-semantic-font-body-small-family);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: var(--ld-semantic-font-body-small-weight-default);
+  line-height: var(--ld-semantic-font-body-small-lineheight);
+  color: var(--ld-semantic-color-text-subtle);
+  margin: 0;
+}
+
+/* ── Overview list ──────────────────────────────────────────── */
+
+.overviewList {
+  margin: 0;
+  padding-left: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: var(--ld-semantic-font-body-small-family);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  color: var(--ld-semantic-color-text-subtle);
+  line-height: 1.5;
+}
+
+.overviewList strong {
+  color: var(--ld-semantic-color-text);
+}
+
+/* ── Demo frame ─────────────────────────────────────────────── */
+
+.demoFrame {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  overflow: hidden;
+}
+
+.demoFrameLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--ld-semantic-color-text-subtle);
+  padding: 8px 16px;
+  background: var(--ld-semantic-color-background-subtle, #f5f6f7);
+  border-bottom: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+}
+
+.demoFrameContent {
+  padding: 24px;
+  background: var(--ld-semantic-color-surface, #fff);
+}
+
+/* ── States row ─────────────────────────────────────────────── */
+
+.statesRow {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── Controls ───────────────────────────────────────────────── */
+
+.controlRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.controlLabel {
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+}
+
+/* ── Props table ────────────────────────────────────────────── */
+
+.propsTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--ld-semantic-font-body-small-family);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+}
+
+.propsTable th {
+  text-align: left;
+  padding: 8px 12px;
+  background: var(--ld-semantic-color-background-subtle, #f5f6f7);
+  border-bottom: 2px solid var(--ld-semantic-color-separator, #e3e4e5);
+  font-weight: 700;
+  color: var(--ld-semantic-color-text);
+}
+
+.propsTable td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  color: var(--ld-semantic-color-text-subtle);
+  vertical-align: top;
+}
+
+.propsTable td:first-child {
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  color: var(--ld-semantic-color-text, #2e2f32);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* ── Code block ─────────────────────────────────────────────── */
+
+.codeBlock {
+  background: var(--ld-semantic-color-text, #2e2f32);
+  color: #e8e9ea;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  padding: 20px 24px;
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  overflow-x: auto;
+  white-space: pre;
+  margin: 0;
+}
+
+/* ── Do / Don't ─────────────────────────────────────────────── */
+
+.guidelineGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.guidelineCard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px 24px;
+  border-radius: var(--ld-primitive-scale-borderradius-100, 8px);
+  background: var(--ld-semantic-color-background-subtle, #f5f6f7);
+  border: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+}
+
+.doLabel {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--ld-semantic-color-text-positive, #1a7a34);
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--ld-semantic-color-text-positive, #1a7a34);
+}
+
+.dontLabel {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--ld-semantic-color-text-negative, #c00);
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--ld-semantic-color-text-negative, #c00);
+}
+
+.guidelineText {
+  font-family: var(--ld-semantic-font-body-small-family);
+  font-size: var(--ld-semantic-font-body-small-size, 14px);
+  color: var(--ld-semantic-color-text-subtle);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .page {
+    padding: 24px 16px 48px;
+    gap: 32px;
+  }
+
+  .guidelineGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .demoFrameContent {
+    padding: 16px;
+  }
+
+  .propsTable {
+    font-size: 12px;
+  }
+
+  .propsTable td:first-child {
+    font-size: 11px;
+  }
+}

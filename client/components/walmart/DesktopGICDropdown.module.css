@@ -1,0 +1,178 @@
+.scrim {
+  position: fixed;
+  inset: 0;
+  background: var(--ld-semantic-color-overlay-dim, rgba(0, 0, 0, 0.4));
+  z-index: 99;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 8px;
+  width: 314px;
+  border-radius: 0 0 16px 16px;
+  z-index: 100;
+  overflow: hidden;
+}
+
+/* Blue header with fulfillment options */
+.optionsSection {
+  padding: 24px 0 20px;
+  background: var(--ld-semantic-color-action-fill-primary);
+}
+
+.optionsList {
+  display: flex;
+  width: 100%;
+}
+
+.optionButton {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.optionIconWrap {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.optionLabel {
+  font-size: var(--ld-semantic-font-body-small-size);
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: center;
+  margin-top: 4px;
+  color: #fff;
+}
+
+/* Selection ring on icon */
+.selectionRing {
+  position: absolute;
+  inset: 3px;
+  pointer-events: none;
+  color: var(--ld-semantic-color-rating-fill);
+}
+
+/* Deselect badge */
+.deselectButton {
+  position: absolute;
+  top: 2px;
+  right: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.deselectBadge {
+  position: relative;
+  width: 21px;
+  height: 21px;
+}
+
+.deselectBadgeCircle {
+  color: var(--ld-semantic-color-rating-fill);
+  position: absolute;
+  inset: 0;
+}
+
+.deselectBadgeX {
+  color: var(--ld-semantic-color-text);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* White card section */
+.cardsSection {
+  padding: 0 16px 16px;
+  background: var(--ld-semantic-color-action-fill-primary);
+}
+
+.cardsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  background: var(--ld-semantic-color-surface);
+  border-radius: 8px;
+  box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 1px rgba(0, 0, 0, 0.15);
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.cardIcon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--ld-semantic-color-text);
+}
+
+.cardIconTop {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--ld-semantic-color-text);
+  align-self: flex-start;
+  margin-top: 2px;
+}
+
+.cardTextSingle {
+  flex: 1;
+  font-size: var(--ld-semantic-font-body-small-size);
+  line-height: var(--ld-semantic-font-body-small-lineheight);
+  color: var(--ld-semantic-color-text);
+}
+
+.cardTextStack {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cardStoreName {
+  font-size: var(--ld-semantic-font-body-small-size);
+  font-weight: 600;
+  line-height: var(--ld-semantic-font-body-small-lineheight);
+  color: var(--ld-semantic-color-text);
+}
+
+.cardStoreAddress {
+  font-size: var(--ld-semantic-font-body-small-size);
+  line-height: var(--ld-semantic-font-body-small-lineheight);
+  color: var(--ld-semantic-color-text);
+}
+
+.cardChevron {
+  flex-shrink: 0;
+  color: var(--ld-semantic-color-text);
+  width: 24px;
+  height: 24px;
+}
